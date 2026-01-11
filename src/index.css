@@ -1,0 +1,25 @@
+:root {
+  /* system-ui? */
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  font-size: 22px;
+  color: white;
+  background-color: #242424;
+
+  /* color-scheme: light dark; */
+  /* font-synthesis: none; */
+  /* text-rendering: optimizeLegibility; */
+  /* -webkit-font-smoothing: antialiased; */
+  /* -moz-osx-font-smoothing: grayscale; */
+}
+
+body {
+  margin: 0;
+  display: flex;
+  /* wghats that */
+  /* place-items: center; */
+}
+
+.clock {
+  color: #3a3a3a;
+}
