@@ -1,18 +1,25 @@
-import { useState } from "react";
-import taskdb from "../taskdb";
+import { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import Roulette from "./Roulette.jsx";
 
-let newKey = taskdb.length;
-
 export default function Tasks() {
-  const [tasks, setTasks] = useState(taskdb);
+  const [tasks, setTasks] = useState(() => {
+    const loadTaskDb = JSON.parse(localStorage.getItem("taskdb"));
+    return loadTaskDb || [];
+  });
+
+  // update localstorage whether tasks change
+  useEffect(() => {
+    localStorage.setItem("taskdb", JSON.stringify(tasks));
+  }, [tasks]);
+
   const taskListItems = tasks.map((task) => <li key={task.id}>{task.name}</li>);
 
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const newTask = formData.get("task");
-    setTasks([...tasks, { id: newKey++, name: newTask }]);
+    setTasks([...tasks, { id: uuidv4(), name: newTask }]);
   }
 
   return (

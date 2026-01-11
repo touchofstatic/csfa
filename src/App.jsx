@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Clock from "./components/Clock.jsx";
+import Timer from "./components/Timer.jsx";
 import Tasks from "./components/Tasks.jsx";
 import Roulette from "./components/Roulette.jsx";
 
@@ -21,8 +22,9 @@ export default function App() {
   return (
     <>
       <Clock time={time.toLocaleTimeString("en-GB")} />
+      <Timer />
+      {/* TODO: separate roulette and tasks? */}
       <Tasks />
-      {/* <Roulette /> */}
     </>
   );
 }

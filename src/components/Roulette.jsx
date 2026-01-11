@@ -5,7 +5,6 @@ export default function Roulette({ tasks }) {
 
   function randomize() {
     let randomIndex = Math.floor(Math.random() * tasks.length);
-    console.log(randomIndex);
     setPull(tasks[randomIndex]);
   }
 
