@@ -1,5 +1,6 @@
 import { useState } from "react";
 import taskdb from "../taskdb";
+import Roulette from "./Roulette.jsx";
 
 let newKey = taskdb.length;
 
@@ -18,7 +19,7 @@ export default function Tasks() {
     <>
       <form
         onSubmit={handleSubmit}
-        autocomplete="off"
+        autoComplete="off"
       >
         <input
           type="text"
@@ -27,6 +28,7 @@ export default function Tasks() {
         <button>add</button>
       </form>
       <ul>{taskListItems}</ul>
+      <Roulette tasks={tasks} />
     </>
   );
 }

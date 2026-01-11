@@ -22,7 +22,7 @@ export default function App() {
     <>
       <Clock time={time.toLocaleTimeString("en-GB")} />
       <Tasks />
-      <Roulette />
+      {/* <Roulette /> */}
     </>
   );
 }
