@@ -15,7 +15,7 @@ function MyTimer({ expiryTimestamp }) {
   return (
     <>
       <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
-      <p>{isRunning ? "Running" : "Not running"}</p>
+      {/* <p>{isRunning ? "Running" : "Not running"}</p> */}
       <button onClick={start}>Start</button>
       <button onClick={pause}>Pause</button>
       <button onClick={resume}>Resume</button>
@@ -24,11 +24,14 @@ function MyTimer({ expiryTimestamp }) {
 }
 
 export default function Timer() {
-  const time = new Date();
-  time.setSeconds(time.getSeconds() + 900);
+  const timer15 = new Date();
+  timer15.setSeconds(timer15.getSeconds() + 900);
+
   return (
-    <div>
-      <MyTimer expiryTimestamp={time} />
-    </div>
+    <>
+      <div>
+        <MyTimer expiryTimestamp={timer15} />
+      </div>
+    </>
   );
 }

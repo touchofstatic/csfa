@@ -4,6 +4,7 @@ import Timer from "./components/Timer.jsx";
 import Tasks from "./components/Tasks.jsx";
 import Roulette from "./components/Roulette.jsx";
 
+// TODO: move to clock???
 function useTime() {
   const [time, setTime] = useState(() => new Date());
 
@@ -17,11 +18,11 @@ function useTime() {
 }
 
 export default function App() {
-  const time = useTime();
+  const clock = useTime();
 
   return (
     <>
-      <Clock time={time.toLocaleTimeString("en-GB")} />
+      <Clock clock={clock.toLocaleTimeString("en-GB")} />
       <Timer />
       {/* TODO: separate roulette and tasks? */}
       <Tasks />

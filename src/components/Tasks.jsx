@@ -8,7 +8,7 @@ export default function Tasks() {
     return loadTaskDb || [];
   });
 
-  // update localstorage whether tasks change
+  // update localstorage whenever tasks change
   useEffect(() => {
     localStorage.setItem("taskdb", JSON.stringify(tasks));
   }, [tasks]);

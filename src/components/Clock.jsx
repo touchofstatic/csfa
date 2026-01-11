@@ -1,7 +1,8 @@
-export default function Clock({ time }) {
+// TODO: MOVE FROM APP
+export default function Clock({ clock }) {
   return (
     <>
-      <div className="clock">{time}</div>
+      <div className="clock">{clock}</div>
     </>
   );
 }
