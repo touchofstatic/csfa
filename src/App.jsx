@@ -21,11 +21,11 @@ export default function App() {
   const clock = useTime();
 
   return (
-    <>
+    <main>
       <Clock clock={clock.toLocaleTimeString("en-GB")} />
-      <Timer />
+      {/* <Timer /> */}
       {/* TODO: separate roulette and tasks? */}
       <Tasks />
-    </>
+    </main>
   );
 }

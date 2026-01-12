@@ -27,7 +27,7 @@ export default function Timer() {
   const timer15 = new Date();
   timer15.setSeconds(timer15.getSeconds() + 900);
 
-  return (
+  return ( 
     <>
       <div>
         <MyTimer expiryTimestamp={timer15} />

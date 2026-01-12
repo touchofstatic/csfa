@@ -13,8 +13,6 @@ export default function Tasks() {
     localStorage.setItem("taskdb", JSON.stringify(tasks));
   }, [tasks]);
 
-  const taskListItems = tasks.map((task) => <li key={task.id}>{task.name}</li>);
-
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -22,8 +20,14 @@ export default function Tasks() {
     setTasks([...tasks, { id: uuidv4(), name: newTask }]);
   }
 
+  function handleDelete(id) {
+    setTasks(tasks.filter((task) => task.id !== id));
+  }
+
   return (
     <>
+      <Roulette tasks={tasks} />
+
       <form
         onSubmit={handleSubmit}
         autoComplete="off"
@@ -31,11 +35,26 @@ export default function Tasks() {
         <input
           type="text"
           name="task"
+          required
         ></input>
-        <button>add</button>
+        <button size-="small">add</button>
       </form>
-      <ul>{taskListItems}</ul>
-      <Roulette tasks={tasks} />
+
+      <ul>
+        {tasks.map((task) => (
+          <li key={task.id}>
+            <button
+              size-="small"
+              onClick={() => handleDelete(task.id)}
+            >
+              -
+            </button>
+            <button size-="small">e</button>
+            {task.name}
+            <div is-="separator"></div>
+          </li>
+        ))}
+      </ul>
     </>
   );
 }

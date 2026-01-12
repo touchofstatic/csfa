@@ -1,25 +1,19 @@
-:root {
-  /* system-ui? */
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+@layer base, utils, components;
+@import "@webtui/css";
+@import "@webtui/theme-nord";
+@import "@webtui/theme-gruvbox";
 
-  font-size: 22px;
-  color: white;
-  background-color: #242424;
-
-  /* color-scheme: light dark; */
-  /* font-synthesis: none; */
-  /* text-rendering: optimizeLegibility; */
-  /* -webkit-font-smoothing: antialiased; */
-  /* -moz-osx-font-smoothing: grayscale; */
+@layer base {
+  :root {
+    --font-size: 17px;
+  }
 }
 
 body {
   margin: 0;
   display: flex;
-  /* wghats that */
-  /* place-items: center; */
 }
 
-.clock {
-  color: #3a3a3a;
+button {
+  margin-inline: 0.5ch;
 }
