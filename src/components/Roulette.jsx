@@ -10,7 +10,7 @@ export default function Roulette({ tasks }) {
 
   return (
     <>
-      <button onClick={randomize}>task gacha</button>
+      <button onClick={randomize}>roulette</button>
       {/* <span is-="spinner"></span> */}
       <span
         box-="square"

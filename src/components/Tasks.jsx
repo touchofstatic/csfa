@@ -2,7 +2,19 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Roulette from "./Roulette.jsx";
 
+function Task({ task }) {
+  return (
+    <label>
+      <button size-="small" onClick={() => onDelete(task.id)}>-</button>
+      <button size-="small">e</button>
+      {task.name}
+      <div is-="separator"></div>
+    </label>
+  );
+}
+
 export default function Tasks() {
+  // load localstorage
   const [tasks, setTasks] = useState(() => {
     const loadTaskDb = JSON.parse(localStorage.getItem("taskdb"));
     return loadTaskDb || [];
@@ -53,7 +65,7 @@ export default function Tasks() {
       <ul>
         {tasks.map((task) => (
           <li key={task.id}>
-            <button
+            {/* <button
               size-="small"
               onClick={() => handleDelete(task.id)}
             >
@@ -66,7 +78,8 @@ export default function Tasks() {
               e
             </button>
             {task.name}
-            <div is-="separator"></div>
+            <div is-="separator"></div> */}
+            <Task task={task} />
           </li>
         ))}
       </ul>
