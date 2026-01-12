@@ -11,9 +11,21 @@
 
 body {
   margin: 0;
-  display: flex;
+  /* display: flex; */
+
+  height: 100dvh;
+  border: 1px red solid;
+  padding: 2ch;
+}
+
+main {
+  border: 1px green solid;
 }
 
 button {
   margin-inline: 0.5ch;
+}
+
+li::before {
+  content: "";
 }

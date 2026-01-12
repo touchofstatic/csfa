@@ -8,7 +8,7 @@ function Task({ task, onDelete, onSave }) {
   // editing
   if (draft) {
     return (
-      <label>
+      <>
         <button
           size-="small"
           onClick={() => onDelete(task.id)}
@@ -32,12 +32,12 @@ function Task({ task, onDelete, onSave }) {
           }}
         />
         <div is-="separator"></div>
-      </label>
+      </>
     );
     // not editing
   } else {
     return (
-      <label>
+      <>
         <button
           size-="small"
           onClick={() => onDelete(task.id)}
@@ -54,7 +54,7 @@ function Task({ task, onDelete, onSave }) {
         </button>
         {task.name}
         <div is-="separator"></div>
-      </label>
+      </>
     );
   }
 }
