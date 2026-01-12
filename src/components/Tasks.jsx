@@ -19,7 +19,6 @@ function Task({ task, onDelete, onEdit }) {
           size-="small"
           onClick={() => {
             setEditing(false);
-            // onEdit(task);
             console.log("not editing");
           }}
         >
@@ -56,7 +55,11 @@ function Task({ task, onDelete, onEdit }) {
         >
           e
         </button>
-        <input value={task.name} />
+        {/* <input
+          value={task.name}
+          readOnly
+        /> */}
+        {task.name}
         <div is-="separator"></div>
       </label>
     );
@@ -87,14 +90,6 @@ export default function Tasks() {
   }
 
   function handleEdit(e) {
-    // const newTasks = tasks.map((task) => {
-    //   if (e.id !== task.id) return task;
-    //   else {
-    //     return e;
-    //   }
-    // });
-    // setTasks(newTasks);
-
     setTasks(
       tasks.map((task) => {
         if (e.id !== task.id) return task;
@@ -127,7 +122,7 @@ export default function Tasks() {
             <Task
               task={task}
               onDelete={() => handleDelete(task.id)}
-              onEdit={() => handleEdit(task)}
+              onEdit={handleEdit}
             />
           </li>
         ))}
