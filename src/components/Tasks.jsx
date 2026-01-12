@@ -2,15 +2,65 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Roulette from "./Roulette.jsx";
 
-function Task({ task }) {
-  return (
-    <label>
-      <button size-="small" onClick={() => onDelete(task.id)}>-</button>
-      <button size-="small">e</button>
-      {task.name}
-      <div is-="separator"></div>
-    </label>
-  );
+function Task({ task, onDelete, onEdit }) {
+  const [isEditing, setEditing] = useState(false);
+
+  if (isEditing) {
+    return (
+      <label>
+        <button
+          size-="small"
+          onClick={() => onDelete(task.id)}
+        >
+          -
+        </button>
+
+        <button
+          size-="small"
+          onClick={() => {
+            setEditing(false);
+            // onEdit(task);
+            console.log("not editing");
+          }}
+        >
+          s
+        </button>
+        <input
+          value={task.name}
+          onChange={(e) => {
+            onEdit({
+              ...task,
+              name: e.target.value,
+            });
+          }}
+        />
+        <div is-="separator"></div>
+      </label>
+    );
+  } else {
+    return (
+      <label>
+        <button
+          size-="small"
+          onClick={() => onDelete(task.id)}
+        >
+          -
+        </button>
+        <button
+          size-="small"
+          onClick={() => {
+            setEditing(true);
+            // onEdit(task.id);
+            console.log("editing");
+          }}
+        >
+          e
+        </button>
+        <input value={task.name} />
+        <div is-="separator"></div>
+      </label>
+    );
+  }
 }
 
 export default function Tasks() {
@@ -36,14 +86,23 @@ export default function Tasks() {
     setTasks(tasks.filter((task) => task.id !== id));
   }
 
-  function handleEdit(id) {
-    const newTasks = tasks.map((task) => {
-      if (id !== task.id) return task;
-      else {
-        return { ...task, name: "edited" };
-      }
-    });
-    setTasks(newTasks);
+  function handleEdit(e) {
+    // const newTasks = tasks.map((task) => {
+    //   if (e.id !== task.id) return task;
+    //   else {
+    //     return e;
+    //   }
+    // });
+    // setTasks(newTasks);
+
+    setTasks(
+      tasks.map((task) => {
+        if (e.id !== task.id) return task;
+        else {
+          return e;
+        }
+      })
+    );
   }
 
   return (
@@ -65,21 +124,11 @@ export default function Tasks() {
       <ul>
         {tasks.map((task) => (
           <li key={task.id}>
-            {/* <button
-              size-="small"
-              onClick={() => handleDelete(task.id)}
-            >
-              -
-            </button>
-            <button
-              size-="small"
-              onClick={() => handleEdit(task.id)}
-            >
-              e
-            </button>
-            {task.name}
-            <div is-="separator"></div> */}
-            <Task task={task} />
+            <Task
+              task={task}
+              onDelete={() => handleDelete(task.id)}
+              onEdit={() => handleEdit(task)}
+            />
           </li>
         ))}
       </ul>
