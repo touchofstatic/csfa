@@ -24,6 +24,16 @@ export default function Tasks() {
     setTasks(tasks.filter((task) => task.id !== id));
   }
 
+  function handleEdit(id) {
+    const newTasks = tasks.map((task) => {
+      if (id !== task.id) return task;
+      else {
+        return { ...task, name: "edited" };
+      }
+    });
+    setTasks(newTasks);
+  }
+
   return (
     <>
       <Roulette tasks={tasks} />
@@ -49,7 +59,12 @@ export default function Tasks() {
             >
               -
             </button>
-            <button size-="small">e</button>
+            <button
+              size-="small"
+              onClick={() => handleEdit(task.id)}
+            >
+              e
+            </button>
             {task.name}
             <div is-="separator"></div>
           </li>
