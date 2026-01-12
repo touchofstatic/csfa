@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Roulette from "./Roulette.jsx";
 
-function Task({ task, onDelete, onEdit }) {
-  const [isEditing, setEditing] = useState(false);
+function Task({ task, onDelete, onSave }) {
+  const [draft, setDraft] = useState("");
 
-  if (isEditing) {
+  // editing
+  if (draft) {
     return (
       <label>
         <button
@@ -18,24 +19,22 @@ function Task({ task, onDelete, onEdit }) {
         <button
           size-="small"
           onClick={() => {
-            setEditing(false);
-            console.log("not editing");
+            onSave({ ...task, name: draft });
+            setDraft("");
           }}
         >
-          s
+          save
         </button>
         <input
-          value={task.name}
+          value={draft}
           onChange={(e) => {
-            onEdit({
-              ...task,
-              name: e.target.value,
-            });
+            setDraft(e.target.value);
           }}
         />
         <div is-="separator"></div>
       </label>
     );
+    // not editing
   } else {
     return (
       <label>
@@ -48,17 +47,11 @@ function Task({ task, onDelete, onEdit }) {
         <button
           size-="small"
           onClick={() => {
-            setEditing(true);
-            // onEdit(task.id);
-            console.log("editing");
+            setDraft(task.name);
           }}
         >
-          e
+          edit
         </button>
-        {/* <input
-          value={task.name}
-          readOnly
-        /> */}
         {task.name}
         <div is-="separator"></div>
       </label>
@@ -89,7 +82,7 @@ export default function Tasks() {
     setTasks(tasks.filter((task) => task.id !== id));
   }
 
-  function handleEdit(e) {
+  function handleSave(e) {
     setTasks(
       tasks.map((task) => {
         if (e.id !== task.id) return task;
@@ -122,7 +115,7 @@ export default function Tasks() {
             <Task
               task={task}
               onDelete={() => handleDelete(task.id)}
-              onEdit={handleEdit}
+              onSave={handleSave}
             />
           </li>
         ))}
