@@ -13,12 +13,7 @@ export default function Roulette({ tasks }) {
   return (
     <>
       <button onClick={randomize}>roulette</button>
-      <span
-        box-="square"
-        className="test"
-      >
-        {pull.name}
-      </span>
+      <span className="test">{pull.name}</span>
     </>
   );
 }

@@ -13,7 +13,7 @@ body {
   margin: 0;
   /* display: flex; */
 
-  height: 100dvh;
+  min-height: 100vh;
   border: 1px white solid;
   padding: 2ch;
 }
@@ -68,5 +68,5 @@ li {
 }
 ul {
   border: 1px orangered solid;
-  /* width: 600px; */
+  max-width: 700px;
 }

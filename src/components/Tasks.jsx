@@ -8,7 +8,7 @@ function Task({ task, onDelete, onSave, advProg }) {
   // not editing
   if (!draft) {
     return (
-      <>
+      <div>
         <span className="task-controls">
           <button
             size-="small"
@@ -37,9 +37,9 @@ function Task({ task, onDelete, onSave, advProg }) {
           readOnly
           
         ></input> */}
-        <span className={progClassName}>{task.name}</span>
-        <span> {task.progress}</span>
-      </>
+        <div className={progClassName}>{task.name}</div>
+        {/* <span> {task.progress}</span> */}
+      </div>
     );
   }
 
