@@ -1,0 +1,72 @@
+@layer base, utils, components;
+@import "@webtui/css";
+@import "@webtui/theme-nord";
+@import "@webtui/theme-gruvbox";
+
+@layer base {
+  :root {
+    --font-size: 17px;
+  }
+}
+
+body {
+  margin: 0;
+  /* display: flex; */
+
+  height: 100dvh;
+  border: 1px white solid;
+  padding: 2ch;
+}
+
+main {
+  border: 1px green solid;
+}
+
+li::before {
+  content: "";
+}
+
+/* .prog-0 no set status */
+/* queued */
+.prog-1 {
+  background-color: var(--nord15);
+}
+
+/* priority */
+.prog-2 {
+  background-color: var(--nord11);
+}
+
+/* working */
+.prog-3 {
+  background-color: var(--nord12);
+}
+
+/* submitted */
+.prog-4 {
+  background-color: var(--nord13);
+}
+
+/* approved */
+.prog-5 {
+  background-color: var(--nord14);
+}
+
+/* done */
+.prog-6 {
+  background-color: var(--nord7);
+}
+
+/* temporary */
+button {
+  margin-inline: 2px;
+}
+li {
+  border: 1px orangered dotted;
+  margin: 5px;
+  word-break: break-all;
+}
+ul {
+  border: 1px orangered solid;
+  /* width: 600px; */
+}

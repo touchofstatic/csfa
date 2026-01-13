@@ -2,60 +2,79 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Roulette from "./Roulette.jsx";
 
-function Task({ task, onDelete, onSave }) {
+function Task({ task, onDelete, onSave, advProg }) {
   const [draft, setDraft] = useState("");
-
-  // editing
-  if (draft) {
+  let progClassName = "prog-" + task.progress;
+  // not editing
+  if (!draft) {
     return (
       <>
-        <button
-          size-="small"
-          onClick={() => onDelete(task.id)}
-        >
-          -
-        </button>
+        <span className="task-controls">
+          <button
+            size-="small"
+            onClick={() => onDelete(task.id)}
+          >
+            -
+          </button>
+          <button
+            size-="small"
+            onClick={() => {
+              setDraft(task.name);
+            }}
+          >
+            e
+          </button>
+          <button
+            size-="small"
+            onClick={() => advProg(task.id)}
+          >
+            &gt;
+          </button>
+        </span>
+        {/* <input
+          className={progClassName}
+          value={task.name}
+          readOnly
+          
+        ></input> */}
+        <span className={progClassName}>{task.name}</span>
+        <span> {task.progress}</span>
+      </>
+    );
+  }
 
-        <button
-          size-="small"
-          onClick={() => {
-            onSave({ ...task, name: draft });
-            setDraft("");
-          }}
-        >
-          save
-        </button>
+  // editing
+  else {
+    return (
+      <>
+        <span className="task-controls">
+          <button
+            size-="small"
+            onClick={() => onDelete(task.id)}
+          >
+            -
+          </button>
+          <button
+            size-="small"
+            onClick={() => {
+              onSave({ ...task, name: draft });
+              setDraft("");
+            }}
+          >
+            s
+          </button>
+          <button size-="small">&gt;</button>
+        </span>
         <input
           value={draft}
           onChange={(e) => {
             setDraft(e.target.value);
           }}
         />
-        <div is-="separator"></div>
+        <span> {task.progress}</span>
       </>
     );
     // not editing
-  } else {
-    return (
-      <>
-        <button
-          size-="small"
-          onClick={() => onDelete(task.id)}
-        >
-          -
-        </button>
-        <button
-          size-="small"
-          onClick={() => {
-            setDraft(task.name);
-          }}
-        >
-          edit
-        </button>
-        {task.name}
-        <div is-="separator"></div>
-      </>
-    );
   }
 }
 
@@ -75,7 +94,7 @@ export default function Tasks() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const newTask = formData.get("task");
-    setTasks([...tasks, { id: uuidv4(), name: newTask }]);
+    setTasks([...tasks, { name: newTask, progress: 0, id: uuidv4() }]);
   }
 
   function handleDelete(id) {
@@ -88,6 +107,18 @@ export default function Tasks() {
         if (e.id !== task.id) return task;
         else {
           return e;
+        }
+      })
+    );
+  }
+
+  function handleAdvProg(id) {
+    setTasks(
+      tasks.map((task) => {
+        if (id !== task.id) return task;
+        else {
+          if (task.progress == 6) return { ...task, progress: 0 };
+          else return { ...task, progress: task.progress + 1 };
         }
       })
     );
@@ -116,6 +147,7 @@ export default function Tasks() {
               task={task}
               onDelete={() => handleDelete(task.id)}
               onSave={handleSave}
+              advProg={() => handleAdvProg(task.id)}
             />
           </li>
         ))}

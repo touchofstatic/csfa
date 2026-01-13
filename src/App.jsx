@@ -22,7 +22,7 @@ export default function App() {
 
   return (
     <main>
-      <Clock clock={clock.toLocaleTimeString("en-GB")} />
+      {/* <Clock clock={clock.toLocaleTimeString("en-GB")} /> */}
       {/* <Timer /> */}
       {/* TODO: separate roulette and tasks? */}
       <Tasks />
