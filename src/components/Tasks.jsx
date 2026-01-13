@@ -8,7 +8,7 @@ function Task({ task, onDelete, onSave, advProg }) {
   // not editing
   if (!draft) {
     return (
-      <div>
+      <section>
         <span className="task-controls">
           <button
             size-="small"
@@ -39,14 +39,14 @@ function Task({ task, onDelete, onSave, advProg }) {
         ></input> */}
         <div className={progClassName}>{task.name}</div>
         {/* <span> {task.progress}</span> */}
-      </div>
+      </section>
     );
   }
 
   // editing
   else {
     return (
-      <>
+      <section>
         <span className="task-controls">
           <button
             size-="small"
@@ -71,10 +71,8 @@ function Task({ task, onDelete, onSave, advProg }) {
             setDraft(e.target.value);
           }}
         />
-        <span> {task.progress}</span>
-      </>
+      </section>
     );
-    // not editing
   }
 }
 

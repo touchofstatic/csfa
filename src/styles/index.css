@@ -30,31 +30,37 @@ li::before {
 /* queued */
 .prog-1 {
   background-color: var(--nord15);
+  color: var(--background0);
 }
 
 /* priority */
 .prog-2 {
   background-color: var(--nord11);
+  color: var(--background0);
 }
 
 /* working */
 .prog-3 {
   background-color: var(--nord12);
+  color: var(--background0);
 }
 
 /* submitted */
 .prog-4 {
   background-color: var(--nord13);
+  color: var(--background0);
 }
 
 /* approved */
 .prog-5 {
   background-color: var(--nord14);
+  color: var(--background0);
 }
 
 /* done */
 .prog-6 {
   background-color: var(--nord7);
+  color: var(--background0);
 }
 
 /* temporary */
@@ -62,11 +68,14 @@ button {
   margin-inline: 2px;
 }
 li {
-  border: 1px orangered dotted;
+  /* border: 1px orangered dotted; */
   margin: 5px;
   word-break: break-all;
 }
 ul {
-  border: 1px orangered solid;
+  /* border: 1px orangered solid; */
   max-width: 700px;
+}
+section > div {
+  padding: 1ch;
 }
