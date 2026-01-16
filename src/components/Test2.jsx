@@ -5,19 +5,24 @@ const TestContext = createContext();
 
 export default function Grandparent() {
   // load localstorage
-  // const [items, setItems] = useState(() => {
-  //   const loadItemsDb = JSON.parse(localStorage.getItem("itemsdb"));
-  //   return loadItemsDb || [];
-  // });
-  const [items, setItems] = useState([
-    { name: 1, id: 1 },
-    { name: 2, id: 2 },
-    { name: 3, id: 3 },
-  ]);
-  const [groups, setGroups] = useState([
-    { name: 1, id: uuidv4(), itemIds: [1, 2] },
-    { name: 2, id: uuidv4(), itemIds: [3] },
-  ]);
+  const [items, setItems] = useState(() => {
+    const loadItemsDb = JSON.parse(localStorage.getItem("itemsdb"));
+    return loadItemsDb || [];
+  });
+  const [groups, setGroups] = useState(() => {
+    const loadGroupsDb = JSON.parse(localStorage.getItem("groupsdb"));
+    return loadGroupsDb || [];
+  });
+
+  // const [items, setItems] = useState([
+  //   { name: 1, id: 1 },
+  //   { name: 2, id: 2 },
+  //   { name: 3, id: 3 },
+  // ]);
+  // const [groups, setGroups] = useState([
+  //   { name: 1, id: uuidv4(), itemIds: [1, 2] },
+  //   { name: 2, id: uuidv4(), itemIds: [3] },
+  // ]);
 
   useEffect(() => {
     localStorage.setItem("itemsdb", JSON.stringify(items));
@@ -108,6 +113,7 @@ export default function Grandparent() {
 
   return (
     <section>
+      {/* FOR TESTING */}
       <form
         onSubmit={handleAddGroup}
         autoComplete="off"
@@ -130,7 +136,7 @@ export default function Grandparent() {
       <ul>
         {items.map((item) => (
           <li key={item.id}>
-            item {item.name} id {item.id}
+            item {item.name} id {item.id.substring(0, 8)}
           </li>
         ))}
       </ul>
