@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const TestContext = createContext();
 
-export default function Grandparent() {
+export default function Items() {
   // load localstorage
   const [items, setItems] = useState(() => {
     const loadItemsDb = JSON.parse(localStorage.getItem("itemsdb"));
@@ -14,6 +14,7 @@ export default function Grandparent() {
     return loadGroupsDb || [];
   });
 
+  // FOR DEVELOPMENT
   // const [items, setItems] = useState([
   //   { name: 1, id: 1 },
   //   { name: 2, id: 2 },
@@ -34,9 +35,13 @@ export default function Grandparent() {
 
   function handleAddGroup(event) {
     event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const newGroup = formData.get("newGroup");
     setGroups([
       ...groups,
       {
+        // name: newGroup,
+        // FOR DEVELOPMENT
         name: Math.floor(Math.random() * 50),
         id: uuidv4(),
         itemIds: [],
@@ -113,7 +118,6 @@ export default function Grandparent() {
 
   return (
     <section>
-      {/* FOR TESTING */}
       <form
         onSubmit={handleAddGroup}
         autoComplete="off"
@@ -121,10 +125,12 @@ export default function Grandparent() {
         <button size-="small">add group</button>
         <input
           type="text"
-          name="list"
+          name="newGroup"
+          required
         ></input>
       </form>
 
+      {/* FOR DEVELOPMENT */}
       <ul>
         {groups.map((group) => (
           <li key={group.id}>
@@ -132,7 +138,6 @@ export default function Grandparent() {
           </li>
         ))}
       </ul>
-
       <ul>
         {items.map((item) => (
           <li key={item.id}>
@@ -140,9 +145,7 @@ export default function Grandparent() {
           </li>
         ))}
       </ul>
-
       <div>--------</div>
-
       <TestContext.Provider
         value={{
           items,
@@ -216,6 +219,7 @@ function Group({ group }) {
           onChange={(e) => {
             setDraftGroupRename(e.target.value);
           }}
+          required
         />
         <button
           size-="small"
@@ -232,7 +236,9 @@ function Group({ group }) {
         <button
           size-="small"
           onClick={() => {
-            handleRenameGroup(group.id, draftGroupRename);
+            // FOR DEVELOPMENT
+            handleRenameGroup(group.id, Math.floor(Math.random() * 50));
+            // handleRenameGroup(group.id, draftGroupRename);
             setDraftGroupRename("");
           }}
         >
@@ -285,6 +291,7 @@ function Item({ item, myGroupId }) {
           onChange={(e) => {
             setDraftItemRename(e.target.value);
           }}
+          required
         />
         <button
           size-="small"
@@ -295,7 +302,9 @@ function Item({ item, myGroupId }) {
         <button
           size-="small"
           onClick={() => {
-            handleRenameItem(item.id, draftItemRename);
+            // FOR DEVELOPMENT
+            handleRenameItem(item.id, Math.floor(Math.random() * 50));
+            // handleRenameItem(item.id, draftItemRename);
             setDraftItemRename("");
           }}
         >
