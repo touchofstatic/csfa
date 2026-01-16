@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Roulette from "./Roulette.jsx";
 
+// TODO: better semantic tags
 function Task({ task, onDelete, onSave, advProg }) {
   const [draft, setDraft] = useState("");
   let progClassName = "prog-" + task.progress;
@@ -37,7 +38,7 @@ function Task({ task, onDelete, onSave, advProg }) {
           readOnly
           
         ></input> */}
-        <div className={progClassName}>{task.name}</div>
+        <span className={progClassName}>{task.name}</span>
         {/* <span> {task.progress}</span> */}
       </section>
     );
@@ -65,6 +66,7 @@ function Task({ task, onDelete, onSave, advProg }) {
           </button>
           <button size-="small">&gt;</button>
         </span>
+        {/* TODO: css */}
         <input
           value={draft}
           onChange={(e) => {
@@ -87,7 +89,7 @@ export default function Tasks() {
   useEffect(() => {
     localStorage.setItem("taskdb", JSON.stringify(tasks));
   }, [tasks]);
-
+f
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -124,18 +126,19 @@ export default function Tasks() {
 
   return (
     <>
-      <Roulette tasks={tasks} />
+      {/* <Roulette tasks={tasks} /> */}
 
       <form
         onSubmit={handleSubmit}
         autoComplete="off"
+        className="add-task"
       >
+        <button size-="small">add</button>
         <input
           type="text"
           name="task"
           required
         ></input>
-        <button size-="small">add</button>
       </form>
 
       <ul>

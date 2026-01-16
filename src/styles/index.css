@@ -5,26 +5,18 @@
 
 @layer base {
   :root {
-    --font-size: 17px;
+    --font-size: 18px;
   }
 }
 
 body {
   margin: 0;
-  /* display: flex; */
-
-  min-height: 100vh;
-  border: 1px white solid;
-  padding: 2ch;
+  /* border: 1px white solid; */
 }
 
-main {
-  border: 1px green solid;
-}
-
-li::before {
+/* li::before {
   content: "";
-}
+} */
 
 /* .prog-0 no set status */
 /* queued */
@@ -64,18 +56,11 @@ li::before {
 }
 
 /* temporary */
-button {
-  margin-inline: 2px;
-}
 li {
   /* border: 1px orangered dotted; */
+  /* word-break: break-all; */
   margin: 5px;
-  word-break: break-all;
 }
-ul {
-  /* border: 1px orangered solid; */
-  max-width: 700px;
-}
-section > div {
-  padding: 1ch;
+button {
+  margin-right: 5px;
 }

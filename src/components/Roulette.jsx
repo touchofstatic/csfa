@@ -11,9 +11,9 @@ export default function Roulette({ tasks }) {
   }
 
   return (
-    <>
+    <section>
       <button onClick={randomize}>roulette</button>
-      <span className="test">{pull.name}</span>
-    </>
+      <textarea value={pull.name}></textarea>
+    </section>
   );
 }
