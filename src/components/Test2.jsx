@@ -52,6 +52,7 @@ export default function Items() {
         name: newItem,
         // FOR DEVELOPMENT
         // name: Math.floor(Math.random() * 50),
+        progress: 0,
         id: newItemId,
       },
     ]);
@@ -112,6 +113,18 @@ export default function Items() {
     );
   }
 
+  function handleAdvanceItem(itemId) {
+    setItems(
+      items.map((item) => {
+        if (item.id !== itemId) return item;
+        else {
+          if (item.progress == 6) return { ...item, progress: 0 };
+          else return { ...item, progress: item.progress + 1 };
+        }
+      })
+    );
+  }
+
   return (
     <section>
       <form
@@ -137,7 +150,7 @@ export default function Items() {
       <ul>
         {items.map((item) => (
           <li key={item.id}>
-            item {item.name} id {item.id.substring(0, 8)}
+            item {item.name} id {item.id.substring(0, 8)} prog {item.progress}
           </li>
         ))}
       </ul>
@@ -150,6 +163,7 @@ export default function Items() {
           handleRenameGroup,
           handleDeleteItem,
           handleRenameItem,
+          handleAdvanceItem,
         }}
       >
         <ul>
@@ -279,12 +293,13 @@ function Group({ group }) {
 
 function Item({ item, myGroupId }) {
   const [draftRenameItem, setDraftRenameItem] = useState("");
-  const { handleDeleteItem, handleRenameItem } = useContext(TestContext);
+  const { handleDeleteItem, handleRenameItem, handleAdvanceItem } =
+    useContext(TestContext);
   // not renaming item
   if (!draftRenameItem) {
     return (
       <>
-        item {item.name}
+        item {item.name} prog {item.progress}
         <button
           size-="small"
           onClick={() => handleDeleteItem(item.id, myGroupId)}
@@ -296,6 +311,12 @@ function Item({ item, myGroupId }) {
           onClick={() => setDraftRenameItem(item.name)}
         >
           rename item
+        </button>
+        <button
+          size-="small"
+          onClick={() => handleAdvanceItem(item.id)}
+        >
+          &gt;
         </button>
       </>
     );
