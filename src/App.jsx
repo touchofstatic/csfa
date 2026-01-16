@@ -3,7 +3,6 @@
 import Timer from "./components/Timer.jsx";
 import Tasks from "./components/Tasks.jsx";
 import Roulette from "./components/Roulette.jsx";
-import Test from "./components/Test.jsx";
 import Test2 from "./components/Test2.jsx";
 
 // TODO: move to clock???

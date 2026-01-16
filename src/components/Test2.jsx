@@ -67,7 +67,16 @@ export default function Grandparent() {
     setGroups(groups.filter((group) => group.id !== groupId));
   }
 
-  function handleRenameGroup(groupId) {}
+  function handleRenameGroup(groupId) {
+    setGroups(
+      groups.map((group) => {
+        if (group.id !== groupId) return group;
+        else {
+          return { ...group, name: Math.floor(Math.random() * 50) };
+        }
+      })
+    );
+  }
 
   function handleDeleteItem(itemId, myGroupId) {
     // delete item
@@ -81,6 +90,17 @@ export default function Grandparent() {
             ...group,
             itemIds: group.itemIds.filter((i) => i !== itemId),
           };
+        }
+      })
+    );
+  }
+
+  function handleRenameItem(itemId) {
+    setItems(
+      items.map((item) => {
+        if (item.id !== itemId) return item;
+        else {
+          return { ...item, name: Math.floor(Math.random() * 50) };
         }
       })
     );
@@ -124,6 +144,7 @@ export default function Grandparent() {
           handleDeleteGroup,
           handleRenameGroup,
           handleDeleteItem,
+          handleRenameItem,
         }}
       >
         <ul>
@@ -149,7 +170,7 @@ function Group({ group }) {
         size-="small"
         onClick={() => handleAddItem(group.id)}
       >
-        add item from group
+        add item to group
       </button>
       <button
         size-="small"
@@ -178,7 +199,7 @@ function Group({ group }) {
 }
 
 function Item({ item, myGroupId }) {
-  const { handleDeleteItem } = useContext(TestContext);
+  const { handleDeleteItem, handleRenameItem } = useContext(TestContext);
   return (
     <>
       item {item.name}
@@ -187,6 +208,12 @@ function Item({ item, myGroupId }) {
         onClick={() => handleDeleteItem(item.id, myGroupId)}
       >
         delete item
+      </button>
+      <button
+        size-="small"
+        onClick={() => handleRenameItem(item.id)}
+      >
+        rename item
       </button>
     </>
   );

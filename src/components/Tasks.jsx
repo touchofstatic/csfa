@@ -89,7 +89,7 @@ export default function Tasks() {
   useEffect(() => {
     localStorage.setItem("taskdb", JSON.stringify(tasks));
   }, [tasks]);
-f
+
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
