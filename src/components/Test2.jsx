@@ -67,12 +67,12 @@ export default function Grandparent() {
     setGroups(groups.filter((group) => group.id !== groupId));
   }
 
-  function handleRenameGroup(groupId) {
+  function handleRenameGroup(groupId, newGroupName) {
     setGroups(
       groups.map((group) => {
         if (group.id !== groupId) return group;
         else {
-          return { ...group, name: Math.floor(Math.random() * 50) };
+          return { ...group, name: newGroupName };
         }
       })
     );
@@ -95,12 +95,12 @@ export default function Grandparent() {
     );
   }
 
-  function handleRenameItem(itemId) {
+  function handleRenameItem(itemId, newItemName) {
     setItems(
       items.map((item) => {
         if (item.id !== itemId) return item;
         else {
-          return { ...item, name: Math.floor(Math.random() * 50) };
+          return { ...item, name: newItemName };
         }
       })
     );
@@ -160,61 +160,142 @@ export default function Grandparent() {
 }
 
 function Group({ group }) {
+  const [draftGroupRename, setDraftGroupRename] = useState("");
+
   const { items, handleAddItem, handleDeleteGroup, handleRenameGroup } =
     useContext(TestContext);
   const myItems = items.filter((item) => group.itemIds.includes(item.id));
-  return (
-    <>
-      group {group.name}
-      <button
-        size-="small"
-        onClick={() => handleAddItem(group.id)}
-      >
-        add item to group
-      </button>
-      <button
-        size-="small"
-        onClick={() => handleDeleteGroup(group.id, myItems)}
-      >
-        delete group
-      </button>
-      <button
-        size-="small"
-        onClick={() => handleRenameGroup(group.id)}
-      >
-        rename group
-      </button>
-      <ul>
-        {myItems.map((item) => (
-          <li key={item.id}>
-            <Item
-              item={item}
-              myGroupId={group.id}
-            />
-          </li>
-        ))}
-      </ul>
-    </>
-  );
+
+  // not editing
+  if (!draftGroupRename) {
+    return (
+      <>
+        group {group.name}
+        <button
+          size-="small"
+          onClick={() => handleAddItem(group.id)}
+        >
+          add item to group
+        </button>
+        <button
+          size-="small"
+          onClick={() => handleDeleteGroup(group.id, myItems)}
+        >
+          delete group
+        </button>
+        <button
+          size-="small"
+          onClick={() => setDraftGroupRename(group.name)}
+        >
+          rename group
+        </button>
+        <ul>
+          {myItems.map((item) => (
+            <li key={item.id}>
+              <Item
+                item={item}
+                myGroupId={group.id}
+              />
+            </li>
+          ))}
+        </ul>
+      </>
+    );
+    // editing
+  } else {
+    return (
+      <>
+        <input
+          value={draftGroupRename}
+          onChange={(e) => {
+            setDraftGroupRename(e.target.value);
+          }}
+        />
+        <button
+          size-="small"
+          onClick={() => handleAddItem(group.id)}
+        >
+          add item to group
+        </button>
+        <button
+          size-="small"
+          onClick={() => handleDeleteGroup(group.id, myItems)}
+        >
+          delete group
+        </button>
+        <button
+          size-="small"
+          onClick={() => {
+            handleRenameGroup(group.id, draftGroupRename);
+            setDraftGroupRename("");
+          }}
+        >
+          save group
+        </button>
+        <ul>
+          {myItems.map((item) => (
+            <li key={item.id}>
+              <Item
+                item={item}
+                myGroupId={group.id}
+              />
+            </li>
+          ))}
+        </ul>
+      </>
+    );
+  }
 }
 
 function Item({ item, myGroupId }) {
+  const [draftItemRename, setDraftItemRename] = useState("");
   const { handleDeleteItem, handleRenameItem } = useContext(TestContext);
-  return (
-    <>
-      item {item.name}
-      <button
-        size-="small"
-        onClick={() => handleDeleteItem(item.id, myGroupId)}
-      >
-        delete item
-      </button>
-      <button
-        size-="small"
-        onClick={() => handleRenameItem(item.id)}
-      >
-        rename item
-      </button>
-    </>
-  );
+  // not editing
+  if (!draftItemRename) {
+    return (
+      <>
+        item {item.name}
+        <button
+          size-="small"
+          onClick={() => handleDeleteItem(item.id, myGroupId)}
+        >
+          delete item
+        </button>
+        <button
+          size-="small"
+          onClick={() => setDraftItemRename(item.name)}
+        >
+          rename item
+        </button>
+      </>
+    );
+  }
+  // editing
+  else {
+    return (
+      <>
+        <input
+          value={draftItemRename}
+          onChange={(e) => {
+            setDraftItemRename(e.target.value);
+          }}
+        />
+        <button
+          size-="small"
+          onClick={() => handleDeleteItem(item.id, myGroupId)}
+        >
+          delete item
+        </button>
+        <button
+          size-="small"
+          onClick={() => {
+            handleRenameItem(item.id, draftItemRename);
+            setDraftItemRename("");
+          }}
+        >
+          save item
+        </button>
+      </>
+    );
+  }
 }
