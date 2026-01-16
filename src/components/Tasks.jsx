@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import Roulette from "./Roulette.jsx";
 
 // TODO: better semantic tags
 function Task({ task, onDelete, onSave, advProg }) {

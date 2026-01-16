@@ -140,6 +140,9 @@ export default function Items() {
       </form>
 
       {/* FOR DEVELOPMENT */}
+
+      <Roulette items={items} />
+
       <ul>
         {groups.map((group) => (
           <li key={group.id}>
@@ -234,7 +237,6 @@ function Group({ group }) {
           <form
             onSubmit={(event) => {
               handleAddItem(event);
-              console.log("added item");
               setDraftAddItem(false);
             }}
             autoComplete="off"
@@ -346,4 +348,22 @@ function Item({ item, myGroupId }) {
       </>
     );
   }
+}
+
+function Roulette({ items }) {
+  const [pull, setPull] = useState("");
+
+  function randomize() {
+    if (items.length > 0) {
+      let randomIndex = Math.floor(Math.random() * items.length);
+      setPull(items[randomIndex]);
+    }
+  }
+
+  return (
+    <>
+      <button onClick={randomize}>roulette</button>
+      <span>{pull.name}</span>
+    </>
+  );
 }
