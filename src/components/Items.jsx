@@ -9,9 +9,9 @@ export default function Items() {
     const loadItemsDb = JSON.parse(localStorage.getItem("itemsdb"));
     return loadItemsDb || [];
   });
-  const [groups, setGroups] = useState(() => {
-    const loadGroupsDb = JSON.parse(localStorage.getItem("groupsdb"));
-    return loadGroupsDb || [];
+  const [lists, setLists] = useState(() => {
+    const loadListsDb = JSON.parse(localStorage.getItem("listsdb"));
+    return loadListsDb || [];
   });
 
   useEffect(() => {
@@ -19,18 +19,18 @@ export default function Items() {
   }, [items]);
 
   useEffect(() => {
-    localStorage.setItem("groupsdb", JSON.stringify(groups));
-  }, [groups]);
+    localStorage.setItem("listsdb", JSON.stringify(lists));
+  }, [lists]);
 
-  function handleAddGroup(event) {
+  function handleAddList(event) {
     event.preventDefault();
     // FOR DEVELOPMENT
     // const formData = new FormData(event.currentTarget);
-    // const newGroup = formData.get("newGroup");
-    setGroups([
-      ...groups,
+    // const newList = formData.get("newList");
+    setLists([
+      ...lists,
       {
-        // name: newGroup,
+        // name: newList,
         // FOR DEVELOPMENT
         name: Math.floor(Math.random() * 50),
         id: uuidv4(),
@@ -44,7 +44,7 @@ export default function Items() {
     const newItemId = uuidv4();
     const formData = new FormData(event.currentTarget);
     const newItem = formData.get("newItem");
-    const originGroupId = formData.get("originGroupId");
+    const originListId = formData.get("originListId");
     // create new item
     setItems([
       ...items,
@@ -56,46 +56,46 @@ export default function Items() {
         id: newItemId,
       },
     ]);
-    // update origin group itemIds with the new item's id
-    setGroups(
-      groups.map((group) => {
-        if (group.id !== originGroupId) return group;
+    // update origin list itemIds with the new item's id
+    setLists(
+      lists.map((list) => {
+        if (list.id !== originListId) return list;
         else {
-          return { ...group, itemIds: [...group.itemIds, newItemId] };
+          return { ...list, itemIds: [...list.itemIds, newItemId] };
         }
       })
     );
   }
 
-  function handleDeleteGroup(groupId, myItems) {
-    // kill group's items
+  function handleDeleteList(listId, myItems) {
+    // kill list's items
     setItems(items.filter((item) => myItems.includes(item) === false));
-    // delete group
-    setGroups(groups.filter((group) => group.id !== groupId));
+    // delete list
+    setLists(lists.filter((list) => list.id !== listId));
   }
 
-  function handleRenameGroup(groupId, newGroupName) {
-    setGroups(
-      groups.map((group) => {
-        if (group.id !== groupId) return group;
+  function handleRenameList(listId, newListName) {
+    setLists(
+      lists.map((list) => {
+        if (list.id !== listId) return list;
         else {
-          return { ...group, name: newGroupName };
+          return { ...list, name: newListName };
         }
       })
     );
   }
 
-  function handleDeleteItem(itemId, myGroupId) {
+  function handleDeleteItem(itemId, myListId) {
     // delete item
     setItems(items.filter((item) => item.id !== itemId));
-    // delete id from origin group's itemIds
-    setGroups(
-      groups.map((group) => {
-        if (group.id !== myGroupId) return group;
+    // delete id from origin list's itemIds
+    setLists(
+      lists.map((list) => {
+        if (list.id !== myListId) return list;
         else {
           return {
-            ...group,
-            itemIds: group.itemIds.filter((i) => i !== itemId),
+            ...list,
+            itemIds: list.itemIds.filter((i) => i !== itemId),
           };
         }
       })
@@ -128,13 +128,13 @@ export default function Items() {
   return (
     <section>
       <form
-        onSubmit={handleAddGroup}
+        onSubmit={handleAddList}
         autoComplete="off"
       >
-        <button size-="small">add group</button>
+        <button size-="small">add list</button>
         <input
           type="text"
-          name="newGroup"
+          name="newList"
           required
         ></input>
       </form>
@@ -144,9 +144,9 @@ export default function Items() {
       <Roulette items={items} />
 
       <ul>
-        {groups.map((group) => (
-          <li key={group.id}>
-            group {group.name} itemIds {group.itemIds.toString()}
+        {lists.map((list) => (
+          <li key={list.id}>
+            list {list.name} itemIds {list.itemIds.toString()}
           </li>
         ))}
       </ul>
@@ -162,17 +162,17 @@ export default function Items() {
         value={{
           items,
           handleAddItem,
-          handleDeleteGroup,
-          handleRenameGroup,
+          handleDeleteList,
+          handleRenameList,
           handleDeleteItem,
           handleRenameItem,
           handleAdvanceItem,
         }}
       >
         <ul>
-          {groups.map((group) => (
-            <li key={group.id}>
-              <Group group={group} />
+          {lists.map((list) => (
+            <li key={list.id}>
+              <List list={list} />
             </li>
           ))}
         </ul>
@@ -181,21 +181,21 @@ export default function Items() {
   );
 }
 
-function Group({ group }) {
-  const [draftRenameGroup, setDraftRenameGroup] = useState("");
+function List({ list }) {
+  const [draftRenameList, setDraftRenameList] = useState("");
   const [draftAddItem, setDraftAddItem] = useState(false);
 
-  const { items, handleAddItem, handleDeleteGroup, handleRenameGroup } =
+  const { items, handleAddItem, handleDeleteList, handleRenameList } =
     useContext(TestContext);
-  const myItems = items.filter((item) => group.itemIds.includes(item.id));
+  const myItems = items.filter((item) => list.itemIds.includes(item.id));
 
-  // not renaming group
-  if (!draftRenameGroup) {
+  // not renaming list
+  if (!draftRenameList) {
     // not adding item
     if (!draftAddItem) {
       return (
         <>
-          group {group.name}
+          list {list.name}
           <button
             size-="small"
             onClick={() => {
@@ -206,22 +206,22 @@ function Group({ group }) {
           </button>
           <button
             size-="small"
-            onClick={() => handleDeleteGroup(group.id, myItems)}
+            onClick={() => handleDeleteList(list.id, myItems)}
           >
-            delete group
+            delete list
           </button>
           <button
             size-="small"
-            onClick={() => setDraftRenameGroup(group.name)}
+            onClick={() => setDraftRenameList(list.name)}
           >
-            rename group
+            rename list
           </button>
           <ul>
             {myItems.map((item) => (
               <li key={item.id}>
                 <Item
                   item={item}
-                  myGroupId={group.id}
+                  myListId={list.id}
                 />
               </li>
             ))}
@@ -233,7 +233,7 @@ function Group({ group }) {
     else {
       return (
         <>
-          group {group.name}
+          list {list.name}
           <form
             onSubmit={(event) => {
               handleAddItem(event);
@@ -249,21 +249,21 @@ function Group({ group }) {
             />
             <input
               type="hidden"
-              name="originGroupId"
-              value={group.id}
+              name="originListId"
+              value={list.id}
             />
           </form>
         </>
       );
     }
-    // renaming group
+    // renaming list
   } else {
     return (
       <>
         <input
-          value={draftRenameGroup}
+          value={draftRenameList}
           onChange={(e) => {
-            setDraftRenameGroup(e.target.value);
+            setDraftRenameList(e.target.value);
           }}
           required
         />
@@ -271,19 +271,19 @@ function Group({ group }) {
           size-="small"
           onClick={() => {
             // FOR DEVELOPMENT
-            handleRenameGroup(group.id, Math.floor(Math.random() * 50));
-            // handleRenameGroup(group.id, draftRenameGroup);
-            setDraftRenameGroup("");
+            handleRenameList(list.id, Math.floor(Math.random() * 50));
+            // handleRenameList(list.id, draftRenameList);
+            setDraftRenameList("");
           }}
         >
-          save group
+          save list
         </button>
         <ul>
           {myItems.map((item) => (
             <li key={item.id}>
               <Item
                 item={item}
-                myGroupId={group.id}
+                myListId={list.id}
               />
             </li>
           ))}
@@ -293,7 +293,7 @@ function Group({ group }) {
   }
 }
 
-function Item({ item, myGroupId }) {
+function Item({ item, myListId }) {
   const [draftRenameItem, setDraftRenameItem] = useState("");
   const { handleDeleteItem, handleRenameItem, handleAdvanceItem } =
     useContext(TestContext);
@@ -308,7 +308,7 @@ function Item({ item, myGroupId }) {
         </span>
         <button
           size-="small"
-          onClick={() => handleDeleteItem(item.id, myGroupId)}
+          onClick={() => handleDeleteItem(item.id, myListId)}
         >
           delete item
         </button>
