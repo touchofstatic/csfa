@@ -297,11 +297,15 @@ function Item({ item, myGroupId }) {
   const [draftRenameItem, setDraftRenameItem] = useState("");
   const { handleDeleteItem, handleRenameItem, handleAdvanceItem } =
     useContext(TestContext);
+  let progClassName = "prog-" + item.progress;
+
   // not renaming item
   if (!draftRenameItem) {
     return (
       <>
-        item {item.name} prog {item.progress}
+        <span className={progClassName}>
+          item {item.name} prog {item.progress}
+        </span>
         <button
           size-="small"
           onClick={() => handleDeleteItem(item.id, myGroupId)}
