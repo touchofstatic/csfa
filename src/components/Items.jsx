@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-const TestContext = createContext();
+const ItemsContext = createContext();
 
 // RENAME
 export default function Area() {
@@ -179,7 +179,7 @@ export default function Area() {
       </ul>
       <div>--------</div> */}
 
-      <TestContext.Provider
+      <ItemsContext.Provider
         value={{
           items,
           handleAddItem,
@@ -197,7 +197,7 @@ export default function Area() {
             </li>
           ))}
         </ul>
-      </TestContext.Provider>
+      </ItemsContext.Provider>
     </>
   );
 }
@@ -207,7 +207,7 @@ function List({ list }) {
   const [draftAddItem, setDraftAddItem] = useState(false);
 
   const { items, handleAddItem, handleDeleteList, handleRenameList } =
-    useContext(TestContext);
+    useContext(ItemsContext);
   const myItems = items.filter((item) => list.itemIds.includes(item.id));
 
   // not renaming list
@@ -328,7 +328,7 @@ function List({ list }) {
 function Item({ item, myListId }) {
   const [draftRenameItem, setDraftRenameItem] = useState("");
   const { handleDeleteItem, handleRenameItem, handleAdvanceItem } =
-    useContext(TestContext);
+    useContext(ItemsContext);
   let progClassName = "prog-" + item.progress;
 
   // not renaming item
