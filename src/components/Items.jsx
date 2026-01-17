@@ -3,16 +3,36 @@ import { v4 as uuidv4 } from "uuid";
 
 const TestContext = createContext();
 
-export default function Items() {
+// RENAME
+export default function Area() {
   // load localstorage
-  const [items, setItems] = useState(() => {
-    const loadItemsDb = JSON.parse(localStorage.getItem("itemsdb"));
-    return loadItemsDb || [];
-  });
-  const [lists, setLists] = useState(() => {
-    const loadListsDb = JSON.parse(localStorage.getItem("listsdb"));
-    return loadListsDb || [];
-  });
+  // const [items, setItems] = useState(() => {
+  //   const loadItemsDb = JSON.parse(localStorage.getItem("itemsdb"));
+  //   return loadItemsDb || [];
+  // });
+  // const [lists, setLists] = useState(() => {
+  //   const loadListsDb = JSON.parse(localStorage.getItem("listsdb"));
+  //   return loadListsDb || [];
+  // });
+
+  // FOR DEVELOPMENT
+  const [items, setItems] = useState([
+    { name: 1, progress: 1, id: "1" },
+    { name: 2, progress: 2, id: "2" },
+    { name: 3, progress: 3, id: "3" },
+    { name: 4, progress: 0, id: "4" },
+    { name: 6, progress: 0, id: "6" },
+    { name: 7, progress: 0, id: "7" },
+    { name: 8, progress: 0, id: "8" },
+    { name: 9, progress: 0, id: "9" },
+  ]);
+  const [lists, setLists] = useState([
+    { name: 1, id: uuidv4(), itemIds: ["1", "2", "4"] },
+    { name: 2, id: uuidv4(), itemIds: ["3"] },
+    { name: 3, id: uuidv4(), itemIds: [] },
+    { name: 4, id: uuidv4(), itemIds: [] },
+    { name: 5, id: uuidv4(), itemIds: ["6", "7", "8", "9"] },
+  ]);
 
   useEffect(() => {
     localStorage.setItem("itemsdb", JSON.stringify(items));
@@ -63,7 +83,7 @@ export default function Items() {
         else {
           return { ...list, itemIds: [...list.itemIds, newItemId] };
         }
-      })
+      }),
     );
   }
 
@@ -81,7 +101,7 @@ export default function Items() {
         else {
           return { ...list, name: newListName };
         }
-      })
+      }),
     );
   }
 
@@ -98,7 +118,7 @@ export default function Items() {
             itemIds: list.itemIds.filter((i) => i !== itemId),
           };
         }
-      })
+      }),
     );
   }
 
@@ -109,7 +129,7 @@ export default function Items() {
         else {
           return { ...item, name: newItemName };
         }
-      })
+      }),
     );
   }
 
@@ -121,12 +141,12 @@ export default function Items() {
           if (item.progress == 6) return { ...item, progress: 0 };
           else return { ...item, progress: item.progress + 1 };
         }
-      })
+      }),
     );
   }
 
   return (
-    <section>
+    <>
       <form
         onSubmit={handleAddList}
         autoComplete="off"
@@ -139,10 +159,10 @@ export default function Items() {
         ></input>
       </form>
 
-      {/* FOR DEVELOPMENT */}
-
       <Roulette items={items} />
 
+      {/* FOR DEVELOPMENT */}
+      {/* <div>--------</div>
       <ul>
         {lists.map((list) => (
           <li key={list.id}>
@@ -157,7 +177,8 @@ export default function Items() {
           </li>
         ))}
       </ul>
-      <div>--------</div>
+      <div>--------</div> */}
+
       <TestContext.Provider
         value={{
           items,
@@ -169,7 +190,7 @@ export default function Items() {
           handleAdvanceItem,
         }}
       >
-        <ul>
+        <ul className="test grid grid-cols-[repeat(auto-fit,_minmax(38ch,_1fr))] gap-[2ch]">
           {lists.map((list) => (
             <li key={list.id}>
               <List list={list} />
@@ -177,7 +198,7 @@ export default function Items() {
           ))}
         </ul>
       </TestContext.Provider>
-    </section>
+    </>
   );
 }
 
@@ -194,28 +215,29 @@ function List({ list }) {
     // not adding item
     if (!draftAddItem) {
       return (
-        <>
-          list {list.name}
+        <div className="list">
           <button
             size-="small"
             onClick={() => {
               setDraftAddItem(true);
             }}
           >
-            add item
+            +
           </button>
           <button
             size-="small"
             onClick={() => handleDeleteList(list.id, myItems)}
           >
-            delete list
+            -
           </button>
           <button
             size-="small"
             onClick={() => setDraftRenameList(list.name)}
           >
-            rename list
+            rn
           </button>
+          <span>list {list.name}</span>
+
           <ul>
             {myItems.map((item) => (
               <li key={item.id}>
@@ -226,14 +248,14 @@ function List({ list }) {
               </li>
             ))}
           </ul>
-        </>
+        </div>
       );
     }
     // adding item
     else {
       return (
-        <>
-          list {list.name}
+        <div className="list">
+          <span>list {list.name}</span>
           <form
             onSubmit={(event) => {
               handleAddItem(event);
@@ -241,7 +263,7 @@ function List({ list }) {
             }}
             autoComplete="off"
           >
-            <button size-="small">add item</button>
+            <button size-="small">+</button>
             <input
               type="text"
               name="newItem"
@@ -253,13 +275,23 @@ function List({ list }) {
               value={list.id}
             />
           </form>
-        </>
+          <ul>
+            {myItems.map((item) => (
+              <li key={item.id}>
+                <Item
+                  item={item}
+                  myListId={list.id}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
       );
     }
     // renaming list
   } else {
     return (
-      <>
+      <div className="list">
         <input
           value={draftRenameList}
           onChange={(e) => {
@@ -276,7 +308,7 @@ function List({ list }) {
             setDraftRenameList("");
           }}
         >
-          save list
+          save
         </button>
         <ul>
           {myItems.map((item) => (
@@ -288,7 +320,7 @@ function List({ list }) {
             </li>
           ))}
         </ul>
-      </>
+      </div>
     );
   }
 }
@@ -303,20 +335,17 @@ function Item({ item, myListId }) {
   if (!draftRenameItem) {
     return (
       <>
-        <span className={progClassName}>
-          item {item.name} prog {item.progress}
-        </span>
         <button
           size-="small"
           onClick={() => handleDeleteItem(item.id, myListId)}
         >
-          delete item
+          -
         </button>
         <button
           size-="small"
           onClick={() => setDraftRenameItem(item.name)}
         >
-          rename item
+          rn
         </button>
         <button
           size-="small"
@@ -324,6 +353,9 @@ function Item({ item, myListId }) {
         >
           &gt;
         </button>
+        <span className={progClassName}>
+          item {item.name} prog {item.progress}
+        </span>
       </>
     );
   }
@@ -347,7 +379,7 @@ function Item({ item, myListId }) {
             setDraftRenameItem("");
           }}
         >
-          save item
+          save
         </button>
       </>
     );

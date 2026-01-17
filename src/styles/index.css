@@ -1,3 +1,4 @@
+@import "tailwindcss";
 @layer base, utils, components;
 @import "@webtui/css";
 @import "@webtui/theme-nord";
@@ -9,14 +10,18 @@
   }
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   /* border: 1px white solid; */
 }
 
-/* li::before {
+li::before {
   content: "";
-} */
+}
 
 /* .prog-0 no set status */
 /* queued */
@@ -56,11 +61,13 @@ body {
 }
 
 /* temporary */
-li {
-  /* border: 1px orangered dotted; */
-  /* word-break: break-all; */
-  margin: 5px;
-}
 button {
   margin-right: 5px;
+}
+
+.test {
+  border: 1px gray solid;
+  > li {
+    border: 2px orangered dotted;
+  }
 }
