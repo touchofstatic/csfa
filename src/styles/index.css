@@ -1,10 +1,29 @@
 @import "tailwindcss";
-/* @layer base, utils, components; */
-/* @import "@webtui/css"; */
+@layer base, utils, components;
+@import "@webtui/css/base.css";
+@import "@webtui/css/utils/box.css";
+@import "@webtui/css/components/typography.css";
+@import "@webtui/css/components/input.css";
+@import "@webtui/css/components/spinner.css";
 @import "@webtui/theme-gruvbox";
+
+@layer base {
+  /* overrides of webtui base css  */
+  :root {
+    --font-size: 16px;
+    --line-height: 1.5;
+    /* Font weight for bold text */
+    --font-weight-bold: 700;
+    /* Font weight for regular text */
+    --font-weight-normal: 400;
+    --font-family: "JetBrains Mono";
+  }
+}
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -155,4 +174,8 @@ body {
 
 button:disabled {
   color: var(--foreground2);
+}
+
+li::before {
+  content: "";
 }
