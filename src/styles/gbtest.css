@@ -1,0 +1,10 @@
+body {
+  background-color: var(--background0);
+  color: var(--foreground0);
+  font-family: "JetBrains Mono", monospace;
+}
+
+input {
+  background-color: var(--background1);
+  color: var(--foreground0);
+}

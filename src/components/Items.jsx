@@ -17,21 +17,29 @@ export default function Area() {
 
   // FOR DEVELOPMENT
   const [items, setItems] = useState([
-    { name: 1, progress: 1, id: "1" },
-    { name: 2, progress: 2, id: "2" },
-    { name: 3, progress: 3, id: "3" },
-    { name: 4, progress: 0, id: "4" },
-    { name: 6, progress: 0, id: "6" },
-    { name: 7, progress: 0, id: "7" },
-    { name: 8, progress: 0, id: "8" },
-    { name: 9, progress: 0, id: "9" },
+    { name: uuidv4().substring(0, 8), progress: 1, id: "1" },
+    {
+      name: "test test test test test test test test test test test test test test test test test test test test test test",
+      progress: 4,
+      id: "2",
+    },
+    { name: uuidv4().substring(0, 8), progress: 5, id: "3" },
+    {
+      name: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+      progress: 5,
+      id: "4",
+    },
+    { name: uuidv4().substring(0, 8), progress: 2, id: "6" },
+    { name: uuidv4().substring(0, 8), progress: 4, id: "7" },
+    { name: uuidv4().substring(0, 8), progress: 6, id: "8" },
+    { name: uuidv4().substring(0, 8), progress: 6, id: "9" },
   ]);
   const [lists, setLists] = useState([
-    { name: 1, id: uuidv4(), itemIds: ["1", "2", "4"] },
-    { name: 2, id: uuidv4(), itemIds: ["3"] },
-    { name: 3, id: uuidv4(), itemIds: [] },
-    { name: 4, id: uuidv4(), itemIds: [] },
-    { name: 5, id: uuidv4(), itemIds: ["6", "7", "8", "9"] },
+    { name: "1", id: uuidv4(), itemIds: ["1", "2", "4", "9"] },
+    { name: "2", id: uuidv4(), itemIds: ["3"] },
+    { name: "3", id: uuidv4(), itemIds: [] },
+    { name: "4", id: uuidv4(), itemIds: [] },
+    { name: "5", id: uuidv4(), itemIds: ["6", "7", "8"] },
   ]);
 
   useEffect(() => {
@@ -151,7 +159,7 @@ export default function Area() {
         onSubmit={handleAddList}
         autoComplete="off"
       >
-        <button size-="small">add list</button>
+        <button>add list</button>
         <input
           type="text"
           name="newList"
@@ -190,7 +198,7 @@ export default function Area() {
           handleAdvanceItem,
         }}
       >
-        <ul className="test grid grid-cols-[repeat(auto-fit,_minmax(38ch,_1fr))] gap-[2ch]">
+        <ul className="areaBlock grid grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
           {lists.map((list) => (
             <li key={list.id}>
               <List list={list} />
@@ -215,30 +223,23 @@ function List({ list }) {
     // not adding item
     if (!draftAddItem) {
       return (
-        <div className="list">
-          <button
-            size-="small"
-            onClick={() => {
-              setDraftAddItem(true);
-            }}
-          >
-            +
-          </button>
-          <button
-            size-="small"
-            onClick={() => handleDeleteList(list.id, myItems)}
-          >
-            -
-          </button>
-          <button
-            size-="small"
-            onClick={() => setDraftRenameList(list.name)}
-          >
-            rn
-          </button>
-          <span>list {list.name}</span>
+        <>
+          <header className="listHeader">
+            <button
+              onClick={() => {
+                setDraftAddItem(true);
+              }}
+            >
+              [+]
+            </button>
+            <button onClick={() => handleDeleteList(list.id, myItems)}>
+              [-]
+            </button>
+            <button onClick={() => setDraftRenameList(list.name)}>[rn]</button>
+            <span>list {list.name}</span>
+          </header>
 
-          <ul>
+          <ul className="listBody">
             {myItems.map((item) => (
               <li key={item.id}>
                 <Item
@@ -248,13 +249,13 @@ function List({ list }) {
               </li>
             ))}
           </ul>
-        </div>
+        </>
       );
     }
     // adding item
     else {
       return (
-        <div className="list">
+        <div>
           <span>list {list.name}</span>
           <form
             onSubmit={(event) => {
@@ -263,7 +264,7 @@ function List({ list }) {
             }}
             autoComplete="off"
           >
-            <button size-="small">+</button>
+            <button>[+]</button>
             <input
               type="text"
               name="newItem"
@@ -291,7 +292,7 @@ function List({ list }) {
     // renaming list
   } else {
     return (
-      <div className="list">
+      <div>
         <input
           value={draftRenameList}
           onChange={(e) => {
@@ -300,7 +301,6 @@ function List({ list }) {
           required
         />
         <button
-          size-="small"
           onClick={() => {
             // FOR DEVELOPMENT
             handleRenameList(list.id, Math.floor(Math.random() * 50));
@@ -335,27 +335,14 @@ function Item({ item, myListId }) {
   if (!draftRenameItem) {
     return (
       <>
-        <button
-          size-="small"
-          onClick={() => handleDeleteItem(item.id, myListId)}
-        >
-          -
-        </button>
-        <button
-          size-="small"
-          onClick={() => setDraftRenameItem(item.name)}
-        >
-          rn
-        </button>
-        <button
-          size-="small"
-          onClick={() => handleAdvanceItem(item.id)}
-        >
-          &gt;
-        </button>
-        <span className={progClassName}>
-          item {item.name} prog {item.progress}
-        </span>
+        <div className="itemButtons">
+          <button onClick={() => handleDeleteItem(item.id, myListId)}>
+            [-]
+          </button>
+          <button onClick={() => setDraftRenameItem(item.name)}>[rn]</button>
+          <button onClick={() => handleAdvanceItem(item.id)}>[&gt;]</button>
+        </div>
+        <div className={`${progClassName} itemName`}>{item.name}</div>
       </>
     );
   }
@@ -371,7 +358,6 @@ function Item({ item, myListId }) {
           required
         />
         <button
-          size-="small"
           onClick={() => {
             // FOR DEVELOPMENT
             handleRenameItem(item.id, Math.floor(Math.random() * 50));
@@ -379,7 +365,7 @@ function Item({ item, myListId }) {
             setDraftRenameItem("");
           }}
         >
-          save
+          [save]
         </button>
       </>
     );
@@ -398,7 +384,7 @@ function Roulette({ items }) {
 
   return (
     <>
-      <button onClick={randomize}>roulette</button>
+      <button onClick={randomize}>[roulette]</button>
       <span>{pull.name}</span>
     </>
   );

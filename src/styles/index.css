@@ -1,14 +1,7 @@
 @import "tailwindcss";
-@layer base, utils, components;
-@import "@webtui/css";
-@import "@webtui/theme-nord";
+/* @layer base, utils, components; */
+/* @import "@webtui/css"; */
 @import "@webtui/theme-gruvbox";
-
-@layer base {
-  :root {
-    --font-size: 18px;
-  }
-}
 
 * {
   box-sizing: border-box;
@@ -16,58 +9,77 @@
 
 body {
   margin: 0;
-  /* border: 1px white solid; */
 }
 
-li::before {
-  content: "";
-}
+/* li::before {
+  content: none;
+} */
 
 /* .prog-0 no set status */
 /* queued */
 .prog-1 {
-  background-color: var(--nord15);
+  background-color: var(--gb-purple);
   color: var(--background0);
 }
 
 /* priority */
 .prog-2 {
-  background-color: var(--nord11);
+  background-color: var(--gb-red);
   color: var(--background0);
 }
 
 /* working */
 .prog-3 {
-  background-color: var(--nord12);
+  background-color: var(--gb-orange);
   color: var(--background0);
 }
 
 /* submitted */
 .prog-4 {
-  background-color: var(--nord13);
+  background-color: var(--gb-yellow);
   color: var(--background0);
 }
 
 /* approved */
 .prog-5 {
-  background-color: var(--nord14);
+  background-color: var(--gb-aqua);
   color: var(--background0);
 }
 
 /* done */
 .prog-6 {
-  background-color: var(--nord7);
+  background-color: var(--gb-green);
   color: var(--background0);
 }
 
 /* temporary */
 button {
-  margin-right: 5px;
+  margin-right: 1ch;
+}
+.areaBlock {
+  /* border: 1px gray solid; */
+  > li {
+    /* border: 2px gray dotted; */
+    border: 2px solid var(--background3);
+    padding: 1ch;
+  }
+}
+.itemButtons {
+  padding-inline: 1ch;
+}
+.itemName {
+  word-wrap: break-word;
+  padding-inline: 1ch;
+}
+.areaBlock {
+  margin-inline: 1ch;
+  margin-block: 1lh;
+}
+.listHeader {
+  font-weight: 700;
 }
 
-.test {
-  border: 1px gray solid;
-  > li {
-    border: 2px orangered dotted;
-  }
+.listBody > li {
+  /* padding: 1ch; */
+  /* margin: 1ch; */
 }
