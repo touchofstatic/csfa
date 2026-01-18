@@ -328,16 +328,40 @@ function Item({ item, myListId }) {
     useContext(ItemsContext);
   let progClassName = "prog-" + item.progress;
 
+  // let progDisplay = "";
+  let test = (() => {
+    switch (progClassName) {
+      case "prog-0":
+        return <span>{""}</span>;
+      case "prog-1":
+        return <span className="prog-1">{"queued"}</span>;
+      case "prog-2":
+        return <span className="prog-2">{"priority"}</span>;
+      case "prog-3":
+        return <span className="prog-3">{"working"}</span>;
+      case "prog-4":
+        return <span className="prog-4">{"submitted"}</span>;
+      case "prog-5":
+        return <span className="prog-5">{"approved"}</span>;
+      case "prog-6":
+        return <span className="prog-6">{"done"}</span>;
+      default:
+        return <span>{"undefined"}</span>;
+    }
+  })();
+
   // not renaming item
   if (!draftRenameItem) {
     return (
       <div className="itemBody">
-        <div className="itemButtons">
+        <div className="itemControls">
           <button onClick={() => handleDeleteItem(item.id, myListId)}>
             [-]
           </button>
           <button onClick={() => setDraftRenameItem(item.name)}>[rn]</button>
           <button onClick={() => handleAdvanceItem(item.id)}>[&gt;]</button>
+          {/* <span>{progDisplay}</span> */}
+          <span>{test}</span>
         </div>
         <div className={`${progClassName} itemName`}>{item.name}</div>
       </div>

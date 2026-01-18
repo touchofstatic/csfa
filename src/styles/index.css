@@ -15,6 +15,73 @@ body {
   content: none;
 } */
 
+.area {
+  margin-inline: 1ch;
+  margin-block: 1lh;
+  /* border: 1px gray solid; */
+  > li {
+    /* border: 2px gray dotted; */
+    border: 2px solid var(--background3);
+    padding: 1ch;
+  }
+
+  button {
+    margin-right: 1ch;
+  }
+}
+
+.listHeader {
+  font-weight: 700;
+  word-break: break-all;
+}
+
+.itemBody {
+  /* border: 1px red solid; */
+  margin-bottom: 0.2lh;
+}
+
+.itemControls {
+  span {
+    float: right;
+  }
+  /* .prog-0 no set status */
+  /* queued */
+  .prog-1 {
+    background-color: var(--background0);
+    color: var(--gb-purple);
+  }
+  /* priority */
+  .prog-2 {
+    background-color: var(--background0);
+    color: var(--gb-red);
+  }
+  /* working */
+  .prog-3 {
+    background-color: var(--background0);
+    color: var(--gb-orange);
+  }
+  /* submitted */
+  .prog-4 {
+    background-color: var(--background0);
+    color: var(--gb-yellow);
+  }
+  /* approved */
+  .prog-5 {
+    background-color: var(--background0);
+    color: var(--gb-aqua);
+  }
+  /* done */
+  .prog-6 {
+    background-color: var(--background0);
+    color: var(--gb-green);
+  }
+}
+
+.itemName {
+  word-wrap: break-word;
+  padding-inline: 1ch;
+}
+
 /* .prog-0 no set status */
 /* queued */
 .prog-1 {
@@ -50,35 +117,6 @@ body {
 .prog-6 {
   background-color: var(--gb-green);
   color: var(--background0);
-}
-
-.area {
-  margin-inline: 1ch;
-  margin-block: 1lh;
-  /* border: 1px gray solid; */
-  > li {
-    /* border: 2px gray dotted; */
-    border: 2px solid var(--background3);
-    padding: 1ch;
-  }
-
-  button {
-    margin-right: 1ch;
-  }
-}
-
-.listHeader {
-  font-weight: 700;
-  word-break: break-all;
-}
-
-.itemName {
-  word-wrap: break-word;
-  padding-inline: 1ch;
-}
-.itemBody {
-  /* border: 1px red solid; */
-  margin-bottom: 0.2lh;
 }
 
 .separator {
