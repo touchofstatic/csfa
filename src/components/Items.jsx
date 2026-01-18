@@ -52,15 +52,12 @@ export default function Area() {
 
   function handleAddList(event) {
     event.preventDefault();
-    // FOR DEVELOPMENT
-    // const formData = new FormData(event.currentTarget);
-    // const newList = formData.get("newList");
+    const formData = new FormData(event.currentTarget);
+    const newList = formData.get("newList");
     setLists([
       ...lists,
       {
-        // name: newList,
-        // FOR DEVELOPMENT
-        name: Math.floor(Math.random() * 50),
+        name: newList,
         id: uuidv4(),
         itemIds: [],
       },
@@ -78,8 +75,6 @@ export default function Area() {
       ...items,
       {
         name: newItem,
-        // FOR DEVELOPMENT
-        // name: Math.floor(Math.random() * 50),
         progress: 0,
         id: newItemId,
       },
@@ -155,19 +150,20 @@ export default function Area() {
 
   return (
     <>
+      <Roulette items={items} />
+
       <form
         onSubmit={handleAddList}
         autoComplete="off"
+        className="addList"
       >
-        <button>add list</button>
+        <button>[+]</button>
         <input
           type="text"
           name="newList"
           required
         ></input>
       </form>
-
-      <Roulette items={items} />
 
       {/* FOR DEVELOPMENT */}
       {/* <div>--------</div>
@@ -198,7 +194,7 @@ export default function Area() {
           handleAdvanceItem,
         }}
       >
-        <ul className="areaBlock grid grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
+        <ul className="area grid grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
           {lists.map((list) => (
             <li key={list.id}>
               <List list={list} />
@@ -236,8 +232,9 @@ function List({ list }) {
               [-]
             </button>
             <button onClick={() => setDraftRenameList(list.name)}>[rn]</button>
-            <span>list {list.name}</span>
+            <span>{list.name}</span>
           </header>
+          <hr className="separator"></hr>
 
           <ul className="listBody">
             {myItems.map((item) => (
@@ -256,7 +253,7 @@ function List({ list }) {
     else {
       return (
         <div>
-          <span>list {list.name}</span>
+          <span>{list.name}</span>
           <form
             onSubmit={(event) => {
               handleAddItem(event);
@@ -303,8 +300,8 @@ function List({ list }) {
         <button
           onClick={() => {
             // FOR DEVELOPMENT
-            handleRenameList(list.id, Math.floor(Math.random() * 50));
-            // handleRenameList(list.id, draftRenameList);
+            // handleRenameList(list.id, Math.floor(Math.random() * 50));
+            handleRenameList(list.id, draftRenameList);
             setDraftRenameList("");
           }}
         >
@@ -334,7 +331,7 @@ function Item({ item, myListId }) {
   // not renaming item
   if (!draftRenameItem) {
     return (
-      <>
+      <div className="itemBody">
         <div className="itemButtons">
           <button onClick={() => handleDeleteItem(item.id, myListId)}>
             [-]
@@ -343,7 +340,7 @@ function Item({ item, myListId }) {
           <button onClick={() => handleAdvanceItem(item.id)}>[&gt;]</button>
         </div>
         <div className={`${progClassName} itemName`}>{item.name}</div>
-      </>
+      </div>
     );
   }
   // renaming item
@@ -360,8 +357,8 @@ function Item({ item, myListId }) {
         <button
           onClick={() => {
             // FOR DEVELOPMENT
-            handleRenameItem(item.id, Math.floor(Math.random() * 50));
-            // handleRenameItem(item.id, draftRenameItem);
+            // handleRenameItem(item.id, Math.floor(Math.random() * 50));
+            handleRenameItem(item.id, draftRenameItem);
             setDraftRenameItem("");
           }}
         >
@@ -383,9 +380,9 @@ function Roulette({ items }) {
   }
 
   return (
-    <>
+    <div className="roulette">
       <button onClick={randomize}>[roulette]</button>
-      <span>{pull.name}</span>
-    </>
+      <div className="roulettePull">{pull.name}</div>
+    </div>
   );
 }
