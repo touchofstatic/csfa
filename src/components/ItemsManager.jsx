@@ -1,10 +1,10 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-const ItemsContext = createContext();
+const ItemsManagerContext = createContext();
 
-// RENAME
-export default function Area() {
+export default function ItemsManager() {
+  // COMMENTED OUT FOR DEVELOPMENT
   // load localstorage
   // const [items, setItems] = useState(() => {
   //   const loadItemsDb = JSON.parse(localStorage.getItem("itemsdb"));
@@ -149,13 +149,12 @@ export default function Area() {
   }
 
   return (
-    <>
+    <div className="itemsManager">
       <Roulette items={items} />
 
       <form
         onSubmit={handleAddList}
         autoComplete="off"
-        className="addList"
       >
         <button>[+]</button>
         <input
@@ -165,7 +164,7 @@ export default function Area() {
         ></input>
       </form>
 
-      {/* FOR DEVELOPMENT */}
+      {/* LIST-ITEM DB VIEWER */}
       {/* <div>--------</div>
       <ul>
         {lists.map((list) => (
@@ -183,7 +182,7 @@ export default function Area() {
       </ul>
       <div>--------</div> */}
 
-      <ItemsContext.Provider
+      <ItemsManagerContext.Provider
         value={{
           items,
           handleAddItem,
@@ -194,15 +193,15 @@ export default function Area() {
           handleAdvanceItem,
         }}
       >
-        <ul className="area grid grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
+        <ul className="lists grid grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
           {lists.map((list) => (
             <li key={list.id}>
               <List list={list} />
             </li>
           ))}
         </ul>
-      </ItemsContext.Provider>
-    </>
+      </ItemsManagerContext.Provider>
+    </div>
   );
 }
 
@@ -211,7 +210,7 @@ function List({ list }) {
   const [draftAddItem, setDraftAddItem] = useState(false);
 
   const { items, handleAddItem, handleDeleteList, handleRenameList } =
-    useContext(ItemsContext);
+    useContext(ItemsManagerContext);
   const myItems = items.filter((item) => list.itemIds.includes(item.id));
 
   // not renaming list
@@ -219,8 +218,8 @@ function List({ list }) {
     // not adding item
     if (!draftAddItem) {
       return (
-        <>
-          <header className="listHeader">
+        <div className="list">
+          <header>
             <button
               onClick={() => {
                 setDraftAddItem(true);
@@ -236,7 +235,7 @@ function List({ list }) {
           </header>
           <hr className="separator"></hr>
 
-          <ul className="listBody">
+          <ul>
             {myItems.map((item) => (
               <li key={item.id}>
                 <Item
@@ -246,7 +245,7 @@ function List({ list }) {
               </li>
             ))}
           </ul>
-        </>
+        </div>
       );
     }
     // adding item
@@ -299,8 +298,6 @@ function List({ list }) {
         />
         <button
           onClick={() => {
-            // FOR DEVELOPMENT
-            // handleRenameList(list.id, Math.floor(Math.random() * 50));
             handleRenameList(list.id, draftRenameList);
             setDraftRenameList("");
           }}
@@ -325,45 +322,50 @@ function List({ list }) {
 function Item({ item, myListId }) {
   const [draftRenameItem, setDraftRenameItem] = useState("");
   const { handleDeleteItem, handleRenameItem, handleAdvanceItem } =
-    useContext(ItemsContext);
-  let progClassName = "prog-" + item.progress;
+    useContext(ItemsManagerContext);
 
-  // let progDisplay = "";
-  let test = (() => {
-    switch (progClassName) {
-      case "prog-0":
-        return <span>{""}</span>;
-      case "prog-1":
-        return <span className="prog-1">{"queued"}</span>;
-      case "prog-2":
-        return <span className="prog-2">{"priority"}</span>;
-      case "prog-3":
-        return <span className="prog-3">{"working"}</span>;
-      case "prog-4":
-        return <span className="prog-4">{"submitted"}</span>;
-      case "prog-5":
-        return <span className="prog-5">{"approved"}</span>;
-      case "prog-6":
-        return <span className="prog-6">{"done"}</span>;
-      default:
-        return <span>{"undefined"}</span>;
-    }
-  })();
+  let progClassName = "prog-" + item.progress;
+  let progDisplay = "";
+  switch (progClassName) {
+    case "prog-0":
+      progDisplay = "";
+      break;
+    case "prog-1":
+      progDisplay = "queued";
+      break;
+    case "prog-2":
+      progDisplay = "priority";
+      break;
+    case "prog-3":
+      progDisplay = "working";
+      break;
+    case "prog-4":
+      progDisplay = "submitted";
+      break;
+    case "prog-5":
+      progDisplay = "approved";
+      break;
+    case "prog-6":
+      progDisplay = "done";
+      break;
+    default:
+      progDisplay = "UNDEFINED";
+      break;
+  }
 
   // not renaming item
   if (!draftRenameItem) {
     return (
-      <div className="itemBody">
+      <div className={`${progClassName} item`}>
         <div className="itemControls">
           <button onClick={() => handleDeleteItem(item.id, myListId)}>
             [-]
           </button>
           <button onClick={() => setDraftRenameItem(item.name)}>[rn]</button>
           <button onClick={() => handleAdvanceItem(item.id)}>[&gt;]</button>
-          {/* <span>{progDisplay}</span> */}
-          <span>{test}</span>
+          <span className="progDisplay">{progDisplay}</span>
         </div>
-        <div className={`${progClassName} itemName`}>{item.name}</div>
+        <div className="itemName">{item.name}</div>
       </div>
     );
   }
@@ -380,19 +382,18 @@ function Item({ item, myListId }) {
         />
         <button
           onClick={() => {
-            // FOR DEVELOPMENT
-            // handleRenameItem(item.id, Math.floor(Math.random() * 50));
             handleRenameItem(item.id, draftRenameItem);
             setDraftRenameItem("");
           }}
         >
-          [save]
+          [rn]
         </button>
       </>
     );
   }
 }
 
+// to be component?
 function Roulette({ items }) {
   const [pull, setPull] = useState("");
 

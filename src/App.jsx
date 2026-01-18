@@ -1,10 +1,10 @@
 // import { useState, useEffect } from "react";
-import Items from "./components/Items.jsx";
+import ItemsManager from "./components/ItemsManager.jsx";
 
 export default function App() {
   return (
     <main>
-      <Items />
+      <ItemsManager />
     </main>
   );
 }

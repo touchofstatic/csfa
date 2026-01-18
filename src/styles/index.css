@@ -11,11 +11,18 @@ body {
   margin: 0;
 }
 
-/* li::before {
-  content: none;
-} */
+.itemsManager > form {
+  margin-inline: 1ch;
 
-.area {
+  button {
+    margin-right: 1ch;
+  }
+  input {
+    min-width: 40ch;
+  }
+}
+
+.lists {
   margin-inline: 1ch;
   margin-block: 1lh;
   /* border: 1px gray solid; */
@@ -30,93 +37,91 @@ body {
   }
 }
 
-.listHeader {
+.list > header {
   font-weight: 700;
   word-break: break-all;
 }
 
-.itemBody {
+.item {
   /* border: 1px red solid; */
   margin-bottom: 0.2lh;
+}
+
+.prog-1 {
+  .itemControls .progDisplay {
+    background-color: var(--background0);
+    color: var(--gb-purple);
+  }
+  .itemName {
+    background-color: var(--gb-purple);
+    color: var(--background0);
+  }
+}
+
+.prog-2 {
+  .itemControls .progDisplay {
+    background-color: var(--background0);
+    color: var(--gb-red);
+  }
+  .itemName {
+    background-color: var(--gb-red);
+    color: var(--background0);
+  }
+}
+
+.prog-3 {
+  .itemControls .progDisplay {
+    background-color: var(--background0);
+    color: var(--gb-orange);
+  }
+  .itemName {
+    background-color: var(--gb-orange);
+    color: var(--background0);
+  }
+}
+
+.prog-4 {
+  .itemControls .progDisplay {
+    background-color: var(--background0);
+    color: var(--gb-yellow);
+  }
+  .itemName {
+    background-color: var(--gb-yellow);
+    color: var(--background0);
+  }
+}
+
+.prog-5 {
+  .itemControls .progDisplay {
+    background-color: var(--background0);
+    color: var(--gb-aqua);
+  }
+  .itemName {
+    background-color: var(--gb-aqua);
+    color: var(--background0);
+  }
+}
+
+.prog-6 {
+  .itemControls .progDisplay {
+    background-color: var(--background0);
+    color: var(--gb-green);
+  }
+  .itemName {
+    background-color: var(--gb-green);
+    color: var(--background0);
+  }
 }
 
 .itemControls {
   span {
     float: right;
   }
-  /* .prog-0 no set status */
-  /* queued */
-  .prog-1 {
-    background-color: var(--background0);
-    color: var(--gb-purple);
-  }
-  /* priority */
-  .prog-2 {
-    background-color: var(--background0);
-    color: var(--gb-red);
-  }
-  /* working */
-  .prog-3 {
-    background-color: var(--background0);
-    color: var(--gb-orange);
-  }
-  /* submitted */
-  .prog-4 {
-    background-color: var(--background0);
-    color: var(--gb-yellow);
-  }
-  /* approved */
-  .prog-5 {
-    background-color: var(--background0);
-    color: var(--gb-aqua);
-  }
-  /* done */
-  .prog-6 {
-    background-color: var(--background0);
-    color: var(--gb-green);
-  }
 }
 
 .itemName {
   word-wrap: break-word;
   padding-inline: 1ch;
-}
-
-/* .prog-0 no set status */
-/* queued */
-.prog-1 {
-  background-color: var(--gb-purple);
-  color: var(--background0);
-}
-
-/* priority */
-.prog-2 {
-  background-color: var(--gb-red);
-  color: var(--background0);
-}
-
-/* working */
-.prog-3 {
-  background-color: var(--gb-orange);
-  color: var(--background0);
-}
-
-/* submitted */
-.prog-4 {
-  background-color: var(--gb-yellow);
-  color: var(--background0);
-}
-
-/* approved */
-.prog-5 {
-  background-color: var(--gb-aqua);
-  color: var(--background0);
-}
-
-/* done */
-.prog-6 {
-  background-color: var(--gb-green);
-  color: var(--background0);
 }
 
 .separator {
@@ -137,15 +142,4 @@ body {
   min-height: 2lh;
   padding-inline: 1ch;
   word-wrap: break-word;
-}
-
-.addList {
-  margin-inline: 1ch;
-
-  button {
-    margin-right: 1ch;
-  }
-  input {
-    min-width: 40ch;
-  }
 }
