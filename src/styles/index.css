@@ -39,11 +39,13 @@ body {
 
 .list > header {
   font-weight: 700;
-  word-break: break-all;
+}
+
+.listName {
+  word-break: break-word;
 }
 
 .item {
-  /* border: 1px red solid; */
   margin-bottom: 0.2lh;
 }
 
@@ -131,6 +133,7 @@ body {
   margin-block: 0.2lh;
   height: 2px;
   border: none;
+  clear: right;
 }
 
 .roulette {

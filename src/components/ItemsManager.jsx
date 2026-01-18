@@ -35,9 +35,17 @@ export default function ItemsManager() {
     { name: uuidv4().substring(0, 8), progress: 6, id: "9" },
   ]);
   const [lists, setLists] = useState([
-    { name: "1", id: uuidv4(), itemIds: ["1", "2", "4", "9"] },
+    {
+      name: "something or other or other or other or other or other",
+      id: uuidv4(),
+      itemIds: ["1", "2", "4", "9"],
+    },
     { name: "2", id: uuidv4(), itemIds: ["3"] },
-    { name: "3", id: uuidv4(), itemIds: [] },
+    {
+      name: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+      id: uuidv4(),
+      itemIds: [],
+    },
     { name: "4", id: uuidv4(), itemIds: [] },
     { name: "5", id: uuidv4(), itemIds: ["6", "7", "8"] },
   ]);
@@ -220,18 +228,22 @@ function List({ list }) {
       return (
         <div className="list">
           <header>
-            <button
-              onClick={() => {
-                setDraftAddItem(true);
-              }}
-            >
-              [+]
-            </button>
-            <button onClick={() => handleDeleteList(list.id, myItems)}>
-              [-]
-            </button>
-            <button onClick={() => setDraftRenameList(list.name)}>[rn]</button>
-            <span>{list.name}</span>
+            <span className="listControls">
+              <button
+                onClick={() => {
+                  setDraftAddItem(true);
+                }}
+              >
+                [+]
+              </button>
+              <button onClick={() => handleDeleteList(list.id, myItems)}>
+                [-]
+              </button>
+              <button onClick={() => setDraftRenameList(list.name)}>
+                [rn]
+              </button>
+            </span>
+            <div className="listName">{list.name}</div>
           </header>
           <hr className="separator"></hr>
 
@@ -288,22 +300,26 @@ function List({ list }) {
     // renaming list
   } else {
     return (
-      <div>
-        <input
-          value={draftRenameList}
-          onChange={(e) => {
-            setDraftRenameList(e.target.value);
-          }}
-          required
-        />
-        <button
-          onClick={() => {
-            handleRenameList(list.id, draftRenameList);
-            setDraftRenameList("");
-          }}
-        >
-          save
-        </button>
+      <div className="list">
+        <header>
+          <input
+            value={draftRenameList}
+            onChange={(e) => {
+              setDraftRenameList(e.target.value);
+            }}
+            required
+          />
+          <button
+            onClick={() => {
+              handleRenameList(list.id, draftRenameList);
+              setDraftRenameList("");
+            }}
+          >
+            [rn]
+          </button>
+        </header>
+        <hr className="separator"></hr>
+
         <ul>
           {myItems.map((item) => (
             <li key={item.id}>
