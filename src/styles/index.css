@@ -29,6 +29,7 @@ body {
   > li {
     border: 2px solid var(--background3);
     padding: 1ch;
+    height: fit-content;
   }
 }
 
@@ -38,10 +39,6 @@ body {
 
 .listName {
   word-break: break-word;
-}
-
-.item {
-  margin-bottom: 0.2lh;
 }
 
 .prog-1 {
@@ -110,6 +107,10 @@ body {
   }
 }
 
+.item {
+  margin-bottom: 0.2lh;
+}
+
 .itemControls {
   span {
     float: right;
@@ -131,6 +132,16 @@ body {
   clear: right;
 }
 
+.list form {
+  input {
+    width: calc(100% - 8ch);
+  }
+
+  input ~ span {
+    float: right;
+  }
+}
+
 .roulette {
   margin-inline: 1ch;
   margin-block: 1lh;
@@ -144,14 +155,4 @@ body {
 
 button:disabled {
   color: var(--foreground2);
-}
-
-.list form {
-  input {
-    width: calc(100% - 8ch);
-  }
-
-  input ~ span {
-    float: right;
-  }
 }
