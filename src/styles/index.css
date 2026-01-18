@@ -15,25 +15,20 @@ body {
   margin-inline: 1ch;
 
   button {
-    margin-right: 1ch;
+    margin-left: 1ch;
   }
   input {
-    min-width: 40ch;
+    width: calc(100% - 4ch);
+    max-width: 40ch;
   }
 }
 
 .lists {
   margin-inline: 1ch;
   margin-block: 1lh;
-  /* border: 1px gray solid; */
   > li {
-    /* border: 2px gray dotted; */
     border: 2px solid var(--background3);
     padding: 1ch;
-  }
-
-  button {
-    margin-right: 1ch;
   }
 }
 
@@ -145,4 +140,18 @@ body {
   min-height: 2lh;
   padding-inline: 1ch;
   word-wrap: break-word;
+}
+
+button:disabled {
+  color: var(--foreground2);
+}
+
+.list form {
+  input {
+    width: calc(100% - 8ch);
+  }
+
+  input ~ span {
+    float: right;
+  }
 }

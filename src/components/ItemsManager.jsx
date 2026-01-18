@@ -36,18 +36,22 @@ export default function ItemsManager() {
   ]);
   const [lists, setLists] = useState([
     {
-      name: "something or other or other or other or other or other",
+      name: "something or other",
       id: uuidv4(),
       itemIds: ["1", "2", "4", "9"],
     },
-    { name: "2", id: uuidv4(), itemIds: ["3"] },
+    { name: "2", id: uuidv4(), itemIds: ["3", "8"] },
     {
       name: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
       id: uuidv4(),
       itemIds: [],
     },
     { name: "4", id: uuidv4(), itemIds: [] },
-    { name: "5", id: uuidv4(), itemIds: ["6", "7", "8"] },
+    {
+      name: "something or other or other or other or other or other or other",
+      id: uuidv4(),
+      itemIds: ["6", "7"],
+    },
   ]);
 
   useEffect(() => {
@@ -105,7 +109,11 @@ export default function ItemsManager() {
     setLists(lists.filter((list) => list.id !== listId));
   }
 
-  function handleRenameList(listId, newListName) {
+  function handleRenameList(event) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const newListName = formData.get("newListName");
+    const listId = formData.get("listId");
     setLists(
       lists.map((list) => {
         if (list.id !== listId) return list;
@@ -133,7 +141,11 @@ export default function ItemsManager() {
     );
   }
 
-  function handleRenameItem(itemId, newItemName) {
+  function handleRenameItem(event) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const newItemName = formData.get("newItemName");
+    const itemId = formData.get("itemId");
     setItems(
       items.map((item) => {
         if (item.id !== itemId) return item;
@@ -164,12 +176,12 @@ export default function ItemsManager() {
         onSubmit={handleAddList}
         autoComplete="off"
       >
-        <button>[+]</button>
         <input
           type="text"
           name="newList"
           required
         ></input>
+        <button type="submit">[+]</button>
       </form>
 
       {/* LIST-ITEM DB VIEWER */}
@@ -201,7 +213,7 @@ export default function ItemsManager() {
           handleAdvanceItem,
         }}
       >
-        <ul className="lists grid grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
+        <ul className="lists grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
           {lists.map((list) => (
             <li key={list.id}>
               <List list={list} />
@@ -228,7 +240,7 @@ function List({ list }) {
       return (
         <div className="list">
           <header>
-            <span className="listControls">
+            <div className="listControls">
               <button
                 onClick={() => {
                   setDraftAddItem(true);
@@ -242,7 +254,7 @@ function List({ list }) {
               <button onClick={() => setDraftRenameList(list.name)}>
                 [rn]
               </button>
-            </span>
+            </div>
             <div className="listName">{list.name}</div>
           </header>
           <hr className="separator"></hr>
@@ -263,27 +275,48 @@ function List({ list }) {
     // adding item
     else {
       return (
-        <div>
-          <span>{list.name}</span>
-          <form
-            onSubmit={(event) => {
-              handleAddItem(event);
-              setDraftAddItem(false);
-            }}
-            autoComplete="off"
-          >
-            <button>[+]</button>
-            <input
-              type="text"
-              name="newItem"
-              required
-            />
-            <input
-              type="hidden"
-              name="originListId"
-              value={list.id}
-            />
-          </form>
+        <div className="list">
+          <header>
+            <div className="listControls">
+              <button disabled>[+]</button>
+              <button disabled>[-]</button>
+              <button disabled>[rn]</button>
+            </div>
+            <div className="listName">{list.name}</div>
+
+            <form
+              onSubmit={(event) => {
+                handleAddItem(event);
+                setDraftAddItem(false);
+              }}
+              autoComplete="off"
+            >
+              <input
+                type="hidden"
+                name="originListId"
+                value={list.id}
+              />
+              <input
+                type="text"
+                name="newItem"
+                autoFocus
+                required
+              />
+              <span>
+                <button type="submit">[+]</button>
+                <button
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setDraftAddItem(false);
+                  }}
+                >
+                  [c]
+                </button>
+              </span>
+            </form>
+          </header>
+          <hr className="separator"></hr>
+
           <ul>
             {myItems.map((item) => (
               <li key={item.id}>
@@ -302,21 +335,43 @@ function List({ list }) {
     return (
       <div className="list">
         <header>
-          <input
-            value={draftRenameList}
-            onChange={(e) => {
-              setDraftRenameList(e.target.value);
-            }}
-            required
-          />
-          <button
-            onClick={() => {
-              handleRenameList(list.id, draftRenameList);
+          <div className="listControls">
+            <button disabled>[+]</button>
+            <button disabled>[-]</button>
+            <button disabled>[rn]</button>
+          </div>
+
+          <form
+            onSubmit={(event) => {
+              handleRenameList(event);
               setDraftRenameList("");
             }}
+            autoComplete="off"
           >
-            [rn]
-          </button>
+            <input
+              type="hidden"
+              name="listId"
+              value={list.id}
+            ></input>
+            <input
+              type="text"
+              name="newListName"
+              defaultValue={draftRenameList}
+              autoFocus
+              required
+            />
+            <span>
+              <button type="submit">[rn]</button>
+              <button
+                onClick={(event) => {
+                  event.preventDefault();
+                  setDraftRenameList("");
+                }}
+              >
+                [c]
+              </button>
+            </span>
+          </form>
         </header>
         <hr className="separator"></hr>
 
@@ -388,23 +443,46 @@ function Item({ item, myListId }) {
   // renaming item
   else {
     return (
-      <>
-        <input
-          value={draftRenameItem}
-          onChange={(e) => {
-            setDraftRenameItem(e.target.value);
-          }}
-          required
-        />
-        <button
-          onClick={() => {
-            handleRenameItem(item.id, draftRenameItem);
+      <div className={`${progClassName} item`}>
+        <div className="itemControls">
+          <button disabled>[-]</button>
+          <button disabled>[rn]</button>
+          <button disabled>[&gt;]</button>
+          <span className="progDisplay">{progDisplay}</span>
+        </div>
+
+        <form
+          onSubmit={(event) => {
+            handleRenameItem(event);
             setDraftRenameItem("");
           }}
+          autoComplete="off"
         >
-          [rn]
-        </button>
-      </>
+          <input
+            type="hidden"
+            name="itemId"
+            value={item.id}
+          />
+          <input
+            type="text"
+            name="newItemName"
+            defaultValue={draftRenameItem}
+            autoFocus
+            required
+          />
+          <span>
+            <button type="submit">[rn]</button>
+            <button
+              onClick={(event) => {
+                event.preventDefault();
+                setDraftRenameItem("");
+              }}
+            >
+              [c]
+            </button>
+          </span>
+        </form>
+      </div>
     );
   }
 }
