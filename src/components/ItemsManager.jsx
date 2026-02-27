@@ -1,7 +1,9 @@
-import { useState, useEffect, createContext, useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { ItemsManagerContext } from './ItemsManagerContext';
 
-const ItemsManagerContext = createContext();
+import Item from './Item';
+import List from './List';
 
 export default function ItemsManager() {
   // COMMENTED OUT FOR DEVELOPMENT
@@ -17,61 +19,65 @@ export default function ItemsManager() {
 
   // FOR DEVELOPMENT
   const [items, setItems] = useState([
-    { name: uuidv4().substring(0, 8), progress: 1, id: "1" },
+    { name: uuidv4().substring(0, 8), progress: 1, id: '1' },
     {
-      name: "test test test test test test test test test test test test test test test test test test test test test test",
+      name: 'test test test test test test test test test test test test test test test test test test test test test test',
       progress: 4,
-      id: "2",
+      id: '2',
     },
-    { name: uuidv4().substring(0, 8), progress: 5, id: "3" },
+    { name: uuidv4().substring(0, 8), progress: 5, id: '3' },
     {
-      name: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+      name: 'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest',
       progress: 5,
-      id: "4",
+      id: '4',
     },
-    { name: uuidv4().substring(0, 8), progress: 2, id: "6" },
-    { name: uuidv4().substring(0, 8), progress: 4, id: "7" },
-    { name: uuidv4().substring(0, 8), progress: 6, id: "8" },
-    { name: uuidv4().substring(0, 8), progress: 6, id: "9" },
+    { name: uuidv4().substring(0, 8), progress: 2, id: '6' },
+    { name: uuidv4().substring(0, 8), progress: 4, id: '7' },
+    { name: uuidv4().substring(0, 8), progress: 6, id: '8' },
+    { name: uuidv4().substring(0, 8), progress: 6, id: '9' },
   ]);
   const [lists, setLists] = useState([
     {
-      name: "something or other",
+      name: 'something or other',
       id: uuidv4(),
-      itemIds: ["1", "2", "4", "9"],
+      itemIds: ['1', '2', '4', '9'],
+      visible: true,
     },
-    { name: "2", id: uuidv4(), itemIds: ["3", "8"] },
+    { name: '2', id: uuidv4(), itemIds: ['3', '8'], visible: true },
     {
-      name: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+      name: 'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest',
       id: uuidv4(),
       itemIds: [],
+      visible: true,
     },
-    { name: "4", id: uuidv4(), itemIds: [] },
+    { name: '4', id: uuidv4(), itemIds: [], visible: true },
     {
-      name: "something or other or other or other or other or other or other",
+      name: 'something or other or other or other or other or other or other',
       id: uuidv4(),
-      itemIds: ["6", "7"],
+      itemIds: ['6', '7'],
+      visible: true,
     },
   ]);
 
   useEffect(() => {
-    localStorage.setItem("itemsdb", JSON.stringify(items));
+    localStorage.setItem('itemsdb', JSON.stringify(items));
   }, [items]);
 
   useEffect(() => {
-    localStorage.setItem("listsdb", JSON.stringify(lists));
+    localStorage.setItem('listsdb', JSON.stringify(lists));
   }, [lists]);
 
   function handleAddList(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const newList = formData.get("newList");
+    const newList = formData.get('newList');
     setLists([
       ...lists,
       {
         name: newList,
         id: uuidv4(),
         itemIds: [],
+        visible: true,
       },
     ]);
   }
@@ -80,8 +86,8 @@ export default function ItemsManager() {
     event.preventDefault();
     const newItemId = uuidv4();
     const formData = new FormData(event.currentTarget);
-    const newItem = formData.get("newItem");
-    const originListId = formData.get("originListId");
+    const newItem = formData.get('newItem');
+    const originListId = formData.get('originListId');
     // create new item
     setItems([
       ...items,
@@ -112,13 +118,24 @@ export default function ItemsManager() {
   function handleRenameList(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const newListName = formData.get("newListName");
-    const listId = formData.get("listId");
+    const newListName = formData.get('newListName');
+    const listId = formData.get('listId');
     setLists(
       lists.map((list) => {
         if (list.id !== listId) return list;
         else {
           return { ...list, name: newListName };
+        }
+      }),
+    );
+  }
+
+  function handleCollapseList(listId) {
+    setLists(
+      lists.map((list) => {
+        if (list.id !== listId) return list;
+        else {
+          return { ...list, visible: !list.visible };
         }
       }),
     );
@@ -144,8 +161,8 @@ export default function ItemsManager() {
   function handleRenameItem(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const newItemName = formData.get("newItemName");
-    const itemId = formData.get("itemId");
+    const newItemName = formData.get('newItemName');
+    const itemId = formData.get('itemId');
     setItems(
       items.map((item) => {
         if (item.id !== itemId) return item;
@@ -184,7 +201,7 @@ export default function ItemsManager() {
         <button type="submit">[+]</button>
       </form>
 
-      {/* LIST-ITEM DB VIEWER */}
+      {/* LIST-ITEM DB VIEWER FOR DEVELOPMENT */}
       {/* <div>--------</div>
       <ul>
         {lists.map((list) => (
@@ -208,6 +225,7 @@ export default function ItemsManager() {
           handleAddItem,
           handleDeleteList,
           handleRenameList,
+          handleCollapseList,
           handleDeleteItem,
           handleRenameItem,
           handleAdvanceItem,
@@ -225,280 +243,21 @@ export default function ItemsManager() {
   );
 }
 
-function List({ list }) {
-  const [draftRenameList, setDraftRenameList] = useState("");
-  const [draftAddItem, setDraftAddItem] = useState(false);
-
-  const { items, handleAddItem, handleDeleteList, handleRenameList } =
-    useContext(ItemsManagerContext);
-  const myItems = items.filter((item) => list.itemIds.includes(item.id));
-
-  // not renaming list
-  if (!draftRenameList) {
-    // not adding item
-    if (!draftAddItem) {
-      return (
-        <div className="list">
-          <header>
-            <div className="listControls">
-              <button
-                onClick={() => {
-                  setDraftAddItem(true);
-                }}
-              >
-                [+]
-              </button>
-              <button onClick={() => handleDeleteList(list.id, myItems)}>
-                [-]
-              </button>
-              <button onClick={() => setDraftRenameList(list.name)}>
-                [rn]
-              </button>
-            </div>
-            <div className="listName">{list.name}</div>
-          </header>
-          <hr className="separator"></hr>
-
-          <ul>
-            {myItems.map((item) => (
-              <li key={item.id}>
-                <Item
-                  item={item}
-                  myListId={list.id}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
-      );
-    }
-    // adding item
-    else {
-      return (
-        <div className="list">
-          <header>
-            <div className="listControls">
-              <button disabled>[+]</button>
-              <button disabled>[-]</button>
-              <button disabled>[rn]</button>
-            </div>
-            <div className="listName">{list.name}</div>
-
-            <form
-              onSubmit={(event) => {
-                handleAddItem(event);
-                setDraftAddItem(false);
-              }}
-              autoComplete="off"
-            >
-              <input
-                type="hidden"
-                name="originListId"
-                value={list.id}
-              />
-              <input
-                type="text"
-                name="newItem"
-                autoFocus
-                required
-              />
-              <span>
-                <button type="submit">[+]</button>
-                <button
-                  onClick={(event) => {
-                    event.preventDefault();
-                    setDraftAddItem(false);
-                  }}
-                >
-                  [c]
-                </button>
-              </span>
-            </form>
-          </header>
-          <hr className="separator"></hr>
-
-          <ul>
-            {myItems.map((item) => (
-              <li key={item.id}>
-                <Item
-                  item={item}
-                  myListId={list.id}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
-      );
-    }
-    // renaming list
-  } else {
-    return (
-      <div className="list">
-        <header>
-          <div className="listControls">
-            <button disabled>[+]</button>
-            <button disabled>[-]</button>
-            <button disabled>[rn]</button>
-          </div>
-
-          <form
-            onSubmit={(event) => {
-              handleRenameList(event);
-              setDraftRenameList("");
-            }}
-            autoComplete="off"
-          >
-            <input
-              type="hidden"
-              name="listId"
-              value={list.id}
-            ></input>
-            <input
-              type="text"
-              name="newListName"
-              defaultValue={draftRenameList}
-              autoFocus
-              required
-            />
-            <span>
-              <button type="submit">[rn]</button>
-              <button
-                onClick={(event) => {
-                  event.preventDefault();
-                  setDraftRenameList("");
-                }}
-              >
-                [c]
-              </button>
-            </span>
-          </form>
-        </header>
-        <hr className="separator"></hr>
-
-        <ul>
-          {myItems.map((item) => (
-            <li key={item.id}>
-              <Item
-                item={item}
-                myListId={list.id}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-}
-
-function Item({ item, myListId }) {
-  const [draftRenameItem, setDraftRenameItem] = useState("");
-  const { handleDeleteItem, handleRenameItem, handleAdvanceItem } =
-    useContext(ItemsManagerContext);
-
-  let progClassName = "prog-" + item.progress;
-  let progDisplay = "";
-  switch (progClassName) {
-    case "prog-0":
-      progDisplay = "";
-      break;
-    case "prog-1":
-      progDisplay = "queued";
-      break;
-    case "prog-2":
-      progDisplay = "priority";
-      break;
-    case "prog-3":
-      progDisplay = "working";
-      break;
-    case "prog-4":
-      progDisplay = "submitted";
-      break;
-    case "prog-5":
-      progDisplay = "approved";
-      break;
-    case "prog-6":
-      progDisplay = "done";
-      break;
-    default:
-      progDisplay = "UNDEFINED";
-      break;
-  }
-
-  // not renaming item
-  if (!draftRenameItem) {
-    return (
-      <div className={`${progClassName} item`}>
-        <div className="itemControls">
-          <button onClick={() => handleDeleteItem(item.id, myListId)}>
-            [-]
-          </button>
-          <button onClick={() => setDraftRenameItem(item.name)}>[rn]</button>
-          <button onClick={() => handleAdvanceItem(item.id)}>[&gt;]</button>
-          <span className="progDisplay">{progDisplay}</span>
-        </div>
-        <div className="itemName">{item.name}</div>
-      </div>
-    );
-  }
-  // renaming item
-  else {
-    return (
-      <div className={`${progClassName} item`}>
-        <div className="itemControls">
-          <button disabled>[-]</button>
-          <button disabled>[rn]</button>
-          <button disabled>[&gt;]</button>
-          <span className="progDisplay">{progDisplay}</span>
-        </div>
-
-        <form
-          onSubmit={(event) => {
-            handleRenameItem(event);
-            setDraftRenameItem("");
-          }}
-          autoComplete="off"
-        >
-          <input
-            type="hidden"
-            name="itemId"
-            value={item.id}
-          />
-          <input
-            type="text"
-            name="newItemName"
-            defaultValue={draftRenameItem}
-            autoFocus
-            required
-          />
-          <span>
-            <button type="submit">[rn]</button>
-            <button
-              onClick={(event) => {
-                event.preventDefault();
-                setDraftRenameItem("");
-              }}
-            >
-              [c]
-            </button>
-          </span>
-        </form>
-      </div>
-    );
-  }
-}
-
 // to be component?
 function Roulette({ items }) {
-  const [pull, setPull] = useState("");
-  const [spinner, setSpinner] = useState(false);
+  const [pull, setPull] = useState('');
+  // const [spinner, setSpinner] = useState(false);
 
   function randomize() {
     if (items.length > 0) {
-      setSpinner(true);
+      // let randomIndex = Math.floor(Math.random() * items.length);
+      // setPull(items[randomIndex]);
+
+      // setSpinner(true);
       setTimeout(() => {
         let randomIndex = Math.floor(Math.random() * items.length);
         setPull(items[randomIndex]);
-        setSpinner(false);
+        // setSpinner(false);
       }, 1500);
     }
   }
@@ -506,12 +265,12 @@ function Roulette({ items }) {
   return (
     <div className="roulette">
       <button onClick={randomize}>[roulette]</button>
-      {spinner && (
+      {/* {spinner && (
         <span
           is-="spinner"
           variant-="dots"
         ></span>
-      )}
+      )} */}
       <div className="roulettePull">{pull.name}</div>
     </div>
   );
