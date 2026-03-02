@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import styles from '../styles/Header.module.css';
 
 export default function Header({ exportData, importData }) {
   // temporary? I don't like that importData process and dialog are scattered like that
@@ -8,7 +9,7 @@ export default function Header({ exportData, importData }) {
   const fileInput = useRef(null);
 
   return (
-    <header className="pageheader">
+    <header className={styles.header}>
       <dialog
         id="import-dialog"
         popover="true"
