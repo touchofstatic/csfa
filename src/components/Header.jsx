@@ -16,7 +16,7 @@ export default function Header({ exportData, importData }) {
       >
         <div
           box-="round"
-          id="content"
+          id="dialog-content"
         >
           {imported === false ? (
             <p>Are you sure you want to import?</p>
@@ -26,7 +26,7 @@ export default function Header({ exportData, importData }) {
           <p style={{ color: 'var(--gb-red)' }}>
             Current data will be overwritten.
           </p>
-          <div id="buttons">
+          <div id="dialog-buttons">
             <button
               commandfor="import-dialog"
               command="close"
@@ -54,12 +54,14 @@ export default function Header({ exportData, importData }) {
         </div>
       </dialog>
       <button
+        size-="small"
         value="export"
         onClick={exportData}
       >
         Export
       </button>
       <button
+        size-="small"
         command="show-modal"
         commandfor="import-dialog"
       >

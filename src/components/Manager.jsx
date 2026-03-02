@@ -7,6 +7,28 @@ import List from './List';
 import Roulette from './Roulette';
 import Header from './Header';
 
+function NewListForm({ newList }) {
+  return (
+    <form
+      onSubmit={newList}
+      autoComplete="off"
+    >
+      <input
+        className="w-full"
+        type="text"
+        name="newList"
+        required
+      ></input>
+      <button
+        type="submit"
+        className="w-full"
+      >
+        [New List]
+      </button>
+    </form>
+  );
+}
+
 export default function Manager() {
   // COMMENTED OUT FOR DEVELOPMENT
   // load localstorage
@@ -218,41 +240,22 @@ export default function Manager() {
 
   return (
     <div className="manager">
+      {/* TODO: I don't think it should be here */}
       <Header
         exportData={exportData}
         importData={importData}
       />
-      <Roulette items={items} />
 
-      <form
-        onSubmit={handleAddList}
-        autoComplete="off"
-      >
-        <input
-          type="text"
-          name="newList"
-          required
-        ></input>
-        <button type="submit">[+]</button>
-      </form>
-
-      {/* LIST-ITEM DB VIEWER FOR DEVELOPMENT */}
-      {/* <div>--------</div>
-      <ul>
-        {lists.map((list) => (
-          <li key={list.id}>
-            list {list.name} itemIds {list.itemIds.toString()}
-          </li>
-        ))}
-      </ul>
-      <ul>
-        {items.map((item) => (
-          <li key={item.id}>
-            item {item.name} id {item.id.substring(0, 8)} prog {item.progress}
-          </li>
-        ))}
-      </ul>
-      <div>--------</div> */}
+      <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
+        <div>
+          <Roulette items={items} />
+          <NewListForm newList={handleAddList} />
+        </div>
+        {/* TODO: slightly mismatched at breakpoint! */}
+        <div className="hidden md:block">
+          cool placeholder to fill out space
+        </div>
+      </div>
 
       <ManagerContext.Provider
         value={{

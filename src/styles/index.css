@@ -6,6 +6,7 @@
 @import '@webtui/css/components/input.css';
 @import '@webtui/css/components/spinner.css';
 @import '@webtui/css/components/dialog.css';
+@import '@webtui/css/components/button.css';
 @import '@webtui/theme-gruvbox';
 
 @layer base {
@@ -31,19 +32,6 @@ body {
   margin: 0;
 }
 
-.manager > form {
-  margin-inline: 1ch;
-  width: 100%;
-
-  button {
-    margin-left: 1ch;
-  }
-  input {
-    width: calc(100% - 4ch);
-    max-width: 40ch;
-  }
-}
-
 .lists {
   margin-inline: 1ch;
   margin-block: 1lh;
@@ -62,6 +50,7 @@ body {
   word-break: break-word;
 }
 
+/* TODO: maybe this should be clsx */
 .prog-1 {
   .itemControls .progDisplay {
     background-color: var(--background0);
@@ -163,10 +152,6 @@ body {
   }
 }
 
-.roulette {
-  margin-inline: 1ch;
-  margin-block: 1lh;
-}
 .roulettePull {
   border: 2px solid var(--background3);
   min-height: 2lh;
@@ -185,14 +170,14 @@ li::before {
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.5);
 }
-#content {
+#dialog-content {
   display: flex;
   flex-direction: column;
   gap: 1lh;
   padding: 2lh 2ch 1lh 2ch;
   background-color: var(--background1);
 }
-#buttons {
+#dialog-buttons {
   display: flex;
   gap: 1ch;
   justify-content: flex-end;

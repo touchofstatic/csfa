@@ -24,19 +24,29 @@ export default function List({ list }) {
           <header>
             <div className="listControls">
               <button
+                size-="small"
                 onClick={() => {
                   setDraftAddItem(true);
                 }}
               >
                 [+]
               </button>
-              <button onClick={() => handleDeleteList(list.id, myItems)}>
+              <button
+                size-="small"
+                onClick={() => handleDeleteList(list.id, myItems)}
+              >
                 [-]
               </button>
-              <button onClick={() => setDraftRenameList(list.name)}>
+              <button
+                size-="small"
+                onClick={() => setDraftRenameList(list.name)}
+              >
                 [rn]
               </button>
-              <button onClick={() => handleCollapseList(list.id)}>
+              <button
+                size-="small"
+                onClick={() => handleCollapseList(list.id)}
+              >
                 {list.visible ? `[▼]` : `[▲]`}
               </button>
             </div>
@@ -123,9 +133,24 @@ export default function List({ list }) {
       <div className="list">
         <header>
           <div className="listControls">
-            <button disabled>[+]</button>
-            <button disabled>[-]</button>
-            <button disabled>[rn]</button>
+            <button
+              size-="small"
+              disabled
+            >
+              [+]
+            </button>
+            <button
+              size-="small"
+              disabled
+            >
+              [-]
+            </button>
+            <button
+              size-="small"
+              disabled
+            >
+              [rn]
+            </button>
           </div>
 
           <form
@@ -148,8 +173,14 @@ export default function List({ list }) {
               required
             />
             <span>
-              <button type="submit">[rn]</button>
               <button
+                size-="small"
+                type="submit"
+              >
+                [rn]
+              </button>
+              <button
+                size-="small"
                 onClick={(event) => {
                   event.preventDefault();
                   setDraftRenameList('');

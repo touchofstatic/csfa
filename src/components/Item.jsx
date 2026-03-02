@@ -40,12 +40,30 @@ export default function Item({ item, myListId }) {
     return (
       <div className={`${progClassName} item`}>
         <div className="itemControls">
-          <button onClick={() => handleDeleteItem(item.id, myListId)}>
+          <button
+            size-="small"
+            onClick={() => handleDeleteItem(item.id, myListId)}
+          >
             [-]
           </button>
-          <button onClick={() => setDraftRenameItem(item.name)}>[rn]</button>
-          <button onClick={() => handleAdvanceItem(item.id)}>[&gt;]</button>
-          <span className="progDisplay">{progDisplay}</span>
+          <button
+            size-="small"
+            onClick={() => setDraftRenameItem(item.name)}
+          >
+            [rn]
+          </button>
+          <button
+            size-="small"
+            onClick={() => handleAdvanceItem(item.id)}
+          >
+            [&gt;]
+          </button>
+          <span
+            size-="small"
+            className="progDisplay"
+          >
+            {progDisplay}
+          </span>
         </div>
         <div className="itemName">{item.name}</div>
       </div>
@@ -56,9 +74,24 @@ export default function Item({ item, myListId }) {
     return (
       <div className={`${progClassName} item`}>
         <div className="itemControls">
-          <button disabled>[-]</button>
-          <button disabled>[rn]</button>
-          <button disabled>[&gt;]</button>
+          <button
+            size-="small"
+            disabled
+          >
+            [-]
+          </button>
+          <button
+            size-="small"
+            disabled
+          >
+            [rn]
+          </button>
+          <button
+            size-="small"
+            disabled
+          >
+            [&gt;]
+          </button>
           <span className="progDisplay">{progDisplay}</span>
         </div>
 
@@ -82,8 +115,14 @@ export default function Item({ item, myListId }) {
             required
           />
           <span>
-            <button type="submit">[rn]</button>
             <button
+              size-="small"
+              type="submit"
+            >
+              [rn]
+            </button>
+            <button
+              size-="small"
               onClick={(event) => {
                 event.preventDefault();
                 setDraftRenameItem('');
