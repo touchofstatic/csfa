@@ -21,13 +21,13 @@ export default function ItemsManager() {
   const [items, setItems] = useState([
     { name: uuidv4().substring(0, 8), progress: 1, id: '1' },
     {
-      name: 'test test test test test test test test test test test test test test test test test test test test test test',
+      name: uuidv4(),
       progress: 4,
       id: '2',
     },
     { name: uuidv4().substring(0, 8), progress: 5, id: '3' },
     {
-      name: 'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest',
+      name: uuidv4(),
       progress: 5,
       id: '4',
     },
@@ -38,21 +38,21 @@ export default function ItemsManager() {
   ]);
   const [lists, setLists] = useState([
     {
-      name: 'something or other',
+      name: uuidv4(),
       id: uuidv4(),
       itemIds: ['1', '2', '4', '9'],
       visible: true,
     },
-    { name: '2', id: uuidv4(), itemIds: ['3', '8'], visible: true },
+    { name: uuidv4(), id: uuidv4(), itemIds: ['3', '8'], visible: true },
     {
-      name: 'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest',
+      name: uuidv4(),
       id: uuidv4(),
       itemIds: [],
       visible: true,
     },
-    { name: '4', id: uuidv4(), itemIds: [], visible: true },
+    { name: uuidv4(), id: uuidv4(), itemIds: [], visible: true },
     {
-      name: 'something or other or other or other or other or other or other',
+      name: uuidv4(),
       id: uuidv4(),
       itemIds: ['6', '7'],
       visible: true,
@@ -185,8 +185,51 @@ export default function ItemsManager() {
     );
   }
 
+  function exportData() {
+    // file object
+    const file = new Blob([JSON.stringify({ lists: lists, items: items })], {
+      type: 'application/json',
+    });
+    // anchor link
+    const element = document.createElement('a');
+    element.href = URL.createObjectURL(file);
+    element.download = 'csfa-' + Date.now() + '.json';
+    // simulate link click
+    document.body.appendChild(element);
+    // Required for this to work in FireFox
+    element.click();
+  }
+
+  function importData(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      const data = JSON.parse(event.target.result);
+      console.log(data);
+
+      setLists(data.lists);
+      setItems(data.items);
+    };
+    reader.readAsText(file);
+  }
+
   return (
     <div className="itemsManager">
+      <div>
+        <button
+          value="export"
+          onClick={exportData}
+        >
+          Export
+        </button>
+      </div>
+
+      <input
+        type="file"
+        accept=".json,application/json"
+        onChange={importData}
+      ></input>
+
       <Roulette items={items} />
 
       <form
