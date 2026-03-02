@@ -1,3 +1,3 @@
 import { createContext } from 'react';
 
-export const ItemsManagerContext = createContext();
+export const ManagerContext = createContext();

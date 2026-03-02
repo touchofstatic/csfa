@@ -31,8 +31,9 @@ body {
   margin: 0;
 }
 
-.itemsManager > form {
+.manager > form {
   margin-inline: 1ch;
+  width: 100%;
 
   button {
     margin-left: 1ch;

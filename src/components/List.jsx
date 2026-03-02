@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { ItemsManagerContext } from './ManagerContext';
+import { ManagerContext } from './ManagerContext';
 import Item from './Item';
 
 export default function List({ list }) {
@@ -12,7 +12,7 @@ export default function List({ list }) {
     handleDeleteList,
     handleRenameList,
     handleCollapseList,
-  } = useContext(ItemsManagerContext);
+  } = useContext(ManagerContext);
   const myItems = items.filter((item) => list.itemIds.includes(item.id));
 
   // not renaming list

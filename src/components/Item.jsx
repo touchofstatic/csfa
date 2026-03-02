@@ -1,10 +1,10 @@
 import { useState, useContext } from 'react';
-import { ItemsManagerContext } from './ManagerContext';
+import { ManagerContext } from './ManagerContext';
 
 export default function Item({ item, myListId }) {
   const [draftRenameItem, setDraftRenameItem] = useState('');
   const { handleDeleteItem, handleRenameItem, handleAdvanceItem } =
-    useContext(ItemsManagerContext);
+    useContext(ManagerContext);
 
   let progClassName = 'prog-' + item.progress;
   let progDisplay = '';

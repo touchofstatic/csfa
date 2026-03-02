@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { ItemsManagerContext } from './ManagerContext';
+import { ManagerContext } from './ManagerContext';
 
 import Item from './Item';
 import List from './List';
@@ -222,27 +222,6 @@ export default function Manager() {
         exportData={exportData}
         importData={importData}
       />
-      {/* <button
-        value="export"
-        onClick={exportData}
-      >
-        Export
-      </button>
-
-      <input
-        type="file"
-        accept=".json,application/json"
-        ref={fileInput}
-        onChange={importData}
-        style={{ display: 'none' }}
-      ></input>
-      <button
-        value="import"
-        onClick={() => fileInput.current.click()}
-      >
-        Import
-      </button> */}
-
       <Roulette items={items} />
 
       <form
@@ -275,7 +254,7 @@ export default function Manager() {
       </ul>
       <div>--------</div> */}
 
-      <ItemsManagerContext.Provider
+      <ManagerContext.Provider
         value={{
           items,
           handleAddItem,
@@ -294,7 +273,7 @@ export default function Manager() {
             </li>
           ))}
         </ul>
-      </ItemsManagerContext.Provider>
+      </ManagerContext.Provider>
     </div>
   );
 }
