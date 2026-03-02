@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { ItemsManagerContext } from './ItemsManagerContext';
+import { ItemsManagerContext } from './ManagerContext';
 
 export default function Item({ item, myListId }) {
   const [draftRenameItem, setDraftRenameItem] = useState('');

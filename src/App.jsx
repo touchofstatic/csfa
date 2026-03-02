@@ -1,9 +1,9 @@
-import ItemsManager from "./components/ItemsManager.jsx";
+import Manager from './components/Manager.jsx';
 
 export default function App() {
   return (
     <main>
-      <ItemsManager />
+      <Manager />
     </main>
   );
 }

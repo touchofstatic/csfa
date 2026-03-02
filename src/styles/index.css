@@ -5,6 +5,7 @@
 @import '@webtui/css/components/typography.css';
 @import '@webtui/css/components/input.css';
 @import '@webtui/css/components/spinner.css';
+@import '@webtui/css/components/dialog.css';
 @import '@webtui/theme-gruvbox';
 
 @layer base {
@@ -178,4 +179,20 @@ button:disabled {
 
 li::before {
   content: '';
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+#content {
+  display: flex;
+  flex-direction: column;
+  gap: 1lh;
+  padding: 2lh 2ch 1lh 2ch;
+  background-color: var(--background1);
+}
+#buttons {
+  display: flex;
+  gap: 1ch;
+  justify-content: flex-end;
 }

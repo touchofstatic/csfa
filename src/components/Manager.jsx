@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { ItemsManagerContext } from './ItemsManagerContext';
+import { ItemsManagerContext } from './ManagerContext';
 
 import Item from './Item';
 import List from './List';
 import Roulette from './Roulette';
 import Header from './Header';
 
-export default function ItemsManager() {
+export default function Manager() {
   // COMMENTED OUT FOR DEVELOPMENT
   // load localstorage
   // const [items, setItems] = useState(() => {
@@ -202,13 +202,13 @@ export default function ItemsManager() {
     element.click();
   }
 
-  // TODO: validation?
+  // TODO: validation
   function importData(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = function (event) {
       const data = JSON.parse(event.target.result);
-      console.log(data);
+      // console.log(data);
 
       setLists(data.lists);
       setItems(data.items);
@@ -217,7 +217,7 @@ export default function ItemsManager() {
   }
 
   return (
-    <div className="itemsManager">
+    <div className="manager">
       <Header
         exportData={exportData}
         importData={importData}

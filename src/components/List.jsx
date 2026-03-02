@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { ItemsManagerContext } from './ItemsManagerContext';
+import { ItemsManagerContext } from './ManagerContext';
 import Item from './Item';
 
 export default function List({ list }) {
