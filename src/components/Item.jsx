@@ -39,7 +39,7 @@ export default function Item({ item, myListId }) {
   if (!draftRenameItem) {
     return (
       <div className={`${progClassName} item`}>
-        <div className="itemControls">
+        <div className="itemControls controls">
           <button
             size-="small"
             onClick={() => handleDeleteItem(item.id, myListId)}
@@ -73,7 +73,7 @@ export default function Item({ item, myListId }) {
   else {
     return (
       <div className={`${progClassName} item`}>
-        <div className="itemControls">
+        <div className="itemControls controls">
           <button
             size-="small"
             disabled
@@ -114,7 +114,7 @@ export default function Item({ item, myListId }) {
             autoFocus
             required
           />
-          <span>
+          <span className="controls">
             <button
               size-="small"
               type="submit"

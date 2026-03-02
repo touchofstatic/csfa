@@ -182,3 +182,16 @@ dialog::backdrop {
   gap: 1ch;
   justify-content: flex-end;
 }
+
+.controls button,
+.listControls button {
+  color: var(--mapped-primary);
+  background-color: var(--mapped-secondary);
+  padding-inline: 0.2ch;
+}
+
+.controls button:active,
+.listControls button:active {
+  background-color: var(--foreground0);
+  color: var(--background0);
+}

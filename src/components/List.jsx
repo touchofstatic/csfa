@@ -22,7 +22,7 @@ export default function List({ list }) {
       return (
         <div className="list">
           <header>
-            <div className="listControls">
+            <div className="listControls controls">
               <button
                 size-="small"
                 onClick={() => {
@@ -74,10 +74,25 @@ export default function List({ list }) {
       return (
         <div className="list">
           <header>
-            <div className="listControls">
-              <button disabled>[+]</button>
-              <button disabled>[-]</button>
-              <button disabled>[rn]</button>
+            <div className="listControls controls">
+              <button
+                size-="small"
+                disabled
+              >
+                [+]
+              </button>
+              <button
+                size-="small"
+                disabled
+              >
+                [-]
+              </button>
+              <button
+                size-="small"
+                disabled
+              >
+                [rn]
+              </button>
             </div>
             <div className="listName">{list.name}</div>
 
@@ -99,9 +114,15 @@ export default function List({ list }) {
                 autoFocus
                 required
               />
-              <span>
-                <button type="submit">[+]</button>
+              <span className="controls">
                 <button
+                  size-="small"
+                  type="submit"
+                >
+                  [+]
+                </button>
+                <button
+                  size-="small"
                   onClick={(event) => {
                     event.preventDefault();
                     setDraftAddItem(false);
@@ -132,7 +153,7 @@ export default function List({ list }) {
     return (
       <div className="list">
         <header>
-          <div className="listControls">
+          <div className="listControls controls">
             <button
               size-="small"
               disabled
@@ -172,7 +193,7 @@ export default function List({ list }) {
               autoFocus
               required
             />
-            <span>
+            <span className="controls">
               <button
                 size-="small"
                 type="submit"
