@@ -5,6 +5,7 @@ import { ItemsManagerContext } from './ItemsManagerContext';
 import Item from './Item';
 import List from './List';
 import Roulette from './Roulette';
+import Header from './Header';
 
 export default function ItemsManager() {
   // COMMENTED OUT FOR DEVELOPMENT
@@ -201,6 +202,7 @@ export default function ItemsManager() {
     element.click();
   }
 
+  // TODO: validation?
   function importData(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -216,20 +218,30 @@ export default function ItemsManager() {
 
   return (
     <div className="itemsManager">
-      <div>
-        <button
-          value="export"
-          onClick={exportData}
-        >
-          Export
-        </button>
-      </div>
+      <Header
+        exportData={exportData}
+        importData={importData}
+      />
+      {/* <button
+        value="export"
+        onClick={exportData}
+      >
+        Export
+      </button>
 
       <input
         type="file"
         accept=".json,application/json"
+        ref={fileInput}
         onChange={importData}
+        style={{ display: 'none' }}
       ></input>
+      <button
+        value="import"
+        onClick={() => fileInput.current.click()}
+      >
+        Import
+      </button> */}
 
       <Roulette items={items} />
 

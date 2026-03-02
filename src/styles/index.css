@@ -1,11 +1,11 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @layer base, utils, components;
-@import "@webtui/css/base.css";
-@import "@webtui/css/utils/box.css";
-@import "@webtui/css/components/typography.css";
-@import "@webtui/css/components/input.css";
-@import "@webtui/css/components/spinner.css";
-@import "@webtui/theme-gruvbox";
+@import '@webtui/css/base.css';
+@import '@webtui/css/utils/box.css';
+@import '@webtui/css/components/typography.css';
+@import '@webtui/css/components/input.css';
+@import '@webtui/css/components/spinner.css';
+@import '@webtui/theme-gruvbox';
 
 @layer base {
   /* overrides of webtui base css  */
@@ -16,7 +16,7 @@
     --font-weight-bold: 700;
     /* Font weight for regular text */
     --font-weight-normal: 400;
-    --font-family: "JetBrains Mono";
+    --font-family: 'JetBrains Mono';
   }
 }
 
@@ -177,5 +177,5 @@ button:disabled {
 }
 
 li::before {
-  content: "";
+  content: '';
 }
