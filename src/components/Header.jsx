@@ -8,8 +8,7 @@ export default function Header({ exportData, importData }) {
   const fileInput = useRef(null);
 
   return (
-    <header>
-      {/* import dialog */}
+    <header className="pageheader">
       <dialog
         id="import-dialog"
         popover="true"

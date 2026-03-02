@@ -183,15 +183,26 @@ dialog::backdrop {
   justify-content: flex-end;
 }
 
-.controls button,
-.listControls button {
-  color: var(--mapped-primary);
-  background-color: var(--mapped-secondary);
+.controls button {
+  color: var(--foreground0);
+  background-color: var(--background0);
   padding-inline: 0.2ch;
 }
 
-.controls button:active,
-.listControls button:active {
-  background-color: var(--foreground0);
+.controls button:active {
   color: var(--background0);
+  background-color: var(--foreground0);
+}
+
+.pageheader {
+  width: 100%;
+  background-color: var(--foreground0);
+}
+
+.pageheader > button {
+  padding-inline: 1ch;
+}
+
+.pageheader > button:active {
+  background-color: var(--gb-red);
 }
