@@ -1,0 +1,18 @@
+.item {
+  margin-bottom: 0.2lh;
+}
+
+.itemControls {
+  span {
+    float: right;
+  }
+}
+
+.itemName {
+  word-wrap: break-word;
+  padding-inline: 1ch;
+}
+
+.progDisplay {
+  float: right;
+}

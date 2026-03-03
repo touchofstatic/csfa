@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { ManagerContext } from './ManagerContext';
 import Item from './Item';
+import styles from '../styles/List.module.css';
 
 export default function List({ list }) {
   const [draftRenameList, setDraftRenameList] = useState('');
@@ -15,42 +16,53 @@ export default function List({ list }) {
   } = useContext(ManagerContext);
   const myItems = items.filter((item) => list.itemIds.includes(item.id));
 
+  // TODO: bad?
+  const visibleStyle = {
+    color: list.visible ? 'var(--foreground0)' : 'var(--background3)',
+  };
+
   // not renaming list
   if (!draftRenameList) {
     // not adding item
     if (!draftAddItem) {
       return (
-        <div className="list">
-          <header>
+        <div className={styles.list}>
+          <header style={visibleStyle}>
             <div className="listControls controls">
               <button
+                className="controls"
                 size-="small"
                 onClick={() => {
                   setDraftAddItem(true);
                 }}
+                style={visibleStyle}
               >
                 [+]
               </button>
               <button
                 size-="small"
                 onClick={() => handleDeleteList(list.id, myItems)}
+                style={visibleStyle}
               >
                 [-]
               </button>
               <button
                 size-="small"
                 onClick={() => setDraftRenameList(list.name)}
+                style={visibleStyle}
               >
                 [rn]
               </button>
               <button
                 size-="small"
                 onClick={() => handleCollapseList(list.id)}
+                style={visibleStyle}
               >
                 {list.visible ? `[▼]` : `[▲]`}
               </button>
+              <span> | {myItems.length} items</span>
             </div>
-            <div className="listName">{list.name}</div>
+            <div className={styles.name}>{list.name}</div>
           </header>
           <hr className="separator"></hr>
 
@@ -66,6 +78,11 @@ export default function List({ list }) {
               ))}
             </ul>
           )}
+
+          <input
+            type="text"
+            className="w-full"
+          ></input>
         </div>
       );
     }

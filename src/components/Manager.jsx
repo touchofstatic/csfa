@@ -247,7 +247,7 @@ export default function Manager() {
         importData={importData}
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
         <div>
           <Roulette items={items} />
           <NewListForm newList={handleAddList} />
@@ -255,7 +255,7 @@ export default function Manager() {
         <div className="hidden md:block content-center">
           cool placeholder to fill out space
         </div>
-      </div>
+      </div> */}
 
       <ManagerContext.Provider
         value={{

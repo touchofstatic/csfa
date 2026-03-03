@@ -8,16 +8,8 @@
   }
 }
 
-.list > header {
-  font-weight: 700;
-}
-
-.listName {
-  word-break: break-word;
-}
-
 /* TODO: maybe this should be clsx */
-.prog-1 {
+.prog1 {
   .itemControls .progDisplay {
     background-color: var(--background0);
     color: var(--gb-purple);
@@ -28,7 +20,7 @@
   }
 }
 
-.prog-2 {
+.prog2 {
   .itemControls .progDisplay {
     background-color: var(--background0);
     color: var(--gb-red);
@@ -39,7 +31,7 @@
   }
 }
 
-.prog-3 {
+.prog3 {
   .itemControls .progDisplay {
     background-color: var(--background0);
     color: var(--gb-orange);
@@ -50,7 +42,7 @@
   }
 }
 
-.prog-4 {
+.prog4 {
   .itemControls .progDisplay {
     background-color: var(--background0);
     color: var(--gb-yellow);
@@ -61,7 +53,7 @@
   }
 }
 
-.prog-5 {
+.prog5 {
   .itemControls .progDisplay {
     background-color: var(--background0);
     color: var(--gb-aqua);
@@ -72,7 +64,7 @@
   }
 }
 
-.prog-6 {
+.prog6 {
   .itemControls .progDisplay {
     background-color: var(--background0);
     color: var(--gb-green);
@@ -81,21 +73,6 @@
     background-color: var(--gb-green);
     color: var(--background0);
   }
-}
-
-.item {
-  margin-bottom: 0.2lh;
-}
-
-.itemControls {
-  span {
-    float: right;
-  }
-}
-
-.itemName {
-  word-wrap: break-word;
-  padding-inline: 1ch;
 }
 
 .separator {
@@ -108,25 +85,11 @@
   clear: right;
 }
 
-.list form {
-  input {
-    width: calc(100% - 8ch);
-  }
-
-  input ~ span {
-    float: right;
-  }
-}
-
 .roulettePull {
   border: 2px solid var(--background3);
   min-height: 2lh;
   padding-inline: 1ch;
   word-wrap: break-word;
-}
-
-button:disabled {
-  color: var(--foreground2);
 }
 
 li::before {

@@ -1,33 +1,34 @@
 import { useState, useContext } from 'react';
 import { ManagerContext } from './ManagerContext';
+import styles from '../styles/Item.module.css';
 
 export default function Item({ item, myListId }) {
   const [draftRenameItem, setDraftRenameItem] = useState('');
   const { handleDeleteItem, handleRenameItem, handleAdvanceItem } =
     useContext(ManagerContext);
 
-  let progClassName = 'prog-' + item.progress;
+  let progClassName = 'prog' + item.progress;
   let progDisplay = '';
   switch (progClassName) {
-    case 'prog-0':
+    case 'prog0':
       progDisplay = '';
       break;
-    case 'prog-1':
+    case 'prog1':
       progDisplay = 'queued';
       break;
-    case 'prog-2':
+    case 'prog2':
       progDisplay = 'priority';
       break;
-    case 'prog-3':
+    case 'prog3':
       progDisplay = 'working';
       break;
-    case 'prog-4':
+    case 'prog4':
       progDisplay = 'submitted';
       break;
-    case 'prog-5':
+    case 'prog5':
       progDisplay = 'approved';
       break;
-    case 'prog-6':
+    case 'prog6':
       progDisplay = 'done';
       break;
     default:
@@ -38,7 +39,7 @@ export default function Item({ item, myListId }) {
   // not renaming item
   if (!draftRenameItem) {
     return (
-      <div className={`${progClassName} item`}>
+      <div className={`${progClassName} ${styles.item}`}>
         <div className="itemControls controls">
           <button
             size-="small"
@@ -52,20 +53,18 @@ export default function Item({ item, myListId }) {
           >
             [rn]
           </button>
+          <button size-="small">[x]</button>
           <button
             size-="small"
+            // TODO: fix css modules
+            className={`${styles.progDisplay} progDisplay`}
             onClick={() => handleAdvanceItem(item.id)}
           >
-            [&gt;]
+            {progDisplay} [&gt;]
           </button>
-          <span
-            size-="small"
-            className="progDisplay"
-          >
-            {progDisplay}
-          </span>
         </div>
-        <div className="itemName">{item.name}</div>
+        {/* TODO: redundant. fix css modules */}
+        <div className={`${styles.itemName} itemName`}>{item.name}</div>
       </div>
     );
   }
