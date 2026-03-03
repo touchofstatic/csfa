@@ -1,7 +1,37 @@
-.list header {
-  font-weight: 700;
-}
-
 .name {
   word-break: break-word;
+  font-weight: 700;
+}
+.controls {
+  color: var(--foreground0);
+  background-color: var(--background0);
+}
+.controls:active {
+  color: var(--background0);
+  background-color: var(--foreground0);
+}
+.collapsed {
+  color: var(--background3);
+}
+.list {
+  border: 2px solid var(--background2);
+  padding: 1ch;
+  height: fit-content;
+}
+.list.collapsed {
+  border: 2px solid var(--background1);
+}
+.separator {
+  background-image: var(--background2);
+  background-color: var(--background2);
+  color: var(--background2);
+  margin-block: 0.2lh;
+  height: 2px;
+  border: none;
+  clear: right;
+}
+.separator.collapsed {
+  background-image: var(--background1);
+  background-color: var(--background1);
+  color: var(--background1);
 }

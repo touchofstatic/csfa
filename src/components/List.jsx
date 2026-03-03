@@ -1,8 +1,8 @@
 import { useState, useContext } from 'react';
 import { useClickAway } from '@uidotdev/usehooks';
 import { ManagerContext } from './ManagerContext';
+import styles from '../styles/list.module.css';
 import Item from './Item';
-import styles from '../styles/List.module.css';
 
 export default function List({ list }) {
   const [draftRenameList, setDraftRenameList] = useState('');
@@ -18,11 +18,6 @@ export default function List({ list }) {
     handleCollapseList,
   } = useContext(ManagerContext);
   const myItems = items.filter((item) => list.itemIds.includes(item.id));
-
-  // TODO: bad?
-  const visibleStyle = {
-    color: list.visible ? 'var(--foreground0)' : 'var(--background3)',
-  };
 
   // TODO: bad?
   let title = '';
@@ -75,27 +70,29 @@ export default function List({ list }) {
     );
   }
   return (
-    <div className={styles.list}>
-      <header style={visibleStyle}>
-        <div className="listControls controls">
+    <div
+      className={`${styles.list} ${!list.visible ? `${styles.collapsed}` : ''}`}
+    >
+      <header className={`${!list.visible ? `${styles.collapsed}` : ''}`}>
+        <div>
           <button
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
             size-="small"
             onClick={() => handleDeleteList(list.id, myItems)}
-            style={visibleStyle}
           >
             [-]
           </button>
           <button
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
             size-="small"
             onClick={() => setDraftRenameList(list.name)}
-            style={visibleStyle}
           >
             [rn]
           </button>
           <button
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
             size-="small"
             onClick={() => handleCollapseList(list.id)}
-            style={visibleStyle}
           >
             {list.visible ? `[▼]` : `[▲]`}
           </button>
@@ -103,7 +100,9 @@ export default function List({ list }) {
         </div>
         {title}
       </header>
-      <hr className="separator"></hr>
+      <hr
+        className={`${styles.separator} ${!list.visible ? `${styles.collapsed}` : ''}`}
+      ></hr>
 
       {list.visible && (
         <ul>
@@ -139,6 +138,7 @@ export default function List({ list }) {
         <button
           size-="small"
           type="submit"
+          className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
         >
           [+]
         </button>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styles from '../styles/roulette.module.css';
 
 export default function Roulette({ items }) {
   const [pull, setPull] = useState('');
@@ -18,7 +19,7 @@ export default function Roulette({ items }) {
 
   return (
     <>
-      <div className="roulettePull">
+      <div className={styles.pull}>
         {spinner && (
           <span
             is-="spinner"
@@ -27,14 +28,13 @@ export default function Roulette({ items }) {
         )}
         {pull.name}
       </div>
-      <div>
-        <button
-          className="w-full"
-          onClick={randomize}
-        >
-          [Roulette]
-        </button>
-      </div>
+      <button
+        size-="small"
+        className="w-full"
+        onClick={randomize}
+      >
+        [Roulette]
+      </button>
     </>
   );
 }

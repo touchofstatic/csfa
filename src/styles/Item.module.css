@@ -1,12 +1,54 @@
-.item {
-  margin-bottom: 0.2lh;
-}
-
-.itemName {
+.name {
   word-wrap: break-word;
-  padding-inline: 1ch;
+}
+.controls {
+  color: var(--foreground0);
+  background-color: var(--background0);
+}
+.controls:active {
+  color: var(--background0);
+  background-color: var(--foreground0);
 }
 
-.progDisplay {
-  float: right;
+button.progress1 {
+  color: var(--gb-purple);
+}
+button.progress2 {
+  color: var(--gb-red);
+}
+button.progress3 {
+  color: var(--gb-orange);
+}
+button.progress4 {
+  color: var(--gb-yellow);
+}
+button.progress5 {
+  color: var(--gb-aqua);
+}
+button.progress6 {
+  color: var(--gb-green);
+}
+.name.progress1 {
+  background-color: var(--gb-purple);
+  color: var(--background0);
+}
+.name.progress2 {
+  background-color: var(--gb-red);
+  color: var(--background0);
+}
+.name.progress3 {
+  background-color: var(--gb-orange);
+  color: var(--background0);
+}
+.name.progress4 {
+  background-color: var(--gb-yellow);
+  color: var(--background0);
+}
+.name.progress5 {
+  background-color: var(--gb-aqua);
+  color: var(--background0);
+}
+.name.progress6 {
+  background-color: var(--gb-green);
+  color: var(--background0);
 }

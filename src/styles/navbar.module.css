@@ -1,0 +1,29 @@
+.nav {
+  width: 100%;
+  background-color: var(--foreground0);
+}
+.button:active {
+  background-color: var(--gb-red);
+}
+.button {
+  padding-inline: 1ch;
+}
+.button:active {
+  background-color: var(--gb-red);
+}
+
+.dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.dialogContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1lh;
+  padding: 2lh 2ch 1lh 2ch;
+  background-color: var(--background1);
+}
+.dialogButtons {
+  display: flex;
+  gap: 1ch;
+  justify-content: flex-end;
+}

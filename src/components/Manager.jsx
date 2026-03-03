@@ -3,10 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { ManagerContext } from './ManagerContext';
 import '../styles/manager.css';
 
-import Item from './Item';
 import List from './List';
 import Roulette from './Roulette';
-import Header from './Header';
+import Navbar from './Navbar';
 
 function NewListForm({ newList }) {
   return (
@@ -21,8 +20,9 @@ function NewListForm({ newList }) {
         required
       ></input>
       <button
-        type="submit"
         className="w-full"
+        size-="small"
+        type="submit"
       >
         [New List]
       </button>
@@ -242,12 +242,12 @@ export default function Manager() {
   return (
     <div className="manager">
       {/* TODO: I don't think it should be here */}
-      <Header
+      <Navbar
         exportData={exportData}
         importData={importData}
       />
 
-      {/* <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
+      <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
         <div>
           <Roulette items={items} />
           <NewListForm newList={handleAddList} />
@@ -255,7 +255,7 @@ export default function Manager() {
         <div className="hidden md:block content-center">
           cool placeholder to fill out space
         </div>
-      </div> */}
+      </div>
 
       <ManagerContext.Provider
         value={{
@@ -269,7 +269,7 @@ export default function Manager() {
           handleAdvanceItem,
         }}
       >
-        <ul className="lists grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
+        <ul className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
           {lists.map((list) => (
             <li key={list.id}>
               <List list={list} />

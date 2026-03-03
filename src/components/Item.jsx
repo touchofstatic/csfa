@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { useClickAway } from '@uidotdev/usehooks';
 import { ManagerContext } from './ManagerContext';
-import styles from '../styles/Item.module.css';
+import styles from '../styles/item.module.css';
 
 export default function Item({ item, myListId }) {
   const [draftRenameItem, setDraftRenameItem] = useState('');
@@ -12,40 +12,43 @@ export default function Item({ item, myListId }) {
     setDraftRenameItem('');
   });
 
-  let progClassName = 'prog' + item.progress;
-  let progDisplay = '';
-  switch (progClassName) {
-    // TODO: make empty space here more clickable
-    case 'prog0':
-      progDisplay = '';
+  let progressClassName = 'progress' + item.progress;
+  let progress = '';
+  switch (progressClassName) {
+    case 'progress0':
+      progress = <span className="invisible">undefined</span>;
       break;
-    case 'prog1':
-      progDisplay = 'queued';
+    case 'progress1':
+      progress = 'queued';
       break;
-    case 'prog2':
-      progDisplay = 'priority';
+    case 'progress2':
+      progress = 'priority';
       break;
-    case 'prog3':
-      progDisplay = 'working';
+    case 'progress3':
+      progress = 'working';
       break;
-    case 'prog4':
-      progDisplay = 'submitted';
+    case 'progress4':
+      progress = 'submitted';
       break;
-    case 'prog5':
-      progDisplay = 'approved';
+    case 'progress5':
+      progress = 'approved';
       break;
-    case 'prog6':
-      progDisplay = 'done';
+    case 'progress6':
+      progress = 'done';
       break;
     default:
-      progDisplay = 'UNDEFINED';
+      progress = '???';
       break;
   }
 
   // TODO: bad?
   let title = '';
   if (!draftRenameItem) {
-    title = <div className={`${styles.itemName} itemName`}>{item.name}</div>;
+    title = (
+      <div className={`${styles.name} ${styles[progressClassName]}`}>
+        {item.name}
+      </div>
+    );
   } else {
     title = (
       <form
@@ -95,15 +98,17 @@ export default function Item({ item, myListId }) {
   }
 
   return (
-    <div className={`${progClassName} ${styles.item}`}>
-      <div className="itemControls controls">
+    <div className={`${progressClassName}`}>
+      <div>
         <button
+          className={`${styles.controls} ${styles[progressClassName]}`}
           size-="small"
           onClick={() => handleDeleteItem(item.id, myListId)}
         >
           [-]
         </button>
         <button
+          className={`${styles.controls} ${styles[progressClassName]}`}
           size-="small"
           onClick={() => setDraftRenameItem(item.name)}
         >
@@ -111,11 +116,10 @@ export default function Item({ item, myListId }) {
         </button>
         <button
           size-="small"
-          // TODO: redundant fix css modules
-          className={`${styles.progDisplay} progDisplay`}
+          className={`${styles[progressClassName]} float-right bg-[var(--background0)] text-[var(--foreground2)]`}
           onClick={() => handleAdvanceItem(item.id)}
         >
-          {progDisplay} [&gt;]
+          {progress} [&gt;]
         </button>
       </div>
       {title}
