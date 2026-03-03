@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
+    "@uidotdev/usehooks": "^2.4.1",
     "@webtui/css": "^0.1.6",
     "@webtui/theme-catppuccin": "^0.0.3",
     "@webtui/theme-everforest": "^0.0.3",

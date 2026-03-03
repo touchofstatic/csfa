@@ -1,17 +1,7 @@
-.header {
+.list header {
   font-weight: 700;
 }
 
 .name {
   word-break: break-word;
 }
-/* 
-.list form {
-  input {
-    width: calc(100% - 8ch);
-  }
-
-  input ~ span {
-    float: right;
-  }
-} */
