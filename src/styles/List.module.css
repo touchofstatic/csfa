@@ -35,3 +35,27 @@
   background-color: var(--background1);
   color: var(--background1);
 }
+.progress1 {
+  background-color: var(--gb-purple);
+  color: var(--background0);
+}
+.progress2 {
+  background-color: var(--gb-red);
+  color: var(--background0);
+}
+.progress3 {
+  background-color: var(--gb-orange);
+  color: var(--background0);
+}
+.progress4 {
+  background-color: var(--gb-yellow);
+  color: var(--background0);
+}
+.progress5 {
+  background-color: var(--gb-aqua);
+  color: var(--background0);
+}
+.progress6 {
+  background-color: var(--gb-green);
+  color: var(--background0);
+}

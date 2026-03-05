@@ -7,11 +7,22 @@ import List from './List';
 import Roulette from './Roulette';
 import Navbar from './Navbar';
 
+const PROGRESS_SYSTEM_DEFAULT = [
+  'unspecified',
+  'queued',
+  'priority',
+  'working',
+  'submitted',
+  'approved',
+  'done',
+];
+
 function NewListForm({ newList }) {
   return (
     <form
       onSubmit={newList}
       autoComplete="off"
+      className="md:flex md:gap-[1ch]"
     >
       <input
         className="w-full"
@@ -20,7 +31,7 @@ function NewListForm({ newList }) {
         required
       ></input>
       <button
-        className="w-full"
+        className="w-full md:w-[15ch]"
         size-="small"
         type="submit"
       >
@@ -56,7 +67,7 @@ export default function Manager() {
       progress: 5,
       id: '4',
     },
-    { name: uuidv4().substring(0, 8), progress: 2, id: '6' },
+    { name: uuidv4().substring(0, 8), progress: 3, id: '6' },
     { name: uuidv4().substring(0, 8), progress: 4, id: '7' },
     { name: uuidv4().substring(0, 8), progress: 6, id: '8' },
     { name: uuidv4().substring(0, 8), progress: 6, id: '9' },
@@ -67,20 +78,35 @@ export default function Manager() {
       id: uuidv4(),
       itemIds: ['1', '2', '4', '9'],
       visible: true,
+      range: PROGRESS_SYSTEM_DEFAULT,
     },
-    { name: uuidv4(), id: uuidv4(), itemIds: ['3', '8'], visible: true },
+    {
+      name: uuidv4(),
+      id: uuidv4(),
+      itemIds: ['3', '8'],
+      visible: true,
+      range: PROGRESS_SYSTEM_DEFAULT,
+    },
     {
       name: uuidv4(),
       id: uuidv4(),
       itemIds: [],
       visible: true,
+      range: PROGRESS_SYSTEM_DEFAULT,
     },
-    { name: uuidv4(), id: uuidv4(), itemIds: [], visible: true },
+    {
+      name: uuidv4(),
+      id: uuidv4(),
+      itemIds: [],
+      visible: true,
+      range: PROGRESS_SYSTEM_DEFAULT,
+    },
     {
       name: uuidv4(),
       id: uuidv4(),
       itemIds: ['6', '7'],
       visible: true,
+      range: PROGRESS_SYSTEM_DEFAULT,
     },
   ]);
 
@@ -103,6 +129,7 @@ export default function Manager() {
         id: uuidv4(),
         itemIds: [],
         visible: true,
+        range: PROGRESS_SYSTEM_DEFAULT,
       },
     ]);
   }
@@ -161,6 +188,21 @@ export default function Manager() {
         if (list.id !== listId) return list;
         else {
           return { ...list, visible: !list.visible };
+        }
+      }),
+    );
+  }
+
+  function handleRenameRange(event) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const newRange = ['unspecified'].concat(formData.getAll('progress'));
+    const listId = formData.get('listId');
+    setLists(
+      lists.map((list) => {
+        if (list.id !== listId) return list;
+        else {
+          return { ...list, range: newRange };
         }
       }),
     );
@@ -240,43 +282,47 @@ export default function Manager() {
   }
 
   return (
-    <div className="manager">
-      {/* TODO: I don't think it should be here */}
+    <>
       <Navbar
         exportData={exportData}
         importData={importData}
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
-        <div>
-          <Roulette items={items} />
-          <NewListForm newList={handleAddList} />
-        </div>
-        <div className="hidden md:block content-center">
-          cool placeholder to fill out space
-        </div>
-      </div>
+      <div className="manager">
+        {/* TODO: I don't think it should be here */}
 
-      <ManagerContext.Provider
-        value={{
-          items,
-          handleAddItem,
-          handleDeleteList,
-          handleRenameList,
-          handleCollapseList,
-          handleDeleteItem,
-          handleRenameItem,
-          handleAdvanceItem,
-        }}
-      >
-        <ul className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
-          {lists.map((list) => (
-            <li key={list.id}>
-              <List list={list} />
-            </li>
-          ))}
-        </ul>
-      </ManagerContext.Provider>
-    </div>
+        <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
+          <div>
+            <Roulette items={items} />
+            <NewListForm newList={handleAddList} />
+          </div>
+          <div className="hidden md:block content-center">
+            cool placeholder to fill out space
+          </div>
+        </div>
+
+        <ManagerContext.Provider
+          value={{
+            items,
+            handleAddItem,
+            handleDeleteList,
+            handleRenameList,
+            handleCollapseList,
+            handleDeleteItem,
+            handleRenameItem,
+            handleAdvanceItem,
+            handleRenameRange,
+          }}
+        >
+          <ul className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
+            {lists.map((list) => (
+              <li key={list.id}>
+                <List list={list} />
+              </li>
+            ))}
+          </ul>
+        </ManagerContext.Provider>
+      </div>
+    </>
   );
 }

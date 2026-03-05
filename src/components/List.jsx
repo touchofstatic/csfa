@@ -16,6 +16,7 @@ export default function List({ list }) {
     handleDeleteList,
     handleRenameList,
     handleCollapseList,
+    handleRenameRange,
   } = useContext(ManagerContext);
   const myItems = items.filter((item) => list.itemIds.includes(item.id));
 
@@ -111,6 +112,7 @@ export default function List({ list }) {
               <Item
                 item={item}
                 myListId={list.id}
+                range={list.range}
               />
             </li>
           ))}
@@ -141,6 +143,67 @@ export default function List({ list }) {
           className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
         >
           [+]
+        </button>
+      </form>
+
+      <form
+        onSubmit={(event) => {
+          handleRenameRange(event);
+        }}
+        autoComplete="off"
+      >
+        <input
+          type="hidden"
+          name="listId"
+          value={list.id}
+        />
+        <input
+          type="text"
+          name="progress"
+          defaultValue={list.range[1]}
+          className={styles.progress1}
+          required
+        />
+        <input
+          type="text"
+          name="progress"
+          defaultValue={list.range[2]}
+          className={styles.progress2}
+          required
+        />
+        <input
+          type="text"
+          name="progress"
+          defaultValue={list.range[3]}
+          className={styles.progress3}
+          required
+        />
+        <input
+          type="text"
+          name="progress"
+          defaultValue={list.range[4]}
+          className={styles.progress4}
+          required
+        />
+        <input
+          type="text"
+          name="progress"
+          defaultValue={list.range[5]}
+          className={styles.progress5}
+          required
+        />
+        <input
+          type="text"
+          name="progress"
+          defaultValue={list.range[6]}
+          className={styles.progress6}
+          required
+        />
+        <button
+          type="submit"
+          size-="small"
+        >
+          [Rename]
         </button>
       </form>
     </div>

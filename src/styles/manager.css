@@ -1,3 +1,7 @@
 li::before {
   content: '';
 }
+
+.manager {
+  padding-inline: 1ch;
+}
