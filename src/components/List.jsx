@@ -164,14 +164,13 @@ export default function List({ list }) {
           box-="double"
           shear-="top"
         >
-          <span
+          <div
             is-="badge"
-            className={styles.badge}
+            className={`${styles.badge} overflow-hidden whitespace-nowrap text-ellipsis max-w-[20ch] md:max-w-[50ch]`}
           >
-            Settings
-          </span>
+            {list.name}
+          </div>
           <div className={styles.dialogContent}>
-            <p>{list.name}</p>
             <form
               className={styles.form}
               onSubmit={(event) => {
