@@ -18,7 +18,7 @@ export default function Roulette({ items }) {
   }
 
   return (
-    <>
+    <div className="flex flex-col gap-[0.5lh]">
       <div className={styles.pull}>
         {spinner && (
           <span
@@ -35,6 +35,6 @@ export default function Roulette({ items }) {
       >
         [Roulette]
       </button>
-    </>
+    </div>
   );
 }

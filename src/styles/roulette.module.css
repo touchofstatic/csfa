@@ -1,5 +1,10 @@
 .pull {
-  min-height: 1lh;
+  min-height: 3lh;
   padding-inline: 1ch;
   word-wrap: break-word;
+  border: 3px solid var(--background1);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }

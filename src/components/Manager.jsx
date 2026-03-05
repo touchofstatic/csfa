@@ -6,8 +6,9 @@ import '../styles/manager.css';
 import List from './List';
 import Roulette from './Roulette';
 import Navbar from './Navbar';
+import Ascii from './Ascii';
 
-const PROGRESS_SYSTEM_DEFAULT = [
+const RANGE_SYSTEM_DEFAULT = [
   'unspecified',
   'queued',
   'priority',
@@ -78,35 +79,35 @@ export default function Manager() {
       id: uuidv4(),
       itemIds: ['1', '2', '4', '9'],
       visible: true,
-      range: PROGRESS_SYSTEM_DEFAULT,
+      range: RANGE_SYSTEM_DEFAULT,
     },
     {
       name: uuidv4(),
       id: uuidv4(),
       itemIds: ['3', '8'],
       visible: true,
-      range: PROGRESS_SYSTEM_DEFAULT,
+      range: RANGE_SYSTEM_DEFAULT,
     },
     {
       name: uuidv4(),
       id: uuidv4(),
       itemIds: [],
       visible: true,
-      range: PROGRESS_SYSTEM_DEFAULT,
+      range: RANGE_SYSTEM_DEFAULT,
     },
     {
       name: uuidv4(),
       id: uuidv4(),
       itemIds: [],
       visible: true,
-      range: PROGRESS_SYSTEM_DEFAULT,
+      range: RANGE_SYSTEM_DEFAULT,
     },
     {
       name: uuidv4(),
       id: uuidv4(),
       itemIds: ['6', '7'],
       visible: true,
-      range: PROGRESS_SYSTEM_DEFAULT,
+      range: RANGE_SYSTEM_DEFAULT,
     },
   ]);
 
@@ -129,7 +130,7 @@ export default function Manager() {
         id: uuidv4(),
         itemIds: [],
         visible: true,
-        range: PROGRESS_SYSTEM_DEFAULT,
+        range: RANGE_SYSTEM_DEFAULT,
       },
     ]);
   }
@@ -289,15 +290,12 @@ export default function Manager() {
       />
 
       <div className="manager">
-        {/* TODO: I don't think it should be here */}
-
-        <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
-          <div>
+        {/* <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]"> */}
+        <div className="flex justify-evenly">
+          <Ascii text="csfa" />
+          <div className="flex flex-col gap-[0.5lh] w-full md:w-3/6 justify-center">
             <Roulette items={items} />
             <NewListForm newList={handleAddList} />
-          </div>
-          <div className="hidden md:block content-center">
-            cool placeholder to fill out space
           </div>
         </div>
 

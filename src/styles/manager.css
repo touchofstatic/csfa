@@ -9,3 +9,17 @@ li::before {
   flex-direction: column;
   row-gap: 1lh;
 }
+
+.gradient {
+  background: -webkit-linear-gradient(
+    left,
+    var(--gb-purple),
+    var(--gb-red),
+    var(--gb-orange),
+    var(--gb-yellow),
+    var(--gb-aqua),
+    var(--gb-green)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
