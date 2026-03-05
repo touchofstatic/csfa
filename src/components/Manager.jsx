@@ -56,9 +56,13 @@ export default function Manager() {
 
   // FOR DEVELOPMENT
   const [items, setItems] = useState([
-    { name: uuidv4().substring(0, 8), progress: 1, id: '1' },
     {
-      name: uuidv4(),
+      name: 'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest',
+      progress: 1,
+      id: '1',
+    },
+    {
+      name: 'съешь ка мягких французских булок да выпей чаю',
       progress: 4,
       id: '2',
     },
@@ -68,8 +72,6 @@ export default function Manager() {
       progress: 5,
       id: '4',
     },
-    { name: uuidv4().substring(0, 8), progress: 3, id: '6' },
-    { name: uuidv4().substring(0, 8), progress: 4, id: '7' },
     { name: uuidv4().substring(0, 8), progress: 6, id: '8' },
     { name: uuidv4().substring(0, 8), progress: 6, id: '9' },
   ]);
@@ -85,27 +87,6 @@ export default function Manager() {
       name: uuidv4(),
       id: uuidv4(),
       itemIds: ['3', '8'],
-      visible: true,
-      range: RANGE_SYSTEM_DEFAULT,
-    },
-    {
-      name: uuidv4(),
-      id: uuidv4(),
-      itemIds: [],
-      visible: true,
-      range: RANGE_SYSTEM_DEFAULT,
-    },
-    {
-      name: uuidv4(),
-      id: uuidv4(),
-      itemIds: [],
-      visible: true,
-      range: RANGE_SYSTEM_DEFAULT,
-    },
-    {
-      name: uuidv4(),
-      id: uuidv4(),
-      itemIds: ['6', '7'],
       visible: true,
       range: RANGE_SYSTEM_DEFAULT,
     },

@@ -17,23 +17,25 @@ export default function Roulette({ items }) {
     }
   }
 
+  const idk = <span className="gradient"></span>;
+
   return (
     <div className="flex flex-col gap-[0.5lh]">
-      <div className={styles.pull}>
+      <div className={`${styles.pull} min-h-[4lh] md:min-h-[3lh]`}>
         {spinner && (
           <span
             is-="spinner"
             variant-="dots"
           ></span>
         )}
-        {pull.name}
+        {!pull && !spinner ? idk : pull.name}
       </div>
       <button
         size-="small"
         className="w-full"
         onClick={randomize}
       >
-        [Roulette]
+        [Task Roulette]
       </button>
     </div>
   );
