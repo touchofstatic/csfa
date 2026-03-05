@@ -50,6 +50,7 @@ export default function List({ list }) {
         />
         <span className="flex gap-[1ch]">
           <button
+            type="button"
             className="w-full"
             size-="small"
             onClick={(event) => {
@@ -96,6 +97,14 @@ export default function List({ list }) {
             onClick={() => handleCollapseList(list.id)}
           >
             {list.visible ? `[▼]` : `[▲]`}
+          </button>
+          <button
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
+            size-="small"
+            command="show-modal"
+            commandfor="settings-dialog"
+          >
+            [s]
           </button>
           <span> | {myItems.length} items</span>
         </div>
@@ -146,66 +155,96 @@ export default function List({ list }) {
         </button>
       </form>
 
-      <form
-        onSubmit={(event) => {
-          handleRenameRange(event);
-        }}
-        autoComplete="off"
+      <dialog
+        className={styles.dialog}
+        id="settings-dialog"
+        popover="true"
       >
-        <input
-          type="hidden"
-          name="listId"
-          value={list.id}
-        />
-        <input
-          type="text"
-          name="progress"
-          defaultValue={list.range[1]}
-          className={styles.progress1}
-          required
-        />
-        <input
-          type="text"
-          name="progress"
-          defaultValue={list.range[2]}
-          className={styles.progress2}
-          required
-        />
-        <input
-          type="text"
-          name="progress"
-          defaultValue={list.range[3]}
-          className={styles.progress3}
-          required
-        />
-        <input
-          type="text"
-          name="progress"
-          defaultValue={list.range[4]}
-          className={styles.progress4}
-          required
-        />
-        <input
-          type="text"
-          name="progress"
-          defaultValue={list.range[5]}
-          className={styles.progress5}
-          required
-        />
-        <input
-          type="text"
-          name="progress"
-          defaultValue={list.range[6]}
-          className={styles.progress6}
-          required
-        />
-        <button
-          type="submit"
-          size-="small"
+        <div
+          box-="double"
+          shear-="top"
         >
-          [Rename]
-        </button>
-      </form>
+          <span
+            is-="badge"
+            className={styles.badge}
+          >
+            Settings
+          </span>
+          <div className={styles.dialogContent}>
+            <p>{list.name}</p>
+            <form
+              className={styles.form}
+              onSubmit={(event) => {
+                handleRenameRange(event);
+              }}
+              autoComplete="off"
+            >
+              <input
+                type="hidden"
+                name="listId"
+                value={list.id}
+              />
+              <input
+                type="text"
+                name="progress"
+                defaultValue={list.range[1]}
+                className={`${styles.progress1}`}
+                required
+              />
+              <input
+                type="text"
+                name="progress"
+                defaultValue={list.range[2]}
+                className={styles.progress2}
+                required
+              />
+              <input
+                type="text"
+                name="progress"
+                defaultValue={list.range[3]}
+                className={styles.progress3}
+                required
+              />
+              <input
+                type="text"
+                name="progress"
+                defaultValue={list.range[4]}
+                className={styles.progress4}
+                required
+              />
+              <input
+                type="text"
+                name="progress"
+                defaultValue={list.range[5]}
+                className={styles.progress5}
+                required
+              />
+              <input
+                type="text"
+                name="progress"
+                defaultValue={list.range[6]}
+                className={styles.progress6}
+                required
+              />
+              <button
+                type="submit"
+                size-="small"
+                className="self-end"
+              >
+                [Rename]
+              </button>
+            </form>
+            <div className={styles.dialogButtons}>
+              <button
+                commandfor="settings-dialog"
+                command="close"
+              >
+                Exit
+              </button>
+            </div>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 }

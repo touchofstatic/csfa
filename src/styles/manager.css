@@ -4,4 +4,8 @@ li::before {
 
 .manager {
   padding-inline: 1ch;
+  padding-block: 1lh;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1lh;
 }

@@ -15,7 +15,7 @@ export default function Navbar({ exportData, importData }) {
         popover="true"
       >
         <div
-          box-="round"
+          box-="double"
           className={styles.dialogContent}
         >
           {imported === false ? (
