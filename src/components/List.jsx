@@ -102,7 +102,7 @@ export default function List({ list }) {
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
             size-="small"
             command="show-modal"
-            commandfor="settings-dialog"
+            commandfor={`settings-dialog-${list.id}`}
           >
             [s]
           </button>
@@ -157,7 +157,7 @@ export default function List({ list }) {
 
       <dialog
         className={styles.dialog}
-        id="settings-dialog"
+        id={`settings-dialog-${list.id}`}
         popover="true"
       >
         <div
@@ -236,7 +236,7 @@ export default function List({ list }) {
             </form>
             <div className={styles.dialogButtons}>
               <button
-                commandfor="settings-dialog"
+                commandfor={`settings-dialog-${list.id}`}
                 command="close"
               >
                 Exit

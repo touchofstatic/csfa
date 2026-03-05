@@ -70,7 +70,6 @@
   /* flex-direction: column; */
   gap: 1ch;
   padding-inline: 2ch;
-  /* word-break: break-word; */
   max-width: 50ch;
 }
 .dialogButtons {
