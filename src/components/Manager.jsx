@@ -293,7 +293,7 @@ export default function Manager() {
         {/* <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]"> */}
         <div className="flex justify-evenly">
           <Ascii text="csfa" />
-          <div className="flex flex-col gap-[0.5lh] w-full md:w-3/6 justify-center">
+          <div className="flex flex-col gap-[0.8lh] w-full md:w-3/6 justify-center">
             <Roulette items={items} />
             <NewListForm newList={handleAddList} />
           </div>

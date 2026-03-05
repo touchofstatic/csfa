@@ -4,11 +4,12 @@ import {
   fraktur,
   ansiShadow,
   dosRebel,
+  deltaCorpsPriest1,
 } from 'react-ascii-text';
 
 export default function Ascii({ text }) {
   const asciiTextRef = useAsciiText({
-    font: alligator,
+    font: deltaCorpsPriest1,
     text: text,
     isAnimated: false,
   });
