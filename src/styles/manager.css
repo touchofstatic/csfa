@@ -21,5 +21,10 @@ li::before {
     var(--gb-green)
   );
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+input[type='checkbox']:not([is-='switch'])::before {
+  background: var(--background0);
 }

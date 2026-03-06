@@ -94,18 +94,19 @@ export default function List({ list }) {
           <button
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
             size-="small"
-            onClick={() => handleCollapseList(list.id)}
-          >
-            {list.visible ? `[▼]` : `[▲]`}
-          </button>
-          <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
-            size-="small"
             command="show-modal"
             commandfor={`settings-dialog-${list.id}`}
           >
             [s]
           </button>
+          <button
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
+            size-="small"
+            onClick={() => handleCollapseList(list.id)}
+          >
+            {list.visible ? `[▼]` : `[▲]`}
+          </button>
+
           <span> | {myItems.length} items</span>
         </div>
         {title}
@@ -128,7 +129,7 @@ export default function List({ list }) {
         </ul>
       )}
       <form
-        className="flex gap-[1ch]"
+        className={`${styles.add} flex gap-[1ch]`}
         onSubmit={(event) => {
           event.preventDefault();
           handleAddItem(event);
@@ -166,13 +167,13 @@ export default function List({ list }) {
         >
           <div
             is-="badge"
-            className={`${styles.badge} overflow-hidden whitespace-nowrap text-ellipsis max-w-[20ch] md:max-w-[50ch]`}
+            className={`${styles.badge} overflow-hidden whitespace-nowrap text-ellipsis max-w-[20ch] md:max-w-[40ch]`}
           >
             {list.name}
           </div>
           <div className={styles.dialogContent}>
             <form
-              className={styles.form}
+              className={styles.settingsRangeForm}
               onSubmit={(event) => {
                 handleRenameRange(event);
               }}
@@ -230,7 +231,7 @@ export default function List({ list }) {
                 size-="small"
                 className="self-end"
               >
-                [Rename]
+                [Update]
               </button>
             </form>
             <div className={styles.dialogButtons}>

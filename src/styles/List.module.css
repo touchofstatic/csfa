@@ -81,10 +81,15 @@
   margin: 0 1ch;
   padding: 0 1ch;
   background-color: var(--background1);
+  margin-right: 4ch;
 }
 
-.form {
+.settingsRangeForm {
   margin-block: 1ch;
   display: flex;
   flex-direction: column;
+}
+
+.add {
+  margin-top: 1ch;
 }

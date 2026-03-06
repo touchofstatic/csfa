@@ -5,8 +5,10 @@
 @import '@webtui/css/components/typography.css';
 @import '@webtui/css/components/input.css';
 @import '@webtui/css/components/spinner.css';
+@import '@webtui/css/components/checkbox.css';
 @import '@webtui/css/components/dialog.css';
 @import '@webtui/css/components/button.css';
+@import '@webtui/css/components/progress.css';
 @import '@webtui/theme-gruvbox';
 
 @layer base {
@@ -31,4 +33,3 @@
 body {
   margin: 0;
 }
-

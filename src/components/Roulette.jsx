@@ -21,7 +21,7 @@ export default function Roulette({ items }) {
 
   return (
     <div className="flex flex-col gap-[0.5lh]">
-      <div className={`${styles.pull} min-h-[4lh] md:min-h-[3lh]`}>
+      <div className={`${styles.pull} min-h-[3lh]`}>
         {spinner && (
           <span
             is-="spinner"
