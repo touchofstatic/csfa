@@ -26,7 +26,7 @@ export default function App() {
       </HelmetProvider>
 
       <main>
-        <ThemeContext.Provider value={{ changeTheme }}>
+        <ThemeContext.Provider value={{ theme, changeTheme }}>
           <Manager />
         </ThemeContext.Provider>
       </main>
