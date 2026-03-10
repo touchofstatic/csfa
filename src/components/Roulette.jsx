@@ -6,7 +6,7 @@ export default function Roulette({ items }) {
   const [spinner, setSpinner] = useState(false);
 
   function randomize() {
-    if (items.length > 0) {
+    if (items.length > 0 && !spinner) {
       setPull('');
       setSpinner(true);
       setTimeout(() => {

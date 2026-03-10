@@ -11,8 +11,8 @@ import Ascii from './Ascii';
 // FOR DEVELOPMENT
 import { itemsdb, listsdb } from './data';
 
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
+const reorder = (source, startIndex, endIndex) => {
+  const result = structuredClone(source);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
 
