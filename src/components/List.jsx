@@ -126,42 +126,43 @@ export default function List({ list, index, children }) {
         key={list.id}
         droppableId={`${index}`}
       >
-        {(provided, snapshot) =>
+        {(provided, snapshot) => (
           // collapse broke
-          list.visible && (
-            <div
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              className={`${snapshot.isDraggingOver ? `${styles.over}` : ``}`}
-            >
-              {myItems.map((item, index) => (
-                <Draggable
-                  key={item.id}
-                  draggableId={item.id}
-                  index={index}
-                >
-                  {(provided) => (
-                    <div
-                      key={item.id}
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                    >
+
+          <div
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            className={`${snapshot.isDraggingOver ? `${styles.over}` : ``}`}
+          >
+            {myItems.map((item, index) => (
+              <Draggable
+                key={item.id}
+                draggableId={item.id}
+                index={index}
+              >
+                {(provided) => (
+                  <div
+                    key={item.id}
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  >
+                    {list.visible && (
                       <Item
                         item={item}
                         myListId={list.id}
                         range={list.range}
                         index={index}
                       />
-                      {children}
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )
-        }
+                    )}
+                    {children}
+                  </div>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
       </Droppable>
 
       <form
