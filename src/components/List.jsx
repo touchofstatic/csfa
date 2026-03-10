@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { useClickAway } from '@uidotdev/usehooks';
-import { ManagerContext } from './ManagerContext';
+import { ManagerContext } from './Contexts';
 import styles from '../styles/list.module.css';
 import Item from './Item';
 
@@ -81,7 +81,9 @@ export default function List({ list, index, children }) {
     <div
       className={`${styles.list} ${!list.visible ? `${styles.collapsed}` : ''}`}
     >
-      <header className={`${!list.visible ? `${styles.collapsed}` : ''}`}>
+      <header
+        className={`${!list.visible ? `${styles.collapsed}` : ''} noselect`}
+      >
         <div>
           <button
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
@@ -127,8 +129,6 @@ export default function List({ list, index, children }) {
         droppableId={`${index}`}
       >
         {(provided, snapshot) => (
-          // collapse broke
-
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}

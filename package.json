@@ -22,6 +22,8 @@
     "react": "^19.2.0",
     "react-ascii-text": "^0.0.4",
     "react-dom": "^19.2.0",
+    "react-helmet": "^6.1.0",
+    "react-helmet-async": "^3.0.0",
     "react-timer-hook": "^4.0.5",
     "tailwindcss": "^4.1.18",
     "use-immer": "^0.11.0",

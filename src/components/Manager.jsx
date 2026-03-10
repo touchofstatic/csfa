@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
-import { ManagerContext } from './ManagerContext';
+import { ManagerContext } from './Contexts';
 import '../styles/manager.css';
 import List from './List';
 import Roulette from './Roulette';
@@ -76,16 +76,16 @@ export default function Manager() {
   // });
 
   // FOR DEVELOPMENT
-  const [items, setItems] = useState(itemsdb);
   const [lists, setLists] = useState(listsdb);
-
-  useEffect(() => {
-    localStorage.setItem('itemsdb', JSON.stringify(items));
-  }, [items]);
+  const [items, setItems] = useState(itemsdb);
 
   useEffect(() => {
     localStorage.setItem('listsdb', JSON.stringify(lists));
   }, [lists]);
+
+  useEffect(() => {
+    localStorage.setItem('itemsdb', JSON.stringify(items));
+  }, [items]);
 
   function onDragEnd(result) {
     const { source, destination } = result;
@@ -251,21 +251,6 @@ export default function Manager() {
     );
   }
 
-  function exportData() {
-    // file object
-    const file = new Blob([JSON.stringify({ lists: lists, items: items })], {
-      type: 'application/json',
-    });
-    // anchor link
-    const element = document.createElement('a');
-    element.href = URL.createObjectURL(file);
-    element.download = 'csfa-' + Date.now() + '.json';
-    // simulate link click
-    document.body.appendChild(element);
-    // Required for this to work in FireFox
-    element.click();
-  }
-
   // TODO: validation
   function importData(event) {
     const file = event.target.files[0];
@@ -281,17 +266,21 @@ export default function Manager() {
 
   return (
     <>
-      <Navbar
-        exportData={exportData}
-        importData={importData}
-      />
-
       {/* FOR DEVELOPMENT */}
       {/* <ul>
         {lists.map((list) => (
           <li key={list.id}>{`${list.itemIds}`}</li>
         ))}
       </ul> */}
+      <ManagerContext.Provider
+        value={{
+          lists,
+          items,
+          importData,
+        }}
+      >
+        <Navbar />
+      </ManagerContext.Provider>
 
       <div className="manager">
         <div className="flex justify-evenly">
@@ -319,6 +308,7 @@ export default function Manager() {
             <DragDropContext onDragEnd={onDragEnd}>
               {lists.map((list, index) => (
                 <List
+                  key={list.id}
                   list={list}
                   index={index}
                 />

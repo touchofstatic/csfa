@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { useClickAway } from '@uidotdev/usehooks';
-import { ManagerContext } from './ManagerContext';
+import { ManagerContext } from './Contexts';
 import styles from '../styles/item.module.css';
 
 export default function Item({ item, myListId, range }) {
@@ -47,7 +47,7 @@ export default function Item({ item, myListId, range }) {
   let title = '';
   if (!draftRenameItem) {
     title = (
-      <div className={`${styles.name} ${styles[progressClassName]}`}>
+      <div className={`${styles.name} ${styles[progressClassName]} noselect`}>
         {item.name}
       </div>
     );
@@ -100,7 +100,7 @@ export default function Item({ item, myListId, range }) {
   }
 
   return (
-    <div className={`${progressClassName}`}>
+    <div className={`${progressClassName} ${styles.item}`}>
       <div>
         <button
           className={`${styles.controls} ${styles[progressClassName]}`}

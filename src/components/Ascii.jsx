@@ -17,7 +17,7 @@ export default function Ascii({ text }) {
   return (
     <pre
       ref={asciiTextRef}
-      className="hidden md:block text-center text-[14px] gradient"
+      className="hidden md:block text-center text-[14px] gradient noselect"
     ></pre>
   );
 }

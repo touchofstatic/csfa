@@ -1,9 +1,35 @@
+import { useState, useEffect } from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { ThemeContext } from './components/Contexts';
 import Manager from './components/Manager.jsx';
 
 export default function App() {
+  const [theme, setTheme] = useState(() => {
+    const loadTheme = JSON.parse(localStorage.getItem('theme'));
+    return loadTheme || 'gruvbox-light-medium';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('theme', JSON.stringify(theme));
+  }, [theme]);
+
+  function changeTheme(theme) {
+    setTheme(theme);
+  }
+
   return (
-    <main>
-      <Manager />
-    </main>
+    <>
+      <HelmetProvider>
+        <Helmet htmlAttributes>
+          <html data-webtui-theme={theme} />
+        </Helmet>
+      </HelmetProvider>
+
+      <main>
+        <ThemeContext.Provider value={{ changeTheme }}>
+          <Manager />
+        </ThemeContext.Provider>
+      </main>
+    </>
   );
 }
