@@ -4,7 +4,9 @@ import { ManagerContext } from './ManagerContext';
 import styles from '../styles/list.module.css';
 import Item from './Item';
 
-export default function List({ list }) {
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+
+export default function List({ list, index, children }) {
   const [draftRenameList, setDraftRenameList] = useState('');
   const ref = useClickAway(() => {
     setDraftRenameList('');
@@ -18,12 +20,15 @@ export default function List({ list }) {
     handleCollapseList,
     handleRenameRange,
   } = useContext(ManagerContext);
-  const myItems = items.filter((item) => list.itemIds.includes(item.id));
+
+  const myItems = list.itemIds
+    .map((key) => items.find((item) => item.id === key))
+    .filter(Boolean);
 
   // TODO: bad?
   let title = '';
   if (!draftRenameList) {
-    title = <div className={styles.name}>{list.name}</div>;
+    title = <div className={`${styles.name}`}>{list.name}</div>;
   } else {
     title = (
       <form
@@ -71,6 +76,7 @@ export default function List({ list }) {
       </form>
     );
   }
+
   return (
     <div
       className={`${styles.list} ${!list.visible ? `${styles.collapsed}` : ''}`}
@@ -111,23 +117,53 @@ export default function List({ list }) {
         </div>
         {title}
       </header>
+
       <hr
         className={`${styles.separator} ${!list.visible ? `${styles.collapsed}` : ''}`}
       ></hr>
 
-      {list.visible && (
-        <ul>
-          {myItems.map((item) => (
-            <li key={item.id}>
-              <Item
-                item={item}
-                myListId={list.id}
-                range={list.range}
-              />
-            </li>
-          ))}
-        </ul>
-      )}
+      <Droppable
+        key={list.id}
+        droppableId={`${index}`}
+      >
+        {(provided, snapshot) =>
+          // collapse broke
+          list.visible && (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className={`${snapshot.isDraggingOver ? `${styles.over}` : ``}`}
+            >
+              {myItems.map((item, index) => (
+                <Draggable
+                  key={item.id}
+                  draggableId={item.id}
+                  index={index}
+                >
+                  {(provided) => (
+                    <div
+                      key={item.id}
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      <Item
+                        item={item}
+                        myListId={list.id}
+                        range={list.range}
+                        index={index}
+                      />
+                      {children}
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )
+        }
+      </Droppable>
+
       <form
         className={`${styles.add} flex gap-[1ch]`}
         onSubmit={(event) => {

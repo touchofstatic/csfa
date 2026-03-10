@@ -4,7 +4,7 @@
 }
 .controls {
   color: var(--foreground0);
-  background-color: var(--background0);
+  background-color: transparent;
 }
 .controls:active {
   color: var(--background0);

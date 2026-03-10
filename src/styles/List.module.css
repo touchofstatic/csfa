@@ -17,6 +17,8 @@
   border: 2px solid var(--background2);
   padding: 1ch;
   height: fit-content;
+  display: flex;
+  flex-direction: column;
 }
 .list.collapsed {
   border: 2px solid var(--background1);
@@ -93,3 +95,8 @@
 .add {
   margin-top: 1ch;
 }
+
+/* 
+.over {
+  margin-bottom: 5ch;
+} */

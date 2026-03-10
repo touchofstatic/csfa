@@ -11,6 +11,7 @@
     "host": "vite --host"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "@tailwindcss/vite": "^4.1.18",
     "@uidotdev/usehooks": "^2.4.1",
     "@webtui/css": "^0.1.6",

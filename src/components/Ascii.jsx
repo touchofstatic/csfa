@@ -1,9 +1,9 @@
 import {
   useAsciiText,
-  alligator,
-  fraktur,
-  ansiShadow,
-  dosRebel,
+  // alligator,
+  // fraktur,
+  // ansiShadow,
+  // dosRebel,
   deltaCorpsPriest1,
 } from 'react-ascii-text';
 

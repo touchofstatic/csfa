@@ -21,27 +21,21 @@ export default function Item({ item, myListId, range }) {
       // progress = <span className="invisible">unspecified</span>;
       break;
     case 'progress1':
-      // progress = 'queued';
       progress = range[1];
       break;
     case 'progress2':
-      // progress = 'priority';
       progress = range[2];
       break;
     case 'progress3':
-      // progress = 'working';
       progress = range[3];
       break;
     case 'progress4':
-      // progress = 'submitted';
       progress = range[4];
       break;
     case 'progress5':
-      // progress = 'approved';
       progress = range[5];
       break;
     case 'progress6':
-      // progress = 'done';
       progress = range[6];
       break;
     default:
@@ -124,7 +118,7 @@ export default function Item({ item, myListId, range }) {
         </button>
         <button
           size-="small"
-          className={`${styles[progressClassName]} float-right bg-[var(--background0)] text-[var(--foreground2)]`}
+          className={`${styles[progressClassName]} float-right bg-transparent text-[var(--foreground2)]`}
           onClick={() => handleAdvanceItem(item.id)}
         >
           {progress} [&gt;]

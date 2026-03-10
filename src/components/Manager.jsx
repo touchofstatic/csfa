@@ -1,12 +1,35 @@
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { ManagerContext } from './ManagerContext';
 import '../styles/manager.css';
-
 import List from './List';
 import Roulette from './Roulette';
 import Navbar from './Navbar';
 import Ascii from './Ascii';
+
+// FOR DEVELOPMENT
+import { itemsdb, listsdb } from './data';
+
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
+
+const move = (source, destination, droppableSource, droppableDestination) => {
+  const sourceClone = structuredClone(source);
+  const destClone = structuredClone(destination);
+  const [removed] = sourceClone.itemIds.splice(droppableSource.index, 1);
+  destClone.itemIds.splice(droppableDestination.index, 0, removed);
+  const result = {};
+  result[droppableSource.droppableId] = sourceClone;
+  result[droppableDestination.droppableId] = destClone;
+
+  return result;
+};
 
 const RANGE_SYSTEM_DEFAULT = [
   'unspecified',
@@ -43,54 +66,18 @@ function NewListForm({ newList }) {
 }
 
 export default function Manager() {
-  // COMMENTED OUT FOR DEVELOPMENT
-  // load localstorage
   // const [items, setItems] = useState(() => {
-  //   const loadItemsDb = JSON.parse(localStorage.getItem("itemsdb"));
+  //   const loadItemsDb = JSON.parse(localStorage.getItem('itemsdb'));
   //   return loadItemsDb || [];
   // });
   // const [lists, setLists] = useState(() => {
-  //   const loadListsDb = JSON.parse(localStorage.getItem("listsdb"));
+  //   const loadListsDb = JSON.parse(localStorage.getItem('listsdb'));
   //   return loadListsDb || [];
   // });
 
   // FOR DEVELOPMENT
-  const [items, setItems] = useState([
-    {
-      name: 'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest',
-      progress: 1,
-      id: '1',
-    },
-    {
-      name: 'съешь ка мягких французских булок да выпей чаю',
-      progress: 4,
-      id: '2',
-    },
-    { name: uuidv4().substring(0, 8), progress: 5, id: '3' },
-    {
-      name: uuidv4(),
-      progress: 5,
-      id: '4',
-    },
-    { name: uuidv4().substring(0, 8), progress: 6, id: '8' },
-    { name: uuidv4().substring(0, 8), progress: 6, id: '9' },
-  ]);
-  const [lists, setLists] = useState([
-    {
-      name: uuidv4(),
-      id: uuidv4(),
-      itemIds: ['1', '2', '4', '9'],
-      visible: true,
-      range: RANGE_SYSTEM_DEFAULT,
-    },
-    {
-      name: uuidv4(),
-      id: uuidv4(),
-      itemIds: ['3', '8'],
-      visible: true,
-      range: RANGE_SYSTEM_DEFAULT,
-    },
-  ]);
+  const [items, setItems] = useState(itemsdb);
+  const [lists, setLists] = useState(listsdb);
 
   useEffect(() => {
     localStorage.setItem('itemsdb', JSON.stringify(items));
@@ -99,6 +86,36 @@ export default function Manager() {
   useEffect(() => {
     localStorage.setItem('listsdb', JSON.stringify(lists));
   }, [lists]);
+
+  function onDragEnd(result) {
+    const { source, destination } = result;
+    if (!destination) {
+      return;
+    }
+
+    const sInd = +source.droppableId;
+    const dInd = +destination.droppableId;
+
+    if (sInd === dInd) {
+      const result = reorder(
+        lists[sInd].itemIds,
+        source.index,
+        destination.index,
+      );
+      setLists(
+        lists.map((list, index) => {
+          if (index !== sInd) return list;
+          else return { ...list, itemIds: result };
+        }),
+      );
+    } else {
+      const result = move(lists[sInd], lists[dInd], source, destination);
+      const newLists = [...lists];
+      newLists[sInd] = result[sInd];
+      newLists[dInd] = result[dInd];
+      setLists(newLists);
+    }
+  }
 
   function handleAddList(event) {
     event.preventDefault();
@@ -255,7 +272,6 @@ export default function Manager() {
     const reader = new FileReader();
     reader.onload = function (event) {
       const data = JSON.parse(event.target.result);
-      // console.log(data);
 
       setLists(data.lists);
       setItems(data.items);
@@ -270,8 +286,13 @@ export default function Manager() {
         importData={importData}
       />
 
+      <ul>
+        {lists.map((list) => (
+          <li key={list.id}>{`${list.itemIds}`}</li>
+        ))}
+      </ul>
+
       <div className="manager">
-        {/* <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]"> */}
         <div className="flex justify-evenly">
           <Ascii text="csfa" />
           <div className="flex flex-col gap-[0.8lh] w-full md:w-3/6 justify-center">
@@ -293,13 +314,16 @@ export default function Manager() {
             handleRenameRange,
           }}
         >
-          <ul className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
-            {lists.map((list) => (
-              <li key={list.id}>
-                <List list={list} />
-              </li>
-            ))}
-          </ul>
+          <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
+            <DragDropContext onDragEnd={onDragEnd}>
+              {lists.map((list, index) => (
+                <List
+                  list={list}
+                  index={index}
+                />
+              ))}
+            </DragDropContext>
+          </div>
         </ManagerContext.Provider>
       </div>
     </>
