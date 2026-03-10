@@ -286,11 +286,12 @@ export default function Manager() {
         importData={importData}
       />
 
-      <ul>
+      {/* FOR DEVELOPMENT */}
+      {/* <ul>
         {lists.map((list) => (
           <li key={list.id}>{`${list.itemIds}`}</li>
         ))}
-      </ul>
+      </ul> */}
 
       <div className="manager">
         <div className="flex justify-evenly">

@@ -179,7 +179,7 @@ export default function List({ list, index, children }) {
           value={list.id}
         />
         <input
-          className="w-full"
+          className="w-full min-w-0"
           type="text"
           name="newItem"
           required
@@ -187,9 +187,9 @@ export default function List({ list, index, children }) {
         <button
           size-="small"
           type="submit"
-          className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
+          className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''} whitespace-nowrap`}
         >
-          [+]
+          [ + ]
         </button>
       </form>
 
