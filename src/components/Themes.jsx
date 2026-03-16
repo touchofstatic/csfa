@@ -31,12 +31,31 @@ export default function Themes() {
       <dialog
         id="themes-dialog"
         popover="true"
-        className={`h-4/5 md:h-[30ch] w-full`}
+        className={`h-4/5 md:h-[50ch] w-full`}
       >
         <article
           className={`flex flex-col align-center justify-center h-full ${idk.article}`}
           box-="double"
         >
+          <div>
+            <span className="bg-[var(--foreground0)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--foreground1)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--foreground2)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--background0)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--background1)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--background2)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--background3)]">&nbsp;&nbsp;</span>
+          </div>
+
+          <div>
+            <span className="bg-[var(--color0)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--color1)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--color2)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--color3)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--color4)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--color5)]">&nbsp;&nbsp;</span>
+          </div>
+
           <section>
             {THEMES_DEFAULT.map((t) => (
               <button
