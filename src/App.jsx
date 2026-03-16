@@ -6,7 +6,7 @@ import Manager from './components/Manager.jsx';
 export default function App() {
   const [theme, setTheme] = useState(() => {
     const loadTheme = JSON.parse(localStorage.getItem('theme'));
-    return loadTheme || 'gruvbox-light-medium';
+    return loadTheme || 'gruvbox-dark-medium';
   });
 
   useEffect(() => {

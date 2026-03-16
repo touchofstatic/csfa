@@ -12,6 +12,9 @@ const THEMES_DEFAULT = [
   'gruvbox-light-medium',
   'gruvbox-light-soft',
   'nord',
+  'catppuccin-mocha',
+  'catppuccin-macchiato',
+  'catppuccin-frappe',
 ];
 
 export default function Themes() {

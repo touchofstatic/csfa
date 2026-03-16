@@ -16,4 +16,21 @@
     --color4: var(--nord13);
     --color5: var(--nord14);
   }
+
+  [data-webtui-theme|='catppuccin'] {
+    /* the forbidden pink as hell catppuccin */
+    /* --color0: var(--rosewater);
+    --color1: var(--flamingo);
+    --color2: var(--pink);
+    --color3: var(--mauve);
+    --color4: var(--red);
+    --color5: var(--maroon); */
+
+    --color0: var(--flamingo);
+    --color1: var(--red);
+    --color2: var(--mauve);
+    --color3: var(--lavender);
+    --color4: var(--teal);
+    --color5: var(--green);
+  }
 }
