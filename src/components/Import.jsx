@@ -36,7 +36,7 @@ export default function Import() {
           ) : (
             <p>Data imported.</p>
           )}
-          <p style={{ color: 'var(--gb-red)' }}>
+          <p style={{ color: 'var(--color1)' }}>
             Current data will be overwritten.
           </p>
           <input

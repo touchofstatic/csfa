@@ -10,6 +10,7 @@
 @import '@webtui/css/components/button.css';
 @import '@webtui/css/components/progress.css';
 @import '@webtui/theme-gruvbox';
+@import '@webtui/theme-nord';
 
 @layer base {
   /* overrides of webtui base css  */

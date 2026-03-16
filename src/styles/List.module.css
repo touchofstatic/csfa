@@ -38,27 +38,28 @@
   color: var(--background1);
 }
 .progress1 {
-  background-color: var(--gb-purple);
+  background-color: var(--color0);
+  /* background-color: var(--color0); */
   color: var(--background0);
 }
 .progress2 {
-  background-color: var(--gb-red);
+  background-color: var(--color1);
   color: var(--background0);
 }
 .progress3 {
-  background-color: var(--gb-orange);
+  background-color: var(--color2);
   color: var(--background0);
 }
 .progress4 {
-  background-color: var(--gb-yellow);
+  background-color: var(--color3);
   color: var(--background0);
 }
 .progress5 {
-  background-color: var(--gb-aqua);
+  background-color: var(--color4);
   color: var(--background0);
 }
 .progress6 {
-  background-color: var(--gb-green);
+  background-color: var(--color5);
   color: var(--background0);
 }
 /* .dialog {

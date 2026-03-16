@@ -12,44 +12,44 @@
 }
 
 button.progress1 {
-  color: var(--gb-purple);
+  color: var(--color0);
 }
 button.progress2 {
-  color: var(--gb-red);
+  color: var(--color1);
 }
 button.progress3 {
-  color: var(--gb-orange);
+  color: var(--color2);
 }
 button.progress4 {
-  color: var(--gb-yellow);
+  color: var(--color3);
 }
 button.progress5 {
-  color: var(--gb-aqua);
+  color: var(--color4);
 }
 button.progress6 {
-  color: var(--gb-green);
+  color: var(--color5);
 }
 .name.progress1 {
-  background-color: var(--gb-purple);
+  background-color: var(--color0);
   color: var(--background0);
 }
 .name.progress2 {
-  background-color: var(--gb-red);
+  background-color: var(--color1);
   color: var(--background0);
 }
 .name.progress3 {
-  background-color: var(--gb-orange);
+  background-color: var(--color2);
   color: var(--background0);
 }
 .name.progress4 {
-  background-color: var(--gb-yellow);
+  background-color: var(--color3);
   color: var(--background0);
 }
 .name.progress5 {
-  background-color: var(--gb-aqua);
+  background-color: var(--color4);
   color: var(--background0);
 }
 .name.progress6 {
-  background-color: var(--gb-green);
+  background-color: var(--color5);
   color: var(--background0);
 }

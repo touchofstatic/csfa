@@ -13,12 +13,12 @@ li::before {
 .gradient {
   background: -webkit-linear-gradient(
     left,
-    var(--gb-purple),
-    var(--gb-red),
-    var(--gb-orange),
-    var(--gb-yellow),
-    var(--gb-aqua),
-    var(--gb-green)
+    var(--color0),
+    var(--color1),
+    var(--color2),
+    var(--color3),
+    var(--color4),
+    var(--color5)
   );
   -webkit-background-clip: text;
   background-clip: text;

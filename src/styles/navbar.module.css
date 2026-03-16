@@ -6,5 +6,5 @@
   padding-inline: 1ch;
 }
 .navbutton:active {
-  background-color: var(--gb-red);
+  background-color: var(--color1);
 }

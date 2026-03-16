@@ -11,6 +11,7 @@ const THEMES_DEFAULT = [
   'gruvbox-light-hard',
   'gruvbox-light-medium',
   'gruvbox-light-soft',
+  'nord',
 ];
 
 export default function Themes() {

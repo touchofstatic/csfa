@@ -119,12 +119,12 @@ export default function List({ list, index, children }) {
 
           <span> | {myItems.length} items</span>
           {/* <div className="flex w-full min-w-full">
-            <span className="bg-[var(--gb-purple)] w-full">&nbsp;10&nbsp;</span>
-            <span className="bg-[var(--gb-red)] w-full">&nbsp;25&nbsp;</span>
-            <span className="bg-[var(--gb-orange)] w-full">&nbsp;30&nbsp;</span>
-            <span className="bg-[var(--gb-yellow)] w-full">&nbsp;40&nbsp;</span>
-            <span className="bg-[var(--gb-aqua)] w-full">&nbsp;50&nbsp;</span>
-            <span className="bg-[var(--gb-green)] w-full">&nbsp;10&nbsp;</span>
+            <span className="bg-[var(--color0)] w-full">&nbsp;10&nbsp;</span>
+            <span className="bg-[var(--color1)] w-full">&nbsp;25&nbsp;</span>
+            <span className="bg-[var(--color2)] w-full">&nbsp;30&nbsp;</span>
+            <span className="bg-[var(--color3)] w-full">&nbsp;40&nbsp;</span>
+            <span className="bg-[var(--color4)] w-full">&nbsp;50&nbsp;</span>
+            <span className="bg-[var(--color5)] w-full">&nbsp;10&nbsp;</span>
           </div> */}
         </div>
       </header>
