@@ -283,9 +283,10 @@ export default function Manager() {
       </ManagerContext.Provider>
 
       <div className="manager">
-        <div className="flex justify-evenly">
+        {/* TODO: fix sliding away */}
+        <div className="flex justify-center gap-[4ch] w-full flex-wrap">
           <Ascii text="csfa" />
-          <div className="flex flex-col gap-[0.8lh] w-full md:w-3/6 justify-center">
+          <div className="flex flex-col gap-[0.8lh] w-full md:w-1/2 justify-center md:max-w-[69ch]">
             <Roulette items={items} />
             <NewListForm newList={handleAddList} />
           </div>

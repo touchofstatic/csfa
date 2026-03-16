@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { useClickAway } from '@uidotdev/usehooks';
 import { ManagerContext } from './Contexts';
 import styles from '../styles/list.module.css';
+import idk from '../styles/idk.module.css';
 import Item from './Item';
 
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
@@ -84,6 +85,7 @@ export default function List({ list, index, children }) {
       <header
         className={`${!list.visible ? `${styles.collapsed}` : ''} noselect`}
       >
+        {title}
         <div>
           <button
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
@@ -116,8 +118,15 @@ export default function List({ list, index, children }) {
           </button>
 
           <span> | {myItems.length} items</span>
+          {/* <div className="flex w-full min-w-full">
+            <span className="bg-[var(--gb-purple)] w-full">&nbsp;10&nbsp;</span>
+            <span className="bg-[var(--gb-red)] w-full">&nbsp;25&nbsp;</span>
+            <span className="bg-[var(--gb-orange)] w-full">&nbsp;30&nbsp;</span>
+            <span className="bg-[var(--gb-yellow)] w-full">&nbsp;40&nbsp;</span>
+            <span className="bg-[var(--gb-aqua)] w-full">&nbsp;50&nbsp;</span>
+            <span className="bg-[var(--gb-green)] w-full">&nbsp;10&nbsp;</span>
+          </div> */}
         </div>
-        {title}
       </header>
 
       <hr
@@ -194,93 +203,84 @@ export default function List({ list, index, children }) {
       </form>
 
       <dialog
-        className={styles.dialog}
+        className={`h-4/5 md:h-[30ch] w-full`}
         id={`settings-dialog-${list.id}`}
         popover="true"
       >
-        <div
+        <article
+          className={`flex flex-col align-center justify-center h-full ${idk.article}`}
           box-="double"
-          shear-="top"
         >
-          <div
-            is-="badge"
-            className={`${styles.badge} overflow-hidden whitespace-nowrap text-ellipsis max-w-[20ch] md:max-w-[40ch]`}
+          <form
+            className={`flex flex-col`}
+            onSubmit={(event) => {
+              handleRenameRange(event);
+            }}
+            autoComplete="off"
           >
-            {list.name}
-          </div>
-          <div className={styles.dialogContent}>
-            <form
-              className={styles.settingsRangeForm}
-              onSubmit={(event) => {
-                handleRenameRange(event);
-              }}
-              autoComplete="off"
+            <input
+              type="hidden"
+              name="listId"
+              value={list.id}
+            />
+            <input
+              type="text"
+              name="progress"
+              defaultValue={list.range[1]}
+              className={`${styles.progress1}`}
+              required
+            />
+            <input
+              type="text"
+              name="progress"
+              defaultValue={list.range[2]}
+              className={styles.progress2}
+              required
+            />
+            <input
+              type="text"
+              name="progress"
+              defaultValue={list.range[3]}
+              className={styles.progress3}
+              required
+            />
+            <input
+              type="text"
+              name="progress"
+              defaultValue={list.range[4]}
+              className={styles.progress4}
+              required
+            />
+            <input
+              type="text"
+              name="progress"
+              defaultValue={list.range[5]}
+              className={styles.progress5}
+              required
+            />
+            <input
+              type="text"
+              name="progress"
+              defaultValue={list.range[6]}
+              className={styles.progress6}
+              required
+            />
+            <button
+              type="submit"
+              size-="small"
             >
-              <input
-                type="hidden"
-                name="listId"
-                value={list.id}
-              />
-              <input
-                type="text"
-                name="progress"
-                defaultValue={list.range[1]}
-                className={`${styles.progress1}`}
-                required
-              />
-              <input
-                type="text"
-                name="progress"
-                defaultValue={list.range[2]}
-                className={styles.progress2}
-                required
-              />
-              <input
-                type="text"
-                name="progress"
-                defaultValue={list.range[3]}
-                className={styles.progress3}
-                required
-              />
-              <input
-                type="text"
-                name="progress"
-                defaultValue={list.range[4]}
-                className={styles.progress4}
-                required
-              />
-              <input
-                type="text"
-                name="progress"
-                defaultValue={list.range[5]}
-                className={styles.progress5}
-                required
-              />
-              <input
-                type="text"
-                name="progress"
-                defaultValue={list.range[6]}
-                className={styles.progress6}
-                required
-              />
-              <button
-                type="submit"
-                size-="small"
-                className="self-end"
-              >
-                [Update]
-              </button>
-            </form>
-            <div className={styles.dialogButtons}>
-              <button
-                commandfor={`settings-dialog-${list.id}`}
-                command="close"
-              >
-                Exit
-              </button>
-            </div>
+              Save
+            </button>
+          </form>
+          <div className="flex justify-center">
+            <button
+              commandfor={`settings-dialog-${list.id}`}
+              command="close"
+            >
+              Exit
+            </button>
           </div>
-        </div>
+        </article>
       </dialog>
     </div>
   );

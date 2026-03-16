@@ -61,7 +61,7 @@
   background-color: var(--gb-green);
   color: var(--background0);
 }
-.dialog {
+/* .dialog {
   background-color: var(--background1);
 }
 .dialog::backdrop {
@@ -78,19 +78,19 @@
   display: flex;
   gap: 1ch;
   justify-content: flex-end;
-}
-.badge {
+} */
+/* .badge {
   margin: 0 1ch;
   padding: 0 1ch;
   background-color: var(--background1);
   margin-right: 4ch;
-}
+} */
 
-.settingsRangeForm {
+/* .settingsRangeForm {
   margin-block: 1ch;
   display: flex;
   flex-direction: column;
-}
+} */
 
 .add {
   margin-top: 1ch;
