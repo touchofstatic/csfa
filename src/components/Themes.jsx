@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { ThemeContext } from './Contexts';
-import styles from '../styles/navbar.module.css';
 import idk from '../styles/idk.module.css';
 
 // TODO: temporary
@@ -26,7 +25,7 @@ export default function Themes() {
         command="show-modal"
         commandfor="themes-dialog"
         size-="small"
-        className={styles.navbutton}
+        className={`active:bg-[var(--color1)]`}
       >
         Themes
       </button>
@@ -37,26 +36,52 @@ export default function Themes() {
         className={`h-4/5 md:h-[50ch] w-full`}
       >
         <article
-          className={`flex flex-col align-center justify-center h-full ${idk.article}`}
+          className={`flex flex-col align-center justify-center h-full ${idk.idk}`}
           box-="double"
         >
           <div>
-            <span className="bg-[var(--foreground0)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--foreground1)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--foreground2)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--background0)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--background1)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--background2)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--background3)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--foreground0)]">
+              &nbsp;&nbsp;
+            </span>
+            <span className="bg-[var(--foreground1)]">
+              &nbsp;&nbsp;
+            </span>
+            <span className="bg-[var(--foreground2)]">
+              &nbsp;&nbsp;
+            </span>
+            <span className="bg-[var(--background0)]">
+              &nbsp;&nbsp;
+            </span>
+            <span className="bg-[var(--background1)]">
+              &nbsp;&nbsp;
+            </span>
+            <span className="bg-[var(--background2)]">
+              &nbsp;&nbsp;
+            </span>
+            <span className="bg-[var(--background3)]">
+              &nbsp;&nbsp;
+            </span>
           </div>
 
           <div>
-            <span className="bg-[var(--color0)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--color1)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--color2)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--color3)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--color4)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--color5)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--color0)]">
+              &nbsp;&nbsp;
+            </span>
+            <span className="bg-[var(--color1)]">
+              &nbsp;&nbsp;
+            </span>
+            <span className="bg-[var(--color2)]">
+              &nbsp;&nbsp;
+            </span>
+            <span className="bg-[var(--color3)]">
+              &nbsp;&nbsp;
+            </span>
+            <span className="bg-[var(--color4)]">
+              &nbsp;&nbsp;
+            </span>
+            <span className="bg-[var(--color5)]">
+              &nbsp;&nbsp;
+            </span>
           </div>
 
           <section>

@@ -1,6 +1,5 @@
 .name {
   word-wrap: break-word;
-  padding-left: 1ch;
 }
 .controls {
   color: var(--foreground0);

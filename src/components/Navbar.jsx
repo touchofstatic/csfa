@@ -1,11 +1,10 @@
 import Export from './Export';
 import Import from './Import';
 import Themes from './Themes';
-import styles from '../styles/navbar.module.css';
 
 export default function Navbar() {
   return (
-    <nav className={styles.nav}>
+    <nav className="w-full bg-[var(--foreground0)]">
       <Export />
       <Import />
       <Themes />

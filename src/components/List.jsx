@@ -5,10 +5,15 @@ import styles from '../styles/list.module.css';
 import idk from '../styles/idk.module.css';
 import Item from './Item';
 
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+} from '@hello-pangea/dnd';
 
 export default function List({ list, index, children }) {
-  const [draftRenameList, setDraftRenameList] = useState('');
+  const [draftRenameList, setDraftRenameList] =
+    useState('');
   const ref = useClickAway(() => {
     setDraftRenameList('');
   });
@@ -29,7 +34,9 @@ export default function List({ list, index, children }) {
   // TODO: bad?
   let title = '';
   if (!draftRenameList) {
-    title = <div className={`${styles.name}`}>{list.name}</div>;
+    title = (
+      <div className={`${styles.name}`}>{list.name}</div>
+    );
   } else {
     title = (
       <form
@@ -80,7 +87,7 @@ export default function List({ list, index, children }) {
 
   return (
     <div
-      className={`${styles.list} ${!list.visible ? `${styles.collapsed}` : ''}`}
+      className={`p-[1ch] border-2 border-[var(--background2)] h-fit flex flex-col ${!list.visible ? `${styles.collapsed}` : ''}`}
     >
       <header
         className={`${!list.visible ? `${styles.collapsed}` : ''} noselect`}
@@ -88,21 +95,23 @@ export default function List({ list, index, children }) {
         {title}
         <div>
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''} p-0`}
             size-="small"
-            onClick={() => handleDeleteList(list.id, myItems)}
+            onClick={() =>
+              handleDeleteList(list.id, myItems)
+            }
           >
             [-]
           </button>
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''} p-0`}
             size-="small"
             onClick={() => setDraftRenameList(list.name)}
           >
             [rn]
           </button>
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''} p-0`}
             size-="small"
             command="show-modal"
             commandfor={`settings-dialog-${list.id}`}
@@ -110,7 +119,7 @@ export default function List({ list, index, children }) {
             [s]
           </button>
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''}`}
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''} p-0`}
             size-="small"
             onClick={() => handleCollapseList(list.id)}
           >
@@ -175,7 +184,7 @@ export default function List({ list, index, children }) {
       </Droppable>
 
       <form
-        className={`${styles.add} flex gap-[1ch]`}
+        className={`mt-[1ch] flex gap-[1ch]`}
         onSubmit={(event) => {
           event.preventDefault();
           handleAddItem(event);
@@ -198,7 +207,7 @@ export default function List({ list, index, children }) {
           type="submit"
           className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''} whitespace-nowrap`}
         >
-          [ + ]
+          [+]
         </button>
       </form>
 
@@ -208,7 +217,7 @@ export default function List({ list, index, children }) {
         popover="true"
       >
         <article
-          className={`flex flex-col align-center justify-center h-full ${idk.article}`}
+          className={`flex flex-col align-center justify-center h-full ${idk.idk}`}
           box-="double"
         >
           <form

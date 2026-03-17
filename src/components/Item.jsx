@@ -4,9 +4,13 @@ import { ManagerContext } from './Contexts';
 import styles from '../styles/item.module.css';
 
 export default function Item({ item, myListId, range }) {
-  const [draftRenameItem, setDraftRenameItem] = useState('');
-  const { handleDeleteItem, handleRenameItem, handleAdvanceItem } =
-    useContext(ManagerContext);
+  const [draftRenameItem, setDraftRenameItem] =
+    useState('');
+  const {
+    handleDeleteItem,
+    handleRenameItem,
+    handleAdvanceItem,
+  } = useContext(ManagerContext);
 
   const ref = useClickAway(() => {
     setDraftRenameItem('');
@@ -17,7 +21,9 @@ export default function Item({ item, myListId, range }) {
 
   switch (progressClassName) {
     case 'progress0':
-      progress = <span className="invisible">{range[0]}</span>;
+      progress = (
+        <span className="invisible">{range[0]}</span>
+      );
       // progress = <span className="invisible">unspecified</span>;
       break;
     case 'progress1':
@@ -47,7 +53,9 @@ export default function Item({ item, myListId, range }) {
   let title = '';
   if (!draftRenameItem) {
     title = (
-      <div className={`${styles.name} ${styles[progressClassName]} noselect`}>
+      <div
+        className={`${styles.name} ${styles[progressClassName]} noselect pl-[1ch]`}
+      >
         {item.name}
       </div>
     );
@@ -103,14 +111,16 @@ export default function Item({ item, myListId, range }) {
     <div className={`${progressClassName} ${styles.item}`}>
       <div>
         <button
-          className={`${styles.controls} ${styles[progressClassName]}`}
+          className={`${styles.controls} ${styles[progressClassName]} p-0`}
           size-="small"
-          onClick={() => handleDeleteItem(item.id, myListId)}
+          onClick={() =>
+            handleDeleteItem(item.id, myListId)
+          }
         >
           [-]
         </button>
         <button
-          className={`${styles.controls} ${styles[progressClassName]}`}
+          className={`${styles.controls} ${styles[progressClassName]} p-0`}
           size-="small"
           onClick={() => setDraftRenameItem(item.name)}
         >
@@ -118,7 +128,7 @@ export default function Item({ item, myListId, range }) {
         </button>
         <button
           size-="small"
-          className={`${styles[progressClassName]} float-right bg-transparent text-[var(--foreground2)]`}
+          className={`${styles[progressClassName]} float-right bg-transparent text-[var(--foreground2)] p-0`}
           onClick={() => handleAdvanceItem(item.id)}
         >
           {progress} [&gt;]

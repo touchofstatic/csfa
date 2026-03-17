@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import styles from '../styles/roulette.module.css';
 
 export default function Roulette({ items }) {
   const [pull, setPull] = useState('');
@@ -10,7 +9,9 @@ export default function Roulette({ items }) {
       setPull('');
       setSpinner(true);
       setTimeout(() => {
-        let randomIndex = Math.floor(Math.random() * items.length);
+        let randomIndex = Math.floor(
+          Math.random() * items.length,
+        );
         setPull(items[randomIndex]);
         setSpinner(false);
       }, 1000);
@@ -21,7 +22,9 @@ export default function Roulette({ items }) {
 
   return (
     <div className="flex flex-col gap-[0.5lh]">
-      <div className={`${styles.pull} min-h-[3lh]`}>
+      <div
+        className={`min-h-[3lh] px-[1ch] border-3 border-[var(--background1)] flex items-center overflow-scroll`}
+      >
         {spinner && (
           <span
             is-="spinner"

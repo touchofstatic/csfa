@@ -1,6 +1,5 @@
 import { useState, useRef, useContext } from 'react';
 import { ManagerContext } from './Contexts';
-import styles from '../styles/navbar.module.css';
 import idk from '../styles/idk.module.css';
 
 export default function Import() {
@@ -16,7 +15,7 @@ export default function Import() {
         size-="small"
         command="show-modal"
         commandfor="import-dialog"
-        className={styles.navbutton}
+        className={`active:bg-[var(--color1)]`}
       >
         Import
       </button>
@@ -27,7 +26,7 @@ export default function Import() {
         className={`h-4/5 md:h-[30ch] w-full`}
       >
         <article
-          className={`flex flex-col align-center justify-center h-full text-center ${idk.article}`}
+          className={`flex flex-col align-center justify-center h-full text-center ${idk.idk}`}
           box-="double"
         >
           {/* message */}

@@ -13,13 +13,6 @@
 .collapsed {
   color: var(--background3);
 }
-.list {
-  border: 2px solid var(--background2);
-  padding: 1ch;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
-}
 .list.collapsed {
   border: 2px solid var(--background1);
 }
@@ -39,7 +32,6 @@
 }
 .progress1 {
   background-color: var(--color0);
-  /* background-color: var(--color0); */
   color: var(--background0);
 }
 .progress2 {
@@ -61,38 +53,4 @@
 .progress6 {
   background-color: var(--color5);
   color: var(--background0);
-}
-/* .dialog {
-  background-color: var(--background1);
-}
-.dialog::backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-.dialogContent {
-  display: flex;
-  flex-direction: column;
-  gap: 1ch;
-  padding-inline: 2ch;
-  word-break: break-word;
-}
-.dialogButtons {
-  display: flex;
-  gap: 1ch;
-  justify-content: flex-end;
-} */
-/* .badge {
-  margin: 0 1ch;
-  padding: 0 1ch;
-  background-color: var(--background1);
-  margin-right: 4ch;
-} */
-
-/* .settingsRangeForm {
-  margin-block: 1ch;
-  display: flex;
-  flex-direction: column;
-} */
-
-.add {
-  margin-top: 1ch;
 }

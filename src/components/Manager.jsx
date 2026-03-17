@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import { DragDropContext } from '@hello-pangea/dnd';
 import { ManagerContext } from './Contexts';
-import '../styles/manager.css';
 import List from './List';
 import Roulette from './Roulette';
 import Navbar from './Navbar';
@@ -19,11 +18,23 @@ const reorder = (source, startIndex, endIndex) => {
   return result;
 };
 
-const move = (source, destination, droppableSource, droppableDestination) => {
+const move = (
+  source,
+  destination,
+  droppableSource,
+  droppableDestination,
+) => {
   const sourceClone = structuredClone(source);
   const destClone = structuredClone(destination);
-  const [removed] = sourceClone.itemIds.splice(droppableSource.index, 1);
-  destClone.itemIds.splice(droppableDestination.index, 0, removed);
+  const [removed] = sourceClone.itemIds.splice(
+    droppableSource.index,
+    1,
+  );
+  destClone.itemIds.splice(
+    droppableDestination.index,
+    0,
+    removed,
+  );
   const result = {};
   result[droppableSource.droppableId] = sourceClone;
   result[droppableDestination.droppableId] = destClone;
@@ -55,7 +66,7 @@ function NewListForm({ newList }) {
         required
       ></input>
       <button
-        className="w-full md:w-[15ch]"
+        className="w-full md:w-[17ch]"
         size-="small"
         type="submit"
       >
@@ -109,7 +120,12 @@ export default function Manager() {
         }),
       );
     } else {
-      const result = move(lists[sInd], lists[dInd], source, destination);
+      const result = move(
+        lists[sInd],
+        lists[dInd],
+        source,
+        destination,
+      );
       const newLists = [...lists];
       newLists[sInd] = result[sInd];
       newLists[dInd] = result[dInd];
@@ -153,7 +169,10 @@ export default function Manager() {
       lists.map((list) => {
         if (list.id !== originListId) return list;
         else {
-          return { ...list, itemIds: [...list.itemIds, newItemId] };
+          return {
+            ...list,
+            itemIds: [...list.itemIds, newItemId],
+          };
         }
       }),
     );
@@ -161,7 +180,11 @@ export default function Manager() {
 
   function handleDeleteList(listId, myItems) {
     // kill list's items
-    setItems(items.filter((item) => myItems.includes(item) === false));
+    setItems(
+      items.filter(
+        (item) => myItems.includes(item) === false,
+      ),
+    );
     // delete list
     setLists(lists.filter((list) => list.id !== listId));
   }
@@ -195,7 +218,9 @@ export default function Manager() {
   function handleRenameRange(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const newRange = ['unspecified'].concat(formData.getAll('progress'));
+    const newRange = ['unspecified'].concat(
+      formData.getAll('progress'),
+    );
     const listId = formData.get('listId');
     setLists(
       lists.map((list) => {
@@ -217,7 +242,9 @@ export default function Manager() {
         else {
           return {
             ...list,
-            itemIds: list.itemIds.filter((i) => i !== itemId),
+            itemIds: list.itemIds.filter(
+              (i) => i !== itemId,
+            ),
           };
         }
       }),
@@ -244,8 +271,10 @@ export default function Manager() {
       items.map((item) => {
         if (item.id !== itemId) return item;
         else {
-          if (item.progress == 6) return { ...item, progress: 0 };
-          else return { ...item, progress: item.progress + 1 };
+          if (item.progress == 6)
+            return { ...item, progress: 0 };
+          else
+            return { ...item, progress: item.progress + 1 };
         }
       }),
     );
@@ -282,7 +311,7 @@ export default function Manager() {
         <Navbar />
       </ManagerContext.Provider>
 
-      <div className="manager">
+      <div className="px-[1ch] py-[1lh] flex flex-col gap-y-[1lh]">
         {/* TODO: fix sliding away */}
         <div className="flex justify-center gap-[4ch] w-full flex-wrap">
           <Ascii text="csfa" />
