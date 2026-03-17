@@ -1,14 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { DragDropContext } from '@hello-pangea/dnd';
-import { ManagerContext } from './Contexts';
-import List from './List';
-import Roulette from './Roulette';
-import Navbar from './Navbar';
-import Ascii from './Ascii';
+import { useState, useEffect, useRef } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { DragDropContext } from "@hello-pangea/dnd";
+import { ManagerContext } from "./Contexts";
+import List from "./List";
+import Roulette from "./Roulette";
+import Navbar from "./Navbar";
+import Ascii from "./Ascii";
 
 // FOR DEVELOPMENT
-import { itemsdb, listsdb } from './data';
+import { itemsdb, listsdb } from "./data";
 
 const reorder = (source, startIndex, endIndex) => {
   const result = structuredClone(source);
@@ -18,23 +18,11 @@ const reorder = (source, startIndex, endIndex) => {
   return result;
 };
 
-const move = (
-  source,
-  destination,
-  droppableSource,
-  droppableDestination,
-) => {
+const move = (source, destination, droppableSource, droppableDestination) => {
   const sourceClone = structuredClone(source);
   const destClone = structuredClone(destination);
-  const [removed] = sourceClone.itemIds.splice(
-    droppableSource.index,
-    1,
-  );
-  destClone.itemIds.splice(
-    droppableDestination.index,
-    0,
-    removed,
-  );
+  const [removed] = sourceClone.itemIds.splice(droppableSource.index, 1);
+  destClone.itemIds.splice(droppableDestination.index, 0, removed);
   const result = {};
   result[droppableSource.droppableId] = sourceClone;
   result[droppableDestination.droppableId] = destClone;
@@ -43,17 +31,17 @@ const move = (
 };
 
 const RANGE_SYSTEM_DEFAULT = [
-  'unspecified',
-  'queued',
-  'priority',
-  'working',
-  'submitted',
-  'approved',
-  'done',
+  "unspecified",
+  "queued",
+  "priority",
+  "working",
+  "submitted",
+  "approved",
+  "done",
 ];
 
 function NewListForm({ onAddList }) {
-  const clearform = useRef('');
+  const clearform = useRef("");
 
   return (
     <form
@@ -69,12 +57,8 @@ function NewListForm({ onAddList }) {
         maxLength="99"
         ref={clearform}
       ></input>
-      <button
-        className="w-full md:w-[17ch]"
-        size-="small"
-        type="submit"
-      >
-        [New List]
+      <button className="w-full md:w-[17ch]" size-="small" type="submit">
+        [Add List]
       </button>
     </form>
   );
@@ -95,11 +79,11 @@ export default function Manager() {
   const [items, setItems] = useState(itemsdb);
 
   useEffect(() => {
-    localStorage.setItem('listsdb', JSON.stringify(lists));
+    localStorage.setItem("listsdb", JSON.stringify(lists));
   }, [lists]);
 
   useEffect(() => {
-    localStorage.setItem('itemsdb', JSON.stringify(items));
+    localStorage.setItem("itemsdb", JSON.stringify(items));
   }, [items]);
 
   function onDragEnd(result) {
@@ -124,12 +108,7 @@ export default function Manager() {
         }),
       );
     } else {
-      const result = move(
-        lists[sInd],
-        lists[dInd],
-        source,
-        destination,
-      );
+      const result = move(lists[sInd], lists[dInd], source, destination);
       const newLists = [...lists];
       newLists[sInd] = result[sInd];
       newLists[dInd] = result[dInd];
@@ -140,8 +119,8 @@ export default function Manager() {
   function handleAddList(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    let newList = formData.get('newList');
-    if (newList === '') newList = 'Untitled';
+    let newList = formData.get("newList");
+    if (newList === "") newList = "Untitled";
     event.target.reset();
     setLists([
       ...lists,
@@ -159,8 +138,8 @@ export default function Manager() {
     event.preventDefault();
     const newItemId = uuidv4();
     const formData = new FormData(event.currentTarget);
-    const newItem = formData.get('newItem');
-    const originListId = formData.get('originListId');
+    const newItem = formData.get("newItem");
+    const originListId = formData.get("originListId");
     event.target.reset();
     // create new item
     setItems([
@@ -187,11 +166,7 @@ export default function Manager() {
 
   function handleDeleteList(listId, myItems) {
     // kill list's items
-    setItems(
-      items.filter(
-        (item) => myItems.includes(item) === false,
-      ),
-    );
+    setItems(items.filter((item) => myItems.includes(item) === false));
     // delete list
     setLists(lists.filter((list) => list.id !== listId));
   }
@@ -199,10 +174,10 @@ export default function Manager() {
   function handleRenameList(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    let newListName = formData.get('newListName');
-    if (newListName === '') newListName = 'Untitled';
+    let newListName = formData.get("newListName");
+    if (newListName === "") newListName = "Untitled";
 
-    const listId = formData.get('listId');
+    const listId = formData.get("listId");
     setLists(
       lists.map((list) => {
         if (list.id !== listId) return list;
@@ -227,10 +202,8 @@ export default function Manager() {
   function handleRenameRange(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const newRange = ['unspecified'].concat(
-      formData.getAll('progress'),
-    );
-    const listId = formData.get('listId');
+    const newRange = ["unspecified"].concat(formData.getAll("progress"));
+    const listId = formData.get("listId");
     setLists(
       lists.map((list) => {
         if (list.id !== listId) return list;
@@ -251,9 +224,7 @@ export default function Manager() {
         else {
           return {
             ...list,
-            itemIds: list.itemIds.filter(
-              (i) => i !== itemId,
-            ),
+            itemIds: list.itemIds.filter((i) => i !== itemId),
           };
         }
       }),
@@ -263,8 +234,8 @@ export default function Manager() {
   function handleRenameItem(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const newItemName = formData.get('newItemName');
-    const itemId = formData.get('itemId');
+    const newItemName = formData.get("newItemName");
+    const itemId = formData.get("itemId");
     setItems(
       items.map((item) => {
         if (item.id !== itemId) return item;
@@ -280,10 +251,8 @@ export default function Manager() {
       items.map((item) => {
         if (item.id !== itemId) return item;
         else {
-          if (item.progress == 6)
-            return { ...item, progress: 0 };
-          else
-            return { ...item, progress: item.progress + 1 };
+          if (item.progress == 6) return { ...item, progress: 0 };
+          else return { ...item, progress: item.progress + 1 };
         }
       }),
     );
@@ -320,11 +289,11 @@ export default function Manager() {
         <Navbar />
       </ManagerContext.Provider>
 
-      <div className="px-[1ch] py-[1lh] flex flex-col gap-y-[1lh]">
+      <div className="flex flex-col gap-y-[1lh] px-[1ch] py-[1lh]">
         {/* TODO: fix sliding away */}
-        <div className="flex justify-center gap-[4ch] w-full flex-wrap">
+        <div className="flex w-full flex-wrap justify-center gap-[4ch]">
           <Ascii text="csfa" />
-          <div className="flex flex-col gap-[0.8lh] w-full md:w-1/2 justify-center md:max-w-[69ch]">
+          <div className="flex w-full flex-col justify-center gap-[0.8lh] md:w-1/2 md:max-w-[69ch]">
             <Roulette items={items} />
             <NewListForm onAddList={handleAddList} />
           </div>
@@ -343,14 +312,10 @@ export default function Manager() {
             handleRenameRange,
           }}
         >
-          <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))] gap-[2ch]">
+          <div className="grid grid-cols-1 gap-[1ch] sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))]">
             <DragDropContext onDragEnd={onDragEnd}>
               {lists.map((list, index) => (
-                <List
-                  key={list.id}
-                  list={list}
-                  index={index}
-                />
+                <List key={list.id} list={list} index={index} />
               ))}
             </DragDropContext>
           </div>

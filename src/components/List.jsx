@@ -1,21 +1,16 @@
-import { useState, useContext, useRef } from 'react';
-import { useClickAway } from '@uidotdev/usehooks';
-import { ManagerContext } from './Contexts';
-import styles from '../styles/list.module.css';
-import idk from '../styles/idk.module.css';
-import Item from './Item';
+import { useState, useContext, useRef } from "react";
+import { useClickAway } from "@uidotdev/usehooks";
+import { ManagerContext } from "./Contexts";
+import styles from "../styles/list.module.css";
+import idk from "../styles/idk.module.css";
+import Item from "./Item";
 
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-} from '@hello-pangea/dnd';
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 export default function List({ list, index, children }) {
-  const [draftRenameList, setDraftRenameList] =
-    useState('');
+  const [draftRenameList, setDraftRenameList] = useState("");
   const ref = useClickAway(() => {
-    setDraftRenameList('');
+    setDraftRenameList("");
   });
 
   const {
@@ -27,33 +22,27 @@ export default function List({ list, index, children }) {
     handleRenameRange,
   } = useContext(ManagerContext);
 
-  const clearform = useRef('');
+  const clearform = useRef("");
 
   const myItems = list.itemIds
     .map((key) => items.find((item) => item.id === key))
     .filter(Boolean);
 
   // TODO: bad?
-  let title = '';
+  let title = "";
   if (!draftRenameList) {
-    title = (
-      <div className={`${styles.name}`}>{list.name}</div>
-    );
+    title = <div className={`${styles.name}`}>{list.name}</div>;
   } else {
     title = (
       <form
         ref={ref}
         onSubmit={(event) => {
           handleRenameList(event);
-          setDraftRenameList('');
+          setDraftRenameList("");
         }}
         autoComplete="off"
       >
-        <input
-          type="hidden"
-          name="listId"
-          value={list.id}
-        ></input>
+        <input type="hidden" name="listId" value={list.id}></input>
         <input
           type="text"
           name="newListName"
@@ -63,24 +52,20 @@ export default function List({ list, index, children }) {
           defaultValue={draftRenameList}
           autoFocus
         />
-        <span className="flex gap-[1ch]">
+        <span className="my-[0.25lh] flex gap-[1ch]">
+          <button className="w-full" size-="small" type="submit">
+            [Save]
+          </button>
           <button
             type="button"
             className="w-full"
             size-="small"
             onClick={(event) => {
               event.preventDefault();
-              setDraftRenameList('');
+              setDraftRenameList("");
             }}
           >
             [Cancel]
-          </button>
-          <button
-            className="w-full"
-            size-="small"
-            type="submit"
-          >
-            [Save]
           </button>
         </span>
       </form>
@@ -89,31 +74,29 @@ export default function List({ list, index, children }) {
 
   return (
     <div
-      className={`p-[1ch] h-fit flex flex-col ${!list.visible ? `${styles.collapsed} border-2 border-[var(--background1)] hover:border-[var(--background3)]` : 'border-2 border-[var(--background2)] hover:border-[var(--foreground1)]'}`}
+      className={`flex h-fit flex-col p-[1ch] ${!list.visible ? `${styles.collapsed} border-2 border-[var(--background1)] hover:border-[var(--background3)]` : "border-2 border-[var(--background2)] hover:border-[var(--foreground1)]"}`}
     >
       <header
-        className={`${!list.visible ? `${styles.collapsed}` : ''} noselect`}
+        className={`${!list.visible ? `${styles.collapsed}` : ""} noselect`}
       >
         {title}
         <div>
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''} p-0`}
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
             size-="small"
-            onClick={() =>
-              handleDeleteList(list.id, myItems)
-            }
+            onClick={() => handleDeleteList(list.id, myItems)}
           >
             [-]
           </button>
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''} p-0`}
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
             size-="small"
             onClick={() => setDraftRenameList(list.name)}
           >
             [rn]
           </button>
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''} p-0`}
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
             size-="small"
             command="show-modal"
             commandfor={`settings-dialog-${list.id}`}
@@ -121,7 +104,7 @@ export default function List({ list, index, children }) {
             [s]
           </button>
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''} p-0`}
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
             size-="small"
             onClick={() => handleCollapseList(list.id)}
           >
@@ -141,13 +124,10 @@ export default function List({ list, index, children }) {
       </header>
 
       <hr
-        className={`${styles.separator} ${!list.visible ? `${styles.collapsed}` : ''}`}
+        className={`${styles.separator} ${!list.visible ? `${styles.collapsed}` : ""}`}
       ></hr>
 
-      <Droppable
-        key={list.id}
-        droppableId={`${index}`}
-      >
+      <Droppable key={list.id} droppableId={`${index}`}>
         {(provided, snapshot) => (
           <div
             ref={provided.innerRef}
@@ -155,11 +135,7 @@ export default function List({ list, index, children }) {
             className={`${snapshot.isDraggingOver ? `${styles.over}` : ``}`}
           >
             {myItems.map((item, index) => (
-              <Draggable
-                key={item.id}
-                draggableId={item.id}
-                index={index}
-              >
+              <Draggable key={item.id} draggableId={item.id} index={index}>
                 {(provided) => (
                   <div
                     key={item.id}
@@ -192,11 +168,7 @@ export default function List({ list, index, children }) {
         }}
         autoComplete="off"
       >
-        <input
-          type="hidden"
-          name="originListId"
-          value={list.id}
-        />
+        <input type="hidden" name="originListId" value={list.id} />
         <input
           ref={clearform}
           className="w-full min-w-0"
@@ -209,19 +181,19 @@ export default function List({ list, index, children }) {
         <button
           size-="small"
           type="submit"
-          className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ''} whitespace-nowrap`}
+          className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0 whitespace-nowrap`}
         >
-          [+]
+          [Add Item]
         </button>
       </form>
 
       <dialog
-        className={`h-4/5 md:h-[30ch] w-full`}
+        className={`h-4/5 w-full md:h-[30ch]`}
         id={`settings-dialog-${list.id}`}
         popover="true"
       >
         <article
-          className={`flex flex-col align-center justify-center h-full ${idk.idk}`}
+          className={`align-center flex h-full flex-col justify-center ${idk.idk}`}
           box-="double"
         >
           <form
@@ -231,11 +203,7 @@ export default function List({ list, index, children }) {
             }}
             autoComplete="off"
           >
-            <input
-              type="hidden"
-              name="listId"
-              value={list.id}
-            />
+            <input type="hidden" name="listId" value={list.id} />
             <input
               type="text"
               name="progress"
@@ -290,18 +258,12 @@ export default function List({ list, index, children }) {
               className={styles.progress6}
               required
             />
-            <button
-              type="submit"
-              size-="small"
-            >
+            <button type="submit" size-="small">
               Save
             </button>
           </form>
           <div className="flex justify-center">
-            <button
-              commandfor={`settings-dialog-${list.id}`}
-              command="close"
-            >
+            <button commandfor={`settings-dialog-${list.id}`} command="close">
               Exit
             </button>
           </div>

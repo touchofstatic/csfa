@@ -49,12 +49,14 @@ export default function Import() {
           ></input>
           <div className="flex gap-[1ch] justify-center">
             <button
+              type="button"
               value="import"
               onClick={() => fileInput.current.click()}
             >
               Import
             </button>
             <button
+              type="button"
               commandfor="import-dialog"
               command="close"
               onClick={() => setImported(false)}

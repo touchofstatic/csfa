@@ -82,7 +82,14 @@ export default function Item({ item, myListId, range }) {
           autoFocus
           required
         />
-        <span className="flex gap-[1ch]">
+        <span className="flex gap-[1ch] my-[0.25lh]">
+          <button
+            className="w-full"
+            size-="small"
+            type="submit"
+          >
+            [Save]
+          </button>
           <button
             type="button"
             className="w-full"
@@ -93,13 +100,6 @@ export default function Item({ item, myListId, range }) {
             }}
           >
             [Cancel]
-          </button>
-          <button
-            className="w-full"
-            size-="small"
-            type="submit"
-          >
-            [Save]
           </button>
         </span>
       </form>
