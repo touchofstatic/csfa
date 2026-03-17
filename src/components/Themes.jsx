@@ -90,6 +90,7 @@ export default function Themes() {
                 size-="small"
                 onClick={() => changeTheme(t)}
                 value={t}
+                key={t}
                 className={`block w-full text-left ${t === theme ? `bg-[var(--foreground0)] text-[var(--background0)]` : `bg-[var(--background1)] text-[var(--foreground0)]`}`}
               >
                 {t}

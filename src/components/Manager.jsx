@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { DragDropContext } from '@hello-pangea/dnd';
 import { ManagerContext } from './Contexts';
@@ -52,10 +52,12 @@ const RANGE_SYSTEM_DEFAULT = [
   'done',
 ];
 
-function NewListForm({ newList }) {
+function NewListForm({ onAddList }) {
+  const clearform = useRef('');
+
   return (
     <form
-      onSubmit={newList}
+      onSubmit={onAddList}
       autoComplete="off"
       className="md:flex md:gap-[1ch]"
     >
@@ -63,8 +65,9 @@ function NewListForm({ newList }) {
         className="w-full"
         type="text"
         name="newList"
-        minlength="0"
-        maxlength="99"
+        minLength="0"
+        maxLength="99"
+        ref={clearform}
       ></input>
       <button
         className="w-full md:w-[17ch]"
@@ -139,6 +142,7 @@ export default function Manager() {
     const formData = new FormData(event.currentTarget);
     let newList = formData.get('newList');
     if (newList === '') newList = 'Untitled';
+    event.target.reset();
     setLists([
       ...lists,
       {
@@ -157,6 +161,7 @@ export default function Manager() {
     const formData = new FormData(event.currentTarget);
     const newItem = formData.get('newItem');
     const originListId = formData.get('originListId');
+    event.target.reset();
     // create new item
     setItems([
       ...items,
@@ -321,7 +326,7 @@ export default function Manager() {
           <Ascii text="csfa" />
           <div className="flex flex-col gap-[0.8lh] w-full md:w-1/2 justify-center md:max-w-[69ch]">
             <Roulette items={items} />
-            <NewListForm newList={handleAddList} />
+            <NewListForm onAddList={handleAddList} />
           </div>
         </div>
 

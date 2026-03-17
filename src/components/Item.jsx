@@ -64,7 +64,6 @@ export default function Item({ item, myListId, range }) {
       <form
         ref={ref}
         onSubmit={(event) => {
-          event.preventDefault();
           handleRenameItem(event);
           setDraftRenameItem('');
         }}
@@ -93,14 +92,14 @@ export default function Item({ item, myListId, range }) {
               setDraftRenameItem('');
             }}
           >
-            [c]
+            [Cancel]
           </button>
           <button
             className="w-full"
             size-="small"
             type="submit"
           >
-            [rn]
+            [Save]
           </button>
         </span>
       </form>
