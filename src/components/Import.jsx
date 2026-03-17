@@ -29,7 +29,6 @@ export default function Import() {
           className={`flex flex-col align-center justify-center h-full text-center ${idk.idk}`}
           box-="double"
         >
-          {/* message */}
           {imported === false ? (
             <p>Are you sure you want to import?</p>
           ) : (

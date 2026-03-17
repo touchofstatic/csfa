@@ -13,9 +13,7 @@
 .collapsed {
   color: var(--background3);
 }
-.list.collapsed {
-  border: 2px solid var(--background1);
-}
+
 .separator {
   background-image: var(--background2);
   background-color: var(--background2);
