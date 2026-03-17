@@ -63,7 +63,8 @@ function NewListForm({ newList }) {
         className="w-full"
         type="text"
         name="newList"
-        required
+        minlength="0"
+        maxlength="99"
       ></input>
       <button
         className="w-full md:w-[17ch]"
@@ -136,7 +137,8 @@ export default function Manager() {
   function handleAddList(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const newList = formData.get('newList');
+    let newList = formData.get('newList');
+    if (newList === '') newList = 'Untitled';
     setLists([
       ...lists,
       {
@@ -192,7 +194,9 @@ export default function Manager() {
   function handleRenameList(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const newListName = formData.get('newListName');
+    let newListName = formData.get('newListName');
+    if (newListName === '') newListName = 'Untitled';
+
     const listId = formData.get('listId');
     setLists(
       lists.map((list) => {

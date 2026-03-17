@@ -56,10 +56,11 @@ export default function List({ list, index, children }) {
         <input
           type="text"
           name="newListName"
+          minlength="0"
+          maxlength="99"
           className="w-full"
           defaultValue={draftRenameList}
           autoFocus
-          required
         />
         <span className="flex gap-[1ch]">
           <button
@@ -200,6 +201,8 @@ export default function List({ list, index, children }) {
           className="w-full min-w-0"
           type="text"
           name="newItem"
+          minlength="1"
+          maxlength="99"
           required
         />
         <button
@@ -235,6 +238,8 @@ export default function List({ list, index, children }) {
             <input
               type="text"
               name="progress"
+              minlength="1"
+              maxlength="12"
               defaultValue={list.range[1]}
               className={`${styles.progress1}`}
               required
@@ -242,6 +247,8 @@ export default function List({ list, index, children }) {
             <input
               type="text"
               name="progress"
+              minlength="1"
+              maxlength="12"
               defaultValue={list.range[2]}
               className={styles.progress2}
               required
@@ -249,6 +256,8 @@ export default function List({ list, index, children }) {
             <input
               type="text"
               name="progress"
+              minlength="1"
+              maxlength="12"
               defaultValue={list.range[3]}
               className={styles.progress3}
               required
@@ -256,6 +265,8 @@ export default function List({ list, index, children }) {
             <input
               type="text"
               name="progress"
+              minlength="1"
+              maxlength="12"
               defaultValue={list.range[4]}
               className={styles.progress4}
               required
@@ -263,6 +274,8 @@ export default function List({ list, index, children }) {
             <input
               type="text"
               name="progress"
+              minlength="1"
+              maxlength="12"
               defaultValue={list.range[5]}
               className={styles.progress5}
               required
@@ -270,6 +283,8 @@ export default function List({ list, index, children }) {
             <input
               type="text"
               name="progress"
+              minlength="1"
+              maxlength="12"
               defaultValue={list.range[6]}
               className={styles.progress6}
               required

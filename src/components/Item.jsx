@@ -80,6 +80,7 @@ export default function Item({ item, myListId, range }) {
           name="newItemName"
           className="w-full"
           defaultValue={draftRenameItem}
+          autoFocus
           required
         />
         <span className="flex gap-[1ch]">
