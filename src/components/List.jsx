@@ -76,9 +76,7 @@ export default function List({ list, index, children }) {
     <div
       className={`flex h-fit flex-col p-[1ch] ${!list.visible ? `${styles.collapsed} border-2 border-[var(--background1)] hover:border-[var(--background3)]` : "border-2 border-[var(--background2)] hover:border-[var(--foreground1)]"}`}
     >
-      <header
-        className={`${!list.visible ? `${styles.collapsed}` : ""} noselect`}
-      >
+      <header className={`${!list.visible ? `${styles.collapsed}` : ""}`}>
         {title}
         <div>
           <button

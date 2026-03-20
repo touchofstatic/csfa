@@ -47,9 +47,7 @@ export default function Item({ item, myListId, range, ...handle }) {
   let title = "";
   if (!draftRenameItem) {
     title = (
-      <div
-        className={`${styles.name} ${styles[progressClassName]} noselect pl-[1ch]`}
-      >
+      <div className={`${styles.name} ${styles[progressClassName]} pl-[1ch]`}>
         {item.name}
       </div>
     );
@@ -96,7 +94,7 @@ export default function Item({ item, myListId, range, ...handle }) {
     <div className={`${progressClassName} ${styles.item}`}>
       <div>
         {/* TODO: find a good place and style for it */}
-        <span {...handle} className={`${styles[progressClassName]}`}>
+        <span {...handle} className={`${styles[progressClassName]} noselect`}>
           [=]
         </span>
 
