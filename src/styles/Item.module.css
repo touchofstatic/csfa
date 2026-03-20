@@ -61,6 +61,6 @@
   opacity: 0.5;
 }
 
-.item:hover {
+.hoveritem:hover {
   filter: brightness(110%);
 }

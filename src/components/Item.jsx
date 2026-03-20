@@ -90,7 +90,9 @@ export default function Item({ item, myListId, range, ...handle }) {
   }
 
   return (
-    <div className={`${progressClassName} ${styles.item}`}>
+    <div
+      className={`${progressClassName} ${styles.item} ${!draftRenameItem && `${styles.hoveritem}`}`}
+    >
       <div>
         {/* TODO: find a good place and style for it */}
         <span {...handle} className={`${styles[progressClassName]} noselect`}>

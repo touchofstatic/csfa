@@ -1,19 +1,19 @@
-import { useContext } from 'react';
-import { ThemeContext } from './Contexts';
-import idk from '../styles/idk.module.css';
+import { useContext } from "react";
+import { ThemeContext } from "./Contexts";
+import idk from "../styles/idk.module.css";
 
 // TODO: temporary
 const THEMES_DEFAULT = [
-  'gruvbox-dark-hard',
-  'gruvbox-dark-medium',
-  'gruvbox-dark-soft',
-  'gruvbox-light-hard',
-  'gruvbox-light-medium',
-  'gruvbox-light-soft',
-  'nord',
-  'catppuccin-mocha',
-  'catppuccin-macchiato',
-  'catppuccin-frappe',
+  "gruvbox-dark-hard",
+  "gruvbox-dark-medium",
+  "gruvbox-dark-soft",
+  "gruvbox-light-hard",
+  "gruvbox-light-medium",
+  "gruvbox-light-soft",
+  "nord",
+  "catppuccin-mocha",
+  "catppuccin-macchiato",
+  "catppuccin-frappe",
 ];
 
 export default function Themes() {
@@ -33,55 +33,30 @@ export default function Themes() {
       <dialog
         id="themes-dialog"
         popover="true"
-        className={`h-4/5 md:h-[50ch] w-full`}
+        className={`h-4/5 w-full md:h-[50ch]`}
       >
         <article
-          className={`flex flex-col align-center justify-center h-full ${idk.idk}`}
+          className={`align-center flex h-full flex-col justify-center ${idk.idk}`}
           box-="double"
         >
+          <h2>Themes</h2>
           <div>
-            <span className="bg-[var(--foreground0)]">
-              &nbsp;&nbsp;
-            </span>
-            <span className="bg-[var(--foreground1)]">
-              &nbsp;&nbsp;
-            </span>
-            <span className="bg-[var(--foreground2)]">
-              &nbsp;&nbsp;
-            </span>
-            <span className="bg-[var(--background0)]">
-              &nbsp;&nbsp;
-            </span>
-            <span className="bg-[var(--background1)]">
-              &nbsp;&nbsp;
-            </span>
-            <span className="bg-[var(--background2)]">
-              &nbsp;&nbsp;
-            </span>
-            <span className="bg-[var(--background3)]">
-              &nbsp;&nbsp;
-            </span>
+            <span className="bg-[var(--foreground0)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--foreground1)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--foreground2)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--background0)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--background1)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--background2)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--background3)]">&nbsp;&nbsp;</span>
           </div>
 
           <div>
-            <span className="bg-[var(--color0)]">
-              &nbsp;&nbsp;
-            </span>
-            <span className="bg-[var(--color1)]">
-              &nbsp;&nbsp;
-            </span>
-            <span className="bg-[var(--color2)]">
-              &nbsp;&nbsp;
-            </span>
-            <span className="bg-[var(--color3)]">
-              &nbsp;&nbsp;
-            </span>
-            <span className="bg-[var(--color4)]">
-              &nbsp;&nbsp;
-            </span>
-            <span className="bg-[var(--color5)]">
-              &nbsp;&nbsp;
-            </span>
+            <span className="bg-[var(--color0)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--color1)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--color2)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--color3)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--color4)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--color5)]">&nbsp;&nbsp;</span>
           </div>
 
           <section>
@@ -98,10 +73,7 @@ export default function Themes() {
             ))}
           </section>
           <div className="flex justify-center">
-            <button
-              commandfor="themes-dialog"
-              command="close"
-            >
+            <button commandfor="themes-dialog" command="close">
               Exit
             </button>
           </div>

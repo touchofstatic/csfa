@@ -188,7 +188,7 @@ export default function List({ list, index, children }) {
       </form>
 
       <dialog
-        className={`h-4/5 w-full md:h-[30ch]`}
+        className={`h-4/5 w-full md:h-[50ch]`}
         id={`settings-dialog-${list.id}`}
         popover="true"
       >
@@ -196,21 +196,20 @@ export default function List({ list, index, children }) {
           className={`align-center flex h-full flex-col justify-center ${idk.idk}`}
           box-="double"
         >
-          <form
-            className={`flex flex-col`}
-            onSubmit={(event) => {
-              handleRenameRange(event);
-            }}
-            autoComplete="off"
-          >
-            <input type="hidden" name="listId" value={list.id} />
+          <h2>Settings/{list.name}</h2>
+          <h3>Progress states</h3>
+          {/* TODO: maybe you could iterate over it somehow idk */}
+          {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
+          <form className={`flex flex-col md:w-[20ch]`} autoComplete="off">
+            {/* TODO: either do something about min length or unclickable empty space in progress advance button. should I allow empty status idk */}
             <input
               type="text"
               name="progress"
               minLength="1"
               maxLength="12"
-              defaultValue={list.range[1]}
-              className={`${styles.progress1}`}
+              className={styles.progress1}
+              value={list.range[1]}
+              onChange={(e) => handleRenameRange(e.target.value, 1, list.id)}
               required
             />
             <input
@@ -218,8 +217,9 @@ export default function List({ list, index, children }) {
               name="progress"
               minLength="1"
               maxLength="12"
-              defaultValue={list.range[2]}
               className={styles.progress2}
+              value={list.range[2]}
+              onChange={(e) => handleRenameRange(e.target.value, 2, list.id)}
               required
             />
             <input
@@ -227,8 +227,9 @@ export default function List({ list, index, children }) {
               name="progress"
               minLength="1"
               maxLength="12"
-              defaultValue={list.range[3]}
               className={styles.progress3}
+              value={list.range[3]}
+              onChange={(e) => handleRenameRange(e.target.value, 3, list.id)}
               required
             />
             <input
@@ -236,8 +237,9 @@ export default function List({ list, index, children }) {
               name="progress"
               minLength="1"
               maxLength="12"
-              defaultValue={list.range[4]}
               className={styles.progress4}
+              value={list.range[4]}
+              onChange={(e) => handleRenameRange(e.target.value, 4, list.id)}
               required
             />
             <input
@@ -245,8 +247,9 @@ export default function List({ list, index, children }) {
               name="progress"
               minLength="1"
               maxLength="12"
-              defaultValue={list.range[5]}
               className={styles.progress5}
+              value={list.range[5]}
+              onChange={(e) => handleRenameRange(e.target.value, 5, list.id)}
               required
             />
             <input
@@ -254,13 +257,11 @@ export default function List({ list, index, children }) {
               name="progress"
               minLength="1"
               maxLength="12"
-              defaultValue={list.range[6]}
               className={styles.progress6}
+              value={list.range[6]}
+              onChange={(e) => handleRenameRange(e.target.value, 6, list.id)}
               required
             />
-            <button type="submit" size-="small">
-              Save
-            </button>
           </form>
           <div className="flex justify-center">
             <button commandfor={`settings-dialog-${list.id}`} command="close">

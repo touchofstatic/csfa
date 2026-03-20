@@ -175,15 +175,13 @@ export default function Manager() {
     );
   }
 
-  function handleRenameRange(event) {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const newRange = ["unspecified"].concat(formData.getAll("progress"));
-    const listId = formData.get("listId");
+  function handleRenameRange(value, index, listId) {
     setLists(
       lists.map((list) => {
         if (list.id !== listId) return list;
         else {
+          let newRange = structuredClone(list.range);
+          newRange[index] = value;
           return { ...list, range: newRange };
         }
       }),
