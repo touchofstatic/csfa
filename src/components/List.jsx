@@ -84,9 +84,9 @@ export default function List({ list, index, children }) {
           <button
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
             size-="small"
-            onClick={() => handleDeleteList(list.id, myItems)}
+            onClick={() => handleCollapseList(list.id)}
           >
-            [-]
+            {list.visible ? `[▼]` : `[▲]`}
           </button>
           <button
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
@@ -106,9 +106,9 @@ export default function List({ list, index, children }) {
           <button
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
             size-="small"
-            onClick={() => handleCollapseList(list.id)}
+            onClick={() => handleDeleteList(list.id, myItems)}
           >
-            {list.visible ? `[▼]` : `[▲]`}
+            [-]
           </button>
 
           <span> | {myItems.length} items</span>
@@ -141,7 +141,8 @@ export default function List({ list, index, children }) {
                     key={item.id}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
-                    {...provided.dragHandleProps}
+                    // used to be here before handle
+                    // {...provided.dragHandleProps}
                   >
                     {list.visible && (
                       <Item
@@ -149,6 +150,7 @@ export default function List({ list, index, children }) {
                         myListId={list.id}
                         range={list.range}
                         index={index}
+                        {...provided.dragHandleProps}
                       />
                     )}
                     {children}

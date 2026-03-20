@@ -16,7 +16,7 @@
 @layer base {
   /* overrides of webtui base css  */
   :root {
-    --font-size: 16px;
+    --font-size: 17px;
     --line-height: 1.5;
     /* Font weight for bold text */
     --font-weight-bold: 700;

@@ -10,22 +10,22 @@
   background-color: var(--foreground0);
 }
 
-button.progress1 {
+.progress1 {
   color: var(--color0);
 }
-button.progress2 {
+.progress2 {
   color: var(--color1);
 }
-button.progress3 {
+.progress3 {
   color: var(--color2);
 }
-button.progress4 {
+.progress4 {
   color: var(--color3);
 }
-button.progress5 {
+.progress5 {
   color: var(--color4);
 }
-button.progress6 {
+.progress6 {
   color: var(--color5);
 }
 .name.progress1 {

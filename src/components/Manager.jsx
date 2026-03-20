@@ -287,7 +287,7 @@ export default function Manager() {
             handleRenameRange,
           }}
         >
-          <div className="grid gap-[1ch] sm:grid-cols-1 md:grid-cols-[repeat(auto-fit,_minmax(37ch,_1fr))]">
+          <div className="grid gap-[1ch] sm:grid-cols-1 md:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))]">
             <DragDropContext onDragEnd={onDragEnd}>
               {lists.map((list, index) => (
                 <List key={list.id} list={list} index={index} />
