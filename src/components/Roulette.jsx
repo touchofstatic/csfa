@@ -1,17 +1,15 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function Roulette({ items }) {
-  const [pull, setPull] = useState('');
+  const [pull, setPull] = useState("");
   const [spinner, setSpinner] = useState(false);
 
   function randomize() {
     if (items.length > 0 && !spinner) {
-      setPull('');
+      setPull("");
       setSpinner(true);
       setTimeout(() => {
-        let randomIndex = Math.floor(
-          Math.random() * items.length,
-        );
+        let randomIndex = Math.floor(Math.random() * items.length);
         setPull(items[randomIndex]);
         setSpinner(false);
       }, 1000);
@@ -21,24 +19,19 @@ export default function Roulette({ items }) {
   const idk = <span className="gradient"></span>;
 
   return (
-    <div className="flex flex-col gap-[0.5lh]">
+    <div className="flex flex-col gap-[0.5lh] md:flex-row">
       <div
-        className={`min-h-[3lh] px-[1ch] border-3 border-[var(--background1)] flex items-center overflow-scroll`}
+        className={`flex min-h-[3lh] w-full items-center overflow-scroll border-3 border-[var(--background1)] px-[1ch]`}
       >
-        {spinner && (
-          <span
-            is-="spinner"
-            variant-="dots"
-          ></span>
-        )}
+        {spinner && <span is-="spinner" variant-="dots"></span>}
         {!pull && !spinner ? idk : pull.name}
       </div>
       <button
         size-="small"
-        className="w-full"
+        className="w-full self-center md:w-[21ch]"
         onClick={randomize}
       >
-        [Task Roulette]
+        [Random]
       </button>
     </div>
   );

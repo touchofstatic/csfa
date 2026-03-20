@@ -40,30 +40,6 @@ const RANGE_SYSTEM_DEFAULT = [
   "done",
 ];
 
-function NewListForm({ onAddList }) {
-  const clearform = useRef("");
-
-  return (
-    <form
-      onSubmit={onAddList}
-      autoComplete="off"
-      className="md:flex md:gap-[1ch]"
-    >
-      <input
-        className="w-full"
-        type="text"
-        name="newList"
-        minLength="0"
-        maxLength="99"
-        ref={clearform}
-      ></input>
-      <button className="w-full md:w-[17ch]" size-="small" type="submit">
-        [Add List]
-      </button>
-    </form>
-  );
-}
-
 export default function Manager() {
   // const [items, setItems] = useState(() => {
   //   const loadItemsDb = JSON.parse(localStorage.getItem('itemsdb'));
@@ -289,11 +265,10 @@ export default function Manager() {
         <Navbar />
       </ManagerContext.Provider>
 
-      <div className="flex flex-col gap-y-[1lh] px-[1ch] py-[1lh]">
-        {/* TODO: fix sliding away */}
-        <div className="flex w-full flex-wrap justify-center gap-[4ch]">
+      <div className="my-[1lh] flex max-w-dvw flex-col md:mx-[1ch]">
+        <div className="mb-[1lh] flex flex-row gap-[1ch] md:mb-auto">
           <Ascii text="csfa" />
-          <div className="flex w-full flex-col justify-center gap-[0.8lh] md:w-1/2 md:max-w-[69ch]">
+          <div className="flex w-full flex-col gap-[0.5lh] md:w-[60ch]">
             <Roulette items={items} />
             <NewListForm onAddList={handleAddList} />
           </div>
@@ -312,7 +287,7 @@ export default function Manager() {
             handleRenameRange,
           }}
         >
-          <div className="grid grid-cols-1 gap-[1ch] sm:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))]">
+          <div className="grid gap-[1ch] sm:grid-cols-1 md:grid-cols-[repeat(auto-fit,_minmax(37ch,_1fr))]">
             <DragDropContext onDragEnd={onDragEnd}>
               {lists.map((list, index) => (
                 <List key={list.id} list={list} index={index} />
@@ -322,5 +297,33 @@ export default function Manager() {
         </ManagerContext.Provider>
       </div>
     </>
+  );
+}
+
+function NewListForm({ onAddList }) {
+  const clearform = useRef("");
+
+  return (
+    <form
+      onSubmit={onAddList}
+      autoComplete="off"
+      className="flex flex-col gap-[0.5lh] md:flex-row md:gap-[1ch]"
+    >
+      <input
+        className="w-full min-w-0"
+        type="text"
+        name="newList"
+        minLength="0"
+        maxLength="99"
+        ref={clearform}
+      ></input>
+      <button
+        size-="small"
+        type="submit"
+        className="w-full self-center md:w-[21ch]"
+      >
+        [Add List]
+      </button>
+    </form>
   );
 }

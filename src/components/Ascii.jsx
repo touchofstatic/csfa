@@ -5,7 +5,7 @@ import {
   ansiShadow,
   dosRebel,
   deltaCorpsPriest1,
-} from 'react-ascii-text';
+} from "react-ascii-text";
 
 export default function Ascii({ text }) {
   const asciiTextRef = useAsciiText({
@@ -17,7 +17,7 @@ export default function Ascii({ text }) {
   return (
     <pre
       ref={asciiTextRef}
-      className="hidden md:block text-center text-[14px] gradient noselect"
+      className="gradient hidden text-center text-[9px] md:block md:text-[13px]"
     ></pre>
   );
 }

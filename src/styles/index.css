@@ -1,17 +1,17 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @layer base, utils, components;
-@import '@webtui/css/base.css';
-@import '@webtui/css/utils/box.css';
-@import '@webtui/css/components/typography.css';
-@import '@webtui/css/components/input.css';
-@import '@webtui/css/components/spinner.css';
-@import '@webtui/css/components/checkbox.css';
-@import '@webtui/css/components/dialog.css';
-@import '@webtui/css/components/button.css';
-@import '@webtui/css/components/progress.css';
-@import '@webtui/theme-gruvbox';
-@import '@webtui/theme-nord';
-@import '@webtui/theme-catppuccin';
+@import "@webtui/css/base.css";
+@import "@webtui/css/utils/box.css";
+@import "@webtui/css/components/typography.css";
+@import "@webtui/css/components/input.css";
+@import "@webtui/css/components/spinner.css";
+@import "@webtui/css/components/checkbox.css";
+@import "@webtui/css/components/dialog.css";
+@import "@webtui/css/components/button.css";
+@import "@webtui/css/components/progress.css";
+@import "@webtui/theme-gruvbox";
+@import "@webtui/theme-nord";
+@import "@webtui/theme-catppuccin";
 
 @layer base {
   /* overrides of webtui base css  */
@@ -22,7 +22,7 @@
     --font-weight-bold: 700;
     /* Font weight for regular text */
     --font-weight-normal: 400;
-    --font-family: 'JetBrains Mono';
+    --font-family: "JetBrains Mono";
   }
   *,
   *::before,
@@ -65,4 +65,15 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+@font-face {
+  font-family: mononoki;
+  src: url(../mononoki-Regular.ttf);
+}
+
+/* TODO: location of font file and optimizing */
+pre {
+  /* standard monospace on mobile breaks ascii art with those █ */
+  font-family: mononoki, monospace;
 }
