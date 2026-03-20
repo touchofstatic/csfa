@@ -3,7 +3,7 @@ import { useClickAway } from "@uidotdev/usehooks";
 import { ManagerContext } from "./Contexts";
 import styles from "../styles/item.module.css";
 
-export default function Item({ item, myListId, range, ...handle }) {
+export default function Item({ item, myListId, status, ...handle }) {
   const [draftRenameItem, setDraftRenameItem] = useState("");
   const { handleDeleteItem, handleRenameItem, handleAdvanceItem } =
     useContext(ManagerContext);
@@ -17,25 +17,25 @@ export default function Item({ item, myListId, range, ...handle }) {
 
   switch (progressClassName) {
     case "progress0":
-      progress = <span className="invisible">{range[0]}</span>;
+      progress = <span className="invisible">{status[0]}</span>;
       break;
     case "progress1":
-      progress = range[1];
+      progress = status[1];
       break;
     case "progress2":
-      progress = range[2];
+      progress = status[2];
       break;
     case "progress3":
-      progress = range[3];
+      progress = status[3];
       break;
     case "progress4":
-      progress = range[4];
+      progress = status[4];
       break;
     case "progress5":
-      progress = range[5];
+      progress = status[5];
       break;
     case "progress6":
-      progress = range[6];
+      progress = status[6];
       break;
     default:
       progress = "???";

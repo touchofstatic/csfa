@@ -30,7 +30,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   return result;
 };
 
-const RANGE_SYSTEM_DEFAULT = [
+const SYSTEM_DEFAULT_RANGE = [
   "unspecified",
   "queued",
   "priority",
@@ -105,7 +105,7 @@ export default function Manager() {
         id: uuidv4(),
         itemIds: [],
         visible: true,
-        range: RANGE_SYSTEM_DEFAULT,
+        status: SYSTEM_DEFAULT_RANGE,
       },
     ]);
   }
@@ -175,14 +175,14 @@ export default function Manager() {
     );
   }
 
-  function handleRenameRange(value, index, listId) {
+  function handleRenameStatus(value, index, listId) {
     setLists(
       lists.map((list) => {
         if (list.id !== listId) return list;
         else {
-          let newRange = structuredClone(list.range);
-          newRange[index] = value;
-          return { ...list, range: newRange };
+          let newStatus = structuredClone(list.status);
+          newStatus[index] = value;
+          return { ...list, status: newStatus };
         }
       }),
     );
@@ -282,7 +282,7 @@ export default function Manager() {
             handleDeleteItem,
             handleRenameItem,
             handleAdvanceItem,
-            handleRenameRange,
+            handleRenameStatus,
           }}
         >
           <div className="grid gap-[1ch] sm:grid-cols-1 md:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))]">

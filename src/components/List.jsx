@@ -19,7 +19,7 @@ export default function List({ list, index, children }) {
     handleDeleteList,
     handleRenameList,
     handleCollapseList,
-    handleRenameRange,
+    handleRenameStatus,
   } = useContext(ManagerContext);
 
   const clearform = useRef("");
@@ -146,7 +146,7 @@ export default function List({ list, index, children }) {
                       <Item
                         item={item}
                         myListId={list.id}
-                        range={list.range}
+                        status={list.status}
                         index={index}
                         {...provided.dragHandleProps}
                       />
@@ -197,7 +197,7 @@ export default function List({ list, index, children }) {
           box-="double"
         >
           <h2>Settings/{list.name}</h2>
-          <h3>Progress states</h3>
+          <h3>Progress status</h3>
           {/* TODO: maybe you could iterate over it somehow idk */}
           {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
           <form className={`flex flex-col md:w-[20ch]`} autoComplete="off">
@@ -208,8 +208,8 @@ export default function List({ list, index, children }) {
               minLength="1"
               maxLength="12"
               className={styles.progress1}
-              value={list.range[1]}
-              onChange={(e) => handleRenameRange(e.target.value, 1, list.id)}
+              value={list.status[1]}
+              onChange={(e) => handleRenameStatus(e.target.value, 1, list.id)}
               required
             />
             <input
@@ -218,8 +218,8 @@ export default function List({ list, index, children }) {
               minLength="1"
               maxLength="12"
               className={styles.progress2}
-              value={list.range[2]}
-              onChange={(e) => handleRenameRange(e.target.value, 2, list.id)}
+              value={list.status[2]}
+              onChange={(e) => handleRenameStatus(e.target.value, 2, list.id)}
               required
             />
             <input
@@ -228,8 +228,8 @@ export default function List({ list, index, children }) {
               minLength="1"
               maxLength="12"
               className={styles.progress3}
-              value={list.range[3]}
-              onChange={(e) => handleRenameRange(e.target.value, 3, list.id)}
+              value={list.status[3]}
+              onChange={(e) => handleRenameStatus(e.target.value, 3, list.id)}
               required
             />
             <input
@@ -238,8 +238,8 @@ export default function List({ list, index, children }) {
               minLength="1"
               maxLength="12"
               className={styles.progress4}
-              value={list.range[4]}
-              onChange={(e) => handleRenameRange(e.target.value, 4, list.id)}
+              value={list.status[4]}
+              onChange={(e) => handleRenameStatus(e.target.value, 4, list.id)}
               required
             />
             <input
@@ -248,8 +248,8 @@ export default function List({ list, index, children }) {
               minLength="1"
               maxLength="12"
               className={styles.progress5}
-              value={list.range[5]}
-              onChange={(e) => handleRenameRange(e.target.value, 5, list.id)}
+              value={list.status[5]}
+              onChange={(e) => handleRenameStatus(e.target.value, 5, list.id)}
               required
             />
             <input
@@ -258,8 +258,8 @@ export default function List({ list, index, children }) {
               minLength="1"
               maxLength="12"
               className={styles.progress6}
-              value={list.range[6]}
-              onChange={(e) => handleRenameRange(e.target.value, 6, list.id)}
+              value={list.status[6]}
+              onChange={(e) => handleRenameStatus(e.target.value, 6, list.id)}
               required
             />
           </form>
