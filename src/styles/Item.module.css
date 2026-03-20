@@ -52,3 +52,15 @@
   background-color: var(--color5);
   color: var(--background0);
 }
+
+.overlay {
+  background-color: transparent;
+  display: inline-block;
+}
+.overlay div:hover {
+  opacity: 0.5;
+}
+
+.item:hover {
+  filter: brightness(110%);
+}

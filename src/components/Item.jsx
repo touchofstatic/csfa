@@ -18,7 +18,6 @@ export default function Item({ item, myListId, range, ...handle }) {
   switch (progressClassName) {
     case "progress0":
       progress = <span className="invisible">{range[0]}</span>;
-      // progress = <span className="invisible">unspecified</span>;
       break;
     case "progress1":
       progress = range[1];
@@ -97,7 +96,6 @@ export default function Item({ item, myListId, range, ...handle }) {
         <span {...handle} className={`${styles[progressClassName]} noselect`}>
           [=]
         </span>
-
         <button
           className={`${styles.controls} ${styles[progressClassName]} p-0`}
           size-="small"
