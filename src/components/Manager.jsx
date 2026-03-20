@@ -293,6 +293,14 @@ export default function Manager() {
                 <List key={list.id} list={list} index={index} />
               ))}
             </DragDropContext>
+            {/* List auto-fit control placeholders because I'm a shameful being */}
+            {/* TODO: HIDE ACCESSIBLY */}
+            {lists.length <= 2 && (
+              <div className="hidden md:invisible md:block">lmao</div>
+            )}
+            {lists.length === 1 && (
+              <div className="hidden md:invisible md:block">lmao</div>
+            )}
           </div>
         </ManagerContext.Provider>
       </div>
