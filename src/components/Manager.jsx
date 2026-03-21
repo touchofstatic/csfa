@@ -1,12 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { DragDropContext } from "@hello-pangea/dnd";
 import { ManagerContext } from "./Contexts";
-import List from "./List";
 import Roulette from "./Roulette";
 import Navbar from "./Navbar";
 import Ascii from "./Ascii";
-
+import Board from "./Board.jsx";
 import Ajv from "ajv";
 import { itemsSchema, listsSchema } from "./schema.jsx";
 
@@ -46,7 +44,6 @@ export default function Manager() {
   // FOR DEVELOPMENT
   const [lists, setLists] = useState(listsdb);
   const [items, setItems] = useState(itemsdb);
-  // TODO: shitty name!!!
   const [userProgs, setUserProgs] = useState(userProgsdb);
 
   useEffect(() => {
@@ -341,18 +338,19 @@ export default function Manager() {
         <Navbar />
       </ManagerContext.Provider>
 
-      <div className="my-[1lh] flex max-w-dvw flex-col md:mx-[1ch]">
-        <div className="mb-[1lh] flex flex-row gap-[1ch] md:mb-auto">
+      <article className="my-[1lh] flex max-w-dvw flex-col md:mx-[1ch]">
+        <header className="mb-[1lh] flex flex-row gap-[1ch] md:mb-auto">
           <Ascii text="csfa" />
           <div className="flex w-full flex-col gap-[0.5lh] md:w-[60ch]">
             <Roulette items={items} />
             <NewListForm onAddList={handleAddList} />
           </div>
-        </div>
+        </header>
 
         <ManagerContext.Provider
           value={{
             items,
+            lists,
             handleAddItem,
             handleDeleteList,
             handleRenameList,
@@ -363,25 +361,12 @@ export default function Manager() {
             handleRenameItem,
             handleAdvanceItem,
             handleRenameListProgs,
+            onDragEnd,
           }}
         >
-          <div className="grid gap-[1ch] sm:grid-cols-1 md:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))]">
-            <DragDropContext onDragEnd={onDragEnd}>
-              {lists.map((list, index) => (
-                <List key={list.id} list={list} index={index} />
-              ))}
-            </DragDropContext>
-            {/* List auto-fit control placeholders because I'm a shameful being */}
-            {/* TODO: HIDE ACCESSIBLY */}
-            {lists.length <= 2 && (
-              <div className="hidden md:invisible md:block">lmao</div>
-            )}
-            {lists.length === 1 && (
-              <div className="hidden md:invisible md:block">lmao</div>
-            )}
-          </div>
+          <Board />
         </ManagerContext.Provider>
-      </div>
+      </article>
     </>
   );
 }

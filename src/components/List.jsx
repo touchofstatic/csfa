@@ -188,6 +188,21 @@ export default function List({ list, index, children }) {
         )}
       </Droppable>
 
+      {/* <div>
+        {myItems.map((item, index) => (
+          <div key={item.id}>
+            {list.visible && (
+              <Item
+                item={item}
+                myListId={list.id}
+                progs={list.progs}
+                index={index}
+              />
+            )}
+          </div>
+        ))}
+      </div> */}
+
       <form
         className={`mt-[1ch] flex gap-[1ch]`}
         onSubmit={(event) => {
