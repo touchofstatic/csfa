@@ -2,12 +2,37 @@ import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
 import { DragDropContext } from "@hello-pangea/dnd";
 import List from "./List";
+import Ascii from "./Ascii";
+import Roulette from "./Random";
 
 export default function Board() {
   const { lists, onDragEnd } = useContext(ManagerContext);
 
   return (
     <div className="grid gap-[1ch] sm:grid-cols-1 md:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))]">
+      <div className="flex flex-col">
+        <Ascii text="csfa" />
+        <Roulette />
+        <form
+          autoComplete="off"
+          className="flex flex-col gap-[1ch] md:flex-row"
+        >
+          <input
+            className="w-full min-w-0"
+            type="text"
+            name="newList"
+            minLength="0"
+            maxLength="99"
+          ></input>
+          <button
+            size-="small"
+            type="submit"
+            className="w-full self-center md:w-[20ch]"
+          >
+            [Add List]
+          </button>
+        </form>
+      </div>
       <DragDropContext onDragEnd={onDragEnd}>
         {lists.map((list, index) => (
           <List key={list.id} list={list} index={index} />

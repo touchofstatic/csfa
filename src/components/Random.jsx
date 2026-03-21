@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Roulette({ items }) {
+export default function Random({ items }) {
   const [pull, setPull] = useState("");
   const [spinner, setSpinner] = useState(false);
 
@@ -19,19 +19,15 @@ export default function Roulette({ items }) {
   const idk = <span className="gradient"></span>;
 
   return (
-    <div className="flex flex-col gap-[0.5lh] md:flex-row">
+    <div className="mb-[0.5lh] flex flex-col gap-[1ch]">
       <div
-        className={`flex min-h-[3lh] w-full items-center overflow-scroll border-3 border-[var(--background1)] px-[1ch]`}
+        className={`flex min-h-[2lh] w-full items-center overflow-scroll border-2 border-[var(--background2)] px-[1ch]`}
       >
         {spinner && <span is-="spinner" variant-="dots"></span>}
         {!pull && !spinner ? idk : pull.name}
       </div>
-      <button
-        size-="small"
-        className="w-full self-center md:w-[21ch]"
-        onClick={randomize}
-      >
-        [Random]
+      <button size-="small" className="w-full self-center" onClick={randomize}>
+        [Random Task]
       </button>
     </div>
   );
