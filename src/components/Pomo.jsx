@@ -71,40 +71,37 @@ export default function Pomo({ config }) {
 
   return (
     <article
-      className={`mx-[1ch] flex max-w-full flex-col items-center md:w-[50ch]`}
+      className={`flex max-w-full flex-col items-center md:w-[50ch]`}
       box-="square"
     >
-      <section
-        className={`flex w-fit flex-col items-center justify-center py-[1lh]`}
-      >
-        {/* TODO: oops is that a hardcoded color */}
+      <section className={`flex flex-col py-[1lh]`}>
         <button
           type="button"
           size-="small"
-          className={`${mode[0] === "Pomodoro" ? `font-bold text-[var(--gb-green)]` : `cursor-pointer`} w-[20ch] bg-transparent text-[var(--foreground0)]`}
+          className={`${mode[0] === "Pomodoro" ? `font-bold text-[var(--background0)]` : `cursor-pointer bg-transparent text-[var(--foreground0)]`}`}
           onClick={() => {
             selectMode("Pomodoro");
           }}
         >
-          Pomodoro {mode[0] !== "Pomodoro" && <span>&nbsp;&#187;</span>}
+          Pomodoro
         </button>
         <button
           size-="small"
-          className={`${mode[0] === "Short break" ? `font-bold text-[var(--gb-green)]` : `cursor-pointer`} w-[20ch] bg-transparent text-[var(--foreground0)]`}
+          className={`${mode[0] === "Short break" ? `font-bold text-[var(--background0)]` : `cursor-pointer bg-transparent text-[var(--foreground0)]`}`}
           onClick={() => {
             selectMode("Short break");
           }}
         >
-          Short break {mode[0] !== "Short break" && <span>&nbsp;&#187;</span>}
+          Short break
         </button>
         <button
           size-="small"
-          className={`${mode[0] === "Long break" ? `font-bold text-[var(--gb-green)]` : `cursor-pointer`} w-[20ch] bg-transparent text-[var(--foreground0)]`}
+          className={`${mode[0] === "Long break" ? `font-bold text-[var(--background0)]` : `cursor-pointer bg-transparent text-[var(--foreground0)]`}`}
           onClick={() => {
             selectMode("Long break");
           }}
         >
-          Long break {mode[0] !== "Long break" && <span>&nbsp;&#187;</span>}
+          Long break
         </button>
 
         <Timer
@@ -115,7 +112,7 @@ export default function Pomo({ config }) {
           ongoing={ongoing}
           startOngoing={() => setOngoing(true)}
         />
-        <p>Cycles: {pomocount}</p>
+        <p>Pomodoros: {pomocount}</p>
       </section>
     </article>
   );
@@ -173,7 +170,7 @@ function Timer({ autoStart, onExpire, mode, ongoing, startOngoing }) {
         ref={bar}
       ></ascii-progress-bar>
 
-      <div className="space-between flex w-full justify-center gap-[1ch]">
+      <div>
         {!timer.isRunning && paused === false && (
           <button
             onClick={() => {

@@ -333,13 +333,13 @@ export default function Manager() {
 
       <article className="my-[1lh] flex max-w-dvw flex-col md:mx-[1ch]">
         {/* TODO: wait do I really want the logo and the board header to be semantically combined */}
-        {/* <header className="mb-[1lh] flex flex-row gap-[1ch] md:mb-auto">
+        <header className="mb-[1lh] flex flex-row gap-[1ch] md:mb-auto">
           <Ascii text="csfa" />
-          <div className="flex w-full flex-col gap-[0.5lh] md:w-[60ch]">
+          {/* <div className="flex w-full flex-col gap-[0.5lh] md:w-[60ch]">
             <Roulette items={items} />
             <NewListForm onAddList={handleAddList} />
-          </div>
-        </header> */}
+          </div> */}
+        </header>
 
         <ManagerContext.Provider
           value={{
