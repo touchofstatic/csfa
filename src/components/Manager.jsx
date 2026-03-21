@@ -192,6 +192,19 @@ export default function Manager() {
     );
   }
 
+  function handleMoveList(index, direction) {
+    const newOrder = structuredClone(lists);
+    if (direction === "up" && index > 0) {
+      const [target] = newOrder.splice(index, 1);
+      newOrder.splice(index - 1, 0, target);
+    }
+    if (direction === "down" && index < lists.length) {
+      const [target] = newOrder.splice(index, 1);
+      newOrder.splice(index + 1, 0, target);
+    }
+    setLists(newOrder);
+  }
+
   function handleRenameListProgs(value, index, listId) {
     setLists(
       lists.map((list) => {
@@ -345,6 +358,7 @@ export default function Manager() {
             handleRenameList,
             handleCollapseList,
             handleGroupList,
+            handleMoveList,
             handleDeleteItem,
             handleRenameItem,
             handleAdvanceItem,

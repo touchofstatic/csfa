@@ -20,6 +20,7 @@ export default function List({ list, index, children }) {
     handleRenameList,
     handleCollapseList,
     handleGroupList,
+    handleMoveList,
     handleRenameListProgs,
   } = useContext(ManagerContext);
 
@@ -117,8 +118,25 @@ export default function List({ list, index, children }) {
           >
             [g]
           </button>
+          <button
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
+            size-="small"
+            onClick={() => handleMoveList(index, "up")}
+          >
+            [↑]
+          </button>
+          <button
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
+            size-="small"
+            onClick={() => handleMoveList(index, "down")}
+          >
+            [↓]
+          </button>
 
-          <span> | {myItems.length} items</span>
+          {/* TODO: kinda wide lol */}
+          {/* <span> | {myItems.length} items</span> */}
+
+          {/* TODO: hhhhhhhh */}
           {/* <div className="flex w-full min-w-full">
             <span className="bg-[var(--color0)] w-full">&nbsp;10&nbsp;</span>
             <span className="bg-[var(--color1)] w-full">&nbsp;25&nbsp;</span>
