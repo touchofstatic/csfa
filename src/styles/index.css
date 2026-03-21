@@ -9,6 +9,8 @@
 @import "@webtui/css/components/dialog.css";
 @import "@webtui/css/components/button.css";
 @import "@webtui/css/components/progress.css";
+@import "@webtui/css/components/radio.css";
+@import "@webtui/css/components/range.css";
 @import "@webtui/theme-gruvbox";
 @import "@webtui/theme-nord";
 @import "@webtui/theme-catppuccin";

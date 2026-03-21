@@ -5,9 +5,12 @@ import Roulette from "./Roulette";
 import Navbar from "./Navbar";
 import Ascii from "./Ascii";
 import Board from "./Board.jsx";
+import Pomo from "./Pomo.jsx";
 
 // FOR DEVELOPMENT
 import { itemsdb, listsdb, userProgsdb, SYSTEM_DEFAULT_PROGS } from "./data";
+// TODO: ported from pomo. merge
+import { userconfig, DEFAULTCONFIG } from "./configdb.jsx";
 
 // TODO: should I put this somewhere else idk
 // DnD logic
@@ -45,6 +48,8 @@ export default function Manager() {
   const [lists, setLists] = useState(listsdb);
   const [items, setItems] = useState(itemsdb);
   const [userProgs, setUserProgs] = useState(userProgsdb);
+  // TODO: ported from pomo. merge
+  const [config, setConfig] = useState(userconfig);
 
   useEffect(() => {
     localStorage.setItem("lists", JSON.stringify(lists));
@@ -57,6 +62,34 @@ export default function Manager() {
   useEffect(() => {
     localStorage.setItem("userProgs", JSON.stringify(userProgs));
   }, [userProgs]);
+
+  // TODO: ported from pomo. merge user settings
+  useEffect(() => {
+    localStorage.setItem("userconfig", JSON.stringify(config));
+  }, [config]);
+
+  // TODO: ported from pomo. merge
+  function changeConfig(value, name) {
+    if (name === "pomo" || name === "short" || name === "long")
+      setConfig({ ...config, [name]: Number(value) * 60 });
+    if (name === "volume") setConfig({ ...config, volume: value });
+    if (name === "interval") setConfig({ ...config, interval: value });
+    if (name === "auto") {
+      if (value === "yes") setConfig({ ...config, autoStart: true });
+      if (value === "no") setConfig({ ...config, autoStart: false });
+    }
+  }
+
+  function resetConfig() {
+    setConfig({
+      pomo: DEFAULTCONFIG.pomo,
+      short: DEFAULTCONFIG.short,
+      long: DEFAULTCONFIG.long,
+      interval: DEFAULTCONFIG.interval,
+      autoStart: DEFAULTCONFIG.autoStart,
+      volume: DEFAULTCONFIG.volume,
+    });
+  }
 
   function onDragEnd(result) {
     const { source, destination } = result;
@@ -286,23 +319,27 @@ export default function Manager() {
         value={{
           lists,
           items,
+          config,
           handleImportBoard,
           userProgs,
           handleRenameUserProgs,
           handleReset,
+          changeConfig,
+          resetConfig,
         }}
       >
         <Navbar />
       </ManagerContext.Provider>
 
       <article className="my-[1lh] flex max-w-dvw flex-col md:mx-[1ch]">
-        <header className="mb-[1lh] flex flex-row gap-[1ch] md:mb-auto">
+        {/* TODO: wait do I really want the logo and the board header to be semantically combined */}
+        {/* <header className="mb-[1lh] flex flex-row gap-[1ch] md:mb-auto">
           <Ascii text="csfa" />
           <div className="flex w-full flex-col gap-[0.5lh] md:w-[60ch]">
             <Roulette items={items} />
             <NewListForm onAddList={handleAddList} />
           </div>
-        </header>
+        </header> */}
 
         <ManagerContext.Provider
           value={{
@@ -321,7 +358,8 @@ export default function Manager() {
             onDragEnd,
           }}
         >
-          <Board />
+          {/* <Board /> */}
+          <Pomo config={config} />
         </ManagerContext.Provider>
       </article>
     </>
