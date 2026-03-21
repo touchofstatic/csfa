@@ -270,7 +270,7 @@ export default function Manager() {
     setUserProgs(newProgs);
   }
 
-  function handleResetUserProgs() {
+  function handleReset() {
     setUserProgs(SYSTEM_DEFAULT_PROGS);
   }
 
@@ -289,7 +289,7 @@ export default function Manager() {
           handleImportBoard,
           userProgs,
           handleRenameUserProgs,
-          handleResetUserProgs,
+          handleReset,
         }}
       >
         <Navbar />

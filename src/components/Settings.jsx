@@ -2,12 +2,12 @@ import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
 import Import from "./Import";
 import Export from "./Export";
+import Reset from "./Reset";
 import styles from "../styles/list.module.css";
 import idk from "../styles/idk.module.css";
 
 export default function Settings() {
-  const { userProgs, handleRenameUserProgs, handleResetUserProgs } =
-    useContext(ManagerContext);
+  const { userProgs, handleRenameUserProgs } = useContext(ManagerContext);
 
   return (
     <>
@@ -95,14 +95,11 @@ export default function Settings() {
               />
             </form>
           </section>
-          {/* TODO: warning dialog */}
           <section className="flex h-full w-fit flex-col gap-1">
             <h3># Data</h3>
             <Import />
             <Export />
-            <button type="button" size-="small" onClick={handleResetUserProgs}>
-              Reset settings
-            </button>
+            <Reset />
           </section>
 
           <section className="self-center align-bottom">
