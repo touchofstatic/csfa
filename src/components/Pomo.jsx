@@ -77,6 +77,7 @@ export default function Pomo({ config }) {
       <section
         className={`flex w-fit flex-col items-center justify-center py-[1lh]`}
       >
+        {/* TODO: oops is that a hardcoded color */}
         <button
           type="button"
           size-="small"
