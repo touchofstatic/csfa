@@ -358,8 +358,8 @@ export default function Manager() {
             onDragEnd,
           }}
         >
-          {/* <Board /> */}
-          <Pomo config={config} />
+          <Board />
+          {/* <Pomo config={config} /> */}
         </ManagerContext.Provider>
       </article>
     </>

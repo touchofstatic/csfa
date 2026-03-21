@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { ThemeContext } from "./Contexts";
 import idk from "../styles/idk.module.css";
 
-// TODO: temporary
+// TODO: move to file
 const THEMES_DEFAULT = [
   "gruvbox-dark-hard",
   "gruvbox-dark-medium",
@@ -15,6 +15,8 @@ const THEMES_DEFAULT = [
   "catppuccin-macchiato",
   "catppuccin-frappe",
 ];
+
+const THEMES_CUSTOM = ["catppuccin-pink"];
 
 export default function Themes() {
   const { theme, changeTheme } = useContext(ThemeContext);
@@ -61,6 +63,20 @@ export default function Themes() {
 
           <section>
             {THEMES_DEFAULT.map((t) => (
+              <button
+                size-="small"
+                onClick={() => changeTheme(t)}
+                value={t}
+                key={t}
+                className={`block w-full text-left ${t === theme ? `bg-[var(--foreground0)] text-[var(--background0)]` : `bg-[var(--background1)] text-[var(--foreground0)]`}`}
+              >
+                {t}
+              </button>
+            ))}
+          </section>
+          <h3># Extra</h3>
+          <section>
+            {THEMES_CUSTOM.map((t) => (
               <button
                 size-="small"
                 onClick={() => changeTheme(t)}

@@ -164,6 +164,7 @@ function Timer({ autoStart, onExpire, mode, ongoing, startOngoing }) {
     <section>
       <Clock minutes={timer.minutes} seconds={timer.seconds} />
       {/* TODO: align */}
+      {/* TODO: second digit appearing moves container */}
       <ascii-progress-bar
         pattern="braille-long"
         show-progress="true"
@@ -202,7 +203,8 @@ function Timer({ autoStart, onExpire, mode, ongoing, startOngoing }) {
           </button>
         )}
       </div>
-      <div>Total: {total} minutes</div>
+      {/* TODO: second digit appearing moves container */}
+      <div>Total time: {total} minutes</div>
     </section>
   );
 }

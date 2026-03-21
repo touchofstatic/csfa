@@ -1,5 +1,5 @@
 @layer base {
-  [data-webtui-theme|='gruvbox'] {
+  [data-webtui-theme|="gruvbox"] {
     --color0: var(--gb-purple);
     --color1: var(--gb-red);
     --color2: var(--gb-orange);
@@ -8,7 +8,7 @@
     --color5: var(--gb-green);
   }
 
-  [data-webtui-theme|='nord'] {
+  [data-webtui-theme|="nord"] {
     --color0: var(--nord8);
     --color1: var(--nord9);
     --color2: var(--nord15);
@@ -17,15 +17,7 @@
     --color5: var(--nord14);
   }
 
-  [data-webtui-theme|='catppuccin'] {
-    /* the forbidden pink as hell catppuccin */
-    /* --color0: var(--rosewater);
-    --color1: var(--flamingo);
-    --color2: var(--pink);
-    --color3: var(--mauve);
-    --color4: var(--red);
-    --color5: var(--maroon); */
-
+  [data-webtui-theme|="catppuccin"] {
     --color0: var(--yellow);
     --color1: var(--peach);
     --color2: var(--red);
