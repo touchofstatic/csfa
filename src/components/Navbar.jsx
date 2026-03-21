@@ -8,8 +8,8 @@ export default function Navbar() {
     <nav className="w-full bg-[var(--foreground0)]">
       <Export />
       <Import />
-      <Themes />
       <Settings />
+      <Themes />
     </nav>
   );
 }
