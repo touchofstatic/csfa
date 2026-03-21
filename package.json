@@ -19,6 +19,7 @@
     "@webtui/theme-everforest": "^0.0.3",
     "@webtui/theme-gruvbox": "^0.0.1",
     "@webtui/theme-nord": "^0.0.2",
+    "ajv": "^8.18.0",
     "react": "^19.2.0",
     "react-ascii-text": "^0.0.4",
     "react-dom": "^19.2.0",

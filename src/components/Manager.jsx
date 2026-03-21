@@ -7,6 +7,9 @@ import Roulette from "./Roulette";
 import Navbar from "./Navbar";
 import Ascii from "./Ascii";
 
+import Ajv from "ajv";
+import { itemsSchema, listsSchema } from "./schema.jsx";
+
 // FOR DEVELOPMENT
 import { itemsdb, listsdb, userProgsdb, SYSTEM_DEFAULT_PROGS } from "./data";
 
@@ -228,15 +231,50 @@ export default function Manager() {
     );
   }
 
-  // TODO: validation
+  function isValid(schema, data) {
+    const ajv = new Ajv();
+    const valid = ajv.validate(schema, data);
+
+    if (!valid) {
+      console.log("Invalid file schema.");
+      console.log(ajv.errors);
+      return false;
+    }
+
+    console.log("all ok");
+    return true;
+  }
+
+  // TODO: VALIDATION
+  // TODO: DISPLAY MESSAGE PROPERLY
   function importData(event) {
     const file = event.target.files[0];
+    if (!file) {
+      console.log("No file selected.");
+      return;
+    }
+
+    if (
+      !file.type.startsWith("application/json") &&
+      !file.type.endsWith(".json")
+    ) {
+      console.log("Unsupported file type.");
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = function (event) {
       const data = JSON.parse(event.target.result);
-
-      setLists(data.lists);
-      setItems(data.items);
+      if (
+        isValid(itemsSchema, data.items) &&
+        isValid(listsSchema, data.lists)
+      ) {
+        setLists(data.lists);
+        setItems(data.items);
+      }
+    };
+    reader.onerror = function () {
+      console.log("Error reading the file.");
     };
     reader.readAsText(file);
   }
