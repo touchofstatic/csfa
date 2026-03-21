@@ -8,7 +8,7 @@ import Navbar from "./Navbar";
 import Ascii from "./Ascii";
 
 // FOR DEVELOPMENT
-import { itemsdb, listsdb } from "./data";
+import { itemsdb, listsdb, userProgsdb, SYSTEM_DEFAULT_PROGS } from "./data";
 
 const reorder = (source, startIndex, endIndex) => {
   const result = structuredClone(source);
@@ -30,16 +30,6 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   return result;
 };
 
-const SYSTEM_DEFAULT_RANGE = [
-  "unspecified",
-  "queued",
-  "priority",
-  "working",
-  "submitted",
-  "approved",
-  "done",
-];
-
 export default function Manager() {
   // const [items, setItems] = useState(() => {
   //   const loadItemsDb = JSON.parse(localStorage.getItem('itemsdb'));
@@ -53,14 +43,20 @@ export default function Manager() {
   // FOR DEVELOPMENT
   const [lists, setLists] = useState(listsdb);
   const [items, setItems] = useState(itemsdb);
+  // TODO: shitty name!!!
+  const [userProgs, setUserProgs] = useState(userProgsdb);
 
   useEffect(() => {
-    localStorage.setItem("listsdb", JSON.stringify(lists));
+    localStorage.setItem("lists", JSON.stringify(lists));
   }, [lists]);
 
   useEffect(() => {
-    localStorage.setItem("itemsdb", JSON.stringify(items));
+    localStorage.setItem("items", JSON.stringify(items));
   }, [items]);
+
+  useEffect(() => {
+    localStorage.setItem("userProgs", JSON.stringify(userProgs));
+  }, [userProgs]);
 
   function onDragEnd(result) {
     const { source, destination } = result;
@@ -105,7 +101,7 @@ export default function Manager() {
         id: uuidv4(),
         itemIds: [],
         visible: true,
-        status: SYSTEM_DEFAULT_RANGE,
+        progs: userProgs,
       },
     ]);
   }
@@ -175,14 +171,14 @@ export default function Manager() {
     );
   }
 
-  function handleRenameStatus(value, index, listId) {
+  function handleRenameListProgs(value, index, listId) {
     setLists(
       lists.map((list) => {
         if (list.id !== listId) return list;
         else {
-          let newStatus = structuredClone(list.status);
-          newStatus[index] = value;
-          return { ...list, status: newStatus };
+          let newProgs = structuredClone(list.progs);
+          newProgs[index] = value;
+          return { ...list, progs: newProgs };
         }
       }),
     );
@@ -245,6 +241,16 @@ export default function Manager() {
     reader.readAsText(file);
   }
 
+  function handleRenameUserProgs(value, index) {
+    let newProgs = structuredClone(userProgs);
+    newProgs[index] = value;
+    setUserProgs(newProgs);
+  }
+
+  function handleResetUserProgs() {
+    setUserProgs(SYSTEM_DEFAULT_PROGS);
+  }
+
   return (
     <>
       {/* FOR DEVELOPMENT */}
@@ -258,6 +264,9 @@ export default function Manager() {
           lists,
           items,
           importData,
+          userProgs,
+          handleRenameUserProgs,
+          handleResetUserProgs,
         }}
       >
         <Navbar />
@@ -282,7 +291,7 @@ export default function Manager() {
             handleDeleteItem,
             handleRenameItem,
             handleAdvanceItem,
-            handleRenameStatus,
+            handleRenameListProgs,
           }}
         >
           <div className="grid gap-[1ch] sm:grid-cols-1 md:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))]">

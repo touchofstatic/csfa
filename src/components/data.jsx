@@ -1,5 +1,6 @@
+// TODO: TEMPORARY FOR DEVELOPMENT
 import { v4 as uuidv4 } from "uuid";
-const SYSTEM_DEFAULT_RANGE = [
+export const SYSTEM_DEFAULT_PROGS = [
   "unspecified",
   "queued",
   "priority",
@@ -8,6 +9,9 @@ const SYSTEM_DEFAULT_RANGE = [
   "approved",
   "done",
 ];
+
+// TODO: shitty name
+export const userProgsdb = SYSTEM_DEFAULT_PROGS;
 
 export const itemsdb = [
   {
@@ -39,27 +43,27 @@ export const listsdb = [
     id: uuidv4(),
     itemIds: ["a0", "a1", "a2", "a3"],
     visible: true,
-    status: SYSTEM_DEFAULT_RANGE,
+    progs: userProgsdb,
   },
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
     itemIds: ["b0", "b1", "b2"],
     visible: true,
-    status: SYSTEM_DEFAULT_RANGE,
+    progs: userProgsdb,
   },
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
     itemIds: ["c0", "c1"],
     visible: true,
-    status: SYSTEM_DEFAULT_RANGE,
+    progs: userProgsdb,
   },
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
     itemIds: [],
     visible: true,
-    status: SYSTEM_DEFAULT_RANGE,
+    progs: userProgsdb,
   },
 ];

@@ -1,6 +1,7 @@
-import Export from './Export';
-import Import from './Import';
-import Themes from './Themes';
+import Export from "./Export";
+import Import from "./Import";
+import Themes from "./Themes";
+import Settings from "./Settings";
 
 export default function Navbar() {
   return (
@@ -8,6 +9,7 @@ export default function Navbar() {
       <Export />
       <Import />
       <Themes />
+      <Settings />
     </nav>
   );
 }
