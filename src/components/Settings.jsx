@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
+import Import from "./Import";
+import Export from "./Export";
 import styles from "../styles/list.module.css";
 import idk from "../styles/idk.module.css";
 
@@ -30,7 +32,7 @@ export default function Settings() {
             {/* TODO: maybe you could iterate over it somehow idk */}
             {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
             {/* TODO: either do something about min length or unclickable empty space in progress advance button. should I allow empty progs idk */}
-            <form className={`flex flex-col`} autoComplete="off">
+            <form className={`flex flex-col gap-1`} autoComplete="off">
               <input
                 type="text"
                 name="progress"
@@ -94,15 +96,12 @@ export default function Settings() {
             </form>
           </section>
           {/* TODO: warning dialog */}
-          <section className="h-full">
+          <section className="flex h-full w-fit flex-col gap-1">
             <h3># Data</h3>
-            <button
-              type="button"
-              size-="small"
-              className="w-fit"
-              onClick={handleResetUserProgs}
-            >
-              Reset
+            <Import />
+            <Export />
+            <button type="button" size-="small" onClick={handleResetUserProgs}>
+              Reset settings
             </button>
           </section>
 

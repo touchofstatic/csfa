@@ -241,7 +241,7 @@ export default function List({ list, index, children }) {
             {/* TODO: maybe you could iterate over it somehow idk */}
             {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
             {/* TODO: either do something about min length or unclickable empty space in progress advance button. should I allow empty progs idk */}
-            <form className={`flex flex-col`} autoComplete="off">
+            <form className={`flex flex-col gap-1`} autoComplete="off">
               <input
                 type="text"
                 name="progress"

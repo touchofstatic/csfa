@@ -5,12 +5,12 @@ import Roulette from "./Roulette";
 import Navbar from "./Navbar";
 import Ascii from "./Ascii";
 import Board from "./Board.jsx";
-import Ajv from "ajv";
-import { itemsSchema, listsSchema } from "./schema.jsx";
 
 // FOR DEVELOPMENT
 import { itemsdb, listsdb, userProgsdb, SYSTEM_DEFAULT_PROGS } from "./data";
 
+// TODO: should I put this somewhere else idk
+// DnD logic
 const reorder = (source, startIndex, endIndex) => {
   const result = structuredClone(source);
   const [removed] = result.splice(startIndex, 1);
@@ -259,52 +259,9 @@ export default function Manager() {
     );
   }
 
-  function isValid(schema, data) {
-    const ajv = new Ajv();
-    const valid = ajv.validate(schema, data);
-
-    if (!valid) {
-      console.log("Invalid file schema.");
-      console.log(ajv.errors);
-      return false;
-    }
-
-    console.log("all ok");
-    return true;
-  }
-
-  // TODO: VALIDATION
-  // TODO: DISPLAY MESSAGE PROPERLY
-  function importData(event) {
-    const file = event.target.files[0];
-    if (!file) {
-      console.log("No file selected.");
-      return;
-    }
-
-    if (
-      !file.type.startsWith("application/json") &&
-      !file.type.endsWith(".json")
-    ) {
-      console.log("Unsupported file type.");
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function (event) {
-      const data = JSON.parse(event.target.result);
-      if (
-        isValid(itemsSchema, data.items) &&
-        isValid(listsSchema, data.lists)
-      ) {
-        setLists(data.lists);
-        setItems(data.items);
-      }
-    };
-    reader.onerror = function () {
-      console.log("Error reading the file.");
-    };
-    reader.readAsText(file);
+  function handleImportBoard(lists, items) {
+    setLists(lists);
+    setItems(items);
   }
 
   function handleRenameUserProgs(value, index) {
@@ -329,7 +286,7 @@ export default function Manager() {
         value={{
           lists,
           items,
-          importData,
+          handleImportBoard,
           userProgs,
           handleRenameUserProgs,
           handleResetUserProgs,

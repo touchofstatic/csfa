@@ -1,65 +1,131 @@
-import { useState, useRef, useContext } from 'react';
-import { ManagerContext } from './Contexts';
-import idk from '../styles/idk.module.css';
+import { useState, useRef, useContext } from "react";
+import { ManagerContext } from "./Contexts";
+import idk from "../styles/idk.module.css";
+import Ajv from "ajv";
+import { itemsSchema, listsSchema } from "./schema.jsx";
 
 export default function Import() {
-  const { importData } = useContext(ManagerContext);
-
-  const [imported, setImported] = useState(false);
+  const { handleImportBoard } = useContext(ManagerContext);
+  const [result, setResult] = useState("none");
   // to hide the default file input
   const fileInput = useRef(null);
 
+  let message = "";
+  switch (result) {
+    case "none":
+      message = "Are you sure? Current board will be overwritten.";
+      break;
+    case "succ":
+      message = "File imported.";
+      break;
+    case "err1":
+      message = "Error: Invalid file schema.";
+      break;
+    case "err2":
+      message = "No file selected.";
+      break;
+    case "err3":
+      message = "Error: Unsupported file type.";
+      break;
+    case "err4":
+      message = "Error: Failed to read file.";
+      break;
+    default:
+      message = "Unknown error.";
+      break;
+  }
+
+  function isValid(schema, data) {
+    const ajv = new Ajv();
+    const valid = ajv.validate(schema, data);
+
+    if (!valid) {
+      setResult("err1");
+      // setMessage("Error: Invalid file schema.");
+      console.log(ajv.errors);
+      return false;
+    }
+    setResult("succ");
+    // setMessage("File imported.");
+    return true;
+  }
+
+  function importBoard(event) {
+    const file = event.target.files[0];
+    if (!file) {
+      setResult("err2");
+      // setMessage("No file selected.");
+      return;
+    }
+
+    if (
+      !file.type.startsWith("application/json") &&
+      !file.type.endsWith(".json")
+    ) {
+      setResult("err3");
+      // setMessage("Error: Unsupported file type.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      const data = JSON.parse(event.target.result);
+      if (
+        isValid(itemsSchema, data.items) &&
+        isValid(listsSchema, data.lists)
+      ) {
+        handleImportBoard(data.lists, data.items);
+      }
+    };
+    reader.onerror = function () {
+      setResult("err4");
+      // setMessage("Error: Failed to read file.");
+    };
+    reader.readAsText(file);
+  }
+
   return (
     <>
-      <button
-        size-="small"
-        command="show-modal"
-        commandfor="import-dialog"
-        className={`active:bg-[var(--color1)]`}
-      >
-        Import
+      <button size-="small" command="show-modal" commandfor="import-dialog">
+        Import board
       </button>
 
       <dialog
         id="import-dialog"
         popover="true"
-        className={`h-4/5 md:h-[30ch] w-full`}
+        className={`h-4/5 w-full md:h-[30ch]`}
       >
         <article
-          className={`flex flex-col align-center justify-center h-full text-center ${idk.idk}`}
+          className={`align-center flex h-full flex-col justify-center text-center ${idk.idk}`}
           box-="double"
         >
-          {imported === false ? (
-            <p>Are you sure you want to import?</p>
-          ) : (
-            <p>Data imported.</p>
-          )}
-          <p style={{ color: 'var(--color1)' }}>
-            Current data will be overwritten.
-          </p>
+          <p>{message}</p>
           <input
             type="file"
             accept=".json,application/json"
             ref={fileInput}
             onChange={(event) => {
-              importData(event);
-              setImported(true);
+              importBoard(event);
+              console.log(event.target.files[0].name);
             }}
-            style={{ display: 'none' }}
+            style={{ display: "none" }}
           ></input>
-          <div className="flex gap-[1ch] justify-center">
-            <button
-              type="button"
-              value="import"
-              onClick={() => fileInput.current.click()}
-            >
-              Import
-            </button>
+          {/* TODO: Ok button if successful */}
+          <div className="flex justify-center gap-[1ch]">
+            {result !== "succ" && (
+              <button
+                type="button"
+                value="import"
+                onClick={() => fileInput.current.click()}
+              >
+                Import
+              </button>
+            )}
             <button
               type="button"
               commandfor="import-dialog"
               command="close"
-              onClick={() => setImported(false)}
+              onClick={() => setResult("none")}
             >
               Exit
             </button>
