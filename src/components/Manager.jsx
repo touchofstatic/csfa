@@ -174,6 +174,24 @@ export default function Manager() {
     );
   }
 
+  function handleGroupList(listId, myItems) {
+    // put item in its numbered progress box
+    let newOrder = [[], [], [], [], [], [], []];
+    myItems.map((item) => {
+      newOrder[item.progress].push(item.id);
+    });
+    // untyped items go to bottom
+    newOrder.push(newOrder.shift());
+    // empty boxes will be removed
+    newOrder = newOrder.flat();
+    setLists(
+      lists.map((list) => {
+        if (list.id !== listId) return list;
+        else return { ...list, itemIds: newOrder };
+      }),
+    );
+  }
+
   function handleRenameListProgs(value, index, listId) {
     setLists(
       lists.map((list) => {
@@ -326,6 +344,7 @@ export default function Manager() {
             handleDeleteList,
             handleRenameList,
             handleCollapseList,
+            handleGroupList,
             handleDeleteItem,
             handleRenameItem,
             handleAdvanceItem,

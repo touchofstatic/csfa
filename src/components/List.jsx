@@ -19,6 +19,7 @@ export default function List({ list, index, children }) {
     handleDeleteList,
     handleRenameList,
     handleCollapseList,
+    handleGroupList,
     handleRenameListProgs,
   } = useContext(ManagerContext);
 
@@ -78,6 +79,7 @@ export default function List({ list, index, children }) {
     >
       <header className={`${!list.visible ? `${styles.collapsed}` : ""}`}>
         {title}
+        {/* TODO: CONSIDER BUTTONS PLACEMENT */}
         <div>
           <button
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
@@ -107,6 +109,13 @@ export default function List({ list, index, children }) {
             onClick={() => handleDeleteList(list.id, myItems)}
           >
             [-]
+          </button>
+          <button
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
+            size-="small"
+            onClick={() => handleGroupList(list.id, myItems)}
+          >
+            [g]
           </button>
 
           <span> | {myItems.length} items</span>

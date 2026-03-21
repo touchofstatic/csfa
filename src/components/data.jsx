@@ -16,12 +16,12 @@ export const userProgsdb = SYSTEM_DEFAULT_PROGS;
 export const itemsdb = [
   {
     name: "item a0",
-    progress: 1,
+    progress: 2,
     id: "a0",
   },
   {
     name: "item a1",
-    progress: 2,
+    progress: 1,
     id: "a1",
   },
   { name: "item a2", progress: 3, id: "a2" },
