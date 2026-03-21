@@ -93,7 +93,7 @@ export default function Import() {
       <dialog
         id="import-dialog"
         popover="true"
-        className={`h-4/5 w-full md:h-[30ch]`}
+        className={`h-4/5 w-full md:h-[24ch]`}
       >
         <article
           className={`align-center flex h-full flex-col justify-center text-center ${idk.idk}`}
@@ -110,7 +110,7 @@ export default function Import() {
             }}
             style={{ display: "none" }}
           ></input>
-          {/* TODO: Ok button if successful */}
+          {/* TODO: auto focus Ok button if successful */}
           <div className="flex justify-center gap-[1ch]">
             {result !== "succ" && (
               <button

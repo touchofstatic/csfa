@@ -18,7 +18,7 @@ export default function Reset() {
       <dialog
         id="reset-dialog"
         popover="true"
-        className={`h-4/5 w-full md:h-[30ch]`}
+        className={`h-4/5 w-full md:h-[24ch]`}
       >
         <article
           className={`align-center flex h-full flex-col justify-center text-center ${idk.idk}`}
