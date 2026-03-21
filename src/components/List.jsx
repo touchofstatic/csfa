@@ -215,98 +215,98 @@ export default function List({ list, index, children }) {
       </form>
 
       <dialog
-        className={`h-4/5 w-full md:h-[50ch]`}
+        className={`h-4/5 w-full md:h-[44ch] md:w-[38ch]`}
         id={`settings-dialog-${list.id}`}
         popover="true"
       >
-        <article
-          className={`align-center flex h-full flex-col justify-center ${idk.idk}`}
-          box-="double"
-        >
+        <article className={`flex h-full flex-col ${idk.idk}`} box-="double">
           <h2>Settings/{list.name}</h2>
-          <h3>Progress</h3>
-          {/* TODO: maybe you could iterate over it somehow idk */}
-          {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
-          {/* TODO: either do something about min length or unclickable empty space in progress advance button. should I allow empty progs idk */}
-          <form className={`flex flex-col md:w-[20ch]`} autoComplete="off">
-            <input
-              type="text"
-              name="progress"
-              minLength="1"
-              maxLength="12"
-              className={styles.progress1}
-              value={list.progs[1]}
-              onChange={(e) =>
-                handleRenameListProgs(e.target.value, 1, list.id)
-              }
-              required
-            />
-            <input
-              type="text"
-              name="progress"
-              minLength="1"
-              maxLength="12"
-              className={styles.progress2}
-              value={list.progs[2]}
-              onChange={(e) =>
-                handleRenameListProgs(e.target.value, 2, list.id)
-              }
-              required
-            />
-            <input
-              type="text"
-              name="progress"
-              minLength="1"
-              maxLength="12"
-              className={styles.progress3}
-              value={list.progs[3]}
-              onChange={(e) =>
-                handleRenameListProgs(e.target.value, 3, list.id)
-              }
-              required
-            />
-            <input
-              type="text"
-              name="progress"
-              minLength="1"
-              maxLength="12"
-              className={styles.progress4}
-              value={list.progs[4]}
-              onChange={(e) =>
-                handleRenameListProgs(e.target.value, 4, list.id)
-              }
-              required
-            />
-            <input
-              type="text"
-              name="progress"
-              minLength="1"
-              maxLength="12"
-              className={styles.progress5}
-              value={list.progs[5]}
-              onChange={(e) =>
-                handleRenameListProgs(e.target.value, 5, list.id)
-              }
-              required
-            />
-            <input
-              type="text"
-              name="progress"
-              minLength="1"
-              maxLength="12"
-              className={styles.progress6}
-              value={list.progs[6]}
-              onChange={(e) =>
-                handleRenameListProgs(e.target.value, 6, list.id)
-              }
-              required
-            />
-          </form>
-          <div className="flex justify-center">
+          <section className={`h-full md:w-[20ch]`}>
+            <h3># Progress</h3>
+            {/* TODO: maybe you could iterate over it somehow idk */}
+            {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
+            {/* TODO: either do something about min length or unclickable empty space in progress advance button. should I allow empty progs idk */}
+            <form className={`flex flex-col`} autoComplete="off">
+              <input
+                type="text"
+                name="progress"
+                minLength="1"
+                maxLength="12"
+                className={styles.progress1}
+                value={list.progs[1]}
+                onChange={(e) =>
+                  handleRenameListProgs(e.target.value, 1, list.id)
+                }
+                required
+              />
+              <input
+                type="text"
+                name="progress"
+                minLength="1"
+                maxLength="12"
+                className={styles.progress2}
+                value={list.progs[2]}
+                onChange={(e) =>
+                  handleRenameListProgs(e.target.value, 2, list.id)
+                }
+                required
+              />
+              <input
+                type="text"
+                name="progress"
+                minLength="1"
+                maxLength="12"
+                className={styles.progress3}
+                value={list.progs[3]}
+                onChange={(e) =>
+                  handleRenameListProgs(e.target.value, 3, list.id)
+                }
+                required
+              />
+              <input
+                type="text"
+                name="progress"
+                minLength="1"
+                maxLength="12"
+                className={styles.progress4}
+                value={list.progs[4]}
+                onChange={(e) =>
+                  handleRenameListProgs(e.target.value, 4, list.id)
+                }
+                required
+              />
+              <input
+                type="text"
+                name="progress"
+                minLength="1"
+                maxLength="12"
+                className={styles.progress5}
+                value={list.progs[5]}
+                onChange={(e) =>
+                  handleRenameListProgs(e.target.value, 5, list.id)
+                }
+                required
+              />
+              <input
+                type="text"
+                name="progress"
+                minLength="1"
+                maxLength="12"
+                className={styles.progress6}
+                value={list.progs[6]}
+                onChange={(e) =>
+                  handleRenameListProgs(e.target.value, 6, list.id)
+                }
+                required
+              />
+            </form>
+          </section>
+
+          <section className="self-center align-bottom">
             <button commandfor={`settings-dialog-${list.id}`} command="close">
               Exit
             </button>
-          </div>
+          </section>
         </article>
       </dialog>
     </div>
