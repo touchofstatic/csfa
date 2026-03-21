@@ -9,7 +9,7 @@ import {
 
 export default function Ascii({ text }) {
   const asciiTextRef = useAsciiText({
-    font: deltaCorpsPriest1,
+    font: ansiShadow,
     text: text,
     isAnimated: false,
   });
@@ -17,7 +17,7 @@ export default function Ascii({ text }) {
   return (
     <pre
       ref={asciiTextRef}
-      className="gradient hidden text-center text-[9px] md:block md:text-[11px]"
+      className="gradient hidden text-center text-[9px] md:block md:text-[14px]"
     ></pre>
   );
 }
