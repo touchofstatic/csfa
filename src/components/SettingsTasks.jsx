@@ -29,10 +29,11 @@ export default function SettingsTasks() {
           className={`flex h-full flex-col ${boxpad.boxpad}`}
           box-="double"
         >
-          <h2>Settings</h2>
-          <h3># Tasks</h3>
+          <h1>Settings</h1>
+          <h2># Tasks</h2>
+
           <section>
-            <h4>## Progress</h4>
+            {/* <h4>## Progress</h4> */}
             {/* TODO: maybe you could iterate over it somehow idk */}
             {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
             {/* TODO: either do something about min length or unclickable empty space in progress advance button. should I allow empty progs idk */}
@@ -100,7 +101,7 @@ export default function SettingsTasks() {
             </form>
           </section>
           <section className="flex w-fit flex-col gap-1">
-            <h4>## Data</h4>
+            <h3>## Data</h3>
             <Import />
             <Export />
             <Reset />

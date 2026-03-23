@@ -41,7 +41,7 @@ export default function Themes() {
           className={`align-center flex h-full flex-col justify-center ${boxpad.boxpad}`}
           box-="double"
         >
-          <h2>Themes</h2>
+          <h1>Themes</h1>
           <div>
             <span className="bg-[var(--foreground0)]">&nbsp;&nbsp;</span>
             <span className="bg-[var(--foreground1)]">&nbsp;&nbsp;</span>
@@ -74,7 +74,7 @@ export default function Themes() {
               </button>
             ))}
           </section>
-          <h3># Extra</h3>
+          <h2># Extra</h2>
           <section>
             {THEMES_CUSTOM.map((t) => (
               <button

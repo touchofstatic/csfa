@@ -238,9 +238,9 @@ export default function List({ list, index, children }) {
           className={`flex h-full flex-col ${boxpad.boxpad}`}
           box-="double"
         >
-          <h2>Settings/{list.name}</h2>
+          <h1>Settings/{list.name}</h1>
           <section className={`h-full md:w-[20ch]`}>
-            <h3># Progress</h3>
+            <h2># Progress</h2>
             {/* TODO: maybe you could iterate over it somehow idk */}
             {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
             {/* TODO: either do something about min length or unclickable empty space in progress advance button. should I allow empty progs idk */}

@@ -39,3 +39,49 @@
     --color5: var(--maroon);
   }
 }
+
+@layer components {
+  [data-webtui-theme|="catppuccin-pink"] {
+    h1 {
+      color: var(--color0);
+    }
+
+    h2 {
+      color: var(--color1);
+    }
+
+    h3 {
+      color: var(--color2);
+    }
+
+    h4 {
+      color: var(--color3);
+    }
+
+    h5 {
+      color: var(--color4);
+    }
+
+    h6 {
+      color: var(--color5);
+    }
+
+    p,
+    blockquote,
+    li,
+    [is-~="typography-block"] {
+      a {
+        color: var(--gb-blue);
+        text-decoration: underline;
+
+        &:hover {
+          color: var(--gb-aqua);
+        }
+      }
+
+      code {
+        color: var(--gb-orange);
+      }
+    }
+  }
+}
