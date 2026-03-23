@@ -28,7 +28,9 @@ const reorder = (source, startIndex, endIndex) => {
 const move = (source, destination, droppableSource, droppableDestination) => {
   const sourceClone = structuredClone(source);
   const destClone = structuredClone(destination);
+
   const [removed] = sourceClone.itemIds.splice(droppableSource.index, 1);
+
   destClone.itemIds.splice(droppableDestination.index, 0, removed);
   const result = {};
   result[droppableSource.droppableId] = sourceClone;
@@ -118,6 +120,19 @@ export default function Manager() {
       newLists[sInd] = result[sInd];
       newLists[dInd] = result[dInd];
       setLists(newLists);
+
+      // validate item progress at new boundary
+      const targetitem = items.find(
+        (item) => item.id === lists[sInd].itemIds[source.index],
+      );
+      if (targetitem.progress > lists[dInd].progs.length) {
+        setItems(
+          items.map((item) => {
+            if (item !== targetitem) return item;
+            else return { ...item, progress: 0 };
+          }),
+        );
+      }
     }
   }
 
@@ -256,8 +271,6 @@ export default function Manager() {
       }),
     );
   }
-
-  console.log(lists);
 
   function handleRenameListProgs(value, index, listId) {
     setLists(
