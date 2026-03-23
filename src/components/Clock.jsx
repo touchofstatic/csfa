@@ -1,8 +1,7 @@
 export default function Clock({ minutes, seconds }) {
-
   return (
     <>
-      <section className="text-[72px]">
+      <section className="text-[90px]">
         <span>
           {minutes < 10 ? "0" : ""}
           {minutes}

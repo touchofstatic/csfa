@@ -15,11 +15,10 @@ export default function Ascii({ text }) {
   });
 
   // TODO: switch return style classes tailored for each font option; font is from user config like theme
-
   return (
     <pre
       ref={asciiTextRef}
-      className="gradient hidden text-center text-[9px] md:block md:text-[19px]"
+      className="gradient hidden text-[9px] md:block md:text-[19px]"
     ></pre>
   );
 }

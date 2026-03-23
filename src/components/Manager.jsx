@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { ManagerContext } from "./Contexts";
-import Random from "./Random.jsx";
 import Navbar from "./Navbar";
 import Ascii from "./Ascii";
 import Board from "./Board.jsx";
 import Pomo from "./Pomo.jsx";
+import Test from "./Test.jsx";
 
 // FOR DEVELOPMENT
 import {
@@ -353,8 +353,9 @@ export default function Manager() {
             onDragEnd,
           }}
         >
-          {/* <Board /> */}
-          <Pomo />
+          <Board />
+          {/* <Pomo /> */}
+          {/* <Test /> */}
         </ManagerContext.Provider>
       </article>
     </>

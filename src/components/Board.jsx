@@ -4,6 +4,7 @@ import { DragDropContext } from "@hello-pangea/dnd";
 import List from "./List";
 import Ascii from "./Ascii";
 import Random from "./Random";
+import Pomo from "./Pomo";
 
 export default function Board() {
   const { items, lists, handleAddList, onDragEnd } = useContext(ManagerContext);
@@ -14,6 +15,7 @@ export default function Board() {
         <Ascii text="csfa" />
         <Random items={items} />
         <NewListForm onAddList={handleAddList} />
+        <Pomo />
       </aside>
 
       <DragDropContext onDragEnd={onDragEnd}>

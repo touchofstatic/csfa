@@ -74,10 +74,7 @@ export default function Pomo() {
   }
 
   return (
-    <article
-      className={`flex max-w-full flex-col items-center md:w-[50ch]`}
-      box-="square"
-    >
+    <article className={`flex max-w-full flex-col`}>
       <section className={`flex flex-col py-[1lh]`}>
         <button
           type="button"
@@ -208,7 +205,7 @@ function Timer({ autoStart, onExpire, mode, ongoing, startOngoing }) {
         )}
       </div>
       {/* TODO: second digit appearing moves container */}
-      <div>Total time: {total} minutes</div>
+      {/* <div>Total time: {total} minutes</div> */}
     </section>
   );
 }
