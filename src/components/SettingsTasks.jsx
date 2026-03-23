@@ -7,7 +7,7 @@ import styles from "../styles/list.module.css";
 import boxpad from "../styles/boxpad.module.css";
 
 export default function SettingsTasks() {
-  const { userProgs, handleResizeProgs, handleRenameProgs } =
+  const { userProgs, handleResizeUserProgs, handleRenameProgs } =
     useContext(ManagerContext);
 
   return (
@@ -25,7 +25,7 @@ export default function SettingsTasks() {
         id="settingstasks-dialog"
         popover="true"
         className={`h-4/5 max-h-dvh w-full md:h-[25lh]`}
-        open
+        // open
       >
         <article
           className={`flex h-full flex-col ${boxpad.boxpad}`}
@@ -35,6 +35,7 @@ export default function SettingsTasks() {
           <h2># Tasks</h2>
           <section>
             <h3>## Progress</h3>
+            {/* TODO: warning */}
             <form className={`flex flex-col`} autoComplete="off">
               <label>
                 Range:
@@ -44,7 +45,7 @@ export default function SettingsTasks() {
                   min="1"
                   max="7"
                   value={userProgs.length - 1}
-                  onChange={(e) => handleResizeProgs(e.target.value)}
+                  onChange={(e) => handleResizeUserProgs(e.target.value)}
                   required
                 ></input>
               </label>

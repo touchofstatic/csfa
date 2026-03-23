@@ -32,6 +32,9 @@
 .progress6 {
   color: var(--color5);
 }
+.progress7 {
+  color: var(--color6);
+}
 .name.progress1 {
   background-color: var(--color0);
   color: var(--background0);
@@ -54,6 +57,10 @@
 }
 .name.progress6 {
   background-color: var(--color5);
+  color: var(--background0);
+}
+.name.progress7 {
+  background-color: var(--color6);
   color: var(--background0);
 }
 

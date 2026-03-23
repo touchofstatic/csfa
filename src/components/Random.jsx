@@ -4,7 +4,7 @@ export default function Random({ items }) {
   const [pull, setPull] = useState("");
   const [spinner, setSpinner] = useState(false);
   const coolplaceholderidk = (
-    <span className="gradient">cool placeholder words (tenative)</span>
+    <span className="gradient">cool placeholder words (tentative)</span>
   );
 
   function randomize() {

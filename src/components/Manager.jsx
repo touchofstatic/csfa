@@ -206,7 +206,7 @@ export default function Manager() {
 
   function handleGroupList(listId, myItems) {
     // put item in its numbered progress box
-    let newOrder = [[], [], [], [], [], [], []];
+    let newOrder = [[], [], [], [], [], [], [], []];
     myItems.map((item) => {
       newOrder[item.progress].push(item.id);
     });
@@ -234,6 +234,30 @@ export default function Manager() {
     }
     setLists(newOrder);
   }
+
+  function handleResizeListProgs(value, listProgs, listId, myItems) {
+    // validate items' progress above new boundary
+    setItems(
+      items.map((item) => {
+        if (myItems.includes(item) === false) return item;
+        else {
+          if (item.progress > value) return { ...item, progress: 0 };
+          else return item;
+        }
+      }),
+    );
+    let newProgs = structuredClone(listProgs);
+    if (value > listProgs.length - 1) newProgs.push("");
+    else if (value < listProgs.length - 1) newProgs.pop();
+    setLists(
+      lists.map((list) => {
+        if (list.id !== listId) return list;
+        else return { ...list, progs: newProgs };
+      }),
+    );
+  }
+
+  console.log(lists);
 
   function handleRenameListProgs(value, index, listId) {
     setLists(
@@ -280,12 +304,13 @@ export default function Manager() {
     );
   }
 
-  function handleAdvanceItem(itemId) {
+  function handleAdvanceItem(itemId, progs) {
     setItems(
       items.map((item) => {
         if (item.id !== itemId) return item;
         else {
-          if (item.progress == 6) return { ...item, progress: 0 };
+          if (item.progress === progs.length - 1)
+            return { ...item, progress: 0 };
           else return { ...item, progress: item.progress + 1 };
         }
       }),
@@ -297,14 +322,12 @@ export default function Manager() {
     setItems(items);
   }
 
-  function handleResizeProgs(value) {
+  function handleResizeUserProgs(value) {
     let newProgs = structuredClone(userProgs);
     if (value > userProgs.length - 1) newProgs.push("");
     else if (value < userProgs.length - 1) newProgs.pop();
     setUserProgs(newProgs);
   }
-
-  console.log(userProgs);
 
   function handleRenameProgs(value, index) {
     let newProgs = structuredClone(userProgs);
@@ -331,7 +354,7 @@ export default function Manager() {
           userProgs,
           userPomo,
           handleImportBoard,
-          handleResizeProgs,
+          handleResizeUserProgs,
           handleRenameProgs,
           resetSettingsConfig,
           changePomoConfig,
@@ -358,6 +381,7 @@ export default function Manager() {
             handleDeleteItem,
             handleRenameItem,
             handleAdvanceItem,
+            handleResizeListProgs,
             handleRenameListProgs,
             onDragEnd,
           }}

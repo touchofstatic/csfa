@@ -65,23 +65,5 @@
     h6 {
       color: var(--color5);
     }
-
-    p,
-    blockquote,
-    li,
-    [is-~="typography-block"] {
-      a {
-        color: var(--gb-blue);
-        text-decoration: underline;
-
-        &:hover {
-          color: var(--gb-aqua);
-        }
-      }
-
-      code {
-        color: var(--gb-orange);
-      }
-    }
   }
 }
