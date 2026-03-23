@@ -8,8 +8,9 @@ export default function Sidebar() {
   const { items, handleAddList } = useContext(ManagerContext);
 
   return (
-    // TODO: mobile broke
-    <aside className="flex flex-col md:w-[40ch]">
+    // TODO: accessibility at bigger font size?
+    // I don't really like how it shrinks on pc
+    <aside className="flex flex-col md:w-[36ch] md:min-w-[36ch]">
       <Ascii text="csfa" />
       <NewListForm onAddList={handleAddList} />
       <Random items={items} />
@@ -25,7 +26,7 @@ function NewListForm({ onAddList }) {
     <form
       onSubmit={onAddList}
       autoComplete="off"
-      className="flex flex-col md:flex-row"
+      className="mb-[1lh] flex flex-col md:flex-row"
     >
       <input
         className="w-full min-w-0"
@@ -35,11 +36,7 @@ function NewListForm({ onAddList }) {
         maxLength="99"
         ref={clearform}
       ></input>
-      <button
-        size-="small"
-        type="submit"
-        className="w-full self-center md:w-[20ch]"
-      >
+      <button size-="small" type="submit" className="w-full md:w-[20ch]">
         [Add List]
       </button>
     </form>

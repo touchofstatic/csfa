@@ -4,7 +4,7 @@ import SettingsPomo from "./SettingsPomo";
 
 export default function Navbar() {
   return (
-    <nav className="w-full bg-[var(--foreground0)]">
+    <nav className="box-border w-dvw bg-[var(--foreground0)]">
       <SettingsTasks />
       <SettingsPomo />
       <Themes />

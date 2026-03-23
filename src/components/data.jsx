@@ -72,14 +72,14 @@ export const listsdb = [
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
-    itemIds: ["c0", "c1"],
+    itemIds: [],
     visible: true,
     progs: userProgsConfig,
   },
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
-    itemIds: [],
+    itemIds: ["c0", "c1"],
     visible: true,
     progs: userProgsConfig,
   },

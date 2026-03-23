@@ -46,7 +46,9 @@ export default function Item({ item, myListId, progs, ...handle }) {
   let title = "";
   if (!draftRenameItem) {
     title = (
-      <div className={`${styles.name} ${styles[progressClassName]} pl-[1ch]`}>
+      <div
+        className={`${styles.name} ${styles[progressClassName]} pl-[1ch] break-all`}
+      >
         {item.name}
       </div>
     );

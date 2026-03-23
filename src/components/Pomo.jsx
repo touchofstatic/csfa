@@ -13,12 +13,19 @@ const SOUND_URL = "../src/melokacool_notification_6.mp3";
 import { AsciiProgressBar } from "@yacosta738/ascii-progress-bar/browser";
 AsciiProgressBar.register();
 
-// TODO: read some design guidelines and ponder width
+customElements.whenDefined("ascii-progress-bar").then(() => {
+  AsciiProgressBar.addPattern("alt178", {
+    empty: "░",
+    filled: "▓",
+    length: 18,
+  });
+});
+
 customElements.whenDefined("ascii-progress-bar").then(() => {
   AsciiProgressBar.addPattern("braille-long", {
     empty: "⣀",
     filled: "⣿",
-    length: 15,
+    length: 18,
   });
 });
 
@@ -164,15 +171,14 @@ function Timer({ autoStart, onExpire, mode, ongoing, startOngoing }) {
   return (
     <section>
       <Clock minutes={timer.minutes} seconds={timer.seconds} />
-      {/* TODO: align */}
-      {/* TODO: second digit appearing moves container */}
       <ascii-progress-bar
         pattern="braille-long"
         show-progress="true"
         ref={bar}
+        className="text-center"
       ></ascii-progress-bar>
 
-      <div>
+      <div className="flex justify-center">
         {!timer.isRunning && paused === false && (
           <button
             onClick={() => {
@@ -204,8 +210,7 @@ function Timer({ autoStart, onExpire, mode, ongoing, startOngoing }) {
           </button>
         )}
       </div>
-      {/* TODO: second digit appearing moves container */}
-      <div>Total time: {total} minutes</div>
+      <p>Total time: {total} minutes</p>
     </section>
   );
 }

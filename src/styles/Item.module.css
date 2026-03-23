@@ -1,5 +1,5 @@
 .name {
-  word-wrap: break-word;
+  word-break: break-word;
 }
 .controls {
   color: var(--foreground0);
