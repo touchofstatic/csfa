@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
-import idk from "../styles/idk.module.css";
+import boxpad from "../styles/boxpad.module.css";
 
 export default function Reset() {
   const { resetSettingsConfig } = useContext(ManagerContext);
@@ -21,7 +21,7 @@ export default function Reset() {
         className={`h-4/5 w-full md:h-[24ch]`}
       >
         <article
-          className={`align-center flex h-full flex-col justify-center text-center ${idk.idk}`}
+          className={`align-center flex h-full flex-col justify-center text-center ${boxpad.boxpad}`}
           box-="double"
         >
           <p>Are you sure?</p>

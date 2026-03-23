@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { ThemeContext } from "./Contexts";
-import idk from "../styles/idk.module.css";
+import boxpad from "../styles/boxpad.module.css";
 
 // TODO: move to file
 const THEMES_DEFAULT = [
@@ -38,7 +38,7 @@ export default function Themes() {
         className={`h-4/5 w-full md:h-[50ch]`}
       >
         <article
-          className={`align-center flex h-full flex-col justify-center ${idk.idk}`}
+          className={`align-center flex h-full flex-col justify-center ${boxpad.boxpad}`}
           box-="double"
         >
           <h2>Themes</h2>

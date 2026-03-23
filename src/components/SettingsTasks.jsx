@@ -4,7 +4,7 @@ import Import from "./Import";
 import Export from "./Export";
 import Reset from "./Reset";
 import styles from "../styles/list.module.css";
-import idk from "../styles/idk.module.css";
+import boxpad from "../styles/boxpad.module.css";
 
 export default function SettingsTasks() {
   const { userProgs, handleRenameUserProgs } = useContext(ManagerContext);
@@ -25,7 +25,10 @@ export default function SettingsTasks() {
         popover="true"
         className={`h-4/5 max-h-dvh w-full md:h-[25lh]`}
       >
-        <article className={`flex h-full flex-col ${idk.idk}`} box-="double">
+        <article
+          className={`flex h-full flex-col ${boxpad.boxpad}`}
+          box-="double"
+        >
           <h2>Settings</h2>
           <h3># Tasks</h3>
           <section>

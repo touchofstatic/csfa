@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
-import idk from "../styles/idk.module.css";
+import boxpad from "../styles/boxpad.module.css";
 
 export default function SettingsPomo() {
   const { userPomo, changePomoConfig, resetPomoConfig } =
@@ -23,7 +23,10 @@ export default function SettingsPomo() {
         popover="true"
         className={`h-4/5 max-h-dvh w-full md:h-[25lh]`}
       >
-        <article className={`flex h-full flex-col ${idk.idk}`} box-="double">
+        <article
+          className={`flex h-full flex-col ${boxpad.boxpad}`}
+          box-="double"
+        >
           <h2>Settings</h2>
           {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
           <h3># Pomodoro</h3>

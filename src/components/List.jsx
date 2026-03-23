@@ -2,7 +2,7 @@ import { useState, useContext, useRef } from "react";
 import { useClickAway } from "@uidotdev/usehooks";
 import { ManagerContext } from "./Contexts";
 import styles from "../styles/list.module.css";
-import idk from "../styles/idk.module.css";
+import boxpad from "../styles/boxpad.module.css";
 import Item from "./Item";
 
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
@@ -234,7 +234,10 @@ export default function List({ list, index, children }) {
         id={`settingstasks-dialog-${list.id}`}
         popover="true"
       >
-        <article className={`flex h-full flex-col ${idk.idk}`} box-="double">
+        <article
+          className={`flex h-full flex-col ${boxpad.boxpad}`}
+          box-="double"
+        >
           <h2>Settings/{list.name}</h2>
           <section className={`h-full md:w-[20ch]`}>
             <h3># Progress</h3>
