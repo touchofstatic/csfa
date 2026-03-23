@@ -125,7 +125,7 @@ export default function Manager() {
       const targetitem = items.find(
         (item) => item.id === lists[sInd].itemIds[source.index],
       );
-      if (targetitem.progress > lists[dInd].progs.length) {
+      if (targetitem.progress >= lists[dInd].progs.length) {
         setItems(
           items.map((item) => {
             if (item !== targetitem) return item;
