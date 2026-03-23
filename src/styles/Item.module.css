@@ -10,6 +10,10 @@
   background-color: var(--foreground0);
 }
 
+.controls:hover:not(:active) {
+  font-weight: bold;
+}
+
 .progress1 {
   color: var(--color0);
 }
@@ -62,5 +66,5 @@
 }
 
 .hoveritem:hover {
-  filter: brightness(110%);
+  filter: brightness(103%);
 }

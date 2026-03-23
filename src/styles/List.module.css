@@ -10,6 +10,9 @@
   color: var(--background0);
   background-color: var(--foreground0);
 }
+.controls:hover:not(:active) {
+  font-weight: bold;
+}
 .collapsed {
   color: var(--background3);
 }

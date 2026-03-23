@@ -36,7 +36,7 @@ function NewListForm({ onAddList }) {
         maxLength="99"
         ref={clearform}
       ></input>
-      <button size-="small" type="submit" className="w-full md:w-[20ch]">
+      <button size-="small" type="submit" className="w-full md:w-[18ch]">
         [Add List]
       </button>
     </form>

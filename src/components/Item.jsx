@@ -72,12 +72,16 @@ export default function Item({ item, myListId, progs, ...handle }) {
           required
         />
         <span className="my-[0.25lh] flex gap-[1ch]">
-          <button className="w-full" size-="small" type="submit">
+          <button
+            className="w-full hover:bg-[var(--foreground1)]"
+            size-="small"
+            type="submit"
+          >
             [Save]
           </button>
           <button
             type="button"
-            className="w-full"
+            className="w-full hover:bg-[var(--foreground1)]"
             size-="small"
             onClick={(event) => {
               event.preventDefault();
@@ -97,18 +101,21 @@ export default function Item({ item, myListId, progs, ...handle }) {
     >
       <div>
         {/* TODO: find a good place and style for it */}
-        <span {...handle} className={`${styles[progressClassName]} noselect`}>
+        <span
+          {...handle}
+          className={`${styles[progressClassName]} noselect p-0.5 hover:font-bold`}
+        >
           [=]
         </span>
         <button
-          className={`${styles.controls} ${styles[progressClassName]} p-0`}
+          className={`${styles.controls} ${styles[progressClassName]} p-0.5`}
           size-="small"
           onClick={() => setDraftRenameItem(item.name)}
         >
           [rn]
         </button>
         <button
-          className={`${styles.controls} ${styles[progressClassName]} p-0`}
+          className={`${styles.controls} ${styles[progressClassName]} p-0.5`}
           size-="small"
           onClick={() => handleDeleteItem(item.id, myListId)}
         >

@@ -55,12 +55,16 @@ export default function List({ list, index, children }) {
           autoFocus
         />
         <span className="my-[0.25lh] flex gap-[1ch]">
-          <button className="w-full" size-="small" type="submit">
+          <button
+            className="w-full hover:bg-[var(--foreground1)]"
+            size-="small"
+            type="submit"
+          >
             [Save]
           </button>
           <button
             type="button"
-            className="w-full"
+            className="w-full hover:bg-[var(--foreground1)]"
             size-="small"
             onClick={(event) => {
               event.preventDefault();
@@ -83,21 +87,21 @@ export default function List({ list, index, children }) {
         {/* TODO: CONSIDER BUTTONS PLACEMENT */}
         <div>
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             onClick={() => handleCollapseList(list.id)}
           >
             {list.visible ? `[▼]` : `[▲]`}
           </button>
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             onClick={() => setDraftRenameList(list.name)}
           >
             [rn]
           </button>
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             command="show-modal"
             commandfor={`settingstasks-dialog-${list.id}`}
@@ -105,28 +109,28 @@ export default function List({ list, index, children }) {
             [s]
           </button>
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             onClick={() => handleDeleteList(list.id, myItems)}
           >
             [-]
           </button>
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             onClick={() => handleGroupList(list.id, myItems)}
           >
             [g]
           </button>
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             onClick={() => handleMoveList(index, "up")}
           >
             [↑]
           </button>
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             onClick={() => handleMoveList(index, "down")}
           >
