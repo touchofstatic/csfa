@@ -27,7 +27,7 @@ export default function Themes() {
         command="show-modal"
         commandfor="themes-dialog"
         size-="small"
-        className={`active:bg-[var(--color1)]`}
+        className={`hover:bg-[var(--foreground2)] active:bg-[var(--color1)]`}
       >
         Themes
       </button>

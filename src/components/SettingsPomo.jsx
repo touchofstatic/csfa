@@ -12,7 +12,7 @@ export default function SettingsPomo() {
         size-="small"
         command="show-modal"
         commandfor="settingspomo-dialog"
-        className={`active:bg-[var(--color1)]`}
+        className={`hover:bg-[var(--foreground2)] active:bg-[var(--color1)]`}
       >
         PomoConfig
       </button>

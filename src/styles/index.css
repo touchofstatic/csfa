@@ -78,3 +78,7 @@ pre {
   /* standard monospace on mobile breaks ascii art with those █ */
   font-family: mononoki, monospace;
 }
+
+button {
+  cursor: pointer;
+}
