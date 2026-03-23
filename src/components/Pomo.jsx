@@ -1,15 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import { useTimer } from "react-timer-hook";
 import Clock from "./Clock";
+
 import useSound from "use-sound";
 // TODO: is import better?
 // TODO: balance volume in audacity!!! too high
 // TODO: move to another folder? is it better?
 // import melokacool_notification_6 from "../src/melokacool_notification_6.mp3";
 const SOUND_URL = "../src/melokacool_notification_6.mp3";
-
 import { AsciiProgressBar } from "@yacosta738/ascii-progress-bar/browser";
 AsciiProgressBar.register();
+
+import Ascii from "./Ascii";
 
 // TODO: read some design guidelines and ponder width
 customElements.whenDefined("ascii-progress-bar").then(() => {

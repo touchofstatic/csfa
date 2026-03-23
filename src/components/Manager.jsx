@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { ManagerContext } from "./Contexts";
 import Random from "./Random.jsx";
@@ -333,65 +333,29 @@ export default function Manager() {
         <Navbar />
       </ManagerContext.Provider>
 
-      {/* <article className="my-[1lh] flex max-w-dvw flex-col md:mx-[1ch]"> */}
-      {/* TODO: wait do I really want the logo and the board header to be semantically combined */}
-      {/* <header className="mb-[1lh] flex flex-row gap-[1ch] md:mb-auto">
-          <Ascii text="csfa" />
-          <div className="flex w-full flex-col gap-[0.5lh] md:w-[60ch]">
-            <Roulette items={items} />
-            <NewListForm onAddList={handleAddList} />
-          </div>
-        </header> */}
-
-      <ManagerContext.Provider
-        value={{
-          items,
-          lists,
-          handleAddItem,
-          handleDeleteList,
-          handleRenameList,
-          handleCollapseList,
-          handleGroupList,
-          handleMoveList,
-          handleDeleteItem,
-          handleRenameItem,
-          handleAdvanceItem,
-          handleRenameListProgs,
-          onDragEnd,
-        }}
-      >
-        {/* <Board /> */}
-        <Pomo config={userPomo} />
-      </ManagerContext.Provider>
-      {/* </article> */}
+      <article className="my-[1lh] flex max-w-dvw flex-col md:mx-[1ch]">
+        <ManagerContext.Provider
+          value={{
+            items,
+            lists,
+            handleAddList,
+            handleAddItem,
+            handleDeleteList,
+            handleRenameList,
+            handleCollapseList,
+            handleGroupList,
+            handleMoveList,
+            handleDeleteItem,
+            handleRenameItem,
+            handleAdvanceItem,
+            handleRenameListProgs,
+            onDragEnd,
+          }}
+        >
+          <Board />
+          {/* <Pomo config={userPomo} /> */}
+        </ManagerContext.Provider>
+      </article>
     </>
-  );
-}
-
-function NewListForm({ onAddList }) {
-  const clearform = useRef("");
-
-  return (
-    <form
-      onSubmit={onAddList}
-      autoComplete="off"
-      className="flex flex-col md:flex-row"
-    >
-      <input
-        className="w-full min-w-0"
-        type="text"
-        name="newList"
-        minLength="0"
-        maxLength="99"
-        ref={clearform}
-      ></input>
-      <button
-        size-="small"
-        type="submit"
-        className="w-full self-center md:w-[21ch]"
-      >
-        [Add List]
-      </button>
-    </form>
   );
 }

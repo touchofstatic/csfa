@@ -1,10 +1,10 @@
 import {
   useAsciiText,
-  alligator,
-  fraktur,
+  // alligator,
+  // fraktur,
   ansiShadow,
-  dosRebel,
-  deltaCorpsPriest1,
+  // dosRebel,
+  // deltaCorpsPriest1,
 } from "react-ascii-text";
 
 export default function Ascii({ text }) {
