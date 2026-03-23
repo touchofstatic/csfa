@@ -73,7 +73,7 @@ export default function Item({ item, myListId, progs, ...handle }) {
         />
         <span className="my-[0.25lh] flex gap-[1ch]">
           <button
-            className="w-full hover:bg-[var(--foreground1)]"
+            className="w-full hover:not-active:bg-[var(--foreground1)]"
             size-="small"
             type="submit"
           >
@@ -81,7 +81,7 @@ export default function Item({ item, myListId, progs, ...handle }) {
           </button>
           <button
             type="button"
-            className="w-full hover:bg-[var(--foreground1)]"
+            className="w-full hover:not-active:bg-[var(--foreground1)]"
             size-="small"
             onClick={(event) => {
               event.preventDefault();

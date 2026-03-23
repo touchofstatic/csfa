@@ -120,8 +120,9 @@ export default function Pomo() {
           ongoing={ongoing}
           startOngoing={() => setOngoing(true)}
         />
-        <p>Pomodoros: {pomocount}</p>
       </section>
+      <p>Total time: {total} minutes</p>
+      <p>Pomodoros: {pomocount}</p>
     </article>
   );
 }
@@ -210,7 +211,6 @@ function Timer({ autoStart, onExpire, mode, ongoing, startOngoing }) {
           </button>
         )}
       </div>
-      <p>Total time: {total} minutes</p>
     </section>
   );
 }

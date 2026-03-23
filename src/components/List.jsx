@@ -56,7 +56,7 @@ export default function List({ list, index, children }) {
         />
         <span className="my-[0.25lh] flex gap-[1ch]">
           <button
-            className="w-full hover:bg-[var(--foreground1)]"
+            className="w-full hover:not-active:bg-[var(--foreground1)]"
             size-="small"
             type="submit"
           >
@@ -64,7 +64,7 @@ export default function List({ list, index, children }) {
           </button>
           <button
             type="button"
-            className="w-full hover:bg-[var(--foreground1)]"
+            className="w-full hover:not-active:bg-[var(--foreground1)]"
             size-="small"
             onClick={(event) => {
               event.preventDefault();
@@ -236,7 +236,7 @@ export default function List({ list, index, children }) {
       </form>
 
       <dialog
-        className={`h-4/5 w-full md:h-[44ch] md:w-[38ch]`}
+        className={`h-4/5 max-h-dvh w-full md:h-[25lh]`}
         id={`settingstasks-dialog-${list.id}`}
         popover="true"
       >

@@ -31,9 +31,8 @@ export default function SettingsTasks() {
         >
           <h1>Settings</h1>
           <h2># Tasks</h2>
-
           <section>
-            {/* <h4>## Progress</h4> */}
+            <h3>## Progress</h3>
             {/* TODO: maybe you could iterate over it somehow idk */}
             {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
             {/* TODO: either do something about min length or unclickable empty space in progress advance button. should I allow empty progs idk */}
