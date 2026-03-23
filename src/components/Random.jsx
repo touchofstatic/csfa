@@ -24,7 +24,7 @@ export default function Random({ items }) {
       {/* TODO: turn into form for accessibility */}
       {/* TODO: align words and break very long word */}
       <output
-        className={`flex h-[3.5lh] w-full overflow-y-scroll border-2 border-[var(--background2)] break-all`}
+        className={`flex h-[3.5lh] w-full overflow-y-scroll bg-[var(--background1)] break-all`}
       >
         {spinner && <span is-="spinner" variant-="dots"></span>}
         {!pull && !spinner ? coolplaceholderidk : <span>{pull.name}</span>}

@@ -3,7 +3,7 @@ export default function Clock({ minutes, seconds }) {
     <>
       {/* TODO: kinda lame font? */}
       {/* possibly should go text-7xl on mobile but it seems fine */}
-      <section className="text-center text-8xl">
+      <section className="noselect bg-[var(--background1)] text-center text-8xl">
         <span>
           {minutes < 10 ? "0" : ""}
           {minutes}
