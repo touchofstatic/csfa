@@ -42,7 +42,7 @@ export default function SettingsTasks() {
                 <input
                   type="number"
                   name="range"
-                  min="1"
+                  min="0"
                   max="7"
                   value={userProgs.length - 1}
                   onChange={(e) => handleResizeUserProgs(e.target.value)}
@@ -60,10 +60,11 @@ export default function SettingsTasks() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress1}`}
-                value={userProgs[1]}
+                className={`${styles.progress1} disabled:grayscale-70`}
+                value={userProgs[1] || ""}
                 onChange={(e) => handleRenameProgs(e.target.value, 1)}
                 required
+                disabled={userProgs.length < 2}
               />
               <input
                 type="text"

@@ -256,7 +256,7 @@ export default function List({ list, index, children }) {
                 <input
                   type="number"
                   name="range"
-                  min="1"
+                  min="0"
                   max="7"
                   value={list.progs.length - 1}
                   onChange={(e) =>
@@ -281,12 +281,13 @@ export default function List({ list, index, children }) {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={styles.progress1}
-                value={list.progs[1]}
+                className={`${styles.progress1} disabled:grayscale-70`}
+                value={list.progs[1] || ""}
                 onChange={(e) =>
                   handleRenameListProgs(e.target.value, 1, list.id)
                 }
                 required
+                disabled={list.progs.length < 2}
               />
               <input
                 type="text"
