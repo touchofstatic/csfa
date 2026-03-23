@@ -297,7 +297,16 @@ export default function Manager() {
     setItems(items);
   }
 
-  function handleRenameUserProgs(value, index) {
+  function handleResizeProgs(value) {
+    let newProgs = structuredClone(userProgs);
+    if (value > userProgs.length - 1) newProgs.push("");
+    else if (value < userProgs.length - 1) newProgs.pop();
+    setUserProgs(newProgs);
+  }
+
+  console.log(userProgs);
+
+  function handleRenameProgs(value, index) {
     let newProgs = structuredClone(userProgs);
     newProgs[index] = value;
     setUserProgs(newProgs);
@@ -322,7 +331,8 @@ export default function Manager() {
           userProgs,
           userPomo,
           handleImportBoard,
-          handleRenameUserProgs,
+          handleResizeProgs,
+          handleRenameProgs,
           resetSettingsConfig,
           changePomoConfig,
           resetPomoConfig,

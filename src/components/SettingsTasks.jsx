@@ -7,7 +7,8 @@ import styles from "../styles/list.module.css";
 import boxpad from "../styles/boxpad.module.css";
 
 export default function SettingsTasks() {
-  const { userProgs, handleRenameUserProgs } = useContext(ManagerContext);
+  const { userProgs, handleResizeProgs, handleRenameProgs } =
+    useContext(ManagerContext);
 
   return (
     <>
@@ -24,6 +25,7 @@ export default function SettingsTasks() {
         id="settingstasks-dialog"
         popover="true"
         className={`h-4/5 max-h-dvh w-full md:h-[25lh]`}
+        open
       >
         <article
           className={`flex h-full flex-col ${boxpad.boxpad}`}
@@ -33,18 +35,33 @@ export default function SettingsTasks() {
           <h2># Tasks</h2>
           <section>
             <h3>## Progress</h3>
+            <form className={`flex flex-col`} autoComplete="off">
+              <label>
+                Range:
+                <input
+                  type="number"
+                  name="range"
+                  min="1"
+                  max="7"
+                  value={userProgs.length - 1}
+                  onChange={(e) => handleResizeProgs(e.target.value)}
+                  required
+                ></input>
+              </label>
+            </form>
+
             {/* TODO: maybe you could iterate over it somehow idk */}
             {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
-            {/* TODO: either do something about min length or unclickable empty space in progress advance button. should I allow empty progs idk */}
+            {/* TODO: either do something about min length or unclickable empty space in progress advance button */}
             <form className={`flex flex-col gap-1`} autoComplete="off">
               <input
                 type="text"
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={styles.progress1}
+                className={`${styles.progress1}`}
                 value={userProgs[1]}
-                onChange={(e) => handleRenameUserProgs(e.target.value, 1)}
+                onChange={(e) => handleRenameProgs(e.target.value, 1)}
                 required
               />
               <input
@@ -52,50 +69,66 @@ export default function SettingsTasks() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={styles.progress2}
-                value={userProgs[2]}
-                onChange={(e) => handleRenameUserProgs(e.target.value, 2)}
+                className={`${styles.progress2} disabled:grayscale-70`}
+                value={userProgs[2] || ""}
+                onChange={(e) => handleRenameProgs(e.target.value, 2)}
                 required
+                disabled={userProgs.length < 3}
               />
               <input
                 type="text"
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={styles.progress3}
-                value={userProgs[3]}
-                onChange={(e) => handleRenameUserProgs(e.target.value, 3)}
+                className={`${styles.progress3} disabled:grayscale-70`}
+                value={userProgs[3] || ""}
+                onChange={(e) => handleRenameProgs(e.target.value, 3)}
                 required
+                disabled={userProgs.length < 4}
               />
               <input
                 type="text"
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={styles.progress4}
-                value={userProgs[4]}
-                onChange={(e) => handleRenameUserProgs(e.target.value, 4)}
+                className={`${styles.progress4} disabled:grayscale-70`}
+                value={userProgs[4] || ""}
+                onChange={(e) => handleRenameProgs(e.target.value, 4)}
                 required
+                disabled={userProgs.length < 5}
               />
               <input
                 type="text"
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={styles.progress5}
-                value={userProgs[5]}
-                onChange={(e) => handleRenameUserProgs(e.target.value, 5)}
+                className={`${styles.progress5} disabled:grayscale-70`}
+                value={userProgs[5] || ""}
+                onChange={(e) => handleRenameProgs(e.target.value, 5)}
                 required
+                disabled={userProgs.length < 6}
               />
               <input
                 type="text"
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={styles.progress6}
-                value={userProgs[6]}
-                onChange={(e) => handleRenameUserProgs(e.target.value, 6)}
+                className={`${styles.progress6} disabled:grayscale-70`}
+                value={userProgs[6] || ""}
+                onChange={(e) => handleRenameProgs(e.target.value, 6)}
                 required
+                disabled={userProgs.length < 7}
+              />
+              <input
+                type="text"
+                name="progress"
+                minLength="1"
+                maxLength="12"
+                className={`${styles.progress7} disabled:grayscale-70`}
+                value={userProgs[7] || ""}
+                onChange={(e) => handleRenameProgs(e.target.value, 7)}
+                required
+                disabled={userProgs.length < 8}
               />
             </form>
           </section>

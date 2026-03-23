@@ -26,7 +26,7 @@ export const userPomoConfig = {
   short: 5,
   long: 8,
   interval: 2,
-  autoStart: true,
+  autoStart: false,
   volume: 10,
 };
 

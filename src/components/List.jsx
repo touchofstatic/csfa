@@ -247,9 +247,10 @@ export default function List({ list, index, children }) {
           <h1>Settings/{list.name}</h1>
           <section className={`h-full md:w-[20ch]`}>
             <h2># Progress</h2>
+
             {/* TODO: maybe you could iterate over it somehow idk */}
             {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
-            {/* TODO: either do something about min length or unclickable empty space in progress advance button. should I allow empty progs idk */}
+            {/* TODO: either do something about min length or unclickable empty space in progress advance button. */}
             <form className={`flex flex-col gap-1`} autoComplete="off">
               <input
                 type="text"
@@ -320,6 +321,18 @@ export default function List({ list, index, children }) {
                 value={list.progs[6]}
                 onChange={(e) =>
                   handleRenameListProgs(e.target.value, 6, list.id)
+                }
+                required
+              />
+              <input
+                type="text"
+                name="progress"
+                minLength="1"
+                maxLength="12"
+                className={styles.progress7}
+                value={list.progs[7]}
+                onChange={(e) =>
+                  handleRenameListProgs(e.target.value, 7, list.id)
                 }
                 required
               />

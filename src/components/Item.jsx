@@ -37,6 +37,9 @@ export default function Item({ item, myListId, progs, ...handle }) {
     case "progress6":
       progress = progs[6];
       break;
+    case "progress7":
+      progress = progs[7];
+      break;
     default:
       progress = "???";
       break;
@@ -100,7 +103,6 @@ export default function Item({ item, myListId, progs, ...handle }) {
       className={`${progressClassName} ${styles.item} ${!draftRenameItem && `${styles.hoveritem}`}`}
     >
       <div>
-        {/* TODO: find a good place and style for it */}
         <span
           {...handle}
           className={`${styles[progressClassName]} noselect p-0.5 hover:font-bold`}
