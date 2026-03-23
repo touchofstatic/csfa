@@ -15,7 +15,7 @@ export default function SettingsTasks() {
         command="show-modal"
         commandfor="settingstasks-dialog"
         size-="small"
-        className={`hover:bg-[var(--foreground2)] active:bg-[var(--color1)]`}
+        className={`hover:bg-[var(--foreground2)] active:bg-[var(--background0)]`}
       >
         TasksConfig
       </button>
