@@ -1,11 +1,10 @@
-//TODO: TEMPORARY !!!!!! PORTED FROM POMO. MERGE
 import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
-import styles from "../styles/navbar.module.css";
 import idk from "../styles/idk.module.css";
 
 export default function SettingsPomo() {
-  const { config, changeConfig, resetConfig } = useContext(ManagerContext);
+  const { userPomo, changePomoConfig, resetPomoConfig } =
+    useContext(ManagerContext);
 
   return (
     <>
@@ -13,8 +12,7 @@ export default function SettingsPomo() {
         size-="small"
         command="show-modal"
         commandfor="settingspomo-dialog"
-        // TODO: PORTED FROM POMO. WE DON'T DO THESE ANYMORE. DELETE CSS MODULE
-        className={styles.navbutton}
+        className={`active:bg-[var(--color1)]`}
       >
         SettingsPomo
       </button>
@@ -23,116 +21,132 @@ export default function SettingsPomo() {
       <dialog
         id="settingspomo-dialog"
         popover="true"
-        className={`h-4/5 w-full md:h-[50ch]`}
+        className={`h-4/5 max-h-dvh w-full md:h-[25lh]`}
       >
-        <article
-          className={`align-center flex h-full flex-col justify-center ${idk.article}`}
-          box-="double"
-        >
+        <article className={`flex h-full flex-col ${idk.idk}`} box-="double">
+          <h2>Settings</h2>
           {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
-          <h2>Timer</h2>
-          <form className={`flex flex-col`} autoComplete="off">
-            <label>
-              Pomodoro:
+          <h3># Pomodoro</h3>
+          <section>
+            <h4>## Timer</h4>
+            <form className={`flex flex-col`} autoComplete="off">
+              <label>
+                Pomodoro:
+                <input
+                  type="number"
+                  name="pomo"
+                  min="0"
+                  max="59"
+                  value={userPomo.pomo / 60}
+                  onChange={(e) =>
+                    changePomoConfig(e.target.value, e.target.name)
+                  }
+                  required
+                ></input>
+              </label>
+              <label>
+                Short break:
+                <input
+                  type="number"
+                  name="short"
+                  min="0"
+                  max="59"
+                  value={userPomo.short / 60}
+                  onChange={(e) =>
+                    changePomoConfig(e.target.value, e.target.name)
+                  }
+                  required
+                ></input>
+              </label>
+              <label>
+                Long break:
+                <input
+                  type="number"
+                  name="long"
+                  min="0"
+                  max="59"
+                  value={userPomo.long / 60}
+                  onChange={(e) =>
+                    changePomoConfig(e.target.value, e.target.name)
+                  }
+                  required
+                ></input>
+              </label>
+              <label>
+                Interval:
+                <input
+                  type="number"
+                  name="interval"
+                  min="1"
+                  value={userPomo.interval}
+                  onChange={(e) =>
+                    changePomoConfig(e.target.value, e.target.name)
+                  }
+                  required
+                ></input>
+              </label>
+              <label>
+                Auto start
+                <input
+                  type="radio"
+                  name="auto"
+                  id="autoFalse"
+                  value="no"
+                  checked={userPomo.autoStart === false}
+                  onChange={(e) =>
+                    changePomoConfig(e.target.value, e.target.name)
+                  }
+                ></input>
+                <label htmlFor="autoFalse">No</label>
+                <input
+                  type="radio"
+                  name="auto"
+                  id="autoTrue"
+                  value="yes"
+                  checked={userPomo.autoStart === true}
+                  onChange={(e) =>
+                    changePomoConfig(e.target.value, e.target.name)
+                  }
+                ></input>
+                <label htmlFor="autoTrue">Yes</label>
+              </label>
+            </form>
+          </section>
+
+          <section>
+            <h4>## Sound</h4>
+            <label htmlFor="volume">
+              Volume
               <input
-                type="number"
-                name="pomo"
+                type="range"
                 min="0"
-                max="59"
-                value={config.pomo / 60}
-                onChange={(e) => changeConfig(e.target.value, e.target.name)}
-                required
-              ></input>
+                max="100"
+                name="volume"
+                value={userPomo.volume}
+                onChange={(e) => {
+                  changePomoConfig(e.target.value, e.target.name);
+                }}
+              />
+              {userPomo.volume}
             </label>
-            <label>
-              Short break:
-              <input
-                type="number"
-                name="short"
-                min="0"
-                max="59"
-                value={config.short / 60}
-                onChange={(e) => changeConfig(e.target.value, e.target.name)}
-                required
-              ></input>
-            </label>
-            <label>
-              Long break:
-              <input
-                type="number"
-                name="long"
-                min="0"
-                max="59"
-                value={config.long / 60}
-                onChange={(e) => changeConfig(e.target.value, e.target.name)}
-                required
-              ></input>
-            </label>
-            <label>
-              Interval:
-              <input
-                type="number"
-                name="interval"
-                min="1"
-                value={config.interval}
-                onChange={(e) => changeConfig(e.target.value, e.target.name)}
-                required
-              ></input>
-            </label>
-            <label>
-              Auto start
-              <input
-                type="radio"
-                name="auto"
-                id="autoFalse"
-                value="no"
-                checked={config.autoStart === false}
-                onChange={(e) => changeConfig(e.target.value, e.target.name)}
-                // defaultChecked={config.autoStart === false}
-              ></input>
-              <label htmlFor="autoFalse">No</label>
-              <input
-                type="radio"
-                name="auto"
-                id="autoTrue"
-                value="yes"
-                checked={config.autoStart === true}
-                onChange={(e) => changeConfig(e.target.value, e.target.name)}
-                // defaultChecked={config.autoStart === true}
-              ></input>
-              <label htmlFor="autoTrue">Yes</label>
-            </label>
-          </form>
-          <h2>Sound</h2>
-          <label htmlFor="volume">
-            Volume
-            <input
-              type="range"
-              min="0"
-              max="100"
-              name="volume"
-              value={config.volume}
-              onChange={(e) => {
-                changeConfig(e.target.value, e.target.name);
-              }}
-            />
-            {config.volume}
-          </label>
-          <h2>Data</h2>
-          {/* TODO: prompt warning dialog? */}
-          <button
-            type="button"
-            size-="small"
-            className="w-fit"
-            onClick={resetConfig}
-          >
-            Reset settings
-          </button>
-          <div className="flex justify-center">
+          </section>
+
+          <section>
+            <h4>## Data</h4>
+            <button
+              type="button"
+              size-="small"
+              className="w-fit"
+              onClick={resetPomoConfig}
+            >
+              Reset settings
+            </button>
+          </section>
+          <section className="self-center align-bottom">
             <button commandfor="settingspomo-dialog" command="close">
               Exit
             </button>
-          </div>
+          </section>
         </article>
       </dialog>
     </>

@@ -10,8 +10,25 @@ export const SYSTEM_DEFAULT_PROGS = [
   "done",
 ];
 
-// TODO: shitty name
-export const userProgsdb = SYSTEM_DEFAULT_PROGS;
+export const SYSTEM_DEFAULT_POMO = {
+  pomo: 1500,
+  short: 300,
+  long: 900,
+  interval: 4,
+  autoStart: false,
+  volume: 25,
+};
+
+export const userProgsConfig = SYSTEM_DEFAULT_PROGS;
+export const userPomoConfig = {
+  // DEVELOPMENT ONLY VALUES
+  pomo: 10,
+  short: 5,
+  long: 8,
+  interval: 2,
+  autoStart: true,
+  volume: 10,
+};
 
 export const itemsdb = [
   {
@@ -43,27 +60,27 @@ export const listsdb = [
     id: uuidv4(),
     itemIds: ["a0", "a1", "a2", "a3"],
     visible: true,
-    progs: userProgsdb,
+    progs: userProgsConfig,
   },
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
     itemIds: ["b0", "b1", "b2"],
     visible: true,
-    progs: userProgsdb,
+    progs: userProgsConfig,
   },
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
     itemIds: ["c0", "c1"],
     visible: true,
-    progs: userProgsdb,
+    progs: userProgsConfig,
   },
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
     itemIds: [],
     visible: true,
-    progs: userProgsdb,
+    progs: userProgsConfig,
   },
 ];

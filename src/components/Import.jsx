@@ -93,7 +93,7 @@ export default function Import() {
       <dialog
         id="import-dialog"
         popover="true"
-        className={`h-4/5 w-full md:h-[24ch]`}
+        className={`h-4/5 w-full overflow-scroll md:h-[24ch]`}
       >
         <article
           className={`align-center flex h-full flex-col justify-center text-center ${idk.idk}`}

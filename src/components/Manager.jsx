@@ -8,9 +8,14 @@ import Board from "./Board.jsx";
 import Pomo from "./Pomo.jsx";
 
 // FOR DEVELOPMENT
-import { itemsdb, listsdb, userProgsdb, SYSTEM_DEFAULT_PROGS } from "./data";
-// TODO: ported from pomo. merge
-import { userconfig, DEFAULTCONFIG } from "./configdb.jsx";
+import {
+  itemsdb,
+  listsdb,
+  userProgsConfig,
+  userPomoConfig,
+  SYSTEM_DEFAULT_PROGS,
+  SYSTEM_DEFAULT_POMO,
+} from "./data";
 
 // TODO: should I put this somewhere else idk
 // DnD logic
@@ -47,9 +52,8 @@ export default function Manager() {
   // FOR DEVELOPMENT
   const [lists, setLists] = useState(listsdb);
   const [items, setItems] = useState(itemsdb);
-  const [userProgs, setUserProgs] = useState(userProgsdb);
-  // TODO: ported from pomo. merge
-  const [config, setConfig] = useState(userconfig);
+  const [userProgs, setUserProgs] = useState(userProgsConfig);
+  const [userPomo, setUserPomo] = useState(userPomoConfig);
 
   useEffect(() => {
     localStorage.setItem("lists", JSON.stringify(lists));
@@ -63,31 +67,29 @@ export default function Manager() {
     localStorage.setItem("userProgs", JSON.stringify(userProgs));
   }, [userProgs]);
 
-  // TODO: ported from pomo. merge user settings
   useEffect(() => {
-    localStorage.setItem("userconfig", JSON.stringify(config));
-  }, [config]);
+    localStorage.setItem("userPomo", JSON.stringify(userPomo));
+  }, [userPomo]);
 
-  // TODO: ported from pomo. merge
-  function changeConfig(value, name) {
+  function changePomoConfig(value, name) {
     if (name === "pomo" || name === "short" || name === "long")
-      setConfig({ ...config, [name]: Number(value) * 60 });
-    if (name === "volume") setConfig({ ...config, volume: value });
-    if (name === "interval") setConfig({ ...config, interval: value });
+      setUserPomo({ ...userPomo, [name]: Number(value) * 60 });
+    if (name === "volume") setUserPomo({ ...userPomo, volume: value });
+    if (name === "interval") setUserPomo({ ...userPomo, interval: value });
     if (name === "auto") {
-      if (value === "yes") setConfig({ ...config, autoStart: true });
-      if (value === "no") setConfig({ ...config, autoStart: false });
+      if (value === "yes") setUserPomo({ ...userPomo, autoStart: true });
+      if (value === "no") setUserPomo({ ...userPomo, autoStart: false });
     }
   }
 
-  function resetConfig() {
-    setConfig({
-      pomo: DEFAULTCONFIG.pomo,
-      short: DEFAULTCONFIG.short,
-      long: DEFAULTCONFIG.long,
-      interval: DEFAULTCONFIG.interval,
-      autoStart: DEFAULTCONFIG.autoStart,
-      volume: DEFAULTCONFIG.volume,
+  function resetPomoConfig() {
+    setUserPomo({
+      pomo: SYSTEM_DEFAULT_POMO.pomo,
+      short: SYSTEM_DEFAULT_POMO.short,
+      long: SYSTEM_DEFAULT_POMO.long,
+      interval: SYSTEM_DEFAULT_POMO.interval,
+      autoStart: SYSTEM_DEFAULT_POMO.autoStart,
+      volume: SYSTEM_DEFAULT_POMO.volume,
     });
   }
 
@@ -303,7 +305,7 @@ export default function Manager() {
     setUserProgs(newProgs);
   }
 
-  function handleReset() {
+  function resetSettingsConfig() {
     setUserProgs(SYSTEM_DEFAULT_PROGS);
   }
 
@@ -319,49 +321,49 @@ export default function Manager() {
         value={{
           lists,
           items,
-          config,
+          userPomo,
           handleImportBoard,
           userProgs,
           handleRenameUserProgs,
-          handleReset,
-          changeConfig,
-          resetConfig,
+          resetSettingsConfig,
+          changePomoConfig,
+          resetPomoConfig,
         }}
       >
         <Navbar />
       </ManagerContext.Provider>
 
-      <article className="my-[1lh] flex max-w-dvw flex-col md:mx-[1ch]">
-        {/* TODO: wait do I really want the logo and the board header to be semantically combined */}
-        <header className="mb-[1lh] flex flex-row gap-[1ch] md:mb-auto">
-          {/* <Ascii text="csfa" /> */}
-          {/* <div className="flex w-full flex-col gap-[0.5lh] md:w-[60ch]">
+      {/* <article className="my-[1lh] flex max-w-dvw flex-col md:mx-[1ch]"> */}
+      {/* TODO: wait do I really want the logo and the board header to be semantically combined */}
+      {/* <header className="mb-[1lh] flex flex-row gap-[1ch] md:mb-auto">
+          <Ascii text="csfa" />
+          <div className="flex w-full flex-col gap-[0.5lh] md:w-[60ch]">
             <Roulette items={items} />
             <NewListForm onAddList={handleAddList} />
-          </div> */}
-        </header>
+          </div>
+        </header> */}
 
-        <ManagerContext.Provider
-          value={{
-            items,
-            lists,
-            handleAddItem,
-            handleDeleteList,
-            handleRenameList,
-            handleCollapseList,
-            handleGroupList,
-            handleMoveList,
-            handleDeleteItem,
-            handleRenameItem,
-            handleAdvanceItem,
-            handleRenameListProgs,
-            onDragEnd,
-          }}
-        >
-          <Board />
-          {/* <Pomo config={config} /> */}
-        </ManagerContext.Provider>
-      </article>
+      <ManagerContext.Provider
+        value={{
+          items,
+          lists,
+          handleAddItem,
+          handleDeleteList,
+          handleRenameList,
+          handleCollapseList,
+          handleGroupList,
+          handleMoveList,
+          handleDeleteItem,
+          handleRenameItem,
+          handleAdvanceItem,
+          handleRenameListProgs,
+          onDragEnd,
+        }}
+      >
+        {/* <Board /> */}
+        <Pomo config={userPomo} />
+      </ManagerContext.Provider>
+      {/* </article> */}
     </>
   );
 }

@@ -100,7 +100,7 @@ export default function List({ list, index, children }) {
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0`}
             size-="small"
             command="show-modal"
-            commandfor={`settings-dialog-${list.id}`}
+            commandfor={`settingstasks-dialog-${list.id}`}
           >
             [s]
           </button>
@@ -231,7 +231,7 @@ export default function List({ list, index, children }) {
 
       <dialog
         className={`h-4/5 w-full md:h-[44ch] md:w-[38ch]`}
-        id={`settings-dialog-${list.id}`}
+        id={`settingstasks-dialog-${list.id}`}
         popover="true"
       >
         <article className={`flex h-full flex-col ${idk.idk}`} box-="double">
@@ -318,7 +318,10 @@ export default function List({ list, index, children }) {
           </section>
 
           <section className="self-center align-bottom">
-            <button commandfor={`settings-dialog-${list.id}`} command="close">
+            <button
+              commandfor={`settingstasks-dialog-${list.id}`}
+              command="close"
+            >
               Exit
             </button>
           </section>

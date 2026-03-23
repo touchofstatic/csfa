@@ -6,29 +6,30 @@ import Reset from "./Reset";
 import styles from "../styles/list.module.css";
 import idk from "../styles/idk.module.css";
 
-export default function Settings() {
+export default function SettingsTasks() {
   const { userProgs, handleRenameUserProgs } = useContext(ManagerContext);
 
   return (
     <>
       <button
         command="show-modal"
-        commandfor="settings-dialog"
+        commandfor="settingstasks-dialog"
         size-="small"
         className={`active:bg-[var(--color1)]`}
       >
-        Settings
+        SettingsTasks
       </button>
 
       <dialog
-        id="settings-dialog"
+        id="settingstasks-dialog"
         popover="true"
-        className={`h-4/5 w-full md:h-[44ch] md:w-[38ch]`}
+        className={`h-4/5 max-h-dvh w-full md:h-[25lh]`}
       >
         <article className={`flex h-full flex-col ${idk.idk}`} box-="double">
           <h2>Settings</h2>
-          <section className={`h-full md:w-[20ch]`}>
-            <h3># Progress</h3>
+          <h3># Tasks</h3>
+          <section>
+            <h4>## Progress</h4>
             {/* TODO: maybe you could iterate over it somehow idk */}
             {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
             {/* TODO: either do something about min length or unclickable empty space in progress advance button. should I allow empty progs idk */}
@@ -95,15 +96,16 @@ export default function Settings() {
               />
             </form>
           </section>
-          <section className="flex h-full w-fit flex-col gap-1">
-            <h3># Data</h3>
+          <section className="flex w-fit flex-col gap-1">
+            <h4>## Data</h4>
             <Import />
             <Export />
             <Reset />
           </section>
 
+          {/* TODO: align bottom doesnt work */}
           <section className="self-center align-bottom">
-            <button commandfor="settings-dialog" command="close">
+            <button commandfor="settingstasks-dialog" command="close">
               Exit
             </button>
           </section>

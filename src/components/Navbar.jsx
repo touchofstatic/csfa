@@ -1,13 +1,13 @@
 import Themes from "./Themes";
-import Settings from "./Settings";
+import SettingsTasks from "./SettingsTasks";
 import SettingsPomo from "./SettingsPomo";
 
 export default function Navbar() {
   return (
     <nav className="w-full bg-[var(--foreground0)]">
-      <Settings />
-      <Themes />
+      <SettingsTasks />
       <SettingsPomo />
+      <Themes />
     </nav>
   );
 }

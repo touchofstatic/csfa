@@ -14,6 +14,8 @@ export default function Ascii({ text }) {
     isAnimated: false,
   });
 
+  // TODO: switch return style classes tailored for each font option; font is from user config like theme
+
   return (
     <pre
       ref={asciiTextRef}

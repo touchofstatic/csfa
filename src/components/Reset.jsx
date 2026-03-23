@@ -3,7 +3,7 @@ import { ManagerContext } from "./Contexts";
 import idk from "../styles/idk.module.css";
 
 export default function Reset() {
-  const { handleReset } = useContext(ManagerContext);
+  const { resetSettingsConfig } = useContext(ManagerContext);
 
   return (
     <>
@@ -33,7 +33,7 @@ export default function Reset() {
               type="button"
               commandfor="reset-dialog"
               command="close"
-              onClick={handleReset}
+              onClick={resetSettingsConfig}
             >
               Yes
             </button>

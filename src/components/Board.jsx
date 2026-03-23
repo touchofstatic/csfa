@@ -3,7 +3,7 @@ import { ManagerContext } from "./Contexts";
 import { DragDropContext } from "@hello-pangea/dnd";
 import List from "./List";
 import Ascii from "./Ascii";
-import Roulette from "./Random";
+import Random from "./Random";
 
 export default function Board() {
   const { lists, onDragEnd } = useContext(ManagerContext);
@@ -12,7 +12,7 @@ export default function Board() {
     <div className="grid gap-[1ch] sm:grid-cols-1 md:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))]">
       <div className="flex flex-col">
         <Ascii text="csfa" />
-        <Roulette />
+        <Random />
         <form
           autoComplete="off"
           className="flex flex-col gap-[1ch] md:flex-row"
