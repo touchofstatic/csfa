@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useTimer } from "react-timer-hook";
+import { useContext } from "react";
+import { ManagerContext } from "./Contexts";
 import Clock from "./Clock";
 
 import useSound from "use-sound";
@@ -10,8 +12,6 @@ import useSound from "use-sound";
 const SOUND_URL = "../src/melokacool_notification_6.mp3";
 import { AsciiProgressBar } from "@yacosta738/ascii-progress-bar/browser";
 AsciiProgressBar.register();
-
-import Ascii from "./Ascii";
 
 // TODO: read some design guidelines and ponder width
 customElements.whenDefined("ascii-progress-bar").then(() => {
@@ -25,32 +25,34 @@ customElements.whenDefined("ascii-progress-bar").then(() => {
 // TODO: temporary
 let total = 0;
 
-export default function Pomo({ config }) {
-  const [mode, setMode] = useState(["Pomodoro", config.pomo]);
+export default function Pomo() {
+  const { userPomo } = useContext(ManagerContext);
+
+  const [mode, setMode] = useState(["Pomodoro", userPomo.pomo]);
   // for auto start; don't auto start if timer was rendered due to page loading or user changing mode
   const [ongoing, setOngoing] = useState(false);
   const [pomocount, setPomocount] = useState(0);
 
   const [play] = useSound(SOUND_URL, {
-    volume: config.volume,
+    volume: userPomo.volume,
   });
 
   // TODO: OOOOOOOOOOOOOO
-  if (mode[0] === "Pomodoro" && mode[1] !== config.pomo)
-    setMode(["Pomodoro", config.pomo]);
-  if (mode[0] === "Short break" && mode[1] !== config.short)
-    setMode(["Short break", config.short]);
-  if (mode[0] === "Long break" && mode[1] !== config.long)
-    setMode(["Long break", config.long]);
+  if (mode[0] === "Pomodoro" && mode[1] !== userPomo.pomo)
+    setMode(["Pomodoro", userPomo.pomo]);
+  if (mode[0] === "Short break" && mode[1] !== userPomo.short)
+    setMode(["Short break", userPomo.short]);
+  if (mode[0] === "Long break" && mode[1] !== userPomo.long)
+    setMode(["Long break", userPomo.long]);
 
   function handleExpire() {
     if (mode[0] === "Pomodoro") {
       setPomocount(pomocount + 1);
-      if ((pomocount + 1) % config.interval !== 0)
-        setMode(["Short break", config.short]);
-      else setMode(["Long break", config.long]);
+      if ((pomocount + 1) % userPomo.interval !== 0)
+        setMode(["Short break", userPomo.short]);
+      else setMode(["Long break", userPomo.long]);
     } else if (mode[0] === "Short break" || mode[0] === "Long break") {
-      setMode(["Pomodoro", config.pomo]);
+      setMode(["Pomodoro", userPomo.pomo]);
     }
     play();
   }
@@ -58,15 +60,15 @@ export default function Pomo({ config }) {
   // TODO: OOOOOO?
   function selectMode(mode) {
     if (mode === "Pomodoro") {
-      setMode(["Pomodoro", config.pomo]);
+      setMode(["Pomodoro", userPomo.pomo]);
       setOngoing(false);
     }
     if (mode === "Short break") {
-      setMode(["Short break", config.short]);
+      setMode(["Short break", userPomo.short]);
       setOngoing(false);
     }
     if (mode === "Long break") {
-      setMode(["Long break", config.long]);
+      setMode(["Long break", userPomo.long]);
       setOngoing(false);
     }
   }
@@ -107,7 +109,7 @@ export default function Pomo({ config }) {
         </button>
 
         <Timer
-          autoStart={config.autoStart}
+          autoStart={userPomo.autoStart}
           onExpire={handleExpire}
           mode={mode}
           key={mode}

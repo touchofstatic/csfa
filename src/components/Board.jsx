@@ -10,7 +10,7 @@ export default function Board() {
 
   return (
     <div className="grid gap-[1ch] sm:grid-cols-1 md:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))]">
-      <aside className="flex flex-col">
+      <aside className="mr-[1ch] mb-[1lh] flex flex-col">
         <Ascii text="csfa" />
         <Random items={items} />
         <NewListForm onAddList={handleAddList} />

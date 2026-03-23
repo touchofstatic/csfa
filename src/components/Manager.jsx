@@ -338,6 +338,7 @@ export default function Manager() {
           value={{
             items,
             lists,
+            userPomo,
             handleAddList,
             handleAddItem,
             handleDeleteList,
@@ -352,8 +353,8 @@ export default function Manager() {
             onDragEnd,
           }}
         >
-          <Board />
-          {/* <Pomo config={userPomo} /> */}
+          {/* <Board /> */}
+          <Pomo />
         </ManagerContext.Provider>
       </article>
     </>
