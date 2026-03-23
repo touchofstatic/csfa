@@ -332,7 +332,7 @@ export default function Manager() {
       </ManagerContext.Provider>
 
       {/* <body>... 2!!! */}
-      <div className="flex max-w-dvw flex-col md:flex-row">
+      <div className="mx-[1ch] my-[1lh] flex max-w-dvw flex-col md:flex-row">
         <ManagerContext.Provider
           value={{
             items,

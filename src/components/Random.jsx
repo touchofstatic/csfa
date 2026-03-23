@@ -19,16 +19,21 @@ export default function Random({ items }) {
   const idk = <span className="gradient"></span>;
 
   return (
-    <div className="mb-[0.5lh] flex flex-col gap-[1ch]">
-      <div
-        className={`flex min-h-[2lh] w-full items-center overflow-scroll border-2 border-[var(--background2)] px-[1ch]`}
+    <section className="flex flex-col">
+      {/* TODO: turn into form for accessibility */}
+      <output
+        className={`flex min-h-[3.5lh] w-full items-center justify-center overflow-scroll border-2 border-[var(--background2)]`}
       >
         {spinner && <span is-="spinner" variant-="dots"></span>}
-        {!pull && !spinner ? idk : pull.name}
-      </div>
-      <button size-="small" className="w-full self-center" onClick={randomize}>
+        {!pull && !spinner ? (
+          idk
+        ) : (
+          <span className="text-center">{pull.name}</span>
+        )}
+      </output>
+      <button size-="small" className="w-full" onClick={randomize}>
         [Random Task]
       </button>
-    </div>
+    </section>
   );
 }

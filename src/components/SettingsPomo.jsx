@@ -14,7 +14,7 @@ export default function SettingsPomo() {
         commandfor="settingspomo-dialog"
         className={`active:bg-[var(--color1)]`}
       >
-        SettingsPomo
+        PomoConfig
       </button>
 
       {/* TODO: this shit is so ass */}

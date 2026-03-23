@@ -17,7 +17,7 @@ export default function SettingsTasks() {
         size-="small"
         className={`active:bg-[var(--color1)]`}
       >
-        SettingsTasks
+        TasksConfig
       </button>
 
       <dialog

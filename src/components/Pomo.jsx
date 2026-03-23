@@ -75,7 +75,7 @@ export default function Pomo() {
 
   return (
     <article className={`flex max-w-full flex-col`}>
-      <section className={`flex flex-col py-[1lh]`}>
+      <section className={`flex flex-col`}>
         <button
           type="button"
           size-="small"
