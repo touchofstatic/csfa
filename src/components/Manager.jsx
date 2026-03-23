@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { ManagerContext } from "./Contexts";
 import Navbar from "./Navbar";
-import Ascii from "./Ascii";
 import Board from "./Board.jsx";
-import Pomo from "./Pomo.jsx";
-import Test from "./Test.jsx";
+import Sidebar from "./Sidebar.jsx";
 
 // FOR DEVELOPMENT
 import {
@@ -319,11 +317,11 @@ export default function Manager() {
       </ul> */}
       <ManagerContext.Provider
         value={{
-          lists,
           items,
+          lists,
+          userProgs,
           userPomo,
           handleImportBoard,
-          userProgs,
           handleRenameUserProgs,
           resetSettingsConfig,
           changePomoConfig,
@@ -333,7 +331,8 @@ export default function Manager() {
         <Navbar />
       </ManagerContext.Provider>
 
-      <article className="my-[1lh] flex max-w-dvw flex-col md:mx-[1ch]">
+      {/* <body>... 2!!! */}
+      <div className="flex max-w-dvw flex-col md:flex-row">
         <ManagerContext.Provider
           value={{
             items,
@@ -353,11 +352,10 @@ export default function Manager() {
             onDragEnd,
           }}
         >
+          <Sidebar />
           <Board />
-          {/* <Pomo /> */}
-          {/* <Test /> */}
         </ManagerContext.Provider>
-      </article>
+      </div>
     </>
   );
 }

@@ -1,6 +1,7 @@
 export default function Clock({ minutes, seconds }) {
   return (
     <>
+      {/* TODO: change units? consider */}
       <section className="text-[90px]">
         <span>
           {minutes < 10 ? "0" : ""}

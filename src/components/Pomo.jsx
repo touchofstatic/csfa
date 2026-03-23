@@ -205,7 +205,7 @@ function Timer({ autoStart, onExpire, mode, ongoing, startOngoing }) {
         )}
       </div>
       {/* TODO: second digit appearing moves container */}
-      {/* <div>Total time: {total} minutes</div> */}
+      <div>Total time: {total} minutes</div>
     </section>
   );
 }
