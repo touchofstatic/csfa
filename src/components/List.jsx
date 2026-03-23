@@ -89,24 +89,18 @@ export default function List({ list, index, children }) {
           <button
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
-            onClick={() => handleCollapseList(list.id)}
+            command="show-modal"
+            commandfor={`settingstasks-dialog-${list.id}`}
           >
-            {list.visible ? `[▼]` : `[▲]`}
+            [s]
           </button>
+
           <button
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             onClick={() => setDraftRenameList(list.name)}
           >
             [rn]
-          </button>
-          <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
-            size-="small"
-            command="show-modal"
-            commandfor={`settingstasks-dialog-${list.id}`}
-          >
-            [s]
           </button>
           <button
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
@@ -118,10 +112,11 @@ export default function List({ list, index, children }) {
           <button
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
-            onClick={() => handleGroupList(list.id, myItems)}
+            onClick={() => handleCollapseList(list.id)}
           >
-            [g]
+            {list.visible ? `[▼]` : `[▲]`}
           </button>
+
           <button
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
@@ -135,6 +130,13 @@ export default function List({ list, index, children }) {
             onClick={() => handleMoveList(index, "down")}
           >
             [↓]
+          </button>
+          <button
+            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
+            size-="small"
+            onClick={() => handleGroupList(list.id, myItems)}
+          >
+            [g]
           </button>
 
           {/* TODO: kinda wide lol */}
