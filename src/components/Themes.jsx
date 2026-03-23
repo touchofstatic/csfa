@@ -68,7 +68,7 @@ export default function Themes() {
                 onClick={() => changeTheme(t)}
                 value={t}
                 key={t}
-                className={`block w-full text-left ${t === theme ? `bg-[var(--foreground0)] text-[var(--background0)]` : `bg-[var(--background1)] text-[var(--foreground0)]`}`}
+                className={`block w-full text-left ${t === theme ? `bg-[var(--foreground0)] text-[var(--background0)]` : `bg-[var(--background1)] text-[var(--foreground0)] hover:bg-[var(--background2)]`}`}
               >
                 {t}
               </button>
@@ -82,7 +82,7 @@ export default function Themes() {
                 onClick={() => changeTheme(t)}
                 value={t}
                 key={t}
-                className={`block w-full text-left ${t === theme ? `bg-[var(--foreground0)] text-[var(--background0)]` : `bg-[var(--background1)] text-[var(--foreground0)]`}`}
+                className={`block w-full text-left ${t === theme ? `bg-[var(--foreground0)] text-[var(--background0)]` : `bg-[var(--background1)] text-[var(--foreground0)] hover:bg-[var(--background2)]`}`}
               >
                 {t}
               </button>
