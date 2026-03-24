@@ -24,8 +24,7 @@ export default function SettingsBoard() {
       <dialog
         id="settingsboard-dialog"
         popover="true"
-        className={`h-4/5 max-h-dvh w-full md:h-[25lh]`}
-        // open
+        className={`h-dvh max-h-dvh w-full md:h-[25lh]`}
       >
         <article
           className={`flex h-full flex-col ${boxpad.boxpad}`}
@@ -39,20 +38,22 @@ export default function SettingsBoard() {
               overwrite existing ones, or disable configuring new lists
               individually.
             </p>
-            <form className={`flex flex-col`} autoComplete="off">
-              <label>
-                Range:
-                <input
-                  type="number"
-                  name="range"
-                  min="0"
-                  max="7"
-                  value={userProgs.length - 1}
-                  onChange={(e) => handleResizeUserProgs(e.target.value)}
-                  required
-                ></input>
-              </label>
-            </form>
+
+            {/* TODO: aria label? */}
+            <label htmlFor="userProgs">
+              <input
+                type="range"
+                min="0"
+                max="7"
+                name="userProgs"
+                value={userProgs.length - 1}
+                onChange={(e) => {
+                  handleResizeUserProgs(e.target.value);
+                }}
+                required
+              />
+              {userProgs.length - 1}
+            </label>
 
             {/* TODO: maybe you could iterate over it somehow idk */}
             {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}

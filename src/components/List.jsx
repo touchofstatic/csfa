@@ -195,21 +195,6 @@ export default function List({ list, index, children }) {
         )}
       </Droppable>
 
-      {/* <div>
-        {myItems.map((item, index) => (
-          <div key={item.id}>
-            {list.visible && (
-              <Item
-                item={item}
-                myListId={list.id}
-                progs={list.progs}
-                index={index}
-              />
-            )}
-          </div>
-        ))}
-      </div> */}
-
       <form
         className={`mt-[1ch] flex gap-[1ch]`}
         onSubmit={(event) => {
@@ -249,8 +234,7 @@ export default function List({ list, index, children }) {
           <section>
             <h2># Progress</h2>
 
-            {/* TODO: warning */}
-            <form className={`flex flex-col`} autoComplete="off">
+            {/* <form className={`flex flex-col`} autoComplete="off">
               <label>
                 Range:
                 <input
@@ -270,7 +254,28 @@ export default function List({ list, index, children }) {
                   required
                 ></input>
               </label>
-            </form>
+            </form> */}
+
+            {/* TODO: aria label? */}
+            <label htmlFor="listProgs">
+              <input
+                type="range"
+                min="0"
+                max="7"
+                name="listProgs"
+                value={list.progs.length - 1}
+                onChange={(e) =>
+                  handleResizeListProgs(
+                    e.target.value,
+                    list.progs,
+                    list.id,
+                    myItems,
+                  )
+                }
+                required
+              />
+              {list.progs.length - 1}
+            </label>
 
             {/* TODO: maybe you could iterate over it somehow idk */}
             {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}

@@ -261,15 +261,32 @@ export default function Manager() {
         }
       }),
     );
-    let newProgs = structuredClone(listProgs);
-    if (value > listProgs.length - 1) newProgs.push("");
-    else if (value < listProgs.length - 1) newProgs.pop();
-    setLists(
-      lists.map((list) => {
-        if (list.id !== listId) return list;
-        else return { ...list, progs: newProgs };
-      }),
-    );
+
+    const oldValue = listProgs.length - 1;
+    if (value !== oldValue) {
+      let newProgs;
+      if (value > oldValue) {
+        newProgs = [...listProgs, ...Array(value - oldValue).fill("")];
+      } else if (value < oldValue) {
+        newProgs = listProgs.slice(0, value - oldValue);
+      }
+      setLists(
+        lists.map((list) => {
+          if (list.id !== listId) return list;
+          else return { ...list, progs: newProgs };
+        }),
+      );
+    }
+
+    // let newProgs = structuredClone(listProgs);
+    // if (value > listProgs.length - 1) newProgs.push("");
+    // else if (value < listProgs.length - 1) newProgs.pop();
+    // setLists(
+    //   lists.map((list) => {
+    //     if (list.id !== listId) return list;
+    //     else return { ...list, progs: newProgs };
+    //   }),
+    // );
   }
 
   function handleRenameListProgs(value, index, listId) {
@@ -335,11 +352,23 @@ export default function Manager() {
     setItems(items);
   }
 
+  // value is the number of colored progress, in user controls
+  // userProgs.length is 6 = value is 5
   function handleResizeUserProgs(value) {
-    let newProgs = structuredClone(userProgs);
-    if (value > userProgs.length - 1) newProgs.push("");
-    else if (value < userProgs.length - 1) newProgs.pop();
-    setUserProgs(newProgs);
+    const oldValue = userProgs.length - 1;
+    if (value !== oldValue) {
+      if (value > oldValue) {
+        const newProgs = [...userProgs, ...Array(value - oldValue).fill("")];
+        setUserProgs(newProgs);
+      } else if (value < oldValue) {
+        const newProgs = userProgs.slice(0, value - oldValue);
+        setUserProgs(newProgs);
+      }
+    }
+
+    // if (value > userProgs.length - 1) newProgs.push("");
+    // else if (value < userProgs.length - 1) newProgs.pop();
+    // setUserProgs(newProgs);
   }
 
   function handleRenameProgs(value, index) {

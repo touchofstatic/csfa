@@ -25,8 +25,8 @@ export default function Reset() {
           box-="double"
         >
           <p>
-            Reset user's tasks settings to app default. Other settings and data
-            will not be erased.
+            Reset user's task board settings to app default. Other settings and
+            data will not be erased.
           </p>
           <p>Are you sure?</p>
           <div className="flex justify-center gap-[1ch]">
