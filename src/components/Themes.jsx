@@ -16,7 +16,7 @@ const THEMES_DEFAULT = [
   "catppuccin-frappe",
 ];
 
-const THEMES_CUSTOM = ["catppuccin-pink"];
+const THEMES_CUSTOM = ["catppuccin-pink", "colder-nord"];
 
 export default function Themes() {
   const { theme, changeTheme } = useContext(ThemeContext);

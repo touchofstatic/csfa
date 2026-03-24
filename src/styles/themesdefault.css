@@ -10,20 +10,22 @@
   }
 
   [data-webtui-theme|="nord"] {
-    --color0: var(--nord8);
-    --color1: var(--nord9);
-    --color2: var(--nord15);
-    --color3: var(--nord12);
-    --color4: var(--nord13);
-    --color5: var(--nord14);
+    --color0: var(--nord11);
+    --color1: var(--nord14);
+    --color2: var(--nord13);
+    --color3: var(--nord9);
+    --color4: var(--nord10);
+    --color5: var(--nord15);
+    --color6: var(--nord7);
   }
 
   [data-webtui-theme|="catppuccin"] {
-    --color0: var(--yellow);
+    --color0: var(--red);
     --color1: var(--peach);
-    --color2: var(--red);
-    --color3: var(--lavender);
+    --color2: var(--yellow);
+    --color3: var(--green);
     --color4: var(--teal);
-    --color5: var(--green);
+    --color5: var(--sapphire);
+    --color6: var(--lavender);
   }
 }

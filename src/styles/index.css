@@ -57,7 +57,8 @@
     var(--color2),
     var(--color3),
     var(--color4),
-    var(--color5)
+    var(--color5),
+    var(--color6)
   );
   -webkit-background-clip: text;
   background-clip: text;

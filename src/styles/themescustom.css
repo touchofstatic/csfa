@@ -1,3 +1,4 @@
+/* catpuccin-pink */
 @layer base {
   /* the forbidden pink as hell catppuccin */
   [data-webtui-theme|="catppuccin-pink"] {
@@ -37,9 +38,9 @@
     --color3: var(--mauve);
     --color4: var(--red);
     --color5: var(--maroon);
+    --color6: var(--lavender);
   }
 }
-
 @layer components {
   [data-webtui-theme|="catppuccin-pink"] {
     h1 {
@@ -65,5 +66,51 @@
     h6 {
       color: var(--color5);
     }
+  }
+}
+
+/* colder-nord */
+@layer base {
+  [data-webtui-theme="colder-nord"] {
+    /* Polar Night */
+    --nord0: #2e3440;
+    --nord1: #3b4252;
+    --nord2: #434c5e;
+    --nord3: #4c566a;
+
+    /* Snow Storm */
+    --nord4: #d8dee9;
+    --nord5: #e5e9f0;
+    --nord6: #eceff4;
+
+    /* Frost */
+    --nord7: #8fbcbb;
+    --nord8: #88c0d0;
+    --nord9: #81a1c1;
+    --nord10: #5e81ac;
+
+    /* Aurora */
+    --nord11: #bf616a;
+    --nord12: #d08770;
+    --nord13: #ebcb8b;
+    --nord14: #a3be8c;
+    --nord15: #b48ead;
+
+    --background0: var(--nord0);
+    --background1: var(--nord1);
+    --background2: var(--nord2);
+    --background3: var(--nord3);
+
+    --foreground0: var(--nord6);
+    --foreground1: var(--nord5);
+    --foreground2: var(--nord4);
+
+    --color0: var(--nord10);
+    --color1: var(--nord15);
+    --color2: var(--nord11);
+    --color3: var(--nord7);
+    --color4: var(--nord14);
+    --color5: var(--nord8);
+    --color6: var(--nord9);
   }
 }
