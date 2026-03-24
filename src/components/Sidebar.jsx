@@ -10,7 +10,7 @@ export default function Sidebar() {
   return (
     // TODO: accessibility at bigger font size?
     // I don't really like how it shrinks on pc
-    <aside className="flex flex-col md:w-[36ch] md:min-w-[36ch]">
+    <aside className="flex flex-col md:sticky md:top-[2lh] md:h-fit md:w-[36ch] md:min-w-[36ch]">
       <Ascii text="csfa" />
       <NewListForm onAddList={handleAddList} />
       <Random items={items} />
