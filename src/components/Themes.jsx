@@ -41,7 +41,7 @@ export default function Themes() {
           className={`align-center flex h-full flex-col justify-center ${boxpad.boxpad}`}
           box-="double"
         >
-          <h1>Themes</h1>
+          <h1 tabindex="0">Themes</h1>
           <div>
             <span className="bg-[var(--foreground0)]">&nbsp;&nbsp;</span>
             <span className="bg-[var(--foreground1)]">&nbsp;&nbsp;</span>

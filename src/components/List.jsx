@@ -230,7 +230,7 @@ export default function List({ list, index, children }) {
           className={`flex h-full flex-col ${boxpad.boxpad}`}
           box-="double"
         >
-          <h1>Settings/{list.name}</h1>
+          <h1 tabindex="0">Settings/{list.name}</h1>
           <section>
             <h2># Progress</h2>
 

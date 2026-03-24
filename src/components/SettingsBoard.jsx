@@ -30,7 +30,7 @@ export default function SettingsBoard() {
           className={`flex h-full flex-col ${boxpad.boxpad}`}
           box-="double"
         >
-          <h1>Settings/Board</h1>
+          <h1 tabindex="0">Settings/Board</h1>
           <section>
             <h2># Progress</h2>
             <p>
