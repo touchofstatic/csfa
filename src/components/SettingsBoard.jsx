@@ -24,7 +24,7 @@ export default function SettingsBoard() {
       <dialog
         id="settingsboard-dialog"
         popover="true"
-        className={`h-dvh max-h-dvh w-full md:h-[25lh]`}
+        className={`h-dvh max-h-dvh w-full md:h-[26lh] md:w-[40ch]`}
       >
         <article
           className={`flex h-full flex-col ${boxpad.boxpad}`}

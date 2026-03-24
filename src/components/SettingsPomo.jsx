@@ -21,7 +21,7 @@ export default function SettingsPomo() {
       <dialog
         id="settingspomo-dialog"
         popover="true"
-        className={`h-4/5 max-h-dvh w-full md:h-[25lh]`}
+        className={`h-dvh max-h-dvh w-full md:h-[26lh] md:w-[40ch]`}
       >
         <article
           className={`flex h-full flex-col ${boxpad.boxpad}`}
@@ -31,7 +31,7 @@ export default function SettingsPomo() {
           {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
           <section>
             <h2># Timer</h2>
-            <form className={`grid grid-cols-2 md:w-[30ch]`} autoComplete="off">
+            <form className={`grid grid-cols-2`} autoComplete="off">
               <label htmlFor="pomo">Pomodoro:</label>
               <input
                 type="number"

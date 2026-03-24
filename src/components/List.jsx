@@ -222,7 +222,7 @@ export default function List({ list, index, children }) {
       </form>
 
       <dialog
-        className={`h-4/5 max-h-dvh w-full md:h-[25lh]`}
+        className={`h-4/5 max-h-dvh w-full md:h-[26lh] md:w-[40ch]`}
         id={`settingsboard-dialog-${list.id}`}
         popover="true"
       >
