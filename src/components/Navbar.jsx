@@ -1,11 +1,11 @@
 import Themes from "./Themes";
-import SettingsTasks from "./SettingsTasks";
+import SettingsBoard from "./SettingsBoard";
 import SettingsPomo from "./SettingsPomo";
 
 export default function Navbar() {
   return (
     <nav className="box-border w-dvw bg-[var(--foreground0)]">
-      <SettingsTasks />
+      <SettingsBoard />
       <SettingsPomo />
       <Themes />
     </nav>

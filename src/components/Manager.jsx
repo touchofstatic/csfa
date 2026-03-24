@@ -28,7 +28,9 @@ const reorder = (source, startIndex, endIndex) => {
 const move = (source, destination, droppableSource, droppableDestination) => {
   const sourceClone = structuredClone(source);
   const destClone = structuredClone(destination);
+
   const [removed] = sourceClone.itemIds.splice(droppableSource.index, 1);
+
   destClone.itemIds.splice(droppableDestination.index, 0, removed);
   const result = {};
   result[droppableSource.droppableId] = sourceClone;
@@ -118,6 +120,19 @@ export default function Manager() {
       newLists[sInd] = result[sInd];
       newLists[dInd] = result[dInd];
       setLists(newLists);
+
+      // validate item progress at new boundary
+      const targetitem = items.find(
+        (item) => item.id === lists[sInd].itemIds[source.index],
+      );
+      if (targetitem.progress >= lists[dInd].progs.length) {
+        setItems(
+          items.map((item) => {
+            if (item !== targetitem) return item;
+            else return { ...item, progress: 0 };
+          }),
+        );
+      }
     }
   }
 
@@ -206,7 +221,7 @@ export default function Manager() {
 
   function handleGroupList(listId, myItems) {
     // put item in its numbered progress box
-    let newOrder = [[], [], [], [], [], [], []];
+    let newOrder = [[], [], [], [], [], [], [], []];
     myItems.map((item) => {
       newOrder[item.progress].push(item.id);
     });
@@ -233,6 +248,28 @@ export default function Manager() {
       newOrder.splice(index + 1, 0, target);
     }
     setLists(newOrder);
+  }
+
+  function handleResizeListProgs(value, listProgs, listId, myItems) {
+    // validate items' progress above new boundary
+    setItems(
+      items.map((item) => {
+        if (myItems.includes(item) === false) return item;
+        else {
+          if (item.progress > value) return { ...item, progress: 0 };
+          else return item;
+        }
+      }),
+    );
+    let newProgs = structuredClone(listProgs);
+    if (value > listProgs.length - 1) newProgs.push("");
+    else if (value < listProgs.length - 1) newProgs.pop();
+    setLists(
+      lists.map((list) => {
+        if (list.id !== listId) return list;
+        else return { ...list, progs: newProgs };
+      }),
+    );
   }
 
   function handleRenameListProgs(value, index, listId) {
@@ -280,12 +317,13 @@ export default function Manager() {
     );
   }
 
-  function handleAdvanceItem(itemId) {
+  function handleAdvanceItem(itemId, progs) {
     setItems(
       items.map((item) => {
         if (item.id !== itemId) return item;
         else {
-          if (item.progress == 6) return { ...item, progress: 0 };
+          if (item.progress === progs.length - 1)
+            return { ...item, progress: 0 };
           else return { ...item, progress: item.progress + 1 };
         }
       }),
@@ -297,7 +335,14 @@ export default function Manager() {
     setItems(items);
   }
 
-  function handleRenameUserProgs(value, index) {
+  function handleResizeUserProgs(value) {
+    let newProgs = structuredClone(userProgs);
+    if (value > userProgs.length - 1) newProgs.push("");
+    else if (value < userProgs.length - 1) newProgs.pop();
+    setUserProgs(newProgs);
+  }
+
+  function handleRenameProgs(value, index) {
     let newProgs = structuredClone(userProgs);
     newProgs[index] = value;
     setUserProgs(newProgs);
@@ -322,7 +367,8 @@ export default function Manager() {
           userProgs,
           userPomo,
           handleImportBoard,
-          handleRenameUserProgs,
+          handleResizeUserProgs,
+          handleRenameProgs,
           resetSettingsConfig,
           changePomoConfig,
           resetPomoConfig,
@@ -348,6 +394,7 @@ export default function Manager() {
             handleDeleteItem,
             handleRenameItem,
             handleAdvanceItem,
+            handleResizeListProgs,
             handleRenameListProgs,
             onDragEnd,
           }}

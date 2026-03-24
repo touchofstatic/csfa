@@ -24,6 +24,10 @@ export default function Reset() {
           className={`align-center flex h-full flex-col justify-center text-center ${boxpad.boxpad}`}
           box-="double"
         >
+          <p>
+            Reset user's tasks settings to app default. Other settings and data
+            will not be erased.
+          </p>
           <p>Are you sure?</p>
           <div className="flex justify-center gap-[1ch]">
             <button type="button" commandfor="reset-dialog" command="close">
