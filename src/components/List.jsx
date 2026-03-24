@@ -4,7 +4,6 @@ import { ManagerContext } from "./Contexts";
 import styles from "../styles/list.module.css";
 import boxpad from "../styles/boxpad.module.css";
 import Item from "./Item";
-
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 export default function List({ list, index, children }) {
@@ -220,149 +219,164 @@ export default function List({ list, index, children }) {
           [Add Item]
         </button>
       </form>
-
-      <dialog
-        className={`h-4/5 max-h-dvh w-full md:h-[26lh] md:w-[40ch]`}
-        id={`settingsboard-dialog-${list.id}`}
-        popover="true"
-      >
-        <article
-          className={`flex h-full flex-col ${boxpad.boxpad}`}
-          box-="double"
-        >
-          <h1 tabindex="0">Settings/{list.name}</h1>
-          <section>
-            <h2># Progress</h2>
-
-            {/* TODO: aria label? */}
-            <label htmlFor="listProgs">
-              <input
-                type="range"
-                min="0"
-                max="7"
-                name="listProgs"
-                value={list.progs.length - 1}
-                onChange={(e) =>
-                  handleResizeListProgs(
-                    e.target.value,
-                    list.progs,
-                    list.id,
-                    myItems,
-                  )
-                }
-                required
-              />
-              {list.progs.length - 1}
-            </label>
-
-            {/* TODO: maybe you could iterate over it somehow idk */}
-            {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
-            {/* TODO: either do something about min length or unclickable empty space in progress advance button. */}
-            <form className={`flex flex-col gap-1`} autoComplete="off">
-              <input
-                type="text"
-                name="progress"
-                minLength="1"
-                maxLength="12"
-                className={`${list.progs.length < 2 ? `${styles.disabled}` : `${styles.progress1}`}`}
-                value={list.progs[1] || ""}
-                onChange={(e) =>
-                  handleRenameListProgs(e.target.value, 1, list.id)
-                }
-                required
-                disabled={list.progs.length < 2}
-              />
-              <input
-                type="text"
-                name="progress"
-                minLength="1"
-                maxLength="12"
-                className={`${list.progs.length < 3 ? `${styles.disabled}` : `${styles.progress2}`}`}
-                value={list.progs[2] || ""}
-                onChange={(e) =>
-                  handleRenameListProgs(e.target.value, 2, list.id)
-                }
-                required
-                disabled={list.progs.length < 3}
-              />
-              <input
-                type="text"
-                name="progress"
-                minLength="1"
-                maxLength="12"
-                className={`${list.progs.length < 4 ? `${styles.disabled}` : `${styles.progress3}`}`}
-                value={list.progs[3] || ""}
-                onChange={(e) =>
-                  handleRenameListProgs(e.target.value, 3, list.id)
-                }
-                required
-                disabled={list.progs.length < 4}
-              />
-              <input
-                type="text"
-                name="progress"
-                minLength="1"
-                maxLength="12"
-                className={`${list.progs.length < 5 ? `${styles.disabled}` : `${styles.progress4}`}`}
-                value={list.progs[4] || ""}
-                onChange={(e) =>
-                  handleRenameListProgs(e.target.value, 4, list.id)
-                }
-                required
-                disabled={list.progs.length < 5}
-              />
-              <input
-                type="text"
-                name="progress"
-                minLength="1"
-                maxLength="12"
-                className={`${list.progs.length < 6 ? `${styles.disabled}` : `${styles.progress5}`}`}
-                value={list.progs[5] || ""}
-                onChange={(e) =>
-                  handleRenameListProgs(e.target.value, 5, list.id)
-                }
-                required
-                disabled={list.progs.length < 6}
-              />
-              <input
-                type="text"
-                name="progress"
-                minLength="1"
-                maxLength="12"
-                className={`${list.progs.length < 7 ? `${styles.disabled}` : `${styles.progress6}`}`}
-                value={list.progs[6] || ""}
-                onChange={(e) =>
-                  handleRenameListProgs(e.target.value, 6, list.id)
-                }
-                required
-                disabled={list.progs.length < 7}
-              />
-              <input
-                type="text"
-                name="progress"
-                minLength="1"
-                maxLength="12"
-                className={`${list.progs.length < 8 ? `${styles.disabled}` : `${styles.progress7}`}`}
-                value={list.progs[7] || ""}
-                onChange={(e) =>
-                  handleRenameListProgs(e.target.value, 7, list.id)
-                }
-                required
-                disabled={list.progs.length < 8}
-              />
-            </form>
-          </section>
-
-          <section className="self-center align-bottom">
-            <button
-              commandfor={`settingsboard-dialog-${list.id}`}
-              command="close"
-            >
-              Exit
-            </button>
-          </section>
-        </article>
-      </dialog>
+      <ListSettings
+        list={list}
+        myItems={myItems}
+        handleRenameListProgs={handleRenameListProgs}
+        handleResizeListProgs={handleResizeListProgs}
+      />
     </div>
+  );
+}
+
+function ListSettings({
+  list,
+  myItems,
+  handleResizeListProgs,
+  handleRenameListProgs,
+}) {
+  return (
+    <dialog
+      className={`h-4/5 max-h-dvh w-full md:h-[26lh] md:w-[40ch]`}
+      id={`settingsboard-dialog-${list.id}`}
+      popover="true"
+    >
+      <article
+        className={`flex h-full flex-col ${boxpad.boxpad}`}
+        box-="double"
+      >
+        <h1 tabindex="0">Settings/{list.name}</h1>
+        <section>
+          <h2># Progress</h2>
+
+          {/* TODO: aria label? */}
+          <label htmlFor="listProgs">
+            <input
+              type="range"
+              min="0"
+              max="7"
+              name="listProgs"
+              value={list.progs.length - 1}
+              onChange={(e) =>
+                handleResizeListProgs(
+                  e.target.value,
+                  list.progs,
+                  list.id,
+                  myItems,
+                )
+              }
+              required
+            />
+            {list.progs.length - 1}
+          </label>
+
+          {/* TODO: maybe you could iterate over it somehow idk */}
+          {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
+          {/* TODO: either do something about min length or unclickable empty space in progress advance button. */}
+          <form className={`flex flex-col gap-1`} autoComplete="off">
+            <input
+              type="text"
+              name="progress"
+              minLength="1"
+              maxLength="12"
+              className={`${list.progs.length < 2 ? `${styles.disabled}` : `${styles.progress1}`}`}
+              value={list.progs[1] || ""}
+              onChange={(e) =>
+                handleRenameListProgs(e.target.value, 1, list.id)
+              }
+              required
+              disabled={list.progs.length < 2}
+            />
+            <input
+              type="text"
+              name="progress"
+              minLength="1"
+              maxLength="12"
+              className={`${list.progs.length < 3 ? `${styles.disabled}` : `${styles.progress2}`}`}
+              value={list.progs[2] || ""}
+              onChange={(e) =>
+                handleRenameListProgs(e.target.value, 2, list.id)
+              }
+              required
+              disabled={list.progs.length < 3}
+            />
+            <input
+              type="text"
+              name="progress"
+              minLength="1"
+              maxLength="12"
+              className={`${list.progs.length < 4 ? `${styles.disabled}` : `${styles.progress3}`}`}
+              value={list.progs[3] || ""}
+              onChange={(e) =>
+                handleRenameListProgs(e.target.value, 3, list.id)
+              }
+              required
+              disabled={list.progs.length < 4}
+            />
+            <input
+              type="text"
+              name="progress"
+              minLength="1"
+              maxLength="12"
+              className={`${list.progs.length < 5 ? `${styles.disabled}` : `${styles.progress4}`}`}
+              value={list.progs[4] || ""}
+              onChange={(e) =>
+                handleRenameListProgs(e.target.value, 4, list.id)
+              }
+              required
+              disabled={list.progs.length < 5}
+            />
+            <input
+              type="text"
+              name="progress"
+              minLength="1"
+              maxLength="12"
+              className={`${list.progs.length < 6 ? `${styles.disabled}` : `${styles.progress5}`}`}
+              value={list.progs[5] || ""}
+              onChange={(e) =>
+                handleRenameListProgs(e.target.value, 5, list.id)
+              }
+              required
+              disabled={list.progs.length < 6}
+            />
+            <input
+              type="text"
+              name="progress"
+              minLength="1"
+              maxLength="12"
+              className={`${list.progs.length < 7 ? `${styles.disabled}` : `${styles.progress6}`}`}
+              value={list.progs[6] || ""}
+              onChange={(e) =>
+                handleRenameListProgs(e.target.value, 6, list.id)
+              }
+              required
+              disabled={list.progs.length < 7}
+            />
+            <input
+              type="text"
+              name="progress"
+              minLength="1"
+              maxLength="12"
+              className={`${list.progs.length < 8 ? `${styles.disabled}` : `${styles.progress7}`}`}
+              value={list.progs[7] || ""}
+              onChange={(e) =>
+                handleRenameListProgs(e.target.value, 7, list.id)
+              }
+              required
+              disabled={list.progs.length < 8}
+            />
+          </form>
+        </section>
+
+        <section className="self-center align-bottom">
+          <button
+            commandfor={`settingsboard-dialog-${list.id}`}
+            command="close"
+          >
+            Exit
+          </button>
+        </section>
+      </article>
+    </dialog>
   );
 }

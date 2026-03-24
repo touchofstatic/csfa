@@ -9,6 +9,7 @@ export default function Import() {
   const [result, setResult] = useState("none");
   // to hide the default file input
   const fileInput = useRef(null);
+  const exit = useRef();
 
   let message = "";
   switch (result) {
@@ -46,6 +47,7 @@ export default function Import() {
       return false;
     }
     setResult("succ");
+    exit.current.click();
     // setMessage("File imported.");
     return true;
   }
@@ -110,22 +112,21 @@ export default function Import() {
             }}
             style={{ display: "none" }}
           ></input>
-          {/* TODO: auto focus Ok button if successful */}
           <div className="flex justify-center gap-[1ch]">
-            {result !== "succ" && (
-              <button
-                type="button"
-                value="import"
-                onClick={() => fileInput.current.click()}
-              >
-                Import
-              </button>
-            )}
+            <button
+              type="button"
+              value="import"
+              onClick={() => fileInput.current.click()}
+            >
+              Import
+            </button>
             <button
               type="button"
               commandfor="import-dialog"
               command="close"
               onClick={() => setResult("none")}
+              tabindex="0"
+              ref={exit}
             >
               Exit
             </button>

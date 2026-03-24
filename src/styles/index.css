@@ -79,3 +79,7 @@ pre {
 button {
   cursor: pointer;
 }
+
+body:has(dialog[open]) {
+  overflow: hidden;
+}
