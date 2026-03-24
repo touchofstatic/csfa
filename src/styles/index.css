@@ -49,10 +49,6 @@
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
-/* li::before {
-  content: '';
-} */
-
 .gradient {
   background: -webkit-linear-gradient(
     left,

@@ -26,7 +26,7 @@ export const userPomoConfig = {
   short: 5,
   long: 8,
   interval: 2,
-  autoStart: true,
+  autoStart: false,
   volume: 10,
 };
 
@@ -50,7 +50,7 @@ export const itemsdb = [
   { name: "item b0", progress: 5, id: "b0" },
   { name: "item b1", progress: 6, id: "b1" },
   { name: "item b2", progress: 1, id: "b2" },
-  { name: "item c0", progress: 6, id: "c0" },
+  { name: "item c0", progress: 2, id: "c0" },
   { name: "item c1", progress: 5, id: "c1" },
 ];
 

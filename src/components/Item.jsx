@@ -37,8 +37,11 @@ export default function Item({ item, myListId, progs, ...handle }) {
     case "progress6":
       progress = progs[6];
       break;
+    case "progress7":
+      progress = progs[7];
+      break;
     default:
-      progress = "???";
+      progress = "ERROR";
       break;
   }
 
@@ -100,7 +103,6 @@ export default function Item({ item, myListId, progs, ...handle }) {
       className={`${progressClassName} ${styles.item} ${!draftRenameItem && `${styles.hoveritem}`}`}
     >
       <div>
-        {/* TODO: find a good place and style for it */}
         <span
           {...handle}
           className={`${styles[progressClassName]} noselect p-0.5 hover:font-bold`}
@@ -124,7 +126,7 @@ export default function Item({ item, myListId, progs, ...handle }) {
         <button
           size-="small"
           className={`${styles[progressClassName]} float-right bg-transparent p-0 text-[var(--foreground2)]`}
-          onClick={() => handleAdvanceItem(item.id)}
+          onClick={() => handleAdvanceItem(item.id, progs)}
         >
           {progress} [&gt;]
         </button>
