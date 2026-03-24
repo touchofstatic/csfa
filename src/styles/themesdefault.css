@@ -23,9 +23,9 @@
     --color0: var(--red);
     --color1: var(--peach);
     --color2: var(--yellow);
-    --color3: var(--green);
-    --color4: var(--teal);
-    --color5: var(--sapphire);
-    --color6: var(--lavender);
+    --color3: var(--teal);
+    --color4: var(--blue);
+    --color5: var(--lavender);
+    --color6: var(--mauve);
   }
 }
