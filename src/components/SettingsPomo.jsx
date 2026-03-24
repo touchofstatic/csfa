@@ -31,64 +31,61 @@ export default function SettingsPomo() {
           {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
           <section>
             <h2># Timer</h2>
-            <form className={`flex flex-col`} autoComplete="off">
-              <label>
-                Pomodoro:
-                <input
-                  type="number"
-                  name="pomo"
-                  min="0"
-                  max="59"
-                  value={userPomo.pomo / 60}
-                  onChange={(e) =>
-                    changePomoConfig(e.target.value, e.target.name)
-                  }
-                  required
-                ></input>
-              </label>
-              <label>
-                Short break:
-                <input
-                  type="number"
-                  name="short"
-                  min="0"
-                  max="59"
-                  value={userPomo.short / 60}
-                  onChange={(e) =>
-                    changePomoConfig(e.target.value, e.target.name)
-                  }
-                  required
-                ></input>
-              </label>
-              <label>
-                Long break:
-                <input
-                  type="number"
-                  name="long"
-                  min="0"
-                  max="59"
-                  value={userPomo.long / 60}
-                  onChange={(e) =>
-                    changePomoConfig(e.target.value, e.target.name)
-                  }
-                  required
-                ></input>
-              </label>
-              <label>
-                Interval:
-                <input
-                  type="number"
-                  name="interval"
-                  min="1"
-                  value={userPomo.interval}
-                  onChange={(e) =>
-                    changePomoConfig(e.target.value, e.target.name)
-                  }
-                  required
-                ></input>
-              </label>
-              <label>
-                Auto start
+            <form className={`grid grid-cols-2 md:w-[30ch]`} autoComplete="off">
+              <label htmlFor="pomo">Pomodoro:</label>
+              <input
+                type="number"
+                name="pomo"
+                min="0"
+                max="59"
+                className="w-[8ch] min-w-0"
+                value={userPomo.pomo / 60}
+                onChange={(e) =>
+                  changePomoConfig(e.target.value, e.target.name)
+                }
+                required
+              ></input>
+              <label htmlFor="short">Short break:</label>
+              <input
+                type="number"
+                name="short"
+                min="0"
+                max="59"
+                className="w-[8ch] min-w-0"
+                value={userPomo.short / 60}
+                onChange={(e) =>
+                  changePomoConfig(e.target.value, e.target.name)
+                }
+                required
+              ></input>
+              <label htmlFor="long">Long break:</label>
+
+              <input
+                type="number"
+                name="long"
+                min="0"
+                max="59"
+                className="w-[8ch] min-w-0"
+                value={userPomo.long / 60}
+                onChange={(e) =>
+                  changePomoConfig(e.target.value, e.target.name)
+                }
+                required
+              ></input>
+              <label htmlFor="interval">Interval:</label>
+              <input
+                type="number"
+                name="interval"
+                min="1"
+                className="w-[8ch] min-w-0"
+                value={userPomo.interval}
+                onChange={(e) =>
+                  changePomoConfig(e.target.value, e.target.name)
+                }
+                required
+              ></input>
+              <label htmlFor="auto">Auto start</label>
+              <fieldset>
                 <input
                   type="radio"
                   name="auto"
@@ -111,7 +108,7 @@ export default function SettingsPomo() {
                   }
                 ></input>
                 <label htmlFor="autoTrue">Yes</label>
-              </label>
+              </fieldset>
             </form>
           </section>
 

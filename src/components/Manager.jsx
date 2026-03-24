@@ -72,14 +72,20 @@ export default function Manager() {
   }, [userPomo]);
 
   function changePomoConfig(value, name) {
-    if (name === "pomo" || name === "short" || name === "long")
-      setUserPomo({ ...userPomo, [name]: Number(value) * 60 });
-    if (name === "volume") setUserPomo({ ...userPomo, volume: value });
-    if (name === "interval") setUserPomo({ ...userPomo, interval: value });
+    if (name === "pomo" || name === "short" || name === "long") {
+      // because mobile users can break input max for some reason
+      if (value > 59) setUserPomo({ ...userPomo, [name]: 59 * 60 });
+      else if (value < 0) setUserPomo({ ...userPomo, [name]: 0 });
+      else setUserPomo({ ...userPomo, [name]: Number(value) * 60 });
+    }
+    if (name === "interval") {
+      setUserPomo({ ...userPomo, interval: value });
+    }
     if (name === "auto") {
       if (value === "yes") setUserPomo({ ...userPomo, autoStart: true });
       if (value === "no") setUserPomo({ ...userPomo, autoStart: false });
     }
+    if (name === "volume") setUserPomo({ ...userPomo, volume: value });
   }
 
   function resetPomoConfig() {

@@ -159,14 +159,17 @@ function Timer({ autoStart, onExpire, mode, ongoing, startOngoing }) {
     // TODO: return??
   }, [timer.minutes, mode]);
 
-  // TODO: possibly not cool in react and many many rerender
   useEffect(() => {
-    bar.current.setAttribute(
-      "progress",
-      Math.floor(
-        ((mode[1] - (timer.minutes * 60 + timer.seconds)) * 100) / mode[1],
-      ),
-    );
+    // if mode's timer is set to 0 avoid division by 0 and display full bar
+    if (mode[1] === 0) {
+      bar.current.setAttribute("progress", 100);
+    } else
+      bar.current.setAttribute(
+        "progress",
+        Math.floor(
+          ((mode[1] - (timer.minutes * 60 + timer.seconds)) * 100) / mode[1],
+        ),
+      );
   }, [timer.minutes, timer.seconds, mode]);
 
   return (
