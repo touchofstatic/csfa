@@ -38,7 +38,14 @@ export default function Pomo() {
   const [mode, setMode] = useState(["Pomodoro", userPomo.pomo]);
   // for auto start; don't auto start if timer was rendered due to page loading or user changing mode
   const [ongoing, setOngoing] = useState(false);
-  const [pomocount, setPomocount] = useState(0);
+  const [pomocount, setPomocount] = useState(() => {
+    const loadPomocount = JSON.parse(localStorage.getItem("pomocount"));
+    return loadPomocount || 0;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("pomocount", JSON.stringify(pomocount));
+  }, [pomocount]);
 
   const [play] = useSound(SOUND_URL, {
     volume: userPomo.volume,
