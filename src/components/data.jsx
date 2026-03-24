@@ -33,7 +33,7 @@ export const userPomoConfig = {
 export const itemsdb = [
   {
     name: "item a0",
-    progress: 6,
+    progress: 2,
     id: "a0",
   },
   {

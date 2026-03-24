@@ -6,7 +6,7 @@ import Reset from "./Reset";
 import styles from "../styles/list.module.css";
 import boxpad from "../styles/boxpad.module.css";
 
-export default function SettingsTasks() {
+export default function SettingsBoard() {
   const { userProgs, handleResizeUserProgs, handleRenameProgs } =
     useContext(ManagerContext);
 
@@ -14,15 +14,15 @@ export default function SettingsTasks() {
     <>
       <button
         command="show-modal"
-        commandfor="settingstasks-dialog"
+        commandfor="settingsboard-dialog"
         size-="small"
         className={`hover:bg-[var(--foreground2)] active:bg-[var(--background0)]`}
       >
-        TasksConfig
+        BoardConfig
       </button>
 
       <dialog
-        id="settingstasks-dialog"
+        id="settingsboard-dialog"
         popover="true"
         className={`h-4/5 max-h-dvh w-full md:h-[25lh]`}
         // open
@@ -31,11 +31,14 @@ export default function SettingsTasks() {
           className={`flex h-full flex-col ${boxpad.boxpad}`}
           box-="double"
         >
-          <h1>Settings</h1>
-          <h2># Tasks</h2>
+          <h1>Settings/Board</h1>
           <section>
-            <h3>## Progress</h3>
-            {/* TODO: warning */}
+            <h2># Progress</h2>
+            <p>
+              Default user configuration for new lists. Changing it will not
+              overwrite existing ones, or disable configuring new lists
+              individually.
+            </p>
             <form className={`flex flex-col`} autoComplete="off">
               <label>
                 Range:
@@ -60,7 +63,7 @@ export default function SettingsTasks() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress1} disabled:grayscale-70`}
+                className={`${styles.progress1} disabled:contrast-80 disabled:saturate-30`}
                 value={userProgs[1] || ""}
                 onChange={(e) => handleRenameProgs(e.target.value, 1)}
                 required
@@ -71,7 +74,7 @@ export default function SettingsTasks() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress2} disabled:grayscale-70`}
+                className={`${styles.progress2} disabled:contrast-80 disabled:saturate-30`}
                 value={userProgs[2] || ""}
                 onChange={(e) => handleRenameProgs(e.target.value, 2)}
                 required
@@ -82,7 +85,7 @@ export default function SettingsTasks() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress3} disabled:grayscale-70`}
+                className={`${styles.progress3} disabled:contrast-80 disabled:saturate-30`}
                 value={userProgs[3] || ""}
                 onChange={(e) => handleRenameProgs(e.target.value, 3)}
                 required
@@ -93,7 +96,7 @@ export default function SettingsTasks() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress4} disabled:grayscale-70`}
+                className={`${styles.progress4} disabled:contrast-80 disabled:saturate-30`}
                 value={userProgs[4] || ""}
                 onChange={(e) => handleRenameProgs(e.target.value, 4)}
                 required
@@ -104,7 +107,7 @@ export default function SettingsTasks() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress5} disabled:grayscale-70`}
+                className={`${styles.progress5} disabled:contrast-80 disabled:saturate-30`}
                 value={userProgs[5] || ""}
                 onChange={(e) => handleRenameProgs(e.target.value, 5)}
                 required
@@ -115,7 +118,7 @@ export default function SettingsTasks() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress6} disabled:grayscale-70`}
+                className={`${styles.progress6} disabled:contrast-80 disabled:saturate-30`}
                 value={userProgs[6] || ""}
                 onChange={(e) => handleRenameProgs(e.target.value, 6)}
                 required
@@ -126,7 +129,7 @@ export default function SettingsTasks() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress7} disabled:grayscale-70`}
+                className={`${styles.progress7} disabled:saturate-30`}
                 value={userProgs[7] || ""}
                 onChange={(e) => handleRenameProgs(e.target.value, 7)}
                 required
@@ -135,7 +138,7 @@ export default function SettingsTasks() {
             </form>
           </section>
           <section className="flex w-fit flex-col gap-1">
-            <h3>## Data</h3>
+            <h2># Data</h2>
             <Import />
             <Export />
             <Reset />
@@ -143,7 +146,7 @@ export default function SettingsTasks() {
 
           {/* TODO: align bottom doesnt work */}
           <section className="self-center align-bottom">
-            <button commandfor="settingstasks-dialog" command="close">
+            <button commandfor="settingsboard-dialog" command="close">
               Exit
             </button>
           </section>
