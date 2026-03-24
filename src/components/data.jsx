@@ -5,32 +5,30 @@ export const SYSTEM_DEFAULT_PROGS = [
   "queued",
   "priority",
   "working",
-  "submitted",
-  "approved",
+  "pending",
   "done",
 ];
 
 export const SYSTEM_DEFAULT_POMO = {
-  pomo: 1500,
-  short: 300,
-  long: 900,
-  interval: 4,
-  autoStart: false,
-  volume: 25,
-};
+  // pomo: 1500,
+  // short: 300,
+  // long: 900,
+  // interval: 4,
+  // autoStart: false,
+  // volume: 10,
 
-export const userProgsConfig = SYSTEM_DEFAULT_PROGS;
-export const userPomoConfig = {
-  // DEVELOPMENT ONLY VALUES
-  pomo: 10,
-  short: 5,
-  long: 8,
-  interval: 2,
-  autoStart: false,
+  // NORMALLY TIME SHOULD ALWAYS BE SET IN ROUND MINUTES
+  // Only for faster testing
+  pomo: 60,
+  short: 60,
+  long: 60,
+  interval: 1,
+  autoStart: true,
   volume: 10,
 };
 
-export const itemsdb = [
+export const devProgsConfig = SYSTEM_DEFAULT_PROGS;
+export const devItems = [
   {
     name: "item a0",
     progress: 2,
@@ -41,46 +39,46 @@ export const itemsdb = [
     progress: 1,
     id: "a1",
   },
-  { name: "item a2", progress: 3, id: "a2" },
+  { name: "item a2", progress: 5, id: "a2" },
   {
     name: "item a3",
     progress: 4,
     id: "a3",
   },
   { name: "item b0", progress: 5, id: "b0" },
-  { name: "item b1", progress: 6, id: "b1" },
+  { name: "item b1", progress: 4, id: "b1" },
   { name: "item b2", progress: 1, id: "b2" },
-  { name: "item c0", progress: 2, id: "c0" },
-  { name: "item c1", progress: 5, id: "c1" },
+  { name: "item c0", progress: 3, id: "c0" },
+  { name: "item c1", progress: 4, id: "c1" },
 ];
 
-export const listsdb = [
+export const devLists = [
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
     itemIds: ["a0", "a1", "a2", "a3"],
     visible: true,
-    progs: userProgsConfig,
+    progs: devProgsConfig,
   },
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
     itemIds: ["b0", "b1", "b2"],
     visible: true,
-    progs: userProgsConfig,
+    progs: devProgsConfig,
   },
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
     itemIds: [],
     visible: true,
-    progs: userProgsConfig,
+    progs: devProgsConfig,
   },
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
     itemIds: ["c0", "c1"],
     visible: true,
-    progs: userProgsConfig,
+    progs: devProgsConfig,
   },
 ];

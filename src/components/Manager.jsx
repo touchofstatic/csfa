@@ -7,10 +7,8 @@ import Sidebar from "./Sidebar.jsx";
 
 // FOR DEVELOPMENT
 import {
-  itemsdb,
-  listsdb,
-  userProgsConfig,
-  userPomoConfig,
+  devItems,
+  devLists,
   SYSTEM_DEFAULT_PROGS,
   SYSTEM_DEFAULT_POMO,
 } from "./data";
@@ -40,20 +38,28 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 };
 
 export default function Manager() {
-  // const [items, setItems] = useState(() => {
-  //   const loadItemsDb = JSON.parse(localStorage.getItem('itemsdb'));
-  //   return loadItemsDb || [];
-  // });
-  // const [lists, setLists] = useState(() => {
-  //   const loadListsDb = JSON.parse(localStorage.getItem('listsdb'));
-  //   return loadListsDb || [];
-  // });
-
-  // FOR DEVELOPMENT
-  const [lists, setLists] = useState(listsdb);
-  const [items, setItems] = useState(itemsdb);
-  const [userProgs, setUserProgs] = useState(userProgsConfig);
-  const [userPomo, setUserPomo] = useState(userPomoConfig);
+  const [items, setItems] = useState(() => {
+    const loadItems = JSON.parse(localStorage.getItem("items"));
+    // return loadItems || [];
+    return loadItems || devItems;
+  });
+  const [lists, setLists] = useState(() => {
+    const loadLists = JSON.parse(localStorage.getItem("lists"));
+    // return loadLists || [];
+    return loadLists || devLists;
+  });
+  const [userProgs, setUserProgs] = useState(() => {
+    const loadUserProgsConfig = JSON.parse(
+      localStorage.getItem("userProgsConfig"),
+    );
+    return loadUserProgsConfig || SYSTEM_DEFAULT_PROGS;
+  });
+  const [userPomo, setUserPomo] = useState(() => {
+    const loadUserPomoConfig = JSON.parse(
+      localStorage.getItem("userPomoConfig"),
+    );
+    return loadUserPomoConfig || SYSTEM_DEFAULT_POMO;
+  });
 
   useEffect(() => {
     localStorage.setItem("lists", JSON.stringify(lists));
@@ -64,11 +70,11 @@ export default function Manager() {
   }, [items]);
 
   useEffect(() => {
-    localStorage.setItem("userProgs", JSON.stringify(userProgs));
+    localStorage.setItem("userProgsConfig", JSON.stringify(userProgs));
   }, [userProgs]);
 
   useEffect(() => {
-    localStorage.setItem("userPomo", JSON.stringify(userPomo));
+    localStorage.setItem("userPomoConfig", JSON.stringify(userPomo));
   }, [userPomo]);
 
   function changePomoConfig(value, name) {
@@ -361,10 +367,6 @@ export default function Manager() {
         setUserProgs(newProgs);
       }
     }
-
-    // if (value > userProgs.length - 1) newProgs.push("");
-    // else if (value < userProgs.length - 1) newProgs.pop();
-    // setUserProgs(newProgs);
   }
 
   function handleRenameProgs(value, index) {
