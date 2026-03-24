@@ -8,7 +8,7 @@ export default function Board() {
 
   return (
     // important!! alignment doesn't work otherwise!!!
-    <article className="flex w-full max-w-dvw flex-col">
+    <article className="or flex w-full max-w-dvw flex-col">
       <div className="grid gap-[0.5ch] sm:grid-cols-1 md:grid-cols-[repeat(auto-fit,_minmax(40ch,_1fr))]">
         <DragDropContext onDragEnd={onDragEnd}>
           {lists.map((list, index) => (

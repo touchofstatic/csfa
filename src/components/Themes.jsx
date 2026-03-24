@@ -59,6 +59,7 @@ export default function Themes() {
             <span className="bg-[var(--color3)]">&nbsp;&nbsp;</span>
             <span className="bg-[var(--color4)]">&nbsp;&nbsp;</span>
             <span className="bg-[var(--color5)]">&nbsp;&nbsp;</span>
+            <span className="bg-[var(--color6)]">&nbsp;&nbsp;</span>
           </div>
 
           <section>

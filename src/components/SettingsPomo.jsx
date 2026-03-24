@@ -27,11 +27,10 @@ export default function SettingsPomo() {
           className={`flex h-full flex-col ${boxpad.boxpad}`}
           box-="double"
         >
-          <h1>Settings</h1>
+          <h1>Settings/Pomodoro</h1>
           {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
-          <h2># Pomodoro</h2>
           <section>
-            <h3>## Timer</h3>
+            <h2># Timer</h2>
             <form className={`flex flex-col`} autoComplete="off">
               <label>
                 Pomodoro:
@@ -117,7 +116,7 @@ export default function SettingsPomo() {
           </section>
 
           <section>
-            <h3>## Sound</h3>
+            <h2># Sound</h2>
             <label htmlFor="volume">
               Volume
               <input
@@ -135,7 +134,7 @@ export default function SettingsPomo() {
           </section>
 
           <section>
-            <h3>## Data</h3>
+            <h2># Data</h2>
             <button
               type="button"
               size-="small"

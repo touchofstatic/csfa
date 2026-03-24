@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
 import Import from "./Import";
 import Export from "./Export";
-import Reset from "./Reset";
+import ResetConfigBoard from "./ResetConfigBoard";
 import styles from "../styles/list.module.css";
 import boxpad from "../styles/boxpad.module.css";
 
@@ -64,7 +64,7 @@ export default function SettingsBoard() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress1} disabled:contrast-80 disabled:saturate-30`}
+                className={`${userProgs.length < 2 ? `${styles.disabled}` : `${styles.progress1}`}`}
                 value={userProgs[1] || ""}
                 onChange={(e) => handleRenameProgs(e.target.value, 1)}
                 required
@@ -75,7 +75,7 @@ export default function SettingsBoard() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress2} disabled:contrast-80 disabled:saturate-30`}
+                className={`${userProgs.length < 3 ? `${styles.disabled}` : `${styles.progress2}`}`}
                 value={userProgs[2] || ""}
                 onChange={(e) => handleRenameProgs(e.target.value, 2)}
                 required
@@ -86,7 +86,7 @@ export default function SettingsBoard() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress3} disabled:contrast-80 disabled:saturate-30`}
+                className={`${userProgs.length < 4 ? `${styles.disabled}` : `${styles.progress3}`}`}
                 value={userProgs[3] || ""}
                 onChange={(e) => handleRenameProgs(e.target.value, 3)}
                 required
@@ -97,7 +97,7 @@ export default function SettingsBoard() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress4} disabled:contrast-80 disabled:saturate-30`}
+                className={`${userProgs.length < 5 ? `${styles.disabled}` : `${styles.progress4}`}`}
                 value={userProgs[4] || ""}
                 onChange={(e) => handleRenameProgs(e.target.value, 4)}
                 required
@@ -108,7 +108,7 @@ export default function SettingsBoard() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress5} disabled:contrast-80 disabled:saturate-30`}
+                className={`${userProgs.length < 6 ? `${styles.disabled}` : `${styles.progress5}`}`}
                 value={userProgs[5] || ""}
                 onChange={(e) => handleRenameProgs(e.target.value, 5)}
                 required
@@ -119,7 +119,7 @@ export default function SettingsBoard() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress6} disabled:contrast-80 disabled:saturate-30`}
+                className={`${userProgs.length < 7 ? `${styles.disabled}` : `${styles.progress6}`}`}
                 value={userProgs[6] || ""}
                 onChange={(e) => handleRenameProgs(e.target.value, 6)}
                 required
@@ -130,7 +130,7 @@ export default function SettingsBoard() {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress7} disabled:saturate-30`}
+                className={`${userProgs.length < 8 ? `${styles.disabled}` : `${styles.progress7}`}`}
                 value={userProgs[7] || ""}
                 onChange={(e) => handleRenameProgs(e.target.value, 7)}
                 required
@@ -142,7 +142,7 @@ export default function SettingsBoard() {
             <h2># Data</h2>
             <Import />
             <Export />
-            <Reset />
+            <ResetConfigBoard />
           </section>
 
           {/* TODO: align bottom doesnt work */}

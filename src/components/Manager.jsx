@@ -277,16 +277,6 @@ export default function Manager() {
         }),
       );
     }
-
-    // let newProgs = structuredClone(listProgs);
-    // if (value > listProgs.length - 1) newProgs.push("");
-    // else if (value < listProgs.length - 1) newProgs.pop();
-    // setLists(
-    //   lists.map((list) => {
-    //     if (list.id !== listId) return list;
-    //     else return { ...list, progs: newProgs };
-    //   }),
-    // );
   }
 
   function handleRenameListProgs(value, index, listId) {

@@ -234,28 +234,6 @@ export default function List({ list, index, children }) {
           <section>
             <h2># Progress</h2>
 
-            {/* <form className={`flex flex-col`} autoComplete="off">
-              <label>
-                Range:
-                <input
-                  type="number"
-                  name="range"
-                  min="0"
-                  max="7"
-                  value={list.progs.length - 1}
-                  onChange={(e) =>
-                    handleResizeListProgs(
-                      e.target.value,
-                      list.progs,
-                      list.id,
-                      myItems,
-                    )
-                  }
-                  required
-                ></input>
-              </label>
-            </form> */}
-
             {/* TODO: aria label? */}
             <label htmlFor="listProgs">
               <input
@@ -286,7 +264,7 @@ export default function List({ list, index, children }) {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress1} disabled:grayscale-70`}
+                className={`${list.progs.length < 2 ? `${styles.disabled}` : `${styles.progress1}`}`}
                 value={list.progs[1] || ""}
                 onChange={(e) =>
                   handleRenameListProgs(e.target.value, 1, list.id)
@@ -299,7 +277,7 @@ export default function List({ list, index, children }) {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress2} disabled:grayscale-70`}
+                className={`${list.progs.length < 3 ? `${styles.disabled}` : `${styles.progress2}`}`}
                 value={list.progs[2] || ""}
                 onChange={(e) =>
                   handleRenameListProgs(e.target.value, 2, list.id)
@@ -312,7 +290,7 @@ export default function List({ list, index, children }) {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress3} disabled:grayscale-70`}
+                className={`${list.progs.length < 4 ? `${styles.disabled}` : `${styles.progress3}`}`}
                 value={list.progs[3] || ""}
                 onChange={(e) =>
                   handleRenameListProgs(e.target.value, 3, list.id)
@@ -325,7 +303,7 @@ export default function List({ list, index, children }) {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress4} disabled:grayscale-70`}
+                className={`${list.progs.length < 5 ? `${styles.disabled}` : `${styles.progress4}`}`}
                 value={list.progs[4] || ""}
                 onChange={(e) =>
                   handleRenameListProgs(e.target.value, 4, list.id)
@@ -338,7 +316,7 @@ export default function List({ list, index, children }) {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress5} disabled:grayscale-70`}
+                className={`${list.progs.length < 6 ? `${styles.disabled}` : `${styles.progress5}`}`}
                 value={list.progs[5] || ""}
                 onChange={(e) =>
                   handleRenameListProgs(e.target.value, 5, list.id)
@@ -351,7 +329,7 @@ export default function List({ list, index, children }) {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress6} disabled:grayscale-70`}
+                className={`${list.progs.length < 7 ? `${styles.disabled}` : `${styles.progress6}`}`}
                 value={list.progs[6] || ""}
                 onChange={(e) =>
                   handleRenameListProgs(e.target.value, 6, list.id)
@@ -364,7 +342,7 @@ export default function List({ list, index, children }) {
                 name="progress"
                 minLength="1"
                 maxLength="12"
-                className={`${styles.progress7} disabled:grayscale-70`}
+                className={`${list.progs.length < 8 ? `${styles.disabled}` : `${styles.progress7}`}`}
                 value={list.progs[7] || ""}
                 onChange={(e) =>
                   handleRenameListProgs(e.target.value, 7, list.id)

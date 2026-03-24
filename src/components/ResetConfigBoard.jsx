@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
 import boxpad from "../styles/boxpad.module.css";
 
-export default function Reset() {
+export default function ResetConfigBoard() {
   const { resetSettingsConfig } = useContext(ManagerContext);
 
   return (
