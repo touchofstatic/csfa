@@ -4,12 +4,14 @@ import Ascii from "./Ascii";
 import Random from "./Random";
 import Pomo from "./Pomo.jsx";
 
+// md: sticky sidebar
+// sm: column !!! NOT FINAL LAYOUT
+// I need to learn more about developing mobile web apps and routing first. Not changing this soon
 export default function Sidebar() {
   const { items, handleAddList } = useContext(ManagerContext);
 
   return (
-    // TODO: accessibility at bigger font size?
-    // I don't really like how it shrinks on pc
+    // md:top-[2lh] to not collide with sticky header
     <aside className="flex flex-col md:sticky md:top-[2lh] md:h-fit md:w-[36ch] md:min-w-[36ch]">
       <Ascii text="csfa" />
       <NewListForm onAddList={handleAddList} />
@@ -20,6 +22,7 @@ export default function Sidebar() {
 }
 
 function NewListForm({ onAddList }) {
+  // ref to clear form text after submit
   const clearform = useRef("");
 
   return (
@@ -28,6 +31,7 @@ function NewListForm({ onAddList }) {
       autoComplete="off"
       className="mb-[1lh] flex flex-col md:flex-row"
     >
+      {/* min-w-0 overrides text input browser css that doesn't allow it to shrink past some point and makes it clip */}
       <input
         className="w-full min-w-0"
         type="text"

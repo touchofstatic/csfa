@@ -72,6 +72,7 @@
   opacity: 0.5;
 }
 
+/* hovering over the item highlights it very slightly */
 .hoveritem:hover {
-  filter: brightness(103%);
+  filter: brightness(105%);
 }

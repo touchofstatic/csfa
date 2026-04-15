@@ -3,7 +3,9 @@ import { ThemeContext } from "./Contexts";
 import boxpad from "../styles/boxpad.module.css";
 
 // TODO: move to file
-const THEMES_DEFAULT = [
+// Themes provided by webtui
+// https://webtui.ironclad.sh/start/plugins/
+const THEMES_STANDARD = [
   "gruvbox-dark-hard",
   "gruvbox-dark-medium",
   "gruvbox-dark-soft",
@@ -16,6 +18,7 @@ const THEMES_DEFAULT = [
   "catppuccin-frappe",
 ];
 
+// Our themes based on colors from webtui themes
 const THEMES_CUSTOM = ["catppuccin-pink", "colder-nord"];
 
 export default function Themes() {
@@ -41,8 +44,13 @@ export default function Themes() {
           className={`align-center flex h-full flex-col justify-center ${boxpad.boxpad}`}
           box-="double"
         >
-          <h1 tabindex="0">Themes</h1>
-          <div>
+          {/* tabIndex focuses dialog's header instead of first input which is the default*/}
+          <h1 tabIndex="0">Themes</h1>
+          {/* TODO: accessibility audit */}
+          {/* Color scheme ui element that showcases the current theme.
+          It's common in tui, for example the linux terminal.
+          Purely visual, not relevant to screen readers */}
+          <div className="noselect">
             <span className="bg-[var(--foreground0)]">&nbsp;&nbsp;</span>
             <span className="bg-[var(--foreground1)]">&nbsp;&nbsp;</span>
             <span className="bg-[var(--foreground2)]">&nbsp;&nbsp;</span>
@@ -52,7 +60,7 @@ export default function Themes() {
             <span className="bg-[var(--background3)]">&nbsp;&nbsp;</span>
           </div>
 
-          <div>
+          <div className="noselect">
             <span className="bg-[var(--color0)]">&nbsp;&nbsp;</span>
             <span className="bg-[var(--color1)]">&nbsp;&nbsp;</span>
             <span className="bg-[var(--color2)]">&nbsp;&nbsp;</span>
@@ -63,7 +71,9 @@ export default function Themes() {
           </div>
 
           <section>
-            {THEMES_DEFAULT.map((t) => (
+            {/* Current theme is strongly highlighted as foreground. hovering highlights slightly */}
+            {/* TODO: focus */}
+            {THEMES_STANDARD.map((t) => (
               <button
                 size-="small"
                 onClick={() => changeTheme(t)}

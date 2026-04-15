@@ -4,6 +4,7 @@ import { ThemeContext } from "./components/Contexts";
 import Manager from "./components/Manager.jsx";
 
 export default function App() {
+  // Themes feature. Current theme name is set in localstorage
   const [theme, setTheme] = useState(() => {
     const loadTheme = JSON.parse(localStorage.getItem("theme"));
     return loadTheme || "gruvbox-dark-hard";
@@ -19,6 +20,9 @@ export default function App() {
 
   return (
     <>
+      {/* Helmet is used because our themes functionality is provided by webtui,
+      where the theme is set by data-webtui-theme attribute in <html>,
+      and Helmet allows to modify and pass props to index.html in React */}
       <HelmetProvider>
         <Helmet htmlAttributes>
           <html data-webtui-theme={theme} />

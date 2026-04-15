@@ -1,13 +1,13 @@
 import { useState, useRef, useContext } from "react";
 import { ManagerContext } from "./Contexts";
-import boxpad from "../styles/boxpad.module.css";
-import Ajv from "ajv";
 import { itemsSchema, listsSchema } from "./schema.jsx";
+import Ajv from "ajv";
+import boxpad from "../styles/boxpad.module.css";
 
 export default function Import() {
   const { handleImportBoard } = useContext(ManagerContext);
   const [result, setResult] = useState("none");
-  // to hide the default file input
+  // To hide the default file input, clicking the visible button clicks the actual file input via ref
   const fileInput = useRef(null);
   const exit = useRef();
 
@@ -36,19 +36,17 @@ export default function Import() {
       break;
   }
 
+  // We use Ajv library to validate structure in json files against schema of lists and items
   function isValid(schema, data) {
     const ajv = new Ajv();
     const valid = ajv.validate(schema, data);
 
     if (!valid) {
       setResult("err1");
-      // setMessage("Error: Invalid file schema.");
       console.log(ajv.errors);
       return false;
     }
     setResult("succ");
-    exit.current.click();
-    // setMessage("File imported.");
     return true;
   }
 
@@ -56,7 +54,6 @@ export default function Import() {
     const file = event.target.files[0];
     if (!file) {
       setResult("err2");
-      // setMessage("No file selected.");
       return;
     }
 
@@ -65,7 +62,6 @@ export default function Import() {
       !file.type.endsWith(".json")
     ) {
       setResult("err3");
-      // setMessage("Error: Unsupported file type.");
       return;
     }
 
@@ -76,12 +72,14 @@ export default function Import() {
         isValid(itemsSchema, data.items) &&
         isValid(listsSchema, data.lists)
       ) {
+        // If read file, json, and validated
         handleImportBoard(data.lists, data.items);
+        // Clicks exit dialog to not make user click through a success message. Optimistic because handleImportBoard hasn't completed yet but I don't want to deal with managing Import's status message state in Board
+        exit.current.click();
       }
     };
     reader.onerror = function () {
       setResult("err4");
-      // setMessage("Error: Failed to read file.");
     };
     reader.readAsText(file);
   }
@@ -125,7 +123,7 @@ export default function Import() {
               commandfor="import-dialog"
               command="close"
               onClick={() => setResult("none")}
-              tabindex="0"
+              tabIndex="0"
               ref={exit}
             >
               Exit

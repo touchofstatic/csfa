@@ -7,6 +7,11 @@ import {
   // deltaCorpsPriest1,
 } from "react-ascii-text";
 
+// Design guideline: blocky, tui-like feel. But I included a few edgy gothic fonts because it's my site and I do whatever I want
+// IMPORTANT:
+// <pre> scale is controlled manually by text-size.
+// Whitespace horizontal lines can be fixed with negative margin.
+// Each ascii font has wildly different inherent size and whitespaces. Therefore each would need its own custom <pre> with text-size and margin chosen specifically for it to look right. I set ansiShadow by default because it's the least troublesome "out of the box".
 export default function Ascii({ text }) {
   const asciiTextRef = useAsciiText({
     font: ansiShadow,
@@ -14,7 +19,7 @@ export default function Ascii({ text }) {
     isAnimated: false,
   });
 
-  // TODO: switch return style classes tailored for each font option; font is from user config like theme
+  // TODO: user can set different ascii logos. Switch that returns custom <pre>s for each font option. font name is passed by prop and taken from user settings. Create a setting for it
   return (
     <pre
       ref={asciiTextRef}

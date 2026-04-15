@@ -1,4 +1,4 @@
-// TODO: TEMPORARY FOR DEVELOPMENT
+// TEMPORARY FILE FOR DEVELOPMENT
 import { v4 as uuidv4 } from "uuid";
 export const SYSTEM_DEFAULT_PROGS = [
   "unspecified",
@@ -18,7 +18,7 @@ export const SYSTEM_DEFAULT_POMO = {
   // volume: 10,
 
   // NORMALLY TIME SHOULD ALWAYS BE SET IN ROUND MINUTES
-  // Only for faster testing
+  // Only for development to test faster
   pomo: 60,
   short: 60,
   long: 60,

@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import Board from "./Board.jsx";
 import Sidebar from "./Sidebar.jsx";
 
-// FOR DEVELOPMENT
+// ONLY FOR DEVELOPMENT
 import {
   devItems,
   devLists,
@@ -13,19 +13,31 @@ import {
   SYSTEM_DEFAULT_POMO,
 } from "./data";
 
-// TODO: should I put this somewhere else idk
-// DnD logic
+// TODO: change to functions and move elsewhere? I don't use function consts anywhere, I just copied these from a code example. Having these floating outside components is weird. Not very descriptive names or variables.
+
+// IMPORTANT dnd logic
+// source: array itemIds of source List
+// destination: array itemIds of destination List
+// startIndex: og index of item
+// endIndex: new index of item
+// interpret simply as you see it, "I move item from 2 to 0" is 2 0
+
+// When item is reordered within the same list
 const reorder = (source, startIndex, endIndex) => {
   const result = structuredClone(source);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
 
+  // return array itemIds
   return result;
 };
 
+// When item is moved to another list
 const move = (source, destination, droppableSource, droppableDestination) => {
   const sourceClone = structuredClone(source);
   const destClone = structuredClone(destination);
+
+  console.log(source, destination, droppableSource, droppableDestination);
 
   const [removed] = sourceClone.itemIds.splice(droppableSource.index, 1);
 
@@ -34,6 +46,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   result[droppableSource.droppableId] = sourceClone;
   result[droppableDestination.droppableId] = destClone;
 
+  console.log(result);
   return result;
 };
 

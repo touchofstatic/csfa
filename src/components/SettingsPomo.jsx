@@ -27,7 +27,7 @@ export default function SettingsPomo() {
           className={`flex h-full flex-col ${boxpad.boxpad}`}
           box-="double"
         >
-          <h1 tabindex="0">Settings/Pomodoro</h1>
+          <h1 tabIndex="0">Settings/Pomodoro</h1>
           {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
           <section>
             <h2># Timer</h2>

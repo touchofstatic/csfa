@@ -8,13 +8,17 @@ export default function Item({ item, myListId, progs, ...handle }) {
   const { handleDeleteItem, handleRenameItem, handleAdvanceItem } =
     useContext(ManagerContext);
 
+  // Clicking outside ends the rename interaction
   const ref = useClickAway(() => {
     setDraftRenameItem("");
   });
 
+  // TODO: this kinda sucks maybe? very confusing. look at closely later and at least comment more extensively
+  // Generate class name used to style Item's elements according to its progress
   let progressClassName = "progress" + item.progress;
+  // Name of item's progress to display
   let progress = "";
-
+  // TODO: I don't like that only one is <span> (due to the need to hide the text but have clickable text there)
   switch (progressClassName) {
     case "progress0":
       progress = <span className="invisible">{progs[0]}</span>;
@@ -45,18 +49,20 @@ export default function Item({ item, myListId, progs, ...handle }) {
       break;
   }
 
-  // TODO: bad?
-  let title = "";
+  // TODO: not sure if bad or okay. ask later
+  let name = "";
+  // If not renaming, display name normally
   if (!draftRenameItem) {
-    title = (
+    name = (
       <div
         className={`${styles.name} ${styles[progressClassName]} pl-[1ch] break-all`}
       >
         {item.name}
       </div>
     );
+    // If renaming, display the form in its place
   } else {
-    title = (
+    name = (
       <form
         ref={ref}
         onSubmit={(event) => {
@@ -102,13 +108,16 @@ export default function Item({ item, myListId, progs, ...handle }) {
     <div
       className={`${progressClassName} ${styles.item} ${!draftRenameItem && `${styles.hoveritem}`}`}
     >
+      {/* Item controls */}
       <div>
+        {/* Dnd drag handle */}
         <span
           {...handle}
           className={`${styles[progressClassName]} noselect p-0.5 hover:font-bold`}
         >
           [=]
         </span>
+        {/* Rename */}
         <button
           className={`${styles.controls} ${styles[progressClassName]} p-0.5`}
           size-="small"
@@ -116,6 +125,7 @@ export default function Item({ item, myListId, progs, ...handle }) {
         >
           [rn]
         </button>
+        {/* Delete */}
         <button
           className={`${styles.controls} ${styles[progressClassName]} p-0.5`}
           size-="small"
@@ -123,6 +133,7 @@ export default function Item({ item, myListId, progs, ...handle }) {
         >
           [-]
         </button>
+        {/* Advance progress */}
         <button
           size-="small"
           className={`${styles[progressClassName]} float-right bg-transparent p-0 text-[var(--foreground2)]`}
@@ -131,7 +142,7 @@ export default function Item({ item, myListId, progs, ...handle }) {
           {progress} [&gt;]
         </button>
       </div>
-      {title}
+      {name}
     </div>
   );
 }
