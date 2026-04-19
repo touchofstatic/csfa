@@ -3,11 +3,32 @@ import { ManagerContext } from "./Contexts";
 import Import from "./Import";
 import Export from "./Export";
 import ResetBoardConfig from "./ResetBoardConfig";
+// TODO: this isn't lists! bad!!
 import styles from "../styles/list.module.css";
 
 export default function BoardConfig() {
   const { stagesConfig, handleResizeConfigStages, handleRenameConfigStages } =
     useContext(ManagerContext);
+
+  const stagesdisplay = [];
+  for (let i = 1; i < 8; i++) {
+    const sdcolor = "stage" + i;
+    stagesdisplay.push(
+      // AUDIT: see react.dev Optimizing re-rendering on every keystroke
+      <input
+        key={sdcolor}
+        type="text"
+        name="stage"
+        minLength="1"
+        maxLength="12"
+        className={`${stagesConfig.length < i + 1 ? `${styles.disabled}` : styles[sdcolor]}`}
+        value={stagesConfig[i] || ""}
+        onChange={(e) => handleRenameConfigStages(e.target.value, i)}
+        required
+        disabled={stagesConfig.length < i + 1}
+      />,
+    );
+  }
 
   return (
     <>
@@ -54,86 +75,8 @@ export default function BoardConfig() {
               {stagesConfig.length - 1}
             </label>
 
-            {/* AUDIT: see react.dev Optimizing re-rendering on every keystroke  */}
-            {/* TODO: ugly ass */}
             <form className={`flex flex-col gap-1`} autoComplete="off">
-              <input
-                type="text"
-                name="stage"
-                minLength="1"
-                maxLength="12"
-                className={`${stagesConfig.length < 2 ? `${styles.disabled}` : `${styles.stage1}`}`}
-                value={stagesConfig[1] || ""}
-                onChange={(e) => handleRenameConfigStages(e.target.value, 1)}
-                required
-                disabled={stagesConfig.length < 2}
-              />
-              <input
-                type="text"
-                name="stage"
-                minLength="1"
-                maxLength="12"
-                className={`${stagesConfig.length < 3 ? `${styles.disabled}` : `${styles.stage2}`}`}
-                value={stagesConfig[2] || ""}
-                onChange={(e) => handleRenameConfigStages(e.target.value, 2)}
-                required
-                disabled={stagesConfig.length < 3}
-              />
-              <input
-                type="text"
-                name="stage"
-                minLength="1"
-                maxLength="12"
-                className={`${stagesConfig.length < 4 ? `${styles.disabled}` : `${styles.stage3}`}`}
-                value={stagesConfig[3] || ""}
-                onChange={(e) => handleRenameConfigStages(e.target.value, 3)}
-                required
-                disabled={stagesConfig.length < 4}
-              />
-              <input
-                type="text"
-                name="stage"
-                minLength="1"
-                maxLength="12"
-                className={`${stagesConfig.length < 5 ? `${styles.disabled}` : `${styles.stage4}`}`}
-                value={stagesConfig[4] || ""}
-                onChange={(e) => handleRenameConfigStages(e.target.value, 4)}
-                required
-                disabled={stagesConfig.length < 5}
-              />
-              <input
-                type="text"
-                name="stage"
-                minLength="1"
-                maxLength="12"
-                className={`${stagesConfig.length < 6 ? `${styles.disabled}` : `${styles.stage5}`}`}
-                value={stagesConfig[5] || ""}
-                onChange={(e) => handleRenameConfigStages(e.target.value, 5)}
-                required
-                disabled={stagesConfig.length < 6}
-              />
-              <input
-                type="text"
-                name="stage"
-                minLength="1"
-                maxLength="12"
-                className={`${stagesConfig.length < 7 ? `${styles.disabled}` : `${styles.stage6}`}`}
-                value={stagesConfig[6] || ""}
-                onChange={(e) => handleRenameConfigStages(e.target.value, 6)}
-                required
-                disabled={stagesConfig.length < 7}
-              />
-              <input
-                type="text"
-                name="stage"
-                minLength="1"
-                maxLength="12"
-                className={`${stagesConfig.length < 8 ? `${styles.disabled}` : `${styles.stage7}`}`}
-                value={stagesConfig[7] || ""}
-                onChange={(e) => handleRenameConfigStages(e.target.value, 7)}
-                required
-                disabled={stagesConfig.length < 8}
-              />
+              {stagesdisplay}
             </form>
           </section>
           <section className="flex w-fit flex-col gap-1">

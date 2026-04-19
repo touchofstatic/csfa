@@ -240,6 +240,26 @@ function ListSettings({
   handleResizeListStages,
   handleRenameListStages,
 }) {
+  const stagesdisplay = [];
+  for (let i = 1; i < 8; i++) {
+    const sdcolor = "stage" + i;
+    stagesdisplay.push(
+      // AUDIT: see react.dev Optimizing re-rendering on every keystroke
+      <input
+        key={sdcolor}
+        type="text"
+        name="stage"
+        minLength="1"
+        maxLength="12"
+        className={`${list.stages.length < i + 1 ? `${styles.disabled}` : styles[sdcolor]}`}
+        value={list.stages[i] || ""}
+        onChange={(e) => handleRenameListStages(e.target.value, i, list.id)}
+        required
+        disabled={list.stages.length < i + 1}
+      />,
+    );
+  }
+
   return (
     // Each list's dialog is uniquely associated with it by id. Otherwise changing its settings affects all lists
     // Dimensions subject to change
@@ -279,100 +299,8 @@ function ListSettings({
             {list.stages.length - 1}
           </label>
 
-          {/* TODO: ugly ass */}
-          {/* AUDIT: see react.dev Optimizing re-rendering on every keystroke  */}
           <form className={`flex flex-col gap-1`} autoComplete="off">
-            <input
-              type="text"
-              name="stage"
-              minLength="1"
-              maxLength="12"
-              className={`${list.stages.length < 2 ? `${styles.disabled}` : `${styles.stage1}`}`}
-              value={list.stages[1] || ""}
-              onChange={(e) =>
-                handleRenameListStages(e.target.value, 1, list.id)
-              }
-              required
-              disabled={list.stages.length < 2}
-            />
-            <input
-              type="text"
-              name="stage"
-              minLength="1"
-              maxLength="12"
-              className={`${list.stages.length < 3 ? `${styles.disabled}` : `${styles.stage2}`}`}
-              value={list.stages[2] || ""}
-              onChange={(e) =>
-                handleRenameListStages(e.target.value, 2, list.id)
-              }
-              required
-              disabled={list.stages.length < 3}
-            />
-            <input
-              type="text"
-              name="stage"
-              minLength="1"
-              maxLength="12"
-              className={`${list.stages.length < 4 ? `${styles.disabled}` : `${styles.stage3}`}`}
-              value={list.stages[3] || ""}
-              onChange={(e) =>
-                handleRenameListStages(e.target.value, 3, list.id)
-              }
-              required
-              disabled={list.stages.length < 4}
-            />
-            <input
-              type="text"
-              name="stage"
-              minLength="1"
-              maxLength="12"
-              className={`${list.stages.length < 5 ? `${styles.disabled}` : `${styles.stage4}`}`}
-              value={list.stages[4] || ""}
-              onChange={(e) =>
-                handleRenameListStages(e.target.value, 4, list.id)
-              }
-              required
-              disabled={list.stages.length < 5}
-            />
-            <input
-              type="text"
-              name="stage"
-              minLength="1"
-              maxLength="12"
-              className={`${list.stages.length < 6 ? `${styles.disabled}` : `${styles.stage5}`}`}
-              value={list.stages[5] || ""}
-              onChange={(e) =>
-                handleRenameListStages(e.target.value, 5, list.id)
-              }
-              required
-              disabled={list.stages.length < 6}
-            />
-            <input
-              type="text"
-              name="stage"
-              minLength="1"
-              maxLength="12"
-              className={`${list.stages.length < 7 ? `${styles.disabled}` : `${styles.stage6}`}`}
-              value={list.stages[6] || ""}
-              onChange={(e) =>
-                handleRenameListStages(e.target.value, 6, list.id)
-              }
-              required
-              disabled={list.stages.length < 7}
-            />
-            <input
-              type="text"
-              name="stage"
-              minLength="1"
-              maxLength="12"
-              className={`${list.stages.length < 8 ? `${styles.disabled}` : `${styles.stage7}`}`}
-              value={list.stages[7] || ""}
-              onChange={(e) =>
-                handleRenameListStages(e.target.value, 7, list.id)
-              }
-              required
-              disabled={list.stages.length < 8}
-            />
+            {stagesdisplay}
           </form>
         </section>
 
