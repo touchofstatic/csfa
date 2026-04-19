@@ -13,9 +13,6 @@ import {
   devLists,
 } from "./systemconfig";
 
-// TODO: change to functions? I don't use function consts anywhere, I just copied these from a code example.
-// TODO: move elsewhere? Having these floating outside components is weird
-
 // IMPORTANT dnd logic
 // When item is reordered within the same list
 const reorder = (itemIds, SIind, DIind) => {

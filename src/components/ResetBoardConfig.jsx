@@ -26,10 +26,7 @@ export default function ResetBoardConfig() {
           className={`align-center dialog-webtuibox-spacing flex h-full flex-col justify-center text-center`}
           box-="double"
         >
-          <p>
-            Reset user's task board settings to app default. Other settings and
-            data will not be erased.
-          </p>
+          <p>Reset user's task board settings.</p>
           <p>Are you sure?</p>
           <div className="flex justify-center gap-[1ch]">
             <button

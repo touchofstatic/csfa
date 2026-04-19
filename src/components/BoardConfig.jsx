@@ -49,7 +49,7 @@ export default function BoardConfig() {
           className={`dialog-webtuibox-spacing flex h-full flex-col`}
           box-="double"
         >
-          <h1 tabIndex="0">Settings/Board</h1>
+          <h1 tabIndex="0">Config/Board</h1>
           <section>
             <h2># Stages</h2>
             <p>

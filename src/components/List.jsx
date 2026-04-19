@@ -273,7 +273,7 @@ function ListSettings({
         box-="double"
       >
         {/* tabIndex focuses dialog's header instead of first input which is the default*/}
-        <h1 tabIndex="0">Settings/List/{list.name}</h1>
+        <h1 tabIndex="0">Config/List/{list.name}</h1>
         <section>
           <h2># Stages</h2>
 

@@ -26,7 +26,7 @@ export default function PomodoroConfig() {
           className={`dialog-webtuibox-spacing flex h-full flex-col`}
           box-="double"
         >
-          <h1 tabIndex="0">Settings/Pomodoro</h1>
+          <h1 tabIndex="0">Config/Pomodoro</h1>
           {/* AUDIT: see react.dev Optimizing re-rendering on every keystroke  */}
           <section>
             <h2># Timer</h2>
@@ -132,7 +132,6 @@ export default function PomodoroConfig() {
 
           <section>
             <h2># Data</h2>
-            {/* TODO: warning dialog to match board? */}
             <button
               type="button"
               size-="small"
