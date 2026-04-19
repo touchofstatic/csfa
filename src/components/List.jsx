@@ -229,7 +229,7 @@ export default function List({ list, index, children }) {
         handleRenameListStages={handleRenameListStages}
         handleResizeListStages={handleResizeListStages}
       />
-      {/* TODO: bug on md screen. Sometimes modal can appear not in the center but higher, and can overlap navbar. Don't know when it triggers or why*/}
+      {/* Known issue: on md screen, sometimes modal can appear not in the center but higher, and can overlap navbar. Don't know when it triggers or why. High priority*/}
     </div>
   );
 }

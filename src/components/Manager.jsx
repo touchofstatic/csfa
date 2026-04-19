@@ -63,7 +63,7 @@ export default function Manager() {
     return loadPomoConfig || SYSTEM_CONFIG_POMODORO;
   });
 
-  // TODO+: see what can be done to optimize
+  // TODO++: see what can be done to optimize
   // Will possibly migrate db to dexie anyway?
   // Update localstorage
   useEffect(() => {

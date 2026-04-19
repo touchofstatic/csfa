@@ -68,14 +68,14 @@ export default function Themes() {
 
           <section>
             {/* Current theme is strongly highlighted in foreground. hovering highlights slightly */}
-            {/* TODO: add focus highlight too */}
+            {/* Known issue: hovering and tab focusing at the same time creates two hightlights. Low priority */}
             {THEMES_STANDARD.map((t) => (
               <button
                 size-="small"
                 onClick={() => changeTheme(t)}
                 value={t}
                 key={t}
-                className={`block w-full text-left ${t === theme ? `bg-[var(--foreground0)] text-[var(--background0)]` : `bg-[var(--background1)] text-[var(--foreground0)] hover:bg-[var(--background2)]`}`}
+                className={`block w-full text-left ${t === theme ? `bg-[var(--foreground0)] text-[var(--background0)]` : `bg-[var(--background1)] text-[var(--foreground0)] hover:bg-[var(--background2)] focus:bg-[var(--background2)]`}`}
               >
                 {t}
               </button>
@@ -89,7 +89,7 @@ export default function Themes() {
                 onClick={() => changeTheme(t)}
                 value={t}
                 key={t}
-                className={`block w-full text-left ${t === theme ? `bg-[var(--foreground0)] text-[var(--background0)]` : `bg-[var(--background1)] text-[var(--foreground0)] hover:bg-[var(--background2)]`}`}
+                className={`block w-full text-left ${t === theme ? `bg-[var(--foreground0)] text-[var(--background0)]` : `bg-[var(--background1)] text-[var(--foreground0)] hover:bg-[var(--background2)] focus:bg-[var(--background2)]`}`}
               >
                 {t}
               </button>

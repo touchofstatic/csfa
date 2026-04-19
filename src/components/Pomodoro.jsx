@@ -145,7 +145,7 @@ export default function Pomodoro() {
       </section>
       {/* Statistics */}
       <p>Completed: {pomoWins}</p>
-      {/* TODO: change to conditional display with hours aFTER you actually implement total */}
+      {/* TODO: change to conditional display with hours (aFTER you actually implement total) */}
       <p>Total time: {totalMins} min</p>
     </article>
   );

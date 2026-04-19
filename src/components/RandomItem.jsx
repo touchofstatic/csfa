@@ -27,11 +27,10 @@ export default function RandomItem({ items }) {
       }}
       className="mb-[1lh] flex flex-col"
     >
-      {/* TODO: align text and break very long word */}
       <output
         name="randomTask"
         aria-live="polite"
-        className={`flex h-[3.5lh] w-full overflow-y-scroll bg-[var(--background1)] break-all`}
+        className={`breakword align-center flex h-[3.5lh] w-full overflow-y-scroll bg-[var(--background1)] px-[1ch]`}
       >
         {/* Spinner component from webtui */}
         {spinner && <span is-="spinner" variant-="dots"></span>}

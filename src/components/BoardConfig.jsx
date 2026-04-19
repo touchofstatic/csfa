@@ -144,7 +144,7 @@ export default function BoardConfig() {
             <ResetBoardConfig />
           </section>
 
-          {/* TODO: fix align bottom doesn't work*/}
+          {/* Known issue: align bottom doesn't work*/}
           <section className="self-center align-bottom">
             <button commandfor="config-board-dialog" command="close">
               Exit
