@@ -1,4 +1,4 @@
-// TEMPORARY FILE ONLY FOR DEVELOPMENT
+// TEMPORARY ONLY FOR DEVELOPMENT
 import { v4 as uuidv4 } from "uuid";
 export const SYSTEM_DEFAULT_STAGES = [
   "unspecified",
@@ -9,7 +9,8 @@ export const SYSTEM_DEFAULT_STAGES = [
   "done",
 ];
 
-export const SYSTEM_DEFAULT_POMO = {
+export const SYSTEM_CONFIG_POMODORO = {
+  // TIME SHOULD ALWAYS BE SET IN ROUND MINUTES
   // pomo: 1500,
   // short: 300,
   // long: 900,
@@ -17,17 +18,16 @@ export const SYSTEM_DEFAULT_POMO = {
   // autoStart: false,
   // volume: 10,
 
-  // NORMALLY TIME SHOULD ALWAYS BE SET IN ROUND MINUTES
-  // Only for development to test faster
+  // TEMPORARY ONLY FOR DEVELOPMENT
   pomo: 60,
   short: 60,
   long: 60,
   interval: 1,
-  autoStart: true,
+  autoStart: false,
   volume: 10,
 };
 
-// TEMPORARY FILE ONLY FOR DEVELOPMENT
+// TEMPORARY ONLY FOR DEVELOPMENT
 export const devProgsConfig = SYSTEM_DEFAULT_STAGES;
 export const devItems = [
   {

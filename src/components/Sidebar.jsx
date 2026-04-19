@@ -2,11 +2,10 @@ import { useContext, useRef } from "react";
 import { ManagerContext } from "./Contexts";
 import Ascii from "./Ascii";
 import RandomItem from "./RandomItem";
-import Pomo from "./Pomo.jsx";
+import Pomodoro from "./Pomodoro.jsx";
 
 // md: sticky sidebar
-// sm: column !!! NOT FINAL LAYOUT
-// I need to learn more about developing mobile web apps and routing first. Not changing this soon
+// sm: column. NOT FINAL LAYOUT! NOT CHANGING THIS SOON!
 export default function Sidebar() {
   const { items, handleAddList } = useContext(ManagerContext);
 
@@ -16,7 +15,7 @@ export default function Sidebar() {
       <Ascii text="csfa" />
       <NewListForm onAddList={handleAddList} />
       <RandomItem items={items} />
-      <Pomo />
+      <Pomodoro />
     </aside>
   );
 }

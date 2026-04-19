@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
 
-export default function ConfigPomo() {
-  const { userPomo, changePomoConfig, resetPomoConfig } =
+export default function PomodoroConfig() {
+  const { pomoConfig, changePomoConfig, resetPomoConfig } =
     useContext(ManagerContext);
 
   return (
@@ -38,7 +38,7 @@ export default function ConfigPomo() {
                 min="0"
                 max="59"
                 className="w-[8ch] min-w-0"
-                value={userPomo.pomo / 60}
+                value={pomoConfig.pomo / 60}
                 onChange={(e) =>
                   changePomoConfig(e.target.value, e.target.name)
                 }
@@ -51,7 +51,7 @@ export default function ConfigPomo() {
                 min="0"
                 max="59"
                 className="w-[8ch] min-w-0"
-                value={userPomo.short / 60}
+                value={pomoConfig.short / 60}
                 onChange={(e) =>
                   changePomoConfig(e.target.value, e.target.name)
                 }
@@ -65,7 +65,7 @@ export default function ConfigPomo() {
                 min="0"
                 max="59"
                 className="w-[8ch] min-w-0"
-                value={userPomo.long / 60}
+                value={pomoConfig.long / 60}
                 onChange={(e) =>
                   changePomoConfig(e.target.value, e.target.name)
                 }
@@ -77,7 +77,7 @@ export default function ConfigPomo() {
                 name="interval"
                 min="1"
                 className="w-[8ch] min-w-0"
-                value={userPomo.interval}
+                value={pomoConfig.interval}
                 onChange={(e) =>
                   changePomoConfig(e.target.value, e.target.name)
                 }
@@ -90,7 +90,7 @@ export default function ConfigPomo() {
                   name="auto"
                   id="autoFalse"
                   value="no"
-                  checked={userPomo.autoStart === false}
+                  checked={pomoConfig.autoStart === false}
                   onChange={(e) =>
                     changePomoConfig(e.target.value, e.target.name)
                   }
@@ -101,7 +101,7 @@ export default function ConfigPomo() {
                   name="auto"
                   id="autoTrue"
                   value="yes"
-                  checked={userPomo.autoStart === true}
+                  checked={pomoConfig.autoStart === true}
                   onChange={(e) =>
                     changePomoConfig(e.target.value, e.target.name)
                   }
@@ -120,12 +120,12 @@ export default function ConfigPomo() {
                 min="0"
                 max="100"
                 name="volume"
-                value={userPomo.volume}
+                value={pomoConfig.volume}
                 onChange={(e) => {
                   changePomoConfig(e.target.value, e.target.name);
                 }}
               />
-              {userPomo.volume}
+              {pomoConfig.volume}
             </label>
             {/* TOOO: add a selection of cool alarm sounds */}
           </section>

@@ -13,7 +13,7 @@ import {
   devItems,
   devLists,
   SYSTEM_DEFAULT_STAGES,
-  SYSTEM_DEFAULT_POMO,
+  SYSTEM_CONFIG_POMODORO,
 } from "./data";
 
 // TODO: change to functions? I don't use function consts anywhere, I just copied these from a code example.
@@ -74,11 +74,9 @@ export default function Manager() {
     );
     return loadUserProgsConfig || SYSTEM_DEFAULT_STAGES;
   });
-  const [userPomo, setUserPomo] = useState(() => {
-    const loadUserPomoConfig = JSON.parse(
-      localStorage.getItem("userPomoConfig"),
-    );
-    return loadUserPomoConfig || SYSTEM_DEFAULT_POMO;
+  const [pomoConfig, setPomoConfig] = useState(() => {
+    const loadPomoConfig = JSON.parse(localStorage.getItem("pomo-config"));
+    return loadPomoConfig || SYSTEM_CONFIG_POMODORO;
   });
 
   // TODO: see what can be done to optimize
@@ -97,8 +95,8 @@ export default function Manager() {
   }, [userProgs]);
 
   useEffect(() => {
-    localStorage.setItem("userPomoConfig", JSON.stringify(userPomo));
-  }, [userPomo]);
+    localStorage.setItem("pomo-config", JSON.stringify(pomoConfig));
+  }, [pomoConfig]);
 
   // Change pomodoro config
   function changePomoConfig(value, name) {
@@ -106,32 +104,32 @@ export default function Manager() {
     if (name === "pomo" || name === "short" || name === "long") {
       // Second validations because mobile users bypass input length limits for some reason
       // 0 <= minutes <= 59
-      if (value > 59) setUserPomo({ ...userPomo, [name]: 59 * 60 });
-      else if (value < 0) setUserPomo({ ...userPomo, [name]: 0 });
-      else setUserPomo({ ...userPomo, [name]: Number(value) * 60 });
+      if (value > 59) setPomoConfig({ ...pomoConfig, [name]: 59 * 60 });
+      else if (value < 0) setPomoConfig({ ...pomoConfig, [name]: 0 });
+      else setPomoConfig({ ...pomoConfig, [name]: Number(value) * 60 });
     }
     // Interval
     if (name === "interval") {
-      setUserPomo({ ...userPomo, interval: value });
+      setPomoConfig({ ...pomoConfig, interval: value });
     }
     // Auto start
     if (name === "auto") {
-      if (value === "yes") setUserPomo({ ...userPomo, autoStart: true });
-      if (value === "no") setUserPomo({ ...userPomo, autoStart: false });
+      if (value === "yes") setPomoConfig({ ...pomoConfig, autoStart: true });
+      if (value === "no") setPomoConfig({ ...pomoConfig, autoStart: false });
     }
     // Volume slider
-    if (name === "volume") setUserPomo({ ...userPomo, volume: value });
+    if (name === "volume") setPomoConfig({ ...pomoConfig, volume: value });
   }
 
   // Reset pomodoro config
   function resetPomoConfig() {
-    setUserPomo({
-      pomo: SYSTEM_DEFAULT_POMO.pomo,
-      short: SYSTEM_DEFAULT_POMO.short,
-      long: SYSTEM_DEFAULT_POMO.long,
-      interval: SYSTEM_DEFAULT_POMO.interval,
-      autoStart: SYSTEM_DEFAULT_POMO.autoStart,
-      volume: SYSTEM_DEFAULT_POMO.volume,
+    setPomoConfig({
+      pomo: SYSTEM_CONFIG_POMODORO.pomo,
+      short: SYSTEM_CONFIG_POMODORO.short,
+      long: SYSTEM_CONFIG_POMODORO.long,
+      interval: SYSTEM_CONFIG_POMODORO.interval,
+      autoStart: SYSTEM_CONFIG_POMODORO.autoStart,
+      volume: SYSTEM_CONFIG_POMODORO.volume,
     });
   }
 
@@ -469,7 +467,7 @@ export default function Manager() {
           items,
           lists,
           userProgs,
-          userPomo,
+          pomoConfig,
           handleImportBoard,
           handleResizeConfigStages,
           handleRenameConfigStages,
@@ -488,7 +486,7 @@ export default function Manager() {
           value={{
             items,
             lists,
-            userPomo,
+            pomoConfig,
             handleAddList,
             handleAddItem,
             handleDeleteList,

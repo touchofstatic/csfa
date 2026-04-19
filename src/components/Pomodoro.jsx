@@ -34,11 +34,11 @@ customElements.whenDefined("ascii-progress-bar").then(() => {
 // Total minutes spent today (WIP)
 let totalMins = 0;
 
-export default function Pomo() {
+export default function Pomodoro() {
   // TODO: not clear name
-  const { userPomo } = useContext(ManagerContext);
+  const { pomoConfig } = useContext(ManagerContext);
   // Current mode = its name and duration
-  const [mode, setMode] = useState(["Pomodoro", userPomo.pomo]);
+  const [mode, setMode] = useState(["Pomodoro", pomoConfig.pomo]);
   // For auto start. Only AS during mode cycle (pomo > short > pomo > long > ...), don't AS if Timer rendered due to page loading or manually selecting mode. That'd be bad user experience. Note: cycling and paused are different and entirely unrelated
   const [cycling, setCycling] = useState(false);
   // TODO+: store record's date and check against today's date instead of always counting up
@@ -55,27 +55,27 @@ export default function Pomo() {
 
   // Initialize alarm sound
   const [play] = useSound(SOUND_URL, {
-    volume: userPomo.volume,
+    volume: pomoConfig.volume,
   });
 
   // IMPORTANT: Enables intended behavior. A check of consistency between mode's duration in here and in config prop
-  if (mode[0] === "Pomodoro" && mode[1] !== userPomo.pomo)
-    setMode(["Pomodoro", userPomo.pomo]);
-  if (mode[0] === "Short break" && mode[1] !== userPomo.short)
-    setMode(["Short break", userPomo.short]);
-  if (mode[0] === "Long break" && mode[1] !== userPomo.long)
-    setMode(["Long break", userPomo.long]);
+  if (mode[0] === "Pomodoro" && mode[1] !== pomoConfig.pomo)
+    setMode(["Pomodoro", pomoConfig.pomo]);
+  if (mode[0] === "Short break" && mode[1] !== pomoConfig.short)
+    setMode(["Short break", pomoConfig.short]);
+  if (mode[0] === "Long break" && mode[1] !== pomoConfig.long)
+    setMode(["Long break", pomoConfig.long]);
 
   // Timer expired
   function handleExpire() {
     if (mode[0] === "Pomodoro") {
       setPomoWins(pomoWins + 1);
       // Don't forget, set state is asyncronous!
-      if ((pomoWins + 1) % userPomo.interval !== 0)
-        setMode(["Short break", userPomo.short]);
-      else setMode(["Long break", userPomo.long]);
+      if ((pomoWins + 1) % pomoConfig.interval !== 0)
+        setMode(["Short break", pomoConfig.short]);
+      else setMode(["Long break", pomoConfig.long]);
     } else if (mode[0] === "Short break" || mode[0] === "Long break") {
-      setMode(["Pomodoro", userPomo.pomo]);
+      setMode(["Pomodoro", pomoConfig.pomo]);
     }
     // Alarm sound
     play();
@@ -84,16 +84,16 @@ export default function Pomo() {
   // Select mode
   function selectMode(mode) {
     if (mode === "Pomodoro") {
-      setMode(["Pomodoro", userPomo.pomo]);
+      setMode(["Pomodoro", pomoConfig.pomo]);
       // Block auto start
       setCycling(false);
     }
     if (mode === "Short break") {
-      setMode(["Short break", userPomo.short]);
+      setMode(["Short break", pomoConfig.short]);
       setCycling(false);
     }
     if (mode === "Long break") {
-      setMode(["Long break", userPomo.long]);
+      setMode(["Long break", pomoConfig.long]);
       setCycling(false);
     }
   }
@@ -139,7 +139,7 @@ export default function Pomo() {
         <Timer
           key={mode}
           mode={mode}
-          autoStart={userPomo.autoStart}
+          autoStart={pomoConfig.autoStart}
           onExpire={handleExpire}
           cycling={cycling}
           startOngoing={() => setCycling(true)}
