@@ -257,7 +257,7 @@ function ListSettings({
         <section>
           <h2># Stages</h2>
 
-          {/* TODO: accessibility audit? */}
+          {/* TODO: accessibility audit */}
           {/* Display list.stages.length - 1 to user because there's always one, stages[0] aka unspecified, but it's hidden from user and can't be changed */}
           <label htmlFor="listStages">
             <input

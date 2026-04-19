@@ -20,19 +20,26 @@ export default function RandomItem({ items }) {
   }
 
   return (
-    <section className="mb-[1lh] flex flex-col">
-      {/* TODO: turn into form */}
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        randomize();
+      }}
+      className="mb-[1lh] flex flex-col"
+    >
       {/* TODO: align text and break very long word */}
       <output
+        name="randomTask"
+        aria-live="polite"
         className={`flex h-[3.5lh] w-full overflow-y-scroll bg-[var(--background1)] break-all`}
       >
         {/* Spinner component from webtui */}
         {spinner && <span is-="spinner" variant-="dots"></span>}
-        <span>{pull.name}</span>
+        <span>{pull?.name}</span>
       </output>
-      <button size-="small" className="w-full" onClick={randomize}>
+      <button type="submit" size-="small" className="w-full">
         [Random Task]
       </button>
-    </section>
+    </form>
   );
 }

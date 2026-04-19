@@ -5,49 +5,37 @@ import Navbar from "./Navbar";
 import Board from "./Board.jsx";
 import Sidebar from "./Sidebar.jsx";
 
-// TODO: resolve "visible" and "collapsed"
-
-// ONLY FOR DEVELOPMENT
 import {
-  devItems,
-  devLists,
   SYSTEM_CONFIG_STAGES,
   SYSTEM_CONFIG_POMODORO,
+  // ONLY FOR DEVELOPMENT
+  devItems,
+  devLists,
 } from "./systemconfig";
 
 // TODO: change to functions? I don't use function consts anywhere, I just copied these from a code example.
 // TODO: move elsewhere? Having these floating outside components is weird
-// TODO: Not very descriptive names or variables.
 
 // IMPORTANT dnd logic
-
 // When item is reordered within the same list
-// itemIds: array itemIds of source List
-// interpret ogIndex and nextIndex simply as you see it with your eyes. "I move item from 2 to 0" is 2 0
-// result: next array itemIds
-const reorder = (itemIds, ogIndex, nextIndex) => {
+const reorder = (itemIds, SIind, DIind) => {
   const result = structuredClone(itemIds);
-  const [removed] = result.splice(ogIndex, 1);
-  result.splice(nextIndex, 0, removed);
+  const [removed] = result.splice(SIind, 1);
+  result.splice(DIind, 0, removed);
 
   return result;
 };
 
 // When item is moved to another list
-// source: object source List
-// destination: object destination List
-// droppableSource, droppableDestination: object {index: index of item in itemIds (number), droppableId: index of List (numeric string)}
-// result: object {object next source List, object next destination List}
-const move = (source, destination, droppableSource, droppableDestination) => {
-  const sourceClone = structuredClone(source);
-  const destClone = structuredClone(destination);
+const move = (SLobj, DLobj, source, destination) => {
+  const SLclone = structuredClone(SLobj);
+  const DLclone = structuredClone(DLobj);
 
-  const [removed] = sourceClone.itemIds.splice(droppableSource.index, 1);
-
-  destClone.itemIds.splice(droppableDestination.index, 0, removed);
+  const [removed] = SLclone.itemIds.splice(source.index, 1);
+  DLclone.itemIds.splice(destination.index, 0, removed);
   const result = {};
-  result[droppableSource.droppableId] = sourceClone;
-  result[droppableDestination.droppableId] = destClone;
+  result[source.droppableId] = SLclone;
+  result[destination.droppableId] = DLclone;
 
   return result;
 };
@@ -75,7 +63,7 @@ export default function Manager() {
     return loadPomoConfig || SYSTEM_CONFIG_POMODORO;
   });
 
-  // TODO: see what can be done to optimize
+  // TODO+: see what can be done to optimize
   // Will possibly migrate db to dexie anyway?
   // Update localstorage
   useEffect(() => {
@@ -130,52 +118,52 @@ export default function Manager() {
   }
 
   // Dnd utility
-  // result: special object of @hello-pangea/dnd
-  // source, destination: object {index: index of item in itemIds (number), droppableId: index of List (numeric string)}
-  // sInd: index of source List
-  // dInd: index of destination List
+  function onDragEnd(drop) {
+    // drop: special object of @hello-pangea/dnd
+    // source, destination: object {index: index of item in itemIds (number), droppableId: index of List (numeric string)}
+    const { source, destination } = drop;
 
-  // TODO: totally inconsistent var naming with reorder and move??
-  function onDragEnd(result) {
-    const { source, destination } = result;
-
-    // Exit if dnd didn't end at a destination
+    // Exit if didn't drop at a destination
     if (!destination) {
       return;
     }
-
-    const sInd = +source.droppableId;
-    const dInd = +destination.droppableId;
+    // SLind: Source List index
+    // DLind: Destination List index
+    // SIind: Source (og) Item index
+    // DIind: Destination (next) Item index
+    // interpret simply as you see with your eyes. "I move item from 2 to 0" is 2 0
+    const SLind = +source.droppableId;
+    const DLind = +destination.droppableId;
+    const SIind = source.index;
+    const DIind = destination.index;
 
     // If source and destionation List index are identical > reorder operation
-    if (sInd === dInd) {
-      // TODO: THIS IS TOTALLY CONFUSING
-      // result: next array itemIds
-      const result = reorder(
-        lists[sInd].itemIds,
-        source.index,
-        destination.index,
-      );
+    if (SLind === DLind) {
+      // SLobj: Source List object
+      // DLobj: Destination List object
+      const SLobj = lists[SLind];
+      // update: array next itemIds
+      const update = reorder(SLobj.itemIds, SIind, DIind);
       setLists(
         lists.map((list, index) => {
-          if (index !== sInd) return list;
-          else return { ...list, itemIds: result };
+          if (index !== SLind) return list;
+          else return { ...list, itemIds: update };
         }),
       );
       // If source and destionation List index are different > move operation
     } else {
-      // result: object {object next source List, object next destination List}
-      const result = move(lists[sInd], lists[dInd], source, destination);
+      const SLobj = lists[SLind];
+      const DLobj = lists[DLind];
+      // update: object {object next source List, object next destination List}
+      const update = move(SLobj, DLobj, source, destination);
       const newLists = [...lists];
-      newLists[sInd] = result[sInd];
-      newLists[dInd] = result[dInd];
+      newLists[SLind] = update[SLind];
+      newLists[DLind] = update[DLind];
       setLists(newLists);
 
       // Lists can have different stages. Moving an item can cause a conflict if its stage is higher than destination's. Always check after moving and reset conflict stages to 0
-      const targetitem = items.find(
-        (item) => item.id === lists[sInd].itemIds[source.index],
-      );
-      if (targetitem.stage >= lists[dInd].stages.length) {
+      const targetitem = items.find((item) => item.id === SLobj.itemIds[SIind]);
+      if (targetitem.stage >= DLobj.stages.length) {
         setItems(
           items.map((item) => {
             if (item !== targetitem) return item;
