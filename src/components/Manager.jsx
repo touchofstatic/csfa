@@ -190,7 +190,7 @@ export default function Manager() {
         name: newList,
         id: uuidv4(),
         itemIds: [],
-        visible: true,
+        collapsed: false,
         stages: stagesConfig,
       },
     ]);
@@ -256,13 +256,12 @@ export default function Manager() {
   }
 
   // Collapse List
-  // TODO: it makes no sense that list is "visible" but class is "collapsed"
   function handleCollapseList(listId) {
     setLists(
       lists.map((list) => {
         if (list.id !== listId) return list;
         else {
-          return { ...list, visible: !list.visible };
+          return { ...list, collapsed: !list.collapsed };
         }
       }),
     );

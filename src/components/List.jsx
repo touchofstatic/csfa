@@ -89,15 +89,15 @@ export default function List({ list, index, children }) {
   return (
     // Border imitates the webtui box utility. We didn't use box because it'd be more complicated especially with moving parts of dnd. And it highlights on hover!
     <div
-      className={`flex h-fit flex-col p-[1ch] ${!list.visible ? `${styles.collapsed} border-2 border-[var(--background1)] hover:border-[var(--background3)]` : "border-2 border-[var(--background2)] hover:border-[var(--foreground1)]"}`}
+      className={`flex h-fit flex-col p-[1ch] ${list.collapsed ? `${styles.collapsed} border-2 border-[var(--background1)] hover:border-[var(--background3)]` : "border-2 border-[var(--background2)] hover:border-[var(--foreground1)]"}`}
     >
-      <header className={`${!list.visible ? `${styles.collapsed}` : ""}`}>
+      <header className={`${list.collapsed ? `${styles.collapsed}` : ""}`}>
         {title}
         {/* List controls */}
         <div>
           {/* Settings */}
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             command="show-modal"
             commandfor={`config-board-dialog-${list.id}`}
@@ -106,7 +106,7 @@ export default function List({ list, index, children }) {
           </button>
           {/* Rename */}
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             onClick={() => setDraftRenameList(list.name)}
           >
@@ -114,7 +114,7 @@ export default function List({ list, index, children }) {
           </button>
           {/* Delete */}
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             onClick={() => handleDeleteList(list.id, myItems)}
           >
@@ -122,7 +122,7 @@ export default function List({ list, index, children }) {
           </button>
           {/* Collapse */}
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             onClick={() => handleCollapseList(list.id)}
           >
@@ -130,7 +130,7 @@ export default function List({ list, index, children }) {
           </button>
           {/* Move up */}
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             onClick={() => handleMoveList(index, "up")}
           >
@@ -138,7 +138,7 @@ export default function List({ list, index, children }) {
           </button>
           {/* Move down */}
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             onClick={() => handleMoveList(index, "down")}
           >
@@ -146,7 +146,7 @@ export default function List({ list, index, children }) {
           </button>
           {/* Order by stage */}
           <button
-            className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             onClick={() => handleOrderList(list.id, myItems)}
           >
@@ -156,7 +156,7 @@ export default function List({ list, index, children }) {
       </header>
 
       <hr
-        className={`${styles.separator} ${!list.visible ? `${styles.collapsed}` : ""}`}
+        className={`${styles.separator} ${list.collapsed ? `${styles.collapsed}` : ""}`}
       ></hr>
 
       {/* IMPORTANT: don't touch dnd logic or it will explode. Nested divs here are for specific needs of @hello-pangea/dnd library. There's barely any relevant code examples on the internet and the documentation is painful and still uses React class components so just be thankful that it works. */}
@@ -175,7 +175,7 @@ export default function List({ list, index, children }) {
                     {...provided.draggableProps}
                   >
                     {/* Don't display items if list is collapsed */}
-                    {list.visible && (
+                    {!list.collapsed && (
                       <Item
                         item={item}
                         myListId={list.id}
@@ -216,7 +216,7 @@ export default function List({ list, index, children }) {
         <button
           size-="small"
           type="submit"
-          className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0 whitespace-nowrap`}
+          className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0 whitespace-nowrap`}
         >
           [Add Item]
         </button>

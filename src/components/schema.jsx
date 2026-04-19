@@ -21,7 +21,7 @@ export const listsSchema = {
         type: "array",
         items: [{ type: "string", uniqueItems: true }],
       },
-      visible: { type: "boolean" },
+      collapsed: { type: "boolean" },
       stages: { type: "array", items: [{ type: "string" }] },
     },
   },
