@@ -54,9 +54,8 @@ export default function BoardConfig() {
               {stagesConfig.length - 1}
             </label>
 
-            {/* TODO: ugly ass */}
             {/* AUDIT: see react.dev Optimizing re-rendering on every keystroke  */}
-            {/* TODO: either do something about min length or unclickable empty space in stage advance button */}
+            {/* TODO: ugly ass */}
             <form className={`flex flex-col gap-1`} autoComplete="off">
               <input
                 type="text"
