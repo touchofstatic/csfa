@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
 import boxpad from "../styles/boxpad.module.css";
 
+// TODO: BETTER NAMES PLEASE
+// Task board config reset button and dialog
 export default function ResetConfigBoard() {
   const { resetSettingsConfig } = useContext(ManagerContext);
 
@@ -15,6 +17,8 @@ export default function ResetConfigBoard() {
       >
         Reset settings
       </button>
+
+      {/* Dimensions subject to change */}
       <dialog
         id="reset-dialog"
         popover="true"

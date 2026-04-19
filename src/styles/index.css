@@ -16,7 +16,7 @@
 @import "@webtui/theme-catppuccin";
 
 @layer base {
-  /* overrides of webtui base css  */
+  /* Overrides of webtui base css */
   :root {
     --font-size: 16px;
     /* Font weight for bold text */
@@ -25,6 +25,7 @@
     --font-weight-normal: 400;
     --font-family: "JetBrains Mono";
   }
+  /* IMPORTANT: needs to be in @layer base for tailwind padding and margin to work */
   *,
   *::before,
   *::after {
@@ -39,6 +40,7 @@
   }
 }
 
+/* To apply noselect */
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -49,6 +51,7 @@
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
+/* To apply gradient */
 .gradient {
   background: -webkit-linear-gradient(
     left,
@@ -65,21 +68,19 @@
   -webkit-text-fill-color: transparent;
 }
 
+/* Fix: ascii art that has █ is broken on mobile (android, not tested on ios). It's a quirk of android monospace fonts. We use another monospace font that has all necessary characters.
+https://stackoverflow.com/questions/51892280/how-do-i-fix-monospace-spaces-not-being-correct-width-in-android-chrome-firefox
+https://stackoverflow.com/questions/65907934/html-pre-tag-contents-resizing-on-android */
 @font-face {
   font-family: mononoki;
   src: url(../mononoki-Regular.ttf);
 }
-
-/* TODO: location of font file and optimizing */
+/* TODO: location of font file and optimizing? when fixing the issue I just threw it in with no consideration */
 pre {
-  /* standard monospace on mobile breaks ascii art with those █ */
   font-family: mononoki, monospace;
 }
 
+/* Had to be added manually */
 button {
   cursor: pointer;
-}
-
-body:has(dialog[open]) {
-  overflow: hidden;
 }

@@ -3,16 +3,17 @@ import { useTimer } from "react-timer-hook";
 import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
 import Clock from "./Clock";
-
 import useSound from "use-sound";
 // TODO: is import better?
-// TODO: balance volume in audacity!!! too high
-// TODO: move to another folder? is it better?
+// TODO: balance volume in audacity!!! NOT READY TO SHIP!
+// TODO: move to another folder? maybe?
 // import melokacool_notification_6 from "../src/melokacool_notification_6.mp3";
 const SOUND_URL = "../src/melokacool_notification_6.mp3";
 import { AsciiProgressBar } from "@yacosta738/ascii-progress-bar/browser";
-AsciiProgressBar.register();
 
+// @yacosta738/ascii-progress-bar syntax
+// Both are cool I cannot decide
+AsciiProgressBar.register();
 customElements.whenDefined("ascii-progress-bar").then(() => {
   AsciiProgressBar.addPattern("alt178", {
     empty: "░",
@@ -29,29 +30,36 @@ customElements.whenDefined("ascii-progress-bar").then(() => {
   });
 });
 
-// TODO: temporary
+// TODO: temporary, should be saved. not clear name!! (this is total minutes spent in pomodoro)
 let total = 0;
 
 export default function Pomo() {
+  // TODO: not clear name?
   const { userPomo } = useContext(ManagerContext);
-
+  // Current mode = its name and duration
   const [mode, setMode] = useState(["Pomodoro", userPomo.pomo]);
-  // for auto start; don't auto start if timer was rendered due to page loading or user changing mode
+  // TODO: maybe name something like "block auto"?
+  // For auto start. Only AS during an ongoing mode cycle (pomo > short > pomo > long > ...), don't AS if Timer rendered due to page loading or manually changing mode. That'd be bad user experience. Note: ongoing and paused *is different* and have no relation
   const [ongoing, setOngoing] = useState(false);
+  // TODO: not clear name?
+  // TODO: store record's date and check against today's date instead of always counting up
+  // Completed pomodoros counter
   const [pomocount, setPomocount] = useState(() => {
     const loadPomocount = JSON.parse(localStorage.getItem("pomocount"));
     return loadPomocount || 0;
   });
 
+  // Update localstorage
   useEffect(() => {
     localStorage.setItem("pomocount", JSON.stringify(pomocount));
   }, [pomocount]);
 
+  // Initialize alarm sound
   const [play] = useSound(SOUND_URL, {
     volume: userPomo.volume,
   });
 
-  // TODO: OOOOOOOOOOOOOO
+  // IMPORTANT: Enables intended behavior. A check of consistency between mode's duration in here and in config prop
   if (mode[0] === "Pomodoro" && mode[1] !== userPomo.pomo)
     setMode(["Pomodoro", userPomo.pomo]);
   if (mode[0] === "Short break" && mode[1] !== userPomo.short)
@@ -59,22 +67,26 @@ export default function Pomo() {
   if (mode[0] === "Long break" && mode[1] !== userPomo.long)
     setMode(["Long break", userPomo.long]);
 
+  // Timer expired
   function handleExpire() {
     if (mode[0] === "Pomodoro") {
       setPomocount(pomocount + 1);
+      // Don't forget, set state is asyncronous!
       if ((pomocount + 1) % userPomo.interval !== 0)
         setMode(["Short break", userPomo.short]);
       else setMode(["Long break", userPomo.long]);
     } else if (mode[0] === "Short break" || mode[0] === "Long break") {
       setMode(["Pomodoro", userPomo.pomo]);
     }
+    // Alarm sound
     play();
   }
 
-  // TODO: OOOOOO?
+  // Select mode
   function selectMode(mode) {
     if (mode === "Pomodoro") {
       setMode(["Pomodoro", userPomo.pomo]);
+      // Block auto start
       setOngoing(false);
     }
     if (mode === "Short break") {
@@ -90,6 +102,7 @@ export default function Pomo() {
   return (
     <article className={`flex max-w-full flex-col`}>
       <section className={`flex flex-col`}>
+        {/* Mode cycle display & select mode. Current mode is strongly highlighted in foreground */}
         <button
           type="button"
           size-="small"
@@ -119,42 +132,62 @@ export default function Pomo() {
           Long break
         </button>
 
+        {/* IMPORTANT: load-bearing key. Enables intended behavior: Timer rerenders reset with current mode's duration if mode changed OR its duration was changed (in settings). This has to do with how React distinguishes elements in DOM and rerenders when props change.
+        mode - key is NOT props. We still need to pass mode to access it
+        handleExpire - has lots of logic outside Timer. onExpire is a native function of react-timer-hook
+        ongoing, startOngoing - set in both Pomodoro and Timer
+        */}
         <Timer
+          key={mode}
+          mode={mode}
           autoStart={userPomo.autoStart}
           onExpire={handleExpire}
-          mode={mode}
-          key={mode}
           ongoing={ongoing}
           startOngoing={() => setOngoing(true)}
         />
       </section>
-      <p>Total time: {total} minutes</p>
+      {/* Statistics */}
+      {/* TODO: change to conditional display with hours aFTER you actually implement total */}
+      <p>Total pomodoro time: {total} min</p>
       <p>Pomodoros: {pomocount}</p>
     </article>
   );
 }
 
 function Timer({ autoStart, onExpire, mode, ongoing, startOngoing }) {
+  // To conditionally render start/resume/pause
   const [paused, setPaused] = useState(false);
+  // Ref to control attribute of progress bar
   const bar = useRef();
 
   const time = new Date();
-  // duration of this mode from config in seconds
+  // Convert mode's duration to seconds
   time.setSeconds(time.getSeconds() + mode[1]);
 
+  // Even if autoStart is enabled, auto is initially false and set to true if Timer wasn't rendered from user opening the page or selecting mode
   let auto = false;
-  if (ongoing === true && autoStart === true) auto = true;
+  if (autoStart === true && ongoing === true) auto = true;
 
+  // react-timer-hook syntax
   const timer = useTimer({
     expiryTimestamp: time,
     autoStart: auto,
     onExpire: () => {
-      // effect can't proc at 00:01 > 00:00
+      // False negative no effect proc at 00:01 > 00:00. Add one manually
       if (mode[0] === "Pomodoro") total++;
       onExpire();
     },
   });
 
+  // Record total pomodoro time. Precision in minutes (losing seconds is okay)
+  // Explanation:
+  // Adds ++ minute when a minute of pomodoro passes. This is easiest by tracking value of timer.minutes.
+  // timer.minutes !== mode[1] / 60 : false positive effect proc when Timer renders
+  // timer.minutes !== mode[1] / 60 - 1 : 25:00 > 24:59 > false positive effect proc
+  // Notes:
+  // - "That's a lot of effect procs and storage operations. Why not add minutes all at once when a pomodoro stops (by timer expire or select mode)?"
+  // User can stop it by other means like closing the browser or turning off the computer. What if user spent 30 minutes out of 45 working and had a power outage? We must add 30 minutes to their statistic. Therefore we must've been already persistently recording that 30 minutes passed. Tracking in real time is the only solution.
+  // - I also tried useStopwatch from react-timer-hook, but it can't pause, and always risks going out of sync with useTimer. Ultimately, calculating from the timer we already have is perfectly fine.
   useEffect(() => {
     if (
       mode[0] === "Pomodoro" &&
@@ -163,11 +196,12 @@ function Timer({ autoStart, onExpire, mode, ongoing, startOngoing }) {
     ) {
       total++;
     }
-    // TODO: return??
+    // TODO: return doko??? DON'T FORGET
   }, [timer.minutes, mode]);
 
+  // Progress bar logic
   useEffect(() => {
-    // if mode's timer is set to 0 avoid division by 0 and display full bar
+    // If mode's timer is 0 minutes, avoid dividing by 0 and display full bar
     if (mode[1] === 0) {
       bar.current.setAttribute("progress", 100);
     } else
@@ -190,6 +224,7 @@ function Timer({ autoStart, onExpire, mode, ongoing, startOngoing }) {
       ></ascii-progress-bar>
 
       <div className="flex justify-center">
+        {/* Not running but wasn't paused > Wasn't started > Start */}
         {!timer.isRunning && paused === false && (
           <button
             onClick={() => {
@@ -200,6 +235,7 @@ function Timer({ autoStart, onExpire, mode, ongoing, startOngoing }) {
             Start
           </button>
         )}
+        {/* Running > Pause */}
         {timer.isRunning && (
           <button
             onClick={() => {
@@ -210,6 +246,7 @@ function Timer({ autoStart, onExpire, mode, ongoing, startOngoing }) {
             Pause
           </button>
         )}
+        {/* Paused > Resume */}
         {paused === true && (
           <button
             onClick={() => {

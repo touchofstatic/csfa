@@ -1,10 +1,13 @@
+/* Tailwind doesn't have break-word */
+/* TODO: maybe create a bw utility class and move to index? */
 .name {
   word-break: break-word;
   font-weight: 700;
 }
+/* Override webtui css of buttons. High contrast of standard is usually good, but we can't do it here because of extreme density of those buttons on screen*/
 .controls {
   color: var(--foreground0);
-  background-color: var(--background0);
+  background-color: transparent;
 }
 .controls:active {
   color: var(--background0);
@@ -13,10 +16,8 @@
 .controls:hover:not(:active) {
   font-weight: bold;
 }
-.collapsed {
-  color: var(--background3);
-}
 
+/* Separator under list header */
 .separator {
   background-image: var(--background2);
   background-color: var(--background2);
@@ -26,11 +27,18 @@
   border: none;
   clear: right;
 }
+
+/* Styles for muted colors of collapsed list */
+.collapsed {
+  color: var(--background3);
+}
 .separator.collapsed {
   background-image: var(--background1);
   background-color: var(--background1);
   color: var(--background1);
 }
+
+/* Used in list settings menu */
 .progress1 {
   background-color: var(--color0);
   color: var(--background0);

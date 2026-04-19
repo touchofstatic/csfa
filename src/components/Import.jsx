@@ -90,6 +90,7 @@ export default function Import() {
         Import board
       </button>
 
+      {/* Dimensions subject to change */}
       <dialog
         id="import-dialog"
         popover="true"
@@ -106,7 +107,7 @@ export default function Import() {
             ref={fileInput}
             onChange={(event) => {
               importBoard(event);
-              console.log(event.target.files[0].name);
+              // console.log(event.target.files[0].name);
             }}
             style={{ display: "none" }}
           ></input>

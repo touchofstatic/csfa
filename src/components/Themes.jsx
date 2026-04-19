@@ -2,9 +2,8 @@ import { useContext } from "react";
 import { ThemeContext } from "./Contexts";
 import boxpad from "../styles/boxpad.module.css";
 
-// TODO: move to file
-// Themes provided by webtui
-// https://webtui.ironclad.sh/start/plugins/
+// TODO: move to a file?
+// Themes provided by webtui https://webtui.ironclad.sh/start/plugins/
 const THEMES_STANDARD = [
   "gruvbox-dark-hard",
   "gruvbox-dark-medium",
@@ -35,6 +34,7 @@ export default function Themes() {
         Themes
       </button>
 
+      {/* Dimensions subject to change */}
       <dialog
         id="themes-dialog"
         popover="true"
@@ -47,9 +47,7 @@ export default function Themes() {
           {/* tabIndex focuses dialog's header instead of first input which is the default*/}
           <h1 tabIndex="0">Themes</h1>
           {/* TODO: accessibility audit */}
-          {/* Color scheme ui element that showcases the current theme.
-          It's common in tui, for example the linux terminal.
-          Purely visual, not relevant to screen readers */}
+          {/* Color scheme ui element that showcases the current theme as a row of color blocks. It's common in tui, for example the linux terminal. Purely visual, not relevant to screen readers */}
           <div className="noselect">
             <span className="bg-[var(--foreground0)]">&nbsp;&nbsp;</span>
             <span className="bg-[var(--foreground1)]">&nbsp;&nbsp;</span>
@@ -71,7 +69,7 @@ export default function Themes() {
           </div>
 
           <section>
-            {/* Current theme is strongly highlighted as foreground. hovering highlights slightly */}
+            {/* Current theme is strongly highlighted in foreground. hovering highlights slightly */}
             {/* TODO: focus */}
             {THEMES_STANDARD.map((t) => (
               <button

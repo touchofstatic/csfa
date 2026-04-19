@@ -85,7 +85,7 @@ export default function List({ list, index, children }) {
   }
 
   return (
-    // + Collapsed list styles
+    // Border imitates the webtui box utility. We didn't use box because it'd be more complicated especially with moving parts of dnd. And it highlights on hover!
     <div
       className={`flex h-fit flex-col p-[1ch] ${!list.visible ? `${styles.collapsed} border-2 border-[var(--background1)] hover:border-[var(--background3)]` : "border-2 border-[var(--background2)] hover:border-[var(--foreground1)]"}`}
     >
@@ -142,7 +142,7 @@ export default function List({ list, index, children }) {
           >
             [↓]
           </button>
-          {/* Group by progress */}
+          {/* Order by progress */}
           <button
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
@@ -158,6 +158,8 @@ export default function List({ list, index, children }) {
       ></hr>
 
       {/* IMPORTANT: don't touch dnd logic or it will explode. Nested divs here are for specific needs of @hello-pangea/dnd library. There's barely any relevant code examples on the internet and the documentation is painful and still uses React class components so just be thankful that it works. */}
+      {/* Important: watch out for fragile dnd interaction w/ grid/height/border when a list item is picked up, hovered, or dropped */}
+      {/* Items droppable area begins below separator and ends before add item form */}
       <Droppable key={list.id} droppableId={`${index}`}>
         {(provided, snapshot) => (
           <div
@@ -230,7 +232,7 @@ export default function List({ list, index, children }) {
         handleRenameListProgs={handleRenameListProgs}
         handleResizeListProgs={handleResizeListProgs}
       />
-      {/* TODO: bug on md screen. Sometimes modal can appear not in the center but higher, and can overlap navbar. Don't know when or why*/}
+      {/* TODO: bug on md screen. Sometimes modal can appear not in the center but higher, and can overlap navbar. Don't know when it triggers or why*/}
     </div>
   );
 }
@@ -242,8 +244,8 @@ function ListSettings({
   handleRenameListProgs,
 }) {
   return (
-    // TODO: dimensions subject to change
-    // Each list's dialog has to be uniquely associated with it, otherwise changing its settings affects all lists
+    // Each list's dialog is uniquely associated with it by id. Otherwise changing its settings affects all lists
+    // Dimensions subject to change
     <dialog
       className={`h-4/5 max-h-dvh w-full md:h-[26lh] md:w-[40ch]`}
       id={`settingsboard-dialog-${list.id}`}
@@ -254,12 +256,12 @@ function ListSettings({
         box-="double"
       >
         {/* tabIndex focuses dialog's header instead of first input which is the default*/}
-        <h1 tabIndex="0">Settings/{list.name}</h1>
+        <h1 tabIndex="0">Settings/List/{list.name}</h1>
         <section>
           <h2># Progress</h2>
 
           {/* TODO: accessibility audit? */}
-          {/* Displays list.progs.length - 1 to user because there's always one, progs[0] aka unspecified, but it's hidden from user and can't be changed */}
+          {/* Display list.progs.length - 1 to user because there's always one, progs[0] aka unspecified, but it's hidden from user and can't be changed */}
           <label htmlFor="listProgs">
             <input
               type="range"
@@ -280,7 +282,7 @@ function ListSettings({
             {list.progs.length - 1}
           </label>
 
-          {/* TODO: maybe you could iterate over this somehow idk */}
+          {/* TODO: ugly ass */}
           {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
           <form className={`flex flex-col gap-1`} autoComplete="off">
             <input

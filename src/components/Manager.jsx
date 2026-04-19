@@ -5,6 +5,9 @@ import Navbar from "./Navbar";
 import Board from "./Board.jsx";
 import Sidebar from "./Sidebar.jsx";
 
+// !!!! TODO: change progs to stages
+// !!! TODO: resolve "visible" and "collapsed"
+
 // ONLY FOR DEVELOPMENT
 import {
   devItems,
@@ -13,31 +16,32 @@ import {
   SYSTEM_DEFAULT_POMO,
 } from "./data";
 
-// TODO: change to functions and move elsewhere? I don't use function consts anywhere, I just copied these from a code example. Having these floating outside components is weird. Not very descriptive names or variables.
+// TODO: change to functions? I don't use function consts anywhere, I just copied these from a code example.
+// TODO: move elsewhere? Having these floating outside components is weird
+// TODO: Not very descriptive names or variables.
 
 // IMPORTANT dnd logic
-// source: array itemIds of source List
-// destination: array itemIds of destination List
-// startIndex: og index of item
-// endIndex: new index of item
-// interpret simply as you see it, "I move item from 2 to 0" is 2 0
 
 // When item is reordered within the same list
-const reorder = (source, startIndex, endIndex) => {
-  const result = structuredClone(source);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
+// itemIds: array itemIds of source List
+// interpret ogIndex and nextIndex simply as you see it with your eyes. "I move item from 2 to 0" is 2 0
+// result: next array itemIds
+const reorder = (itemIds, ogIndex, nextIndex) => {
+  const result = structuredClone(itemIds);
+  const [removed] = result.splice(ogIndex, 1);
+  result.splice(nextIndex, 0, removed);
 
-  // return array itemIds
   return result;
 };
 
 // When item is moved to another list
+// source: object source List
+// destination: object destination List
+// droppableSource, droppableDestination: object {index: index of item in itemIds (number), droppableId: index of List (numeric string)}
+// result: object {object next source List, object next destination List}
 const move = (source, destination, droppableSource, droppableDestination) => {
   const sourceClone = structuredClone(source);
   const destClone = structuredClone(destination);
-
-  console.log(source, destination, droppableSource, droppableDestination);
 
   const [removed] = sourceClone.itemIds.splice(droppableSource.index, 1);
 
@@ -46,7 +50,6 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   result[droppableSource.droppableId] = sourceClone;
   result[droppableDestination.droppableId] = destClone;
 
-  console.log(result);
   return result;
 };
 
@@ -54,13 +57,17 @@ export default function Manager() {
   const [items, setItems] = useState(() => {
     const loadItems = JSON.parse(localStorage.getItem("items"));
     // return loadItems || [];
+    // FOR DEVELOPMENT
     return loadItems || devItems;
   });
   const [lists, setLists] = useState(() => {
     const loadLists = JSON.parse(localStorage.getItem("lists"));
     // return loadLists || [];
+    // FOR DEVELOPMENT
     return loadLists || devLists;
   });
+  // TODO: those names suck
+  // If user doesn't have settings in localstorage, load default settings
   const [userProgs, setUserProgs] = useState(() => {
     const loadUserProgsConfig = JSON.parse(
       localStorage.getItem("userProgsConfig"),
@@ -74,6 +81,10 @@ export default function Manager() {
     return loadUserPomoConfig || SYSTEM_DEFAULT_POMO;
   });
 
+  // TODO: see what can be done to optimize
+  // Will possibly migrate db to dexie?
+
+  // Update localstorage
   useEffect(() => {
     localStorage.setItem("lists", JSON.stringify(lists));
   }, [lists]);
@@ -90,23 +101,30 @@ export default function Manager() {
     localStorage.setItem("userPomoConfig", JSON.stringify(userPomo));
   }, [userPomo]);
 
+  // Change pomodoro config
   function changePomoConfig(value, name) {
+    // Countdowns
     if (name === "pomo" || name === "short" || name === "long") {
-      // because mobile users can break input max for some reason
+      // Second validations because mobile users bypass input length limits for some reason
+      // 0 <= minutes <= 59
       if (value > 59) setUserPomo({ ...userPomo, [name]: 59 * 60 });
       else if (value < 0) setUserPomo({ ...userPomo, [name]: 0 });
       else setUserPomo({ ...userPomo, [name]: Number(value) * 60 });
     }
+    // Interval
     if (name === "interval") {
       setUserPomo({ ...userPomo, interval: value });
     }
+    // Auto start
     if (name === "auto") {
       if (value === "yes") setUserPomo({ ...userPomo, autoStart: true });
       if (value === "no") setUserPomo({ ...userPomo, autoStart: false });
     }
+    // Volume slider
     if (name === "volume") setUserPomo({ ...userPomo, volume: value });
   }
 
+  // Reset pomodoro config
   function resetPomoConfig() {
     setUserPomo({
       pomo: SYSTEM_DEFAULT_POMO.pomo,
@@ -118,8 +136,17 @@ export default function Manager() {
     });
   }
 
+  // Dnd utility
+  // result: special object of @hello-pangea/dnd
+  // source, destination: object {index: index of item in itemIds (number), droppableId: index of List (numeric string)}
+  // sInd: index of source List
+  // dInd: index of destination List
+
+  // TODO: totally inconsistent var naming with reorder and move??
   function onDragEnd(result) {
     const { source, destination } = result;
+
+    // Exit if dnd didn't end at a destination
     if (!destination) {
       return;
     }
@@ -127,7 +154,10 @@ export default function Manager() {
     const sInd = +source.droppableId;
     const dInd = +destination.droppableId;
 
+    // If source and destionation List index are identical > reorder operation
     if (sInd === dInd) {
+      // TODO: THIS IS TOTALLY CONFUSING
+      // result: next array itemIds
       const result = reorder(
         lists[sInd].itemIds,
         source.index,
@@ -139,14 +169,16 @@ export default function Manager() {
           else return { ...list, itemIds: result };
         }),
       );
+      // If source and destionation List index are different > move operation
     } else {
+      // result: object {object next source List, object next destination List}
       const result = move(lists[sInd], lists[dInd], source, destination);
       const newLists = [...lists];
       newLists[sInd] = result[sInd];
       newLists[dInd] = result[dInd];
       setLists(newLists);
 
-      // validate item progress at new boundary
+      // Lists can have different stages. Moving an item can cause a conflict if its stage is higher than destination's. Always check after moving and reset conflict stages to 0
       const targetitem = items.find(
         (item) => item.id === lists[sInd].itemIds[source.index],
       );
@@ -161,12 +193,16 @@ export default function Manager() {
     }
   }
 
+  // Add List
   function handleAddList(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     let newList = formData.get("newList");
+    // Empty List name is allowed
     if (newList === "") newList = "Untitled";
+    // Reset input
     event.target.reset();
+    // Lists are created with stages specified in user board config
     setLists([
       ...lists,
       {
@@ -179,14 +215,16 @@ export default function Manager() {
     ]);
   }
 
+  // Add Item
   function handleAddItem(event) {
     event.preventDefault();
     const newItemId = uuidv4();
     const formData = new FormData(event.currentTarget);
     const newItem = formData.get("newItem");
+    // Reset input
     const originListId = formData.get("originListId");
     event.target.reset();
-    // create new item
+    // Update Items
     setItems([
       ...items,
       {
@@ -195,7 +233,7 @@ export default function Manager() {
         id: newItemId,
       },
     ]);
-    // update origin list itemIds with the new item's id
+    // Update Lists to add new Item's id to its origin list itemIds
     setLists(
       lists.map((list) => {
         if (list.id !== originListId) return list;
@@ -209,20 +247,23 @@ export default function Manager() {
     );
   }
 
+  // Delete List
   function handleDeleteList(listId, myItems) {
-    // kill list's items
+    // Kill List's Items
     setItems(items.filter((item) => myItems.includes(item) === false));
-    // delete list
+    // Delete List
     setLists(lists.filter((list) => list.id !== listId));
   }
 
+  // Rename List
   function handleRenameList(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     let newListName = formData.get("newListName");
+    // Empty List name is allowed
     if (newListName === "") newListName = "Untitled";
-
     const listId = formData.get("listId");
+
     setLists(
       lists.map((list) => {
         if (list.id !== listId) return list;
@@ -233,6 +274,8 @@ export default function Manager() {
     );
   }
 
+  // Collapse List
+  // TODO: it makes no sense that list is "visible" but class is "collapsed"
   function handleCollapseList(listId) {
     setLists(
       lists.map((list) => {
@@ -244,15 +287,17 @@ export default function Manager() {
     );
   }
 
+  // Group List
+  // TODO: better name? "Order list"?
   function handleGroupList(listId, myItems) {
-    // put item in its numbered progress box
+    // We simply put item in its numbered stage box. There's no need to actually compare and shuffle them
     let newOrder = [[], [], [], [], [], [], [], []];
     myItems.map((item) => {
       newOrder[item.progress].push(item.id);
     });
-    // untyped items go to bottom
+    // Stage 0 items go to bottom
     newOrder.push(newOrder.shift());
-    // empty boxes will be removed
+    // newOrder is flattened into an itemIds type array and empty boxes are removed
     newOrder = newOrder.flat();
     setLists(
       lists.map((list) => {
@@ -262,7 +307,11 @@ export default function Manager() {
     );
   }
 
+  // Move List
+  // It's not dnd because that would be awful on every level
+  // TODO: it sucks that newOrder var name is repeated in totally different funcs (see above)
   function handleMoveList(index, direction) {
+    // Create changed lists where target List is inserted at corresponding index
     const newOrder = structuredClone(lists);
     if (direction === "up" && index > 0) {
       const [target] = newOrder.splice(index, 1);
@@ -275,18 +324,24 @@ export default function Manager() {
     setLists(newOrder);
   }
 
+  // Resize List's Stages
+  // TODO: HORRIBLE NAME
+  // TODO: non descriptive variable names, especially "value"
   function handleResizeListProgs(value, listProgs, listId, myItems) {
-    // validate items' progress above new boundary
+    // First resolve conflicts with Items' and List's new stages
     setItems(
       items.map((item) => {
+        // skip Items not in List
         if (myItems.includes(item) === false) return item;
         else {
+          // Reset conflicting stage
           if (item.progress > value) return { ...item, progress: 0 };
           else return item;
         }
       }),
     );
 
+    //!!!!!! TODO: this is so freaking confusing I can't even comment it
     const oldValue = listProgs.length - 1;
     if (value !== oldValue) {
       let newProgs;
@@ -304,6 +359,9 @@ export default function Manager() {
     }
   }
 
+  // Rename List's Stages
+  // TODO: shitty var names
+  // index: number of target stage, value: new name
   function handleRenameListProgs(value, index, listId) {
     setLists(
       lists.map((list) => {
@@ -317,10 +375,10 @@ export default function Manager() {
     );
   }
 
+  // Delete Item
   function handleDeleteItem(itemId, myListId) {
-    // delete item
     setItems(items.filter((item) => item.id !== itemId));
-    // delete id from origin list's itemIds
+    // Delete Item's id from origin List's itemIds
     setLists(
       lists.map((list) => {
         if (list.id !== myListId) return list;
@@ -334,6 +392,7 @@ export default function Manager() {
     );
   }
 
+  // Rename Item
   function handleRenameItem(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -349,11 +408,13 @@ export default function Manager() {
     );
   }
 
+  // Advance Item
   function handleAdvanceItem(itemId, progs) {
     setItems(
       items.map((item) => {
         if (item.id !== itemId) return item;
         else {
+          // Max stage loops back to stage 0
           if (item.progress === progs.length - 1)
             return { ...item, progress: 0 };
           else return { ...item, progress: item.progress + 1 };
@@ -362,11 +423,16 @@ export default function Manager() {
     );
   }
 
+  // Import Board
+  // Majority of function happens in Import child component, Manager only receives data that was read, destructured, and validated by it
   function handleImportBoard(lists, items) {
     setLists(lists);
     setItems(items);
   }
 
+  // TODO: TERRIBLE NAMES AGAIN
+  // I'm nto even gonna comment this
+  // Resize Config Stages
   // value is the number of colored progress, in user controls
   // userProgs.length is 6 = value is 5
   function handleResizeUserProgs(value) {
@@ -382,19 +448,27 @@ export default function Manager() {
     }
   }
 
+  // TODO: Bad names, not clear that config
+  // index: number of target stage, value: new name
+  // Rename Config Stages
   function handleRenameProgs(value, index) {
     let newProgs = structuredClone(userProgs);
     newProgs[index] = value;
     setUserProgs(newProgs);
   }
 
+  // Reset Board Config
+  // !!! TODO: VERY BAD NAME
+  // Settings and Config terms should be merged into Config in next update, this is redundant. Instead clarify that this is Board
   function resetSettingsConfig() {
+    // Reset config stages
+    // Doesn't do anything else because it's the only Board setting now
     setUserProgs(SYSTEM_DEFAULT_PROGS);
   }
 
   return (
     <>
-      {/* FOR DEVELOPMENT */}
+      {/* FOR DEVELOPMENT: display lists and itemIds in readable form */}
       {/* <ul>
         {lists.map((list) => (
           <li key={list.id}>{`${list.itemIds}`}</li>
@@ -417,7 +491,8 @@ export default function Manager() {
         <Navbar />
       </ManagerContext.Provider>
 
-      {/* <body>... 2!!! */}
+      {/* <body>... 2!!!
+      IMPORTANT: load bearing for flow. I forgot why */}
       <div className="mx-[1ch] my-[1lh] flex max-w-dvw flex-col gap-[1ch] md:flex-row">
         <ManagerContext.Provider
           value={{

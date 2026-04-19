@@ -1,3 +1,5 @@
+/* Standardized padding inside webtui box <article> of <dialog>s (menus and warnings). Originally created because I had weird problems with webtui box clipping and with tailwind spacing classes but that doesn't seem to be the case anymore. */
+/* TODO: more descriptive name? Move out of this module? It's just one class lol */
 .boxpad {
   padding: 2lh 2ch 1lh 2ch;
 }

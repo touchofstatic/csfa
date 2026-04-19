@@ -17,7 +17,7 @@ export default function SettingsPomo() {
         PomoConfig
       </button>
 
-      {/* TODO: this shit is so ass */}
+      {/* Dimensions subject to change */}
       <dialog
         id="settingspomo-dialog"
         popover="true"
@@ -128,10 +128,12 @@ export default function SettingsPomo() {
               />
               {userPomo.volume}
             </label>
+            {/* TOOO: add a selection of cool alarm sounds */}
           </section>
 
           <section>
             <h2># Data</h2>
+            {/* TODO: warning dialog maybe? */}
             <button
               type="button"
               size-="small"

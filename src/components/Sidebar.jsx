@@ -22,7 +22,7 @@ export default function Sidebar() {
 }
 
 function NewListForm({ onAddList }) {
-  // ref to clear form text after submit
+  // Ref to clear form text after submit
   const clearform = useRef("");
 
   return (

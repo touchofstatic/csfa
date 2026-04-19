@@ -1,19 +1,24 @@
+/* Tailwind doesn't have break-word */
+/* TODO: maybe create a bw utility class and move to index? */
 .name {
   word-break: break-word;
 }
+/* TODO: combine with List? */
+/* Override webtui css of buttons. High contrast of standard is usually good, but we can't do it here because of extreme density of those buttons on screen*/
 .controls {
   color: var(--foreground0);
+  /* important because of dnd */
   background-color: transparent;
 }
 .controls:active {
   color: var(--background0);
   background-color: var(--foreground0);
 }
-
 .controls:hover:not(:active) {
   font-weight: bold;
 }
 
+/* Give stage color to item controls */
 .progress1 {
   color: var(--color0);
 }
@@ -35,6 +40,8 @@
 .progress7 {
   color: var(--color6);
 }
+
+/* Give stage color to item content */
 .name.progress1 {
   background-color: var(--color0);
   color: var(--background0);
@@ -64,15 +71,7 @@
   color: var(--background0);
 }
 
-.overlay {
-  background-color: transparent;
-  display: inline-block;
-}
-.overlay div:hover {
-  opacity: 0.5;
-}
-
-/* hovering over the item highlights it very slightly */
+/* Hovering over the item highlights it very slightly */
 .hoveritem:hover {
   filter: brightness(105%);
 }

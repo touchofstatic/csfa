@@ -21,6 +21,7 @@ export default function SettingsBoard() {
         BoardConfig
       </button>
 
+      {/* Dimensions subject to change */}
       <dialog
         id="settingsboard-dialog"
         popover="true"
@@ -55,7 +56,7 @@ export default function SettingsBoard() {
               {userProgs.length - 1}
             </label>
 
-            {/* TODO: maybe you could iterate over it somehow idk */}
+            {/* TODO: ugly ass */}
             {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
             {/* TODO: either do something about min length or unclickable empty space in progress advance button */}
             <form className={`flex flex-col gap-1`} autoComplete="off">
@@ -145,7 +146,7 @@ export default function SettingsBoard() {
             <ResetConfigBoard />
           </section>
 
-          {/* TODO: align bottom doesnt work */}
+          {/* TODO: align bottom doesnt work. consider it */}
           <section className="self-center align-bottom">
             <button commandfor="settingsboard-dialog" command="close">
               Exit
