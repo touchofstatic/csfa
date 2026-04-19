@@ -304,34 +304,37 @@ export default function Manager() {
   }
 
   // Resize List's Stages
-  // TODO: non descriptive variable names, especially "value"
-  function handleResizeListStages(value, listStages, listId, myItems) {
-    // First resolve conflicts with Items' and List's new stages
+  // nextSize is num of COLORED stages
+  function handleResizeListStages(nextSize, listStages, listId, myItems) {
+    // First resolve conflicts with Items' stages
     setItems(
       items.map((item) => {
         // skip Items not in List
         if (myItems.includes(item) === false) return item;
         else {
           // Reset conflicting stage
-          if (item.stage > value) return { ...item, stage: 0 };
+          if (item.stage > nextSize) return { ...item, stage: 0 };
           else return item;
         }
       }),
     );
 
-    //!!!!!! TODO: this is so freaking confusing I can't even comment it
-    const oldValue = listStages.length - 1;
-    if (value !== oldValue) {
-      let newStages;
-      if (value > oldValue) {
-        newStages = [...listStages, ...Array(value - oldValue).fill("")];
-      } else if (value < oldValue) {
-        newStages = listStages.slice(0, value - oldValue);
+    const size = listStages.length - 1;
+    // If received form input =/= stages size
+    if (nextSize !== size) {
+      let nextStages;
+      if (nextSize > size) {
+        // Copy existing stages + append empty array (unnamed) of length diff
+        nextStages = [...listStages, ...Array(nextSize - size).fill("")];
+      } else if (nextSize < size) {
+        // Remove length diff
+        nextStages = listStages.slice(0, nextSize - size);
       }
+      // Note: we can't simply append or delete one because a slider can be clicked anywhere and not just moved
       setLists(
         lists.map((list) => {
           if (list.id !== listId) return list;
-          else return { ...list, stages: newStages };
+          else return { ...list, stages: nextStages };
         }),
       );
     }
@@ -405,22 +408,16 @@ export default function Manager() {
     setItems(items);
   }
 
-  // TODO: TERRIBLE NAMES AGAIN CONFUSING INTERACTION
-  // I'm nto even gonna comment this
   // Resize Config Stages
-  // value is the number of colored stage, in user controls
-  // stagesConfig.length is 6 = value is 5
-  function handleResizeConfigStages(value) {
-    const oldValue = stagesConfig.length - 1;
-    if (value !== oldValue) {
-      if (value > oldValue) {
-        const newStages = [
-          ...stagesConfig,
-          ...Array(value - oldValue).fill(""),
-        ];
+  // nextSize is num of COLORED stages
+  function handleResizeConfigStages(nextSize) {
+    const size = stagesConfig.length - 1;
+    if (nextSize !== size) {
+      if (nextSize > size) {
+        const newStages = [...stagesConfig, ...Array(nextSize - size).fill("")];
         setStagesConfig(newStages);
-      } else if (value < oldValue) {
-        const newStages = stagesConfig.slice(0, value - oldValue);
+      } else if (nextSize < size) {
+        const newStages = stagesConfig.slice(0, nextSize - size);
         setStagesConfig(newStages);
       }
     }
