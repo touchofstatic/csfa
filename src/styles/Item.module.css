@@ -1,6 +1,6 @@
 /* Override webtui css of buttons. High contrast of standard is usually good, but we can't do it here because of extreme density of those buttons on screen*/
 .controls {
-  color: var(--foreground0);
+  /* color: var(--foreground0); */
   /* important because of dnd */
   background-color: transparent;
 }
@@ -11,60 +11,6 @@
 .controls:hover:not(:active) {
   font-weight: bold;
 }
-
-/* Give stage color to item controls */
-.stage1 {
-  color: var(--color0);
-}
-.stage2 {
-  color: var(--color1);
-}
-.stage3 {
-  color: var(--color2);
-}
-.stage4 {
-  color: var(--color3);
-}
-.stage5 {
-  color: var(--color4);
-}
-.stage6 {
-  color: var(--color5);
-}
-.stage7 {
-  color: var(--color6);
-}
-
-/* Give stage color to item content */
-.name.stage1 {
-  background-color: var(--color0);
-  color: var(--background0);
-}
-.name.stage2 {
-  background-color: var(--color1);
-  color: var(--background0);
-}
-.name.stage3 {
-  background-color: var(--color2);
-  color: var(--background0);
-}
-.name.stage4 {
-  background-color: var(--color3);
-  color: var(--background0);
-}
-.name.stage5 {
-  background-color: var(--color4);
-  color: var(--background0);
-}
-.name.stage6 {
-  background-color: var(--color5);
-  color: var(--background0);
-}
-.name.stage7 {
-  background-color: var(--color6);
-  color: var(--background0);
-}
-
 /* Hovering over the item highlights it very slightly */
 .hoveritem:hover {
   filter: brightness(105%);

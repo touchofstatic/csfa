@@ -13,52 +13,16 @@ export default function Item({ item, myListId, stages, ...handle }) {
     setDraftRenameItem("");
   });
 
-  // TODO: this kinda sucks? very confusing. look at closely later and at least comment more extensively
-  // Generate class name used to style Item's elements according to its stage
-  let stageClassName = "stage" + item.stage;
-  // Name of item's stage to display
-  let stage = "";
-  // TODO: I don't like that only one is <span> (due to the need to hide the text but have clickable text there)
-  switch (stageClassName) {
-    case "stage0":
-      stage = <span className="invisible">{stages[0]}</span>;
-      break;
-    case "stage1":
-      stage = stages[1];
-      break;
-    case "stage2":
-      stage = stages[2];
-      break;
-    case "stage3":
-      stage = stages[3];
-      break;
-    case "stage4":
-      stage = stages[4];
-      break;
-    case "stage5":
-      stage = stages[5];
-      break;
-    case "stage6":
-      stage = stages[6];
-      break;
-    case "stage7":
-      stage = stages[7];
-      break;
-    default:
-      stage = "ERROR";
-      break;
-  }
+  // Generate class names to style Item's elements according to its stage
+  let ctrlcolor = "front-stage" + item.stage;
+  let contentcolor = "bg-stage" + item.stage;
 
   // AUDIT: not sure if bad or okay. ask later
   let name = "";
   // If not renaming, display name normally
   if (!draftRenameItem) {
     name = (
-      <div
-        className={`${styles.name} ${styles[stageClassName]} breakword pl-[1ch]`}
-      >
-        {item.name}
-      </div>
+      <div className={`${contentcolor} breakword pl-[1ch]`}>{item.name}</div>
     );
     // If renaming, display the form in its place
   } else {
@@ -106,20 +70,20 @@ export default function Item({ item, myListId, stages, ...handle }) {
 
   return (
     <div
-      className={`${stageClassName} ${styles.item} ${!draftRenameItem && `${styles.hoveritem}`}`}
+      className={`${styles.item} ${!draftRenameItem && `${styles.hoveritem}`}`}
     >
       {/* Item controls */}
       <div>
-        {/* Dnd drag handle */}
+        {/* Dnd drag handle. Needs noselect, and set font-bold individually as it's not a button like the others */}
         <span
           {...handle}
-          className={`${styles[stageClassName]} noselect p-0.5 hover:font-bold`}
+          className={`${ctrlcolor} noselect p-0.5 hover:font-bold`}
         >
           [=]
         </span>
         {/* Rename */}
         <button
-          className={`${styles.controls} ${styles[stageClassName]} p-0.5`}
+          className={`${ctrlcolor} ${styles.controls} p-0.5`}
           size-="small"
           onClick={() => setDraftRenameItem(item.name)}
         >
@@ -127,7 +91,7 @@ export default function Item({ item, myListId, stages, ...handle }) {
         </button>
         {/* Delete */}
         <button
-          className={`${styles.controls} ${styles[stageClassName]} p-0.5`}
+          className={`${ctrlcolor} ${styles.controls} p-0.5`}
           size-="small"
           onClick={() => handleDeleteItem(item.id, myListId)}
         >
@@ -136,10 +100,13 @@ export default function Item({ item, myListId, stages, ...handle }) {
         {/* Advance stage */}
         <button
           size-="small"
-          className={`${styles[stageClassName]} float-right bg-transparent p-0 text-[var(--foreground2)]`}
+          className={`${ctrlcolor} float-right bg-transparent p-0 text-[var(--foreground2)]`}
           onClick={() => handleAdvanceItem(item.id, stages)}
         >
-          {stage} [&gt;]
+          <span className={`${item.stage === 0 && `invisible`}`}>
+            {stages[item.stage]}&nbsp;
+          </span>
+          [&gt;]
         </button>
       </div>
       {name}

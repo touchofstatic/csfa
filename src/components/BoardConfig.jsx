@@ -3,8 +3,6 @@ import { ManagerContext } from "./Contexts";
 import Import from "./Import";
 import Export from "./Export";
 import ResetBoardConfig from "./ResetBoardConfig";
-// TODO: this isn't lists! bad!!
-import styles from "../styles/list.module.css";
 
 export default function BoardConfig() {
   const { stagesConfig, handleResizeConfigStages, handleRenameConfigStages } =
@@ -12,7 +10,7 @@ export default function BoardConfig() {
 
   const stagesdisplay = [];
   for (let i = 1; i < 8; i++) {
-    const sdcolor = "stage" + i;
+    const sdcolor = "bg-stage" + i;
     stagesdisplay.push(
       // AUDIT: see react.dev Optimizing re-rendering on every keystroke
       <input
@@ -21,7 +19,7 @@ export default function BoardConfig() {
         name="stage"
         minLength="1"
         maxLength="12"
-        className={`${stagesConfig.length < i + 1 ? `${styles.disabled}` : styles[sdcolor]}`}
+        className={`${stagesConfig.length < i + 1 ? `bg-[var(--background1)] ` : sdcolor}`}
         value={stagesConfig[i] || ""}
         onChange={(e) => handleRenameConfigStages(e.target.value, i)}
         required

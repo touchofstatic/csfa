@@ -242,7 +242,7 @@ function ListSettings({
 }) {
   const stagesdisplay = [];
   for (let i = 1; i < 8; i++) {
-    const sdcolor = "stage" + i;
+    const sdcolor = "bg-stage" + i;
     stagesdisplay.push(
       // AUDIT: see react.dev Optimizing re-rendering on every keystroke
       <input
@@ -251,7 +251,7 @@ function ListSettings({
         name="stage"
         minLength="1"
         maxLength="12"
-        className={`${list.stages.length < i + 1 ? `${styles.disabled}` : styles[sdcolor]}`}
+        className={`${list.stages.length < i + 1 ? `bg-[var(--background1)] ` : sdcolor}`}
         value={list.stages[i] || ""}
         onChange={(e) => handleRenameListStages(e.target.value, i, list.id)}
         required
