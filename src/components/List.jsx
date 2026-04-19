@@ -2,7 +2,7 @@ import { useState, useContext, useRef } from "react";
 import { useClickAway } from "@uidotdev/usehooks";
 import { ManagerContext } from "./Contexts";
 import styles from "../styles/list.module.css";
-import boxpad from "../styles/boxpad.module.css";
+
 import Item from "./Item";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
@@ -15,10 +15,10 @@ export default function List({ list, index, children }) {
     handleDeleteList,
     handleRenameList,
     handleCollapseList,
-    handleGroupList,
+    handleOrderList,
     handleMoveList,
-    handleResizeListProgs,
-    handleRenameListProgs,
+    handleResizeListStages,
+    handleRenameListStages,
   } = useContext(ManagerContext);
 
   // Clicking outside ends the rename interaction
@@ -38,7 +38,9 @@ export default function List({ list, index, children }) {
   let title = "";
   // If not renaming, display name normally
   if (!draftRenameList) {
-    title = <div className={`${styles.name}`}>{list.name}</div>;
+    title = (
+      <div className={`${styles.name} breakword font-[700]`}>{list.name}</div>
+    );
     // If renaming, display the form in its place
   } else {
     title = (
@@ -98,7 +100,7 @@ export default function List({ list, index, children }) {
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
             command="show-modal"
-            commandfor={`settingsboard-dialog-${list.id}`}
+            commandfor={`config-board-dialog-${list.id}`}
           >
             [s]
           </button>
@@ -142,13 +144,13 @@ export default function List({ list, index, children }) {
           >
             [↓]
           </button>
-          {/* Order by progress */}
+          {/* Order by stage */}
           <button
             className={`${styles.controls} ${!list.visible ? `${styles.collapsed}` : ""} p-0.5`}
             size-="small"
-            onClick={() => handleGroupList(list.id, myItems)}
+            onClick={() => handleOrderList(list.id, myItems)}
           >
-            [g]
+            [o]
           </button>
         </div>
       </header>
@@ -161,13 +163,8 @@ export default function List({ list, index, children }) {
       {/* Important: watch out for fragile dnd interaction w/ grid/height/border when a list item is picked up, hovered, or dropped */}
       {/* Items droppable area begins below separator and ends before add item form */}
       <Droppable key={list.id} droppableId={`${index}`}>
-        {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            // TODO: at the time of commenting I'm not sure that css module class exists anymore? look later
-            className={`${snapshot.isDraggingOver ? `${styles.over}` : ``}`}
-          >
+        {(provided) => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
             {/* IMPORTANT: seriously don't mess with placement of {children} and {provided.placeholder} */}
             {myItems.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -229,8 +226,8 @@ export default function List({ list, index, children }) {
       <ListSettings
         list={list}
         myItems={myItems}
-        handleRenameListProgs={handleRenameListProgs}
-        handleResizeListProgs={handleResizeListProgs}
+        handleRenameListStages={handleRenameListStages}
+        handleResizeListStages={handleResizeListStages}
       />
       {/* TODO: bug on md screen. Sometimes modal can appear not in the center but higher, and can overlap navbar. Don't know when it triggers or why*/}
     </div>
@@ -240,19 +237,19 @@ export default function List({ list, index, children }) {
 function ListSettings({
   list,
   myItems,
-  handleResizeListProgs,
-  handleRenameListProgs,
+  handleResizeListStages,
+  handleRenameListStages,
 }) {
   return (
     // Each list's dialog is uniquely associated with it by id. Otherwise changing its settings affects all lists
     // Dimensions subject to change
     <dialog
       className={`h-4/5 max-h-dvh w-full md:h-[26lh] md:w-[40ch]`}
-      id={`settingsboard-dialog-${list.id}`}
+      id={`config-board-dialog-${list.id}`}
       popover="true"
     >
       <article
-        className={`flex h-full flex-col ${boxpad.boxpad}`}
+        className={`dialog-webtuibox-spacing flex h-full flex-col`}
         box-="double"
       >
         {/* tabIndex focuses dialog's header instead of first input which is the default*/}
@@ -270,7 +267,7 @@ function ListSettings({
               name="listProgs"
               value={list.progs.length - 1}
               onChange={(e) =>
-                handleResizeListProgs(
+                handleResizeListStages(
                   e.target.value,
                   list.progs,
                   list.id,
@@ -283,7 +280,7 @@ function ListSettings({
           </label>
 
           {/* TODO: ugly ass */}
-          {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
+          {/* TODO+: see react.dev Optimizing re-rendering on every keystroke  */}
           <form className={`flex flex-col gap-1`} autoComplete="off">
             <input
               type="text"
@@ -293,7 +290,7 @@ function ListSettings({
               className={`${list.progs.length < 2 ? `${styles.disabled}` : `${styles.progress1}`}`}
               value={list.progs[1] || ""}
               onChange={(e) =>
-                handleRenameListProgs(e.target.value, 1, list.id)
+                handleRenameListStages(e.target.value, 1, list.id)
               }
               required
               disabled={list.progs.length < 2}
@@ -306,7 +303,7 @@ function ListSettings({
               className={`${list.progs.length < 3 ? `${styles.disabled}` : `${styles.progress2}`}`}
               value={list.progs[2] || ""}
               onChange={(e) =>
-                handleRenameListProgs(e.target.value, 2, list.id)
+                handleRenameListStages(e.target.value, 2, list.id)
               }
               required
               disabled={list.progs.length < 3}
@@ -319,7 +316,7 @@ function ListSettings({
               className={`${list.progs.length < 4 ? `${styles.disabled}` : `${styles.progress3}`}`}
               value={list.progs[3] || ""}
               onChange={(e) =>
-                handleRenameListProgs(e.target.value, 3, list.id)
+                handleRenameListStages(e.target.value, 3, list.id)
               }
               required
               disabled={list.progs.length < 4}
@@ -332,7 +329,7 @@ function ListSettings({
               className={`${list.progs.length < 5 ? `${styles.disabled}` : `${styles.progress4}`}`}
               value={list.progs[4] || ""}
               onChange={(e) =>
-                handleRenameListProgs(e.target.value, 4, list.id)
+                handleRenameListStages(e.target.value, 4, list.id)
               }
               required
               disabled={list.progs.length < 5}
@@ -345,7 +342,7 @@ function ListSettings({
               className={`${list.progs.length < 6 ? `${styles.disabled}` : `${styles.progress5}`}`}
               value={list.progs[5] || ""}
               onChange={(e) =>
-                handleRenameListProgs(e.target.value, 5, list.id)
+                handleRenameListStages(e.target.value, 5, list.id)
               }
               required
               disabled={list.progs.length < 6}
@@ -358,7 +355,7 @@ function ListSettings({
               className={`${list.progs.length < 7 ? `${styles.disabled}` : `${styles.progress6}`}`}
               value={list.progs[6] || ""}
               onChange={(e) =>
-                handleRenameListProgs(e.target.value, 6, list.id)
+                handleRenameListStages(e.target.value, 6, list.id)
               }
               required
               disabled={list.progs.length < 7}
@@ -371,7 +368,7 @@ function ListSettings({
               className={`${list.progs.length < 8 ? `${styles.disabled}` : `${styles.progress7}`}`}
               value={list.progs[7] || ""}
               onChange={(e) =>
-                handleRenameListProgs(e.target.value, 7, list.id)
+                handleRenameListStages(e.target.value, 7, list.id)
               }
               required
               disabled={list.progs.length < 8}
@@ -380,10 +377,7 @@ function ListSettings({
         </section>
 
         <section className="self-center align-bottom">
-          <button
-            commandfor={`settingsboard-dialog-${list.id}`}
-            command="close"
-          >
+          <button commandfor={`config-board-dialog-${list.id}`} command="close">
             Exit
           </button>
         </section>

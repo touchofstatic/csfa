@@ -1,7 +1,7 @@
 import { useContext, useRef } from "react";
 import { ManagerContext } from "./Contexts";
 import Ascii from "./Ascii";
-import Random from "./Random";
+import RandomItem from "./RandomItem";
 import Pomo from "./Pomo.jsx";
 
 // md: sticky sidebar
@@ -15,7 +15,7 @@ export default function Sidebar() {
     <aside className="flex flex-col md:sticky md:top-[2lh] md:h-fit md:w-[36ch] md:min-w-[36ch]">
       <Ascii text="csfa" />
       <NewListForm onAddList={handleAddList} />
-      <Random items={items} />
+      <RandomItem items={items} />
       <Pomo />
     </aside>
   );

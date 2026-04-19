@@ -12,7 +12,7 @@ import Sidebar from "./Sidebar.jsx";
 import {
   devItems,
   devLists,
-  SYSTEM_DEFAULT_PROGS,
+  SYSTEM_DEFAULT_STAGES,
   SYSTEM_DEFAULT_POMO,
 } from "./data";
 
@@ -72,7 +72,7 @@ export default function Manager() {
     const loadUserProgsConfig = JSON.parse(
       localStorage.getItem("userProgsConfig"),
     );
-    return loadUserProgsConfig || SYSTEM_DEFAULT_PROGS;
+    return loadUserProgsConfig || SYSTEM_DEFAULT_STAGES;
   });
   const [userPomo, setUserPomo] = useState(() => {
     const loadUserPomoConfig = JSON.parse(
@@ -82,8 +82,7 @@ export default function Manager() {
   });
 
   // TODO: see what can be done to optimize
-  // Will possibly migrate db to dexie?
-
+  // Will possibly migrate db to dexie anyway?
   // Update localstorage
   useEffect(() => {
     localStorage.setItem("lists", JSON.stringify(lists));
@@ -287,10 +286,9 @@ export default function Manager() {
     );
   }
 
-  // Group List
-  // TODO: better name? "Order list"?
-  function handleGroupList(listId, myItems) {
-    // We simply put item in its numbered stage box. There's no need to actually compare and shuffle them
+  // Order List by stages
+  function handleOrderList(listId, myItems) {
+    // We simply put item in its numbered stage box. There's no need to actually compare and shuffle them. It also preserves items' order otherwise
     let newOrder = [[], [], [], [], [], [], [], []];
     myItems.map((item) => {
       newOrder[item.progress].push(item.id);
@@ -309,25 +307,23 @@ export default function Manager() {
 
   // Move List
   // It's not dnd because that would be awful on every level
-  // TODO: it sucks that newOrder var name is repeated in totally different funcs (see above)
   function handleMoveList(index, direction) {
     // Create changed lists where target List is inserted at corresponding index
-    const newOrder = structuredClone(lists);
+    const newLists = structuredClone(lists);
     if (direction === "up" && index > 0) {
-      const [target] = newOrder.splice(index, 1);
-      newOrder.splice(index - 1, 0, target);
+      const [target] = newLists.splice(index, 1);
+      newLists.splice(index - 1, 0, target);
     }
     if (direction === "down" && index < lists.length) {
-      const [target] = newOrder.splice(index, 1);
-      newOrder.splice(index + 1, 0, target);
+      const [target] = newLists.splice(index, 1);
+      newLists.splice(index + 1, 0, target);
     }
-    setLists(newOrder);
+    setLists(newLists);
   }
 
   // Resize List's Stages
-  // TODO: HORRIBLE NAME
   // TODO: non descriptive variable names, especially "value"
-  function handleResizeListProgs(value, listProgs, listId, myItems) {
+  function handleResizeListStages(value, listProgs, listId, myItems) {
     // First resolve conflicts with Items' and List's new stages
     setItems(
       items.map((item) => {
@@ -360,15 +356,13 @@ export default function Manager() {
   }
 
   // Rename List's Stages
-  // TODO: shitty var names
-  // index: number of target stage, value: new name
-  function handleRenameListProgs(value, index, listId) {
+  function handleRenameListStages(input, index, listId) {
     setLists(
       lists.map((list) => {
         if (list.id !== listId) return list;
         else {
           let newProgs = structuredClone(list.progs);
-          newProgs[index] = value;
+          newProgs[index] = input;
           return { ...list, progs: newProgs };
         }
       }),
@@ -430,12 +424,12 @@ export default function Manager() {
     setItems(items);
   }
 
-  // TODO: TERRIBLE NAMES AGAIN
+  // TODO: TERRIBLE NAMES AGAIN CONFUSING INTERACTION
   // I'm nto even gonna comment this
   // Resize Config Stages
   // value is the number of colored progress, in user controls
   // userProgs.length is 6 = value is 5
-  function handleResizeUserProgs(value) {
+  function handleResizeConfigStages(value) {
     const oldValue = userProgs.length - 1;
     if (value !== oldValue) {
       if (value > oldValue) {
@@ -448,22 +442,18 @@ export default function Manager() {
     }
   }
 
-  // TODO: Bad names, not clear that config
-  // index: number of target stage, value: new name
   // Rename Config Stages
-  function handleRenameProgs(value, index) {
+  function handleRenameConfigStages(input, index) {
     let newProgs = structuredClone(userProgs);
-    newProgs[index] = value;
+    newProgs[index] = input;
     setUserProgs(newProgs);
   }
 
   // Reset Board Config
-  // !!! TODO: VERY BAD NAME
-  // Settings and Config terms should be merged into Config in next update, this is redundant. Instead clarify that this is Board
-  function resetSettingsConfig() {
+  function resetBoardConfig() {
     // Reset config stages
     // Doesn't do anything else because it's the only Board setting now
-    setUserProgs(SYSTEM_DEFAULT_PROGS);
+    setUserProgs(SYSTEM_DEFAULT_STAGES);
   }
 
   return (
@@ -481,9 +471,9 @@ export default function Manager() {
           userProgs,
           userPomo,
           handleImportBoard,
-          handleResizeUserProgs,
-          handleRenameProgs,
-          resetSettingsConfig,
+          handleResizeConfigStages,
+          handleRenameConfigStages,
+          resetBoardConfig,
           changePomoConfig,
           resetPomoConfig,
         }}
@@ -504,13 +494,13 @@ export default function Manager() {
             handleDeleteList,
             handleRenameList,
             handleCollapseList,
-            handleGroupList,
+            handleOrderList,
             handleMoveList,
             handleDeleteItem,
             handleRenameItem,
             handleAdvanceItem,
-            handleResizeListProgs,
-            handleRenameListProgs,
+            handleResizeListStages,
+            handleRenameListStages,
             onDragEnd,
           }}
         >

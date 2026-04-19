@@ -1,6 +1,6 @@
 // TEMPORARY FILE ONLY FOR DEVELOPMENT
 import { v4 as uuidv4 } from "uuid";
-export const SYSTEM_DEFAULT_PROGS = [
+export const SYSTEM_DEFAULT_STAGES = [
   "unspecified",
   "queued",
   "priority",
@@ -28,7 +28,7 @@ export const SYSTEM_DEFAULT_POMO = {
 };
 
 // TEMPORARY FILE ONLY FOR DEVELOPMENT
-export const devProgsConfig = SYSTEM_DEFAULT_PROGS;
+export const devProgsConfig = SYSTEM_DEFAULT_STAGES;
 export const devItems = [
   {
     name: "item a0",

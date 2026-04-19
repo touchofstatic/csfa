@@ -55,7 +55,7 @@ export default function Item({ item, myListId, progs, ...handle }) {
   if (!draftRenameItem) {
     name = (
       <div
-        className={`${styles.name} ${styles[progressClassName]} pl-[1ch] break-all`}
+        className={`${styles.name} ${styles[progressClassName]} breakword pl-[1ch]`}
       >
         {item.name}
       </div>

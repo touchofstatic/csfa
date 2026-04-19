@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
-import boxpad from "../styles/boxpad.module.css";
 
-export default function SettingsPomo() {
+export default function ConfigPomo() {
   const { userPomo, changePomoConfig, resetPomoConfig } =
     useContext(ManagerContext);
 
@@ -11,7 +10,7 @@ export default function SettingsPomo() {
       <button
         size-="small"
         command="show-modal"
-        commandfor="settingspomo-dialog"
+        commandfor="config-pomo-dialog"
         className={`hover:bg-[var(--foreground2)] active:bg-[var(--background0)]`}
       >
         PomoConfig
@@ -19,12 +18,12 @@ export default function SettingsPomo() {
 
       {/* Dimensions subject to change */}
       <dialog
-        id="settingspomo-dialog"
+        id="config-pomo-dialog"
         popover="true"
         className={`h-dvh max-h-dvh w-full md:h-[26lh] md:w-[40ch]`}
       >
         <article
-          className={`flex h-full flex-col ${boxpad.boxpad}`}
+          className={`dialog-webtuibox-spacing flex h-full flex-col`}
           box-="double"
         >
           <h1 tabIndex="0">Settings/Pomodoro</h1>
@@ -133,7 +132,7 @@ export default function SettingsPomo() {
 
           <section>
             <h2># Data</h2>
-            {/* TODO: warning dialog maybe? */}
+            {/* TODO: warning dialog to match board? */}
             <button
               type="button"
               size-="small"
@@ -144,7 +143,7 @@ export default function SettingsPomo() {
             </button>
           </section>
           <section className="self-center align-bottom">
-            <button commandfor="settingspomo-dialog" command="close">
+            <button commandfor="config-pomo-dialog" command="close">
               Exit
             </button>
           </section>

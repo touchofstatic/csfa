@@ -1,8 +1,8 @@
 import { useState, useRef, useContext } from "react";
 import { ManagerContext } from "./Contexts";
 import { itemsSchema, listsSchema } from "./schema.jsx";
+// Package for json schema validation
 import Ajv from "ajv";
-import boxpad from "../styles/boxpad.module.css";
 
 export default function Import() {
   const { handleImportBoard } = useContext(ManagerContext);
@@ -97,7 +97,7 @@ export default function Import() {
         className={`h-4/5 w-full overflow-scroll md:h-[24ch]`}
       >
         <article
-          className={`align-center flex h-full flex-col justify-center text-center ${boxpad.boxpad}`}
+          className={`align-center dialog-webtuibox-spacing flex h-full flex-col justify-center text-center`}
           box-="double"
         >
           <p>{message}</p>

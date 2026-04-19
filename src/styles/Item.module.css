@@ -1,9 +1,3 @@
-/* Tailwind doesn't have break-word */
-/* TODO: maybe create a bw utility class and move to index? */
-.name {
-  word-break: break-word;
-}
-/* TODO: combine with List? */
 /* Override webtui css of buttons. High contrast of standard is usually good, but we can't do it here because of extreme density of those buttons on screen*/
 .controls {
   color: var(--foreground0);

@@ -1,8 +1,7 @@
 import { useState } from "react";
 
-// TODO: better name?
 // Random task productivity feature
-export default function Random({ items }) {
+export default function RandomItem({ items }) {
   const [pull, setPull] = useState("");
   // Track if spinner animation is playing
   const [spinner, setSpinner] = useState(false);

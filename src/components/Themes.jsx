@@ -1,8 +1,6 @@
 import { useContext } from "react";
 import { ThemeContext } from "./Contexts";
-import boxpad from "../styles/boxpad.module.css";
 
-// TODO: move to a file?
 // Themes provided by webtui https://webtui.ironclad.sh/start/plugins/
 const THEMES_STANDARD = [
   "gruvbox-dark-hard",
@@ -41,7 +39,7 @@ export default function Themes() {
         className={`h-4/5 w-full md:h-[50ch]`}
       >
         <article
-          className={`align-center flex h-full flex-col justify-center ${boxpad.boxpad}`}
+          className={`align-center dialog-webtuibox-spacing flex h-full flex-col justify-center`}
           box-="double"
         >
           {/* tabIndex focuses dialog's header instead of first input which is the default*/}
@@ -70,7 +68,7 @@ export default function Themes() {
 
           <section>
             {/* Current theme is strongly highlighted in foreground. hovering highlights slightly */}
-            {/* TODO: focus */}
+            {/* TODO: add focus highlight too */}
             {THEMES_STANDARD.map((t) => (
               <button
                 size-="small"
