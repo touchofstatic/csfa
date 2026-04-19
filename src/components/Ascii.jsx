@@ -19,7 +19,7 @@ export default function Ascii({ text }) {
     isAnimated: false,
   });
 
-  // TODO: User can set different ascii logos. Add switch that returns custom <pre>s for each font option. font name is from user settings and passed by prop. Create a setting for it
+  // TODO feature: User can set different ascii logos. Add switch that returns custom <pre>s for each font option. font name is from user settings and passed by prop. Create a setting for it
   return (
     <pre
       ref={asciiTextRef}

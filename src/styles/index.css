@@ -16,14 +16,13 @@
 @import "@webtui/theme-catppuccin";
 
 @layer base {
-  /* Overrides of webtui base css */
   :root {
     --font-size: 16px;
     /* Font weight for bold text */
     --font-weight-bold: 700;
     /* Font weight for regular text */
     --font-weight-normal: 400;
-    --font-family: "JetBrains Mono";
+    --font-family: "JetBrains Mono", mononoki;
   }
   /* IMPORTANT: needs to be in @layer base for tailwind padding and margin to work */
   *,

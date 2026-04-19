@@ -13,7 +13,7 @@ export default function Item({ item, myListId, progs, ...handle }) {
     setDraftRenameItem("");
   });
 
-  // TODO: this kinda sucks maybe? very confusing. look at closely later and at least comment more extensively
+  // TODO: this kinda sucks? very confusing. look at closely later and at least comment more extensively
   // Generate class name used to style Item's elements according to its progress
   let progressClassName = "progress" + item.progress;
   // Name of item's progress to display
