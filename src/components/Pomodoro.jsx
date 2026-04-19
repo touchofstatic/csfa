@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useTimer } from "react-timer-hook";
 import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
@@ -29,10 +29,6 @@ customElements.whenDefined("ascii-progress-bar").then(() => {
   });
 });
 
-// TODO+: temporary, should be saved
-// Total minutes spent today (WIP)
-let totalMins = 0;
-
 export default function Pomodoro() {
   const { pomoConfig } = useContext(ManagerContext);
   // Current mode = its name and duration
@@ -41,15 +37,22 @@ export default function Pomodoro() {
   const [cycling, setCycling] = useState(false);
   // TODO+: store record's date and check against today's date instead of always counting up
   // Total completed pomodoros today (WIP). Based on timer expire proc
-  const [pomoWins, setPomoWins] = useState(() => {
-    const loadPomoWins = JSON.parse(localStorage.getItem("pomoWins"));
-    return loadPomoWins || 0;
+  const [totalWins, setTotalWins] = useState(() => {
+    const loadTotalWins = JSON.parse(localStorage.getItem("total-wins"));
+    return loadTotalWins || 0;
+  });
+  // Total time spent in pomodoro today (WIP)
+  const [totalTime, setTotalTime] = useState(() => {
+    return JSON.parse(localStorage.getItem("total-time")) || 0;
   });
 
   // Update localstorage
   useEffect(() => {
-    localStorage.setItem("pomoWins", JSON.stringify(pomoWins));
-  }, [pomoWins]);
+    localStorage.setItem("total-wins", JSON.stringify(totalWins));
+  }, [totalWins]);
+  useEffect(() => {
+    localStorage.setItem("total-time", JSON.stringify(totalTime));
+  }, [totalTime]);
 
   // Initialize alarm sound
   const [play] = useSound(SOUND_URL, {
@@ -67,17 +70,20 @@ export default function Pomodoro() {
   // Timer expired
   function handleExpire() {
     if (mode[0] === "Pomodoro") {
-      setPomoWins(pomoWins + 1);
+      setTotalWins(totalWins + 1);
       // Don't forget, set state is asyncronous!
-      if ((pomoWins + 1) % pomoConfig.interval !== 0)
+      if ((totalWins + 1) % pomoConfig.interval !== 0)
         setMode(["Short break", pomoConfig.short]);
       else setMode(["Long break", pomoConfig.long]);
     } else if (mode[0] === "Short break" || mode[0] === "Long break") {
       setMode(["Pomodoro", pomoConfig.pomo]);
     }
-    // Alarm sound
+    // Alarm sound c:
     play();
   }
+
+  // Cache addMinute with useCallback so that it doesn't cause a loop in effect. Because it uses the functional updater and doesn't reference total time directly, it doesn't have dependencies itself
+  const addMinute = useCallback(() => setTotalTime((prev) => prev + 1), []);
 
   // Select mode
   function selectMode(mode) {
@@ -141,18 +147,26 @@ export default function Pomodoro() {
           onExpire={handleExpire}
           cycling={cycling}
           startOngoing={() => setCycling(true)}
+          onAddMinute={addMinute}
         />
       </section>
       {/* Statistics */}
-      <p>Completed: {pomoWins}</p>
+      <p>Completed: {totalWins}</p>
       <p>
-        Time: {Math.floor(totalMins / 60)} hr {totalMins % 60} min
+        Time: {Math.floor(totalTime / 60)} hr {totalTime % 60} min
       </p>
     </article>
   );
 }
 
-function Timer({ autoStart, onExpire, mode, cycling, startOngoing }) {
+function Timer({
+  autoStart,
+  onExpire,
+  mode,
+  cycling,
+  startOngoing,
+  onAddMinute,
+}) {
   // To conditionally render start/resume/pause
   const [paused, setPaused] = useState(false);
   // Ref to control attribute of progress bar
@@ -172,7 +186,7 @@ function Timer({ autoStart, onExpire, mode, cycling, startOngoing }) {
     autoStart: auto,
     onExpire: () => {
       // False negative no effect proc at 00:01 > 00:00. Add one manually
-      if (mode[0] === "Pomodoro") totalMins++;
+      if (mode[0] === "Pomodoro") onAddMinute();
       onExpire();
     },
   });
@@ -192,10 +206,9 @@ function Timer({ autoStart, onExpire, mode, cycling, startOngoing }) {
       timer.minutes !== mode[1] / 60 &&
       timer.minutes !== mode[1] / 60 - 1
     ) {
-      totalMins++;
+      onAddMinute();
     }
-    // TODO: return doko??? DON'T FORGET
-  }, [timer.minutes, mode]);
+  }, [timer.minutes, mode, onAddMinute]);
 
   // Progress bar logic
   useEffect(() => {
