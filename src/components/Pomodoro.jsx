@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
 import Clock from "./Clock";
 import useSound from "use-sound";
-// TODO: is import better? move to another folder? maybe?
+// AUDIT: is import better? move to another folder? maybe?
 // TODO: balance volume in audacity!!! NOT READY TO SHIP!
 // import melokacool_notification_6 from "../src/melokacool_notification_6.mp3";
 const SOUND_URL = "../src/melokacool_notification_6.mp3";

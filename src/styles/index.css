@@ -74,7 +74,7 @@ https://stackoverflow.com/questions/65907934/html-pre-tag-contents-resizing-on-a
   font-family: mononoki;
   src: url(../mononoki-Regular.ttf);
 }
-/* TODO: location of font file and optimizing? when fixing the issue I just threw it in with no consideration */
+/* AUDIT: location of font file and optimizing? when fixing the issue I just threw it in with no consideration */
 pre {
   font-family: mononoki, monospace;
 }

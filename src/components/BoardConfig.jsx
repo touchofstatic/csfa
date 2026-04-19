@@ -38,7 +38,7 @@ export default function BoardConfig() {
               existing ones, or disable configuring new lists individually.
             </p>
 
-            {/* TODO: accessibility audit */}
+            {/* AUDIT: accessibility */}
             <label htmlFor="stagesConfig">
               <input
                 type="range"
@@ -55,7 +55,7 @@ export default function BoardConfig() {
             </label>
 
             {/* TODO: ugly ass */}
-            {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
+            {/* AUDIT: see react.dev Optimizing re-rendering on every keystroke  */}
             {/* TODO: either do something about min length or unclickable empty space in stage advance button */}
             <form className={`flex flex-col gap-1`} autoComplete="off">
               <input
@@ -144,7 +144,7 @@ export default function BoardConfig() {
             <ResetBoardConfig />
           </section>
 
-          {/* Known issue: align bottom doesn't work*/}
+          {/* KNOWN ISSUE: align bottom doesn't work*/}
           <section className="self-center align-bottom">
             <button commandfor="config-board-dialog" command="close">
               Exit

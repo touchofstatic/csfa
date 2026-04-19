@@ -44,7 +44,7 @@ export default function Themes() {
         >
           {/* tabIndex focuses dialog's header instead of first input which is the default*/}
           <h1 tabIndex="0">Themes</h1>
-          {/* TODO: accessibility audit */}
+          {/* AUDIT: accessibility */}
           {/* Color scheme ui element that showcases the current theme as a row of color blocks. It's common in tui, for example the linux terminal. Purely visual, not relevant to screen readers */}
           <div className="noselect">
             <span className="bg-[var(--foreground0)]">&nbsp;&nbsp;</span>
@@ -68,7 +68,7 @@ export default function Themes() {
 
           <section>
             {/* Current theme is strongly highlighted in foreground. hovering highlights slightly */}
-            {/* Known issue: hovering and tab focusing at the same time creates two hightlights. Low priority */}
+            {/* KNOWN ISSUE: hovering and tab focusing at the same time creates two hightlights. Low priority */}
             {THEMES_STANDARD.map((t) => (
               <button
                 size-="small"

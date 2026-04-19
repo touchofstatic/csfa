@@ -19,7 +19,7 @@ export default function Board() {
           ))}
         </DragDropContext>
         {/* (md screen) Invisible fake grid items in case there's only 1 or 2 lists to create the grid spacing I want. I tried auto-fill but I didn't like how when list resizes with the page it stutters badly */}
-        {/* TODO: accessibility audit. hide from screen readers? */}
+        {/* AUDIT: accessibility. hide from screen readers? */}
         {lists.length === 1 && (
           <div className="hidden md:invisible md:block">spacing</div>
         )}

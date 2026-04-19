@@ -27,7 +27,7 @@ export default function PomodoroConfig() {
           box-="double"
         >
           <h1 tabIndex="0">Settings/Pomodoro</h1>
-          {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
+          {/* AUDIT: see react.dev Optimizing re-rendering on every keystroke  */}
           <section>
             <h2># Timer</h2>
             <form className={`grid grid-cols-2`} autoComplete="off">

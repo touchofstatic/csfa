@@ -49,7 +49,7 @@ export default function Item({ item, myListId, stages, ...handle }) {
       break;
   }
 
-  // TODO: not sure if bad or okay. ask later
+  // AUDIT: not sure if bad or okay. ask later
   let name = "";
   // If not renaming, display name normally
   if (!draftRenameItem) {

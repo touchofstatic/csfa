@@ -34,7 +34,7 @@ export default function List({ list, index, children }) {
     .map((key) => items.find((item) => item.id === key))
     .filter(Boolean);
 
-  // TODO: not sure if bad or okay. ask later
+  // AUDIT: not sure if bad or okay. ask later
   let title = "";
   // If not renaming, display name normally
   if (!draftRenameList) {
@@ -229,7 +229,7 @@ export default function List({ list, index, children }) {
         handleRenameListStages={handleRenameListStages}
         handleResizeListStages={handleResizeListStages}
       />
-      {/* Known issue: on md screen, sometimes modal can appear not in the center but higher, and can overlap navbar. Don't know when it triggers or why. High priority*/}
+      {/* KNOWN ISSUE: on md screen, sometimes modal can appear not in the center but higher, and can overlap navbar. Don't know when it triggers or why. High priority*/}
     </div>
   );
 }
@@ -257,7 +257,7 @@ function ListSettings({
         <section>
           <h2># Stages</h2>
 
-          {/* TODO: accessibility audit */}
+          {/* AUDIT: accessibility */}
           {/* Display list.stages.length - 1 to user because there's always one, stages[0] aka unspecified, but it's hidden from user and can't be changed */}
           <label htmlFor="listStages">
             <input
@@ -280,7 +280,7 @@ function ListSettings({
           </label>
 
           {/* TODO: ugly ass */}
-          {/* TODO+: see react.dev Optimizing re-rendering on every keystroke  */}
+          {/* AUDIT: see react.dev Optimizing re-rendering on every keystroke  */}
           <form className={`flex flex-col gap-1`} autoComplete="off">
             <input
               type="text"
