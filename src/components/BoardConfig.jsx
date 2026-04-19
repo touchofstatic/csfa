@@ -6,7 +6,7 @@ import ResetBoardConfig from "./ResetBoardConfig";
 import styles from "../styles/list.module.css";
 
 export default function BoardConfig() {
-  const { userProgs, handleResizeConfigStages, handleRenameConfigStages } =
+  const { stagesConfig, handleResizeConfigStages, handleRenameConfigStages } =
     useContext(ManagerContext);
 
   return (
@@ -39,101 +39,101 @@ export default function BoardConfig() {
             </p>
 
             {/* TODO: accessibility audit */}
-            <label htmlFor="userProgs">
+            <label htmlFor="stagesConfig">
               <input
                 type="range"
                 min="0"
                 max="7"
-                name="userProgs"
-                value={userProgs.length - 1}
+                name="stagesConfig"
+                value={stagesConfig.length - 1}
                 onChange={(e) => {
                   handleResizeConfigStages(e.target.value);
                 }}
                 required
               />
-              {userProgs.length - 1}
+              {stagesConfig.length - 1}
             </label>
 
             {/* TODO: ugly ass */}
             {/* TODO: see react.dev Optimizing re-rendering on every keystroke  */}
-            {/* TODO: either do something about min length or unclickable empty space in progress advance button */}
+            {/* TODO: either do something about min length or unclickable empty space in stage advance button */}
             <form className={`flex flex-col gap-1`} autoComplete="off">
               <input
                 type="text"
-                name="progress"
+                name="stage"
                 minLength="1"
                 maxLength="12"
-                className={`${userProgs.length < 2 ? `${styles.disabled}` : `${styles.progress1}`}`}
-                value={userProgs[1] || ""}
+                className={`${stagesConfig.length < 2 ? `${styles.disabled}` : `${styles.stage1}`}`}
+                value={stagesConfig[1] || ""}
                 onChange={(e) => handleRenameConfigStages(e.target.value, 1)}
                 required
-                disabled={userProgs.length < 2}
+                disabled={stagesConfig.length < 2}
               />
               <input
                 type="text"
-                name="progress"
+                name="stage"
                 minLength="1"
                 maxLength="12"
-                className={`${userProgs.length < 3 ? `${styles.disabled}` : `${styles.progress2}`}`}
-                value={userProgs[2] || ""}
+                className={`${stagesConfig.length < 3 ? `${styles.disabled}` : `${styles.stage2}`}`}
+                value={stagesConfig[2] || ""}
                 onChange={(e) => handleRenameConfigStages(e.target.value, 2)}
                 required
-                disabled={userProgs.length < 3}
+                disabled={stagesConfig.length < 3}
               />
               <input
                 type="text"
-                name="progress"
+                name="stage"
                 minLength="1"
                 maxLength="12"
-                className={`${userProgs.length < 4 ? `${styles.disabled}` : `${styles.progress3}`}`}
-                value={userProgs[3] || ""}
+                className={`${stagesConfig.length < 4 ? `${styles.disabled}` : `${styles.stage3}`}`}
+                value={stagesConfig[3] || ""}
                 onChange={(e) => handleRenameConfigStages(e.target.value, 3)}
                 required
-                disabled={userProgs.length < 4}
+                disabled={stagesConfig.length < 4}
               />
               <input
                 type="text"
-                name="progress"
+                name="stage"
                 minLength="1"
                 maxLength="12"
-                className={`${userProgs.length < 5 ? `${styles.disabled}` : `${styles.progress4}`}`}
-                value={userProgs[4] || ""}
+                className={`${stagesConfig.length < 5 ? `${styles.disabled}` : `${styles.stage4}`}`}
+                value={stagesConfig[4] || ""}
                 onChange={(e) => handleRenameConfigStages(e.target.value, 4)}
                 required
-                disabled={userProgs.length < 5}
+                disabled={stagesConfig.length < 5}
               />
               <input
                 type="text"
-                name="progress"
+                name="stage"
                 minLength="1"
                 maxLength="12"
-                className={`${userProgs.length < 6 ? `${styles.disabled}` : `${styles.progress5}`}`}
-                value={userProgs[5] || ""}
+                className={`${stagesConfig.length < 6 ? `${styles.disabled}` : `${styles.stage5}`}`}
+                value={stagesConfig[5] || ""}
                 onChange={(e) => handleRenameConfigStages(e.target.value, 5)}
                 required
-                disabled={userProgs.length < 6}
+                disabled={stagesConfig.length < 6}
               />
               <input
                 type="text"
-                name="progress"
+                name="stage"
                 minLength="1"
                 maxLength="12"
-                className={`${userProgs.length < 7 ? `${styles.disabled}` : `${styles.progress6}`}`}
-                value={userProgs[6] || ""}
+                className={`${stagesConfig.length < 7 ? `${styles.disabled}` : `${styles.stage6}`}`}
+                value={stagesConfig[6] || ""}
                 onChange={(e) => handleRenameConfigStages(e.target.value, 6)}
                 required
-                disabled={userProgs.length < 7}
+                disabled={stagesConfig.length < 7}
               />
               <input
                 type="text"
-                name="progress"
+                name="stage"
                 minLength="1"
                 maxLength="12"
-                className={`${userProgs.length < 8 ? `${styles.disabled}` : `${styles.progress7}`}`}
-                value={userProgs[7] || ""}
+                className={`${stagesConfig.length < 8 ? `${styles.disabled}` : `${styles.stage7}`}`}
+                value={stagesConfig[7] || ""}
                 onChange={(e) => handleRenameConfigStages(e.target.value, 7)}
                 required
-                disabled={userProgs.length < 8}
+                disabled={stagesConfig.length < 8}
               />
             </form>
           </section>

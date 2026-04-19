@@ -4,7 +4,7 @@ export const itemsSchema = {
     type: "object",
     properties: {
       name: { type: "string" },
-      progress: { type: "number" },
+      stage: { type: "number" },
       id: { type: "string" },
     },
   },
@@ -22,7 +22,7 @@ export const listsSchema = {
         items: [{ type: "string", uniqueItems: true }],
       },
       visible: { type: "boolean" },
-      progs: { type: "array", items: [{ type: "string" }] },
+      stages: { type: "array", items: [{ type: "string" }] },
     },
   },
 };

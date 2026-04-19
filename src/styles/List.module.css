@@ -33,31 +33,31 @@
 }
 
 /* Used in list settings menu */
-.progress1 {
+.stage1 {
   background-color: var(--color0);
   color: var(--background0);
 }
-.progress2 {
+.stage2 {
   background-color: var(--color1);
   color: var(--background0);
 }
-.progress3 {
+.stage3 {
   background-color: var(--color2);
   color: var(--background0);
 }
-.progress4 {
+.stage4 {
   background-color: var(--color3);
   color: var(--background0);
 }
-.progress5 {
+.stage5 {
   background-color: var(--color4);
   color: var(--background0);
 }
-.progress6 {
+.stage6 {
   background-color: var(--color5);
   color: var(--background0);
 }
-.progress7 {
+.stage7 {
   background-color: var(--color6);
   color: var(--background0);
 }

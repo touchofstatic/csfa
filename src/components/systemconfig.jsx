@@ -1,6 +1,5 @@
-// TEMPORARY ONLY FOR DEVELOPMENT
 import { v4 as uuidv4 } from "uuid";
-export const SYSTEM_DEFAULT_STAGES = [
+export const SYSTEM_CONFIG_STAGES = [
   "unspecified",
   "queued",
   "priority",
@@ -28,58 +27,57 @@ export const SYSTEM_CONFIG_POMODORO = {
 };
 
 // TEMPORARY ONLY FOR DEVELOPMENT
-export const devProgsConfig = SYSTEM_DEFAULT_STAGES;
+export const devStages = SYSTEM_CONFIG_STAGES;
 export const devItems = [
   {
     name: "item a0",
-    progress: 2,
+    stage: 2,
     id: "a0",
   },
   {
     name: "item a1",
-    progress: 1,
+    stage: 1,
     id: "a1",
   },
-  { name: "item a2", progress: 5, id: "a2" },
+  { name: "item a2", stage: 5, id: "a2" },
   {
     name: "item a3",
-    progress: 4,
+    stage: 4,
     id: "a3",
   },
-  { name: "item b0", progress: 5, id: "b0" },
-  { name: "item b1", progress: 4, id: "b1" },
-  { name: "item b2", progress: 1, id: "b2" },
-  { name: "item c0", progress: 3, id: "c0" },
-  { name: "item c1", progress: 4, id: "c1" },
+  { name: "item b0", stage: 5, id: "b0" },
+  { name: "item b1", stage: 4, id: "b1" },
+  { name: "item b2", stage: 1, id: "b2" },
+  { name: "item c0", stage: 3, id: "c0" },
+  { name: "item c1", stage: 4, id: "c1" },
 ];
-
 export const devLists = [
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
     itemIds: ["a0", "a1", "a2", "a3"],
     visible: true,
-    progs: devProgsConfig,
+    stages: devStages,
   },
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
     itemIds: ["b0", "b1", "b2"],
     visible: true,
-    progs: devProgsConfig,
+    stages: devStages,
   },
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
     itemIds: [],
     visible: true,
-    progs: devProgsConfig,
+    stages: devStages,
   },
   {
     name: uuidv4().substring(0, 8),
     id: uuidv4(),
     itemIds: ["c0", "c1"],
     visible: true,
-    progs: devProgsConfig,
+    stages: devStages,
   },
 ];

@@ -13,54 +13,54 @@
 }
 
 /* Give stage color to item controls */
-.progress1 {
+.stage1 {
   color: var(--color0);
 }
-.progress2 {
+.stage2 {
   color: var(--color1);
 }
-.progress3 {
+.stage3 {
   color: var(--color2);
 }
-.progress4 {
+.stage4 {
   color: var(--color3);
 }
-.progress5 {
+.stage5 {
   color: var(--color4);
 }
-.progress6 {
+.stage6 {
   color: var(--color5);
 }
-.progress7 {
+.stage7 {
   color: var(--color6);
 }
 
 /* Give stage color to item content */
-.name.progress1 {
+.name.stage1 {
   background-color: var(--color0);
   color: var(--background0);
 }
-.name.progress2 {
+.name.stage2 {
   background-color: var(--color1);
   color: var(--background0);
 }
-.name.progress3 {
+.name.stage3 {
   background-color: var(--color2);
   color: var(--background0);
 }
-.name.progress4 {
+.name.stage4 {
   background-color: var(--color3);
   color: var(--background0);
 }
-.name.progress5 {
+.name.stage5 {
   background-color: var(--color4);
   color: var(--background0);
 }
-.name.progress6 {
+.name.stage6 {
   background-color: var(--color5);
   color: var(--background0);
 }
-.name.progress7 {
+.name.stage7 {
   background-color: var(--color6);
   color: var(--background0);
 }

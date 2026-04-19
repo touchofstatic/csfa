@@ -3,7 +3,7 @@ import { useClickAway } from "@uidotdev/usehooks";
 import { ManagerContext } from "./Contexts";
 import styles from "../styles/item.module.css";
 
-export default function Item({ item, myListId, progs, ...handle }) {
+export default function Item({ item, myListId, stages, ...handle }) {
   const [draftRenameItem, setDraftRenameItem] = useState("");
   const { handleDeleteItem, handleRenameItem, handleAdvanceItem } =
     useContext(ManagerContext);
@@ -14,38 +14,38 @@ export default function Item({ item, myListId, progs, ...handle }) {
   });
 
   // TODO: this kinda sucks? very confusing. look at closely later and at least comment more extensively
-  // Generate class name used to style Item's elements according to its progress
-  let progressClassName = "progress" + item.progress;
-  // Name of item's progress to display
-  let progress = "";
+  // Generate class name used to style Item's elements according to its stage
+  let stageClassName = "stage" + item.stage;
+  // Name of item's stage to display
+  let stage = "";
   // TODO: I don't like that only one is <span> (due to the need to hide the text but have clickable text there)
-  switch (progressClassName) {
-    case "progress0":
-      progress = <span className="invisible">{progs[0]}</span>;
+  switch (stageClassName) {
+    case "stage0":
+      stage = <span className="invisible">{stages[0]}</span>;
       break;
-    case "progress1":
-      progress = progs[1];
+    case "stage1":
+      stage = stages[1];
       break;
-    case "progress2":
-      progress = progs[2];
+    case "stage2":
+      stage = stages[2];
       break;
-    case "progress3":
-      progress = progs[3];
+    case "stage3":
+      stage = stages[3];
       break;
-    case "progress4":
-      progress = progs[4];
+    case "stage4":
+      stage = stages[4];
       break;
-    case "progress5":
-      progress = progs[5];
+    case "stage5":
+      stage = stages[5];
       break;
-    case "progress6":
-      progress = progs[6];
+    case "stage6":
+      stage = stages[6];
       break;
-    case "progress7":
-      progress = progs[7];
+    case "stage7":
+      stage = stages[7];
       break;
     default:
-      progress = "ERROR";
+      stage = "ERROR";
       break;
   }
 
@@ -55,7 +55,7 @@ export default function Item({ item, myListId, progs, ...handle }) {
   if (!draftRenameItem) {
     name = (
       <div
-        className={`${styles.name} ${styles[progressClassName]} breakword pl-[1ch]`}
+        className={`${styles.name} ${styles[stageClassName]} breakword pl-[1ch]`}
       >
         {item.name}
       </div>
@@ -106,20 +106,20 @@ export default function Item({ item, myListId, progs, ...handle }) {
 
   return (
     <div
-      className={`${progressClassName} ${styles.item} ${!draftRenameItem && `${styles.hoveritem}`}`}
+      className={`${stageClassName} ${styles.item} ${!draftRenameItem && `${styles.hoveritem}`}`}
     >
       {/* Item controls */}
       <div>
         {/* Dnd drag handle */}
         <span
           {...handle}
-          className={`${styles[progressClassName]} noselect p-0.5 hover:font-bold`}
+          className={`${styles[stageClassName]} noselect p-0.5 hover:font-bold`}
         >
           [=]
         </span>
         {/* Rename */}
         <button
-          className={`${styles.controls} ${styles[progressClassName]} p-0.5`}
+          className={`${styles.controls} ${styles[stageClassName]} p-0.5`}
           size-="small"
           onClick={() => setDraftRenameItem(item.name)}
         >
@@ -127,19 +127,19 @@ export default function Item({ item, myListId, progs, ...handle }) {
         </button>
         {/* Delete */}
         <button
-          className={`${styles.controls} ${styles[progressClassName]} p-0.5`}
+          className={`${styles.controls} ${styles[stageClassName]} p-0.5`}
           size-="small"
           onClick={() => handleDeleteItem(item.id, myListId)}
         >
           [-]
         </button>
-        {/* Advance progress */}
+        {/* Advance stage */}
         <button
           size-="small"
-          className={`${styles[progressClassName]} float-right bg-transparent p-0 text-[var(--foreground2)]`}
-          onClick={() => handleAdvanceItem(item.id, progs)}
+          className={`${styles[stageClassName]} float-right bg-transparent p-0 text-[var(--foreground2)]`}
+          onClick={() => handleAdvanceItem(item.id, stages)}
         >
-          {progress} [&gt;]
+          {stage} [&gt;]
         </button>
       </div>
       {name}

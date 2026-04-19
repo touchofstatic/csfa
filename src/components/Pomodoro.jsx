@@ -4,9 +4,8 @@ import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
 import Clock from "./Clock";
 import useSound from "use-sound";
-// TODO: is import better?
+// TODO: is import better? move to another folder? maybe?
 // TODO: balance volume in audacity!!! NOT READY TO SHIP!
-// TODO: move to another folder? maybe?
 // import melokacool_notification_6 from "../src/melokacool_notification_6.mp3";
 const SOUND_URL = "../src/melokacool_notification_6.mp3";
 import { AsciiProgressBar } from "@yacosta738/ascii-progress-bar/browser";
@@ -35,7 +34,6 @@ customElements.whenDefined("ascii-progress-bar").then(() => {
 let totalMins = 0;
 
 export default function Pomodoro() {
-  // TODO: not clear name
   const { pomoConfig } = useContext(ManagerContext);
   // Current mode = its name and duration
   const [mode, setMode] = useState(["Pomodoro", pomoConfig.pomo]);

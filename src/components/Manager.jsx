@@ -5,16 +5,15 @@ import Navbar from "./Navbar";
 import Board from "./Board.jsx";
 import Sidebar from "./Sidebar.jsx";
 
-// !!!! TODO: change progs to stages
-// !!! TODO: resolve "visible" and "collapsed"
+// TODO: resolve "visible" and "collapsed"
 
 // ONLY FOR DEVELOPMENT
 import {
   devItems,
   devLists,
-  SYSTEM_DEFAULT_STAGES,
+  SYSTEM_CONFIG_STAGES,
   SYSTEM_CONFIG_POMODORO,
-} from "./data";
+} from "./systemconfig";
 
 // TODO: change to functions? I don't use function consts anywhere, I just copied these from a code example.
 // TODO: move elsewhere? Having these floating outside components is weird
@@ -66,13 +65,10 @@ export default function Manager() {
     // FOR DEVELOPMENT
     return loadLists || devLists;
   });
-  // TODO: those names suck
-  // If user doesn't have settings in localstorage, load default settings
-  const [userProgs, setUserProgs] = useState(() => {
-    const loadUserProgsConfig = JSON.parse(
-      localStorage.getItem("userProgsConfig"),
-    );
-    return loadUserProgsConfig || SYSTEM_DEFAULT_STAGES;
+  // If user doesn't have config in localstorage, load system config
+  const [stagesConfig, setStagesConfig] = useState(() => {
+    const loadStagesConfig = JSON.parse(localStorage.getItem("stages-config"));
+    return loadStagesConfig || SYSTEM_CONFIG_STAGES;
   });
   const [pomoConfig, setPomoConfig] = useState(() => {
     const loadPomoConfig = JSON.parse(localStorage.getItem("pomo-config"));
@@ -91,8 +87,8 @@ export default function Manager() {
   }, [items]);
 
   useEffect(() => {
-    localStorage.setItem("userProgsConfig", JSON.stringify(userProgs));
-  }, [userProgs]);
+    localStorage.setItem("stages-config", JSON.stringify(stagesConfig));
+  }, [stagesConfig]);
 
   useEffect(() => {
     localStorage.setItem("pomo-config", JSON.stringify(pomoConfig));
@@ -179,11 +175,11 @@ export default function Manager() {
       const targetitem = items.find(
         (item) => item.id === lists[sInd].itemIds[source.index],
       );
-      if (targetitem.progress >= lists[dInd].progs.length) {
+      if (targetitem.stage >= lists[dInd].stages.length) {
         setItems(
           items.map((item) => {
             if (item !== targetitem) return item;
-            else return { ...item, progress: 0 };
+            else return { ...item, stage: 0 };
           }),
         );
       }
@@ -207,7 +203,7 @@ export default function Manager() {
         id: uuidv4(),
         itemIds: [],
         visible: true,
-        progs: userProgs,
+        stages: stagesConfig,
       },
     ]);
   }
@@ -226,7 +222,7 @@ export default function Manager() {
       ...items,
       {
         name: newItem,
-        progress: 0,
+        stage: 0,
         id: newItemId,
       },
     ]);
@@ -289,7 +285,7 @@ export default function Manager() {
     // We simply put item in its numbered stage box. There's no need to actually compare and shuffle them. It also preserves items' order otherwise
     let newOrder = [[], [], [], [], [], [], [], []];
     myItems.map((item) => {
-      newOrder[item.progress].push(item.id);
+      newOrder[item.stage].push(item.id);
     });
     // Stage 0 items go to bottom
     newOrder.push(newOrder.shift());
@@ -321,7 +317,7 @@ export default function Manager() {
 
   // Resize List's Stages
   // TODO: non descriptive variable names, especially "value"
-  function handleResizeListStages(value, listProgs, listId, myItems) {
+  function handleResizeListStages(value, listStages, listId, myItems) {
     // First resolve conflicts with Items' and List's new stages
     setItems(
       items.map((item) => {
@@ -329,25 +325,25 @@ export default function Manager() {
         if (myItems.includes(item) === false) return item;
         else {
           // Reset conflicting stage
-          if (item.progress > value) return { ...item, progress: 0 };
+          if (item.stage > value) return { ...item, stage: 0 };
           else return item;
         }
       }),
     );
 
     //!!!!!! TODO: this is so freaking confusing I can't even comment it
-    const oldValue = listProgs.length - 1;
+    const oldValue = listStages.length - 1;
     if (value !== oldValue) {
-      let newProgs;
+      let newStages;
       if (value > oldValue) {
-        newProgs = [...listProgs, ...Array(value - oldValue).fill("")];
+        newStages = [...listStages, ...Array(value - oldValue).fill("")];
       } else if (value < oldValue) {
-        newProgs = listProgs.slice(0, value - oldValue);
+        newStages = listStages.slice(0, value - oldValue);
       }
       setLists(
         lists.map((list) => {
           if (list.id !== listId) return list;
-          else return { ...list, progs: newProgs };
+          else return { ...list, stages: newStages };
         }),
       );
     }
@@ -359,9 +355,9 @@ export default function Manager() {
       lists.map((list) => {
         if (list.id !== listId) return list;
         else {
-          let newProgs = structuredClone(list.progs);
-          newProgs[index] = input;
-          return { ...list, progs: newProgs };
+          let newStages = structuredClone(list.stages);
+          newStages[index] = input;
+          return { ...list, stages: newStages };
         }
       }),
     );
@@ -401,15 +397,14 @@ export default function Manager() {
   }
 
   // Advance Item
-  function handleAdvanceItem(itemId, progs) {
+  function handleAdvanceItem(itemId, stages) {
     setItems(
       items.map((item) => {
         if (item.id !== itemId) return item;
         else {
           // Max stage loops back to stage 0
-          if (item.progress === progs.length - 1)
-            return { ...item, progress: 0 };
-          else return { ...item, progress: item.progress + 1 };
+          if (item.stage === stages.length - 1) return { ...item, stage: 0 };
+          else return { ...item, stage: item.stage + 1 };
         }
       }),
     );
@@ -425,33 +420,36 @@ export default function Manager() {
   // TODO: TERRIBLE NAMES AGAIN CONFUSING INTERACTION
   // I'm nto even gonna comment this
   // Resize Config Stages
-  // value is the number of colored progress, in user controls
-  // userProgs.length is 6 = value is 5
+  // value is the number of colored stage, in user controls
+  // stagesConfig.length is 6 = value is 5
   function handleResizeConfigStages(value) {
-    const oldValue = userProgs.length - 1;
+    const oldValue = stagesConfig.length - 1;
     if (value !== oldValue) {
       if (value > oldValue) {
-        const newProgs = [...userProgs, ...Array(value - oldValue).fill("")];
-        setUserProgs(newProgs);
+        const newStages = [
+          ...stagesConfig,
+          ...Array(value - oldValue).fill(""),
+        ];
+        setStagesConfig(newStages);
       } else if (value < oldValue) {
-        const newProgs = userProgs.slice(0, value - oldValue);
-        setUserProgs(newProgs);
+        const newStages = stagesConfig.slice(0, value - oldValue);
+        setStagesConfig(newStages);
       }
     }
   }
 
   // Rename Config Stages
   function handleRenameConfigStages(input, index) {
-    let newProgs = structuredClone(userProgs);
-    newProgs[index] = input;
-    setUserProgs(newProgs);
+    let newStages = structuredClone(stagesConfig);
+    newStages[index] = input;
+    setStagesConfig(newStages);
   }
 
   // Reset Board Config
   function resetBoardConfig() {
     // Reset config stages
     // Doesn't do anything else because it's the only Board setting now
-    setUserProgs(SYSTEM_DEFAULT_STAGES);
+    setStagesConfig(SYSTEM_CONFIG_STAGES);
   }
 
   return (
@@ -466,7 +464,7 @@ export default function Manager() {
         value={{
           items,
           lists,
-          userProgs,
+          stagesConfig,
           pomoConfig,
           handleImportBoard,
           handleResizeConfigStages,

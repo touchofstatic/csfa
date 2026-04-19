@@ -179,7 +179,7 @@ export default function List({ list, index, children }) {
                       <Item
                         item={item}
                         myListId={list.id}
-                        progs={list.progs}
+                        stages={list.stages}
                         index={index}
                         {...provided.dragHandleProps}
                       />
@@ -255,28 +255,28 @@ function ListSettings({
         {/* tabIndex focuses dialog's header instead of first input which is the default*/}
         <h1 tabIndex="0">Settings/List/{list.name}</h1>
         <section>
-          <h2># Progress</h2>
+          <h2># Stages</h2>
 
           {/* TODO: accessibility audit? */}
-          {/* Display list.progs.length - 1 to user because there's always one, progs[0] aka unspecified, but it's hidden from user and can't be changed */}
-          <label htmlFor="listProgs">
+          {/* Display list.stages.length - 1 to user because there's always one, stages[0] aka unspecified, but it's hidden from user and can't be changed */}
+          <label htmlFor="listStages">
             <input
               type="range"
               min="0"
               max="7"
-              name="listProgs"
-              value={list.progs.length - 1}
+              name="listStages"
+              value={list.stages.length - 1}
               onChange={(e) =>
                 handleResizeListStages(
                   e.target.value,
-                  list.progs,
+                  list.stages,
                   list.id,
                   myItems,
                 )
               }
               required
             />
-            {list.progs.length - 1}
+            {list.stages.length - 1}
           </label>
 
           {/* TODO: ugly ass */}
@@ -284,94 +284,94 @@ function ListSettings({
           <form className={`flex flex-col gap-1`} autoComplete="off">
             <input
               type="text"
-              name="progress"
+              name="stage"
               minLength="1"
               maxLength="12"
-              className={`${list.progs.length < 2 ? `${styles.disabled}` : `${styles.progress1}`}`}
-              value={list.progs[1] || ""}
+              className={`${list.stages.length < 2 ? `${styles.disabled}` : `${styles.stage1}`}`}
+              value={list.stages[1] || ""}
               onChange={(e) =>
                 handleRenameListStages(e.target.value, 1, list.id)
               }
               required
-              disabled={list.progs.length < 2}
+              disabled={list.stages.length < 2}
             />
             <input
               type="text"
-              name="progress"
+              name="stage"
               minLength="1"
               maxLength="12"
-              className={`${list.progs.length < 3 ? `${styles.disabled}` : `${styles.progress2}`}`}
-              value={list.progs[2] || ""}
+              className={`${list.stages.length < 3 ? `${styles.disabled}` : `${styles.stage2}`}`}
+              value={list.stages[2] || ""}
               onChange={(e) =>
                 handleRenameListStages(e.target.value, 2, list.id)
               }
               required
-              disabled={list.progs.length < 3}
+              disabled={list.stages.length < 3}
             />
             <input
               type="text"
-              name="progress"
+              name="stage"
               minLength="1"
               maxLength="12"
-              className={`${list.progs.length < 4 ? `${styles.disabled}` : `${styles.progress3}`}`}
-              value={list.progs[3] || ""}
+              className={`${list.stages.length < 4 ? `${styles.disabled}` : `${styles.stage3}`}`}
+              value={list.stages[3] || ""}
               onChange={(e) =>
                 handleRenameListStages(e.target.value, 3, list.id)
               }
               required
-              disabled={list.progs.length < 4}
+              disabled={list.stages.length < 4}
             />
             <input
               type="text"
-              name="progress"
+              name="stage"
               minLength="1"
               maxLength="12"
-              className={`${list.progs.length < 5 ? `${styles.disabled}` : `${styles.progress4}`}`}
-              value={list.progs[4] || ""}
+              className={`${list.stages.length < 5 ? `${styles.disabled}` : `${styles.stage4}`}`}
+              value={list.stages[4] || ""}
               onChange={(e) =>
                 handleRenameListStages(e.target.value, 4, list.id)
               }
               required
-              disabled={list.progs.length < 5}
+              disabled={list.stages.length < 5}
             />
             <input
               type="text"
-              name="progress"
+              name="stage"
               minLength="1"
               maxLength="12"
-              className={`${list.progs.length < 6 ? `${styles.disabled}` : `${styles.progress5}`}`}
-              value={list.progs[5] || ""}
+              className={`${list.stages.length < 6 ? `${styles.disabled}` : `${styles.stage5}`}`}
+              value={list.stages[5] || ""}
               onChange={(e) =>
                 handleRenameListStages(e.target.value, 5, list.id)
               }
               required
-              disabled={list.progs.length < 6}
+              disabled={list.stages.length < 6}
             />
             <input
               type="text"
-              name="progress"
+              name="stage"
               minLength="1"
               maxLength="12"
-              className={`${list.progs.length < 7 ? `${styles.disabled}` : `${styles.progress6}`}`}
-              value={list.progs[6] || ""}
+              className={`${list.stages.length < 7 ? `${styles.disabled}` : `${styles.stage6}`}`}
+              value={list.stages[6] || ""}
               onChange={(e) =>
                 handleRenameListStages(e.target.value, 6, list.id)
               }
               required
-              disabled={list.progs.length < 7}
+              disabled={list.stages.length < 7}
             />
             <input
               type="text"
-              name="progress"
+              name="stage"
               minLength="1"
               maxLength="12"
-              className={`${list.progs.length < 8 ? `${styles.disabled}` : `${styles.progress7}`}`}
-              value={list.progs[7] || ""}
+              className={`${list.stages.length < 8 ? `${styles.disabled}` : `${styles.stage7}`}`}
+              value={list.stages[7] || ""}
               onChange={(e) =>
                 handleRenameListStages(e.target.value, 7, list.id)
               }
               required
-              disabled={list.progs.length < 8}
+              disabled={list.stages.length < 8}
             />
           </form>
         </section>
