@@ -151,3 +151,8 @@ Back: bg is colored */
   background-color: var(--color6);
   color: var(--background0);
 }
+
+@font-face {
+  font-family: "flexiIBM";
+  src: url(../Flexi_IBM_VGA_True.ttf);
+}
