@@ -126,7 +126,7 @@ export default function List({ list, index, children }) {
             size-="small"
             onClick={() => handleCollapseList(list.id)}
           >
-            {list.visible ? `[▼]` : `[▲]`}
+            {list.collapsed ? `[▼]` : `[▲]`}
           </button>
           {/* Move up */}
           <button
