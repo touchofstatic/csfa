@@ -83,7 +83,8 @@ export default function PomodoroConfig() {
                 }
                 required
               ></input>
-              <label htmlFor="auto">Auto start</label>
+
+              <label htmlFor="auto">Auto start:</label>
               <fieldset>
                 <input
                   type="radio"
@@ -113,8 +114,62 @@ export default function PomodoroConfig() {
 
           <section>
             <h2># Sound</h2>
+            <form className={`grid grid-cols-2`} autoComplete="off">
+              {/* TOOO: add a selection of cool alarm sounds */}
+              {/* TODO: make selecting sound play demo */}
+              <label htmlFor="alarmsound">Alarm sound:</label>
+              <fieldset className="flex flex-col">
+                {/* <button size-="small" name="alarm" value="sound0">
+                  sound0
+                </button>
+                <button size-="small" name="alarm" value="sound1">
+                  sound1
+                </button> */}
+                <input
+                  type="radio"
+                  name="alarmsound"
+                  id="sound0"
+                  value="sound0"
+                  checked={pomoConfig.alarmSound === "sound0"}
+                  onChange={(e) =>
+                    changePomoConfig(e.target.value, e.target.name)
+                  }
+                ></input>
+                {/* KNOWN ISSUE: Why are you hidden behind checkbox.... low priority because it's "fixed" */}
+                <label htmlFor="sound0" className="ml-[3ch]">
+                  sound0
+                </label>{" "}
+                <input
+                  type="radio"
+                  name="alarmsound"
+                  id="sound1"
+                  value="sound1"
+                  checked={pomoConfig.alarmSound === "sound1"}
+                  onChange={(e) =>
+                    changePomoConfig(e.target.value, e.target.name)
+                  }
+                ></input>
+                <label htmlFor="sound1" className="ml-[3ch]">
+                  sound1
+                </label>
+                <input
+                  type="radio"
+                  name="alarmsound"
+                  id="sound2"
+                  value="sound2"
+                  checked={pomoConfig.alarmSound === "sound2"}
+                  onChange={(e) =>
+                    changePomoConfig(e.target.value, e.target.name)
+                  }
+                ></input>
+                <label htmlFor="sound2" className="ml-[3ch]">
+                  sound2
+                </label>
+              </fieldset>
+            </form>
+
             <label htmlFor="volume">
-              Volume
+              Volume:
               <input
                 type="range"
                 min="0"
@@ -124,10 +179,10 @@ export default function PomodoroConfig() {
                 onChange={(e) => {
                   changePomoConfig(e.target.value, e.target.name);
                 }}
+                className="w-full min-w-0"
               />
               {pomoConfig.volume}
             </label>
-            {/* TOOO: add a selection of cool alarm sounds */}
           </section>
 
           <section>

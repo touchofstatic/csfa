@@ -3,12 +3,11 @@ import { useTimer } from "react-timer-hook";
 import { useContext } from "react";
 import { ManagerContext } from "./Contexts";
 import Clock from "./Clock";
+import { AsciiProgressBar } from "@yacosta738/ascii-progress-bar/browser";
 import useSound from "use-sound";
 // TODO+: balance volume in audacity!!! NOT READY TO SHIP!
-// AUDIT: is import better? move to another folder? maybe?
-// import melokacool_notification_6 from "../src/melokacool_notification_6.mp3";
-const SOUND_URL = "../src/melokacool_notification_6.mp3";
-import { AsciiProgressBar } from "@yacosta738/ascii-progress-bar/browser";
+// AUDIT: should I move sound files to another folder?
+// const SOUND_URL = "../src/melokacool_notification_6.mp3";
 
 // @yacosta738/ascii-progress-bar syntax
 // Both are cool I cannot decide
@@ -55,7 +54,10 @@ export default function Pomodoro() {
   }, [totalTime]);
 
   // Initialize alarm sound
-  const [play] = useSound(SOUND_URL, {
+  // const [play] = useSound(SOUND_URL, {
+  //   volume: pomoConfig.volume,
+  // });
+  const [play] = useSound(`../src/${pomoConfig.alarmSound}.mp3`, {
     volume: pomoConfig.volume,
   });
 

@@ -15,14 +15,16 @@ export const SYSTEM_CONFIG_POMODORO = {
   // long: 900,
   // interval: 4,
   // autoStart: false,
+  // alarmSound: "sound0",
   // volume: 10,
 
   // TEMPORARY ONLY FOR DEVELOPMENT
-  pomo: 60,
+  pomo: 5,
   short: 60,
   long: 60,
   interval: 1,
   autoStart: false,
+  alarmSound: "sound0",
   volume: 10,
 };
 

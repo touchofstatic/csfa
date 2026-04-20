@@ -98,6 +98,9 @@ export default function Manager() {
       if (value === "yes") setPomoConfig({ ...pomoConfig, autoStart: true });
       if (value === "no") setPomoConfig({ ...pomoConfig, autoStart: false });
     }
+    // Alarm sound
+    if (name === "alarmsound") setPomoConfig({ ...pomoConfig, alarmSound: value });
+
     // Volume slider
     if (name === "volume") setPomoConfig({ ...pomoConfig, volume: value });
   }
@@ -110,6 +113,7 @@ export default function Manager() {
       long: SYSTEM_CONFIG_POMODORO.long,
       interval: SYSTEM_CONFIG_POMODORO.interval,
       autoStart: SYSTEM_CONFIG_POMODORO.autoStart,
+      alarmSound: SYSTEM_CONFIG_POMODORO.alarmSound,
       volume: SYSTEM_CONFIG_POMODORO.volume,
     });
   }
