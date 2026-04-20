@@ -5,8 +5,12 @@ import styles from "../styles/item.module.css";
 
 export default function Item({ item, myListId, stages, ...handle }) {
   const [draftRenameItem, setDraftRenameItem] = useState("");
-  const { handleDeleteItem, handleRenameItem, handleAdvanceItem } =
-    useContext(ManagerContext);
+  const {
+    handleDeleteItem,
+    handleRenameItem,
+    handleResetItem,
+    handleAdvanceItem,
+  } = useContext(ManagerContext);
 
   // Clicking outside ends the rename interaction
   const ref = useClickAway(() => {
@@ -96,6 +100,14 @@ export default function Item({ item, myListId, stages, ...handle }) {
           onClick={() => handleDeleteItem(item.id, myListId)}
         >
           [-]
+        </button>
+        {/* Reset stage */}
+        <button
+          className={`${ctrlcolor} ${styles.controls} p-0.5`}
+          size-="small"
+          onClick={() => handleResetItem(item.id)}
+        >
+          [r]
         </button>
         {/* Advance stage */}
         <button

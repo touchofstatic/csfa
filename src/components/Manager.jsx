@@ -383,6 +383,16 @@ export default function Manager() {
     );
   }
 
+  // Reset Item
+  function handleResetItem(itemId) {
+    setItems(
+      items.map((item) => {
+        if (item.id !== itemId) return item;
+        else return { ...item, stage: 0 };
+      }),
+    );
+  }
+
   // Advance Item
   function handleAdvanceItem(itemId, stages) {
     setItems(
@@ -475,6 +485,7 @@ export default function Manager() {
             handleMoveList,
             handleDeleteItem,
             handleRenameItem,
+            handleResetItem,
             handleAdvanceItem,
             handleResizeListStages,
             handleRenameListStages,
