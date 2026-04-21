@@ -7,7 +7,7 @@ export default function App() {
   // Themes feature. Current theme name is set in localstorage
   const [theme, setTheme] = useState(() => {
     const loadTheme = JSON.parse(localStorage.getItem("theme"));
-    return loadTheme || "gruvbox-dark-hard";
+    return loadTheme || "colder-nord";
   });
 
   useEffect(() => {
