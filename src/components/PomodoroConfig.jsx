@@ -4,6 +4,9 @@ import { Howl } from "howler";
 import sound0File from "../sound0.mp3";
 import sound1File from "../sound1.mp3";
 import sound2File from "../sound2.mp3";
+// AUDIT: should I move sound files to another folder?
+// TODO: add a small selection of fun sounds
+// TODO: refactor Pomodoro.jsx to use howler library as well
 
 export default function PomodoroConfig() {
   const { pomoConfig, changePomoConfig, resetPomoConfig } =
@@ -180,8 +183,6 @@ export default function PomodoroConfig() {
           <section>
             <h2># Sound</h2>
             <form className={`grid grid-cols-2`} autoComplete="off">
-              {/* TOOO: add a selection of cool alarm sounds */}
-              {/* TODO: make selecting sound play demo */}
               <label htmlFor="alarmsound">Alarm sound:</label>
               <fieldset className="flex flex-col">
                 <input
