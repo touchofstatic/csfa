@@ -1,13 +1,12 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { useTimer } from "react-timer-hook";
-import { useContext } from "react";
+import { useState, useEffect, useRef, useCallback, useContext } from "react";
 import { ManagerContext } from "./Contexts";
-import Clock from "./Clock";
+import { useTimer } from "react-timer-hook";
 import { AsciiProgressBar } from "@yacosta738/ascii-progress-bar/browser";
 import useSound from "use-sound";
 // TODO+: balance volume in audacity!!! NOT READY TO SHIP!
 // AUDIT: should I move sound files to another folder?
 // const SOUND_URL = "../src/melokacool_notification_6.mp3";
+import Clock from "./Clock";
 
 // @yacosta738/ascii-progress-bar syntax
 // Both are cool I cannot decide

@@ -22,6 +22,7 @@
     "@yacosta738/ascii-progress-bar": "^1.7.0",
     "ajv": "^8.18.0",
     "body-scroll-lock": "^4.0.0-beta.0",
+    "howler": "^2.2.4",
     "react": "^19.2.0",
     "react-ascii-text": "^0.0.4",
     "react-dom": "^19.2.0",
