@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { ManagerContext } from "./Contexts";
 import { Howl } from "howler";
 import sound0File from "../sound0.mp3";
@@ -12,24 +12,38 @@ export default function PomodoroConfig() {
   // Selecting an alarm sound plays a preview
   // 90% of related code is to solve issues like overlapping when user clicks sound B but sound A hasn't finished playing yet and memory leaks
   // New sound effect instances declared directly like "const sound = new Howl({ src: ['sound.mp3'] })" are being created on re-rerender and you lose control of previous instances. Instead we declare them with stable identity
-  const previewSounds = useMemo(
-    () => ({
+  const previewSoundsRef = useRef(null);
+  useEffect(() => {
+    previewSoundsRef.current = {
       sound0: new Howl({ src: [sound0File] }),
       sound1: new Howl({ src: [sound1File] }),
       sound2: new Howl({ src: [sound2File] }),
-    }),
-    [],
-  );
+    };
+    // Cleanup for the audio objects. For each Howl instance .stop immediately halts playback, .unload() releases audio resources from memory. This prevents lingering audio, avoids leaks, and keeps behavior predictable when leaving the config screen
+    return () => {
+      const sounds = previewSoundsRef.current;
+      if (!sounds) return;
+      Object.values(sounds).forEach((sound) => {
+        sound.stop();
+        sound.unload();
+      });
+      previewSoundsRef.current = null;
+    };
+  }, []);
 
   function stopAllPreviews() {
-    Object.values(previewSounds).forEach((sound) => {
+    const sounds = previewSoundsRef.current;
+    if (!sounds) return;
+    Object.values(sounds).forEach((sound) => {
       sound.stop();
     });
   }
 
   function playPreview(nextSound) {
+    const sounds = previewSoundsRef.current;
+    if (!sounds) return;
     stopAllPreviews();
-    previewSounds[nextSound]?.play();
+    sounds[nextSound]?.play();
   }
 
   // Cool new volume slider that has live preview
@@ -39,20 +53,12 @@ export default function PomodoroConfig() {
       1,
       Math.max(0, Number(pomoConfig.volume) / 100),
     );
-    Object.values(previewSounds).forEach((sound) => {
+    const sounds = previewSoundsRef.current;
+    if (!sounds) return;
+    Object.values(sounds).forEach((sound) => {
       sound.volume(nextVolume);
     });
-  }, [pomoConfig.volume, previewSounds]);
-
-  // Cleanup for the audio objects. For each Howl instance .stop immediately halts playback, .unload() releases audio resources from memory. This prevents lingering audio, avoids leaks, and keeps behavior predictable when leaving the config screen. Because previewSounds is stable (I hope?) it should mostly run on umount which is ideal
-  useEffect(() => {
-    return () => {
-      Object.values(previewSounds).forEach((sound) => {
-        sound.stop();
-        sound.unload();
-      });
-    };
-  }, [previewSounds]);
+  }, [pomoConfig.volume]);
 
   return (
     <>
