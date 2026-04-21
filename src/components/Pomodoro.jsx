@@ -28,6 +28,9 @@ customElements.whenDefined("ascii-progress-bar").then(() => {
   });
 });
 
+// const a = new Date();
+// console.log("a: " + a.getDate());
+
 export default function Pomodoro() {
   const { pomoConfig } = useContext(ManagerContext);
   // Current mode = its name and duration
@@ -51,7 +54,14 @@ export default function Pomodoro() {
   }, [totalWins]);
   useEffect(() => {
     localStorage.setItem("total-time", JSON.stringify(totalTime));
+    const foo = new Date();
+    console.log(foo.getDate());
+    // console.log(Date.now());
   }, [totalTime]);
+
+  useEffect(() => {
+    console.log("bweh");
+  }, []);
 
   // Initialize alarm sound
   // const [play] = useSound(SOUND_URL, {
@@ -60,6 +70,9 @@ export default function Pomodoro() {
   const [play] = useSound(`../src/${pomoConfig.alarmSound}.mp3`, {
     volume: pomoConfig.volume,
   });
+
+  // const b = new Date();
+  // console.log("b: " + b.getDate());
 
   // IMPORTANT: Enables intended behavior. A check of consistency between mode's duration in here and in config prop
   if (mode[0] === "Pomodoro" && mode[1] !== pomoConfig.pomo)

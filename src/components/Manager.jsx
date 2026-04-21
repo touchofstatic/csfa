@@ -99,7 +99,8 @@ export default function Manager() {
       if (value === "no") setPomoConfig({ ...pomoConfig, autoStart: false });
     }
     // Alarm sound
-    if (name === "alarmsound") setPomoConfig({ ...pomoConfig, alarmSound: value });
+    if (name === "alarmsound")
+      setPomoConfig({ ...pomoConfig, alarmSound: value });
 
     // Volume slider
     if (name === "volume") setPomoConfig({ ...pomoConfig, volume: value });
@@ -185,8 +186,17 @@ export default function Manager() {
     // Reset input
     event.target.reset();
     // Lists are created with stages specified in user board config
+    // setLists([
+    //   ...lists,
+    //   {
+    //     name: newList,
+    //     id: uuidv4(),
+    //     itemIds: [],
+    //     collapsed: false,
+    //     stages: stagesConfig,
+    //   },
+    // ]);
     setLists([
-      ...lists,
       {
         name: newList,
         id: uuidv4(),
@@ -194,6 +204,7 @@ export default function Manager() {
         collapsed: false,
         stages: stagesConfig,
       },
+      ...lists,
     ]);
   }
 
