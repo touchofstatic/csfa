@@ -27,6 +27,7 @@ export default function PomodoroConfig() {
         sound.stop();
         sound.unload();
       });
+      // Clears the ref explicitly by  removing the stored value
       previewSoundsRef.current = null;
     };
   }, []);
@@ -39,16 +40,23 @@ export default function PomodoroConfig() {
     });
   }
 
-  function playPreview(nextSound) {
+  // Preview for selecting a track. Should interrupt each other (prevent overlap)
+  function trackPreview(nextSound) {
     const sounds = previewSoundsRef.current;
     if (!sounds) return;
     stopAllPreviews();
     sounds[nextSound]?.play();
   }
 
-  // Cool new volume slider that has live preview
+  // Preview for adjusting volume. Should not interrupt each other (drag slider while listening)
+  function volumePreview(currentSound) {
+    const sounds = previewSoundsRef.current;
+    if (!sounds) return;
+    if (!sounds[currentSound]?.playing()) sounds[currentSound]?.play();
+  }
+
+  // Normalize and clamp a UI volume value into the range expected by audio libraries like Howler, converting a percentage-style input (75) into a decimal gain value (0.75). Values below 0 become 0, and values above 1 become 1. So nextVolume is intended to stay in [0, 1], and it prevents invalid loudness values from being applied to the sound engine
   useEffect(() => {
-    // Normalize and clamp a UI volume value into the range expected by audio libraries like Howler, converting a percentage-style input (75) into a decimal gain value (0.75). Values below 0 become 0, and values above 1 become 1. So nextVolume is intended to stay in [0, 1], and it prevents invalid loudness values from being applied to the sound engine
     const nextVolume = Math.min(
       1,
       Math.max(0, Number(pomoConfig.volume) / 100),
@@ -184,7 +192,7 @@ export default function PomodoroConfig() {
                   checked={pomoConfig.alarmSound === "sound0"}
                   onChange={(e) => {
                     changePomoConfig(e.target.value, e.target.name);
-                    playPreview(e.target.value);
+                    trackPreview(e.target.value);
                   }}
                 ></input>
                 {/* KNOWN ISSUE: Why are you hidden behind checkbox.... low priority because it's "fixed" */}
@@ -199,7 +207,7 @@ export default function PomodoroConfig() {
                   checked={pomoConfig.alarmSound === "sound1"}
                   onChange={(e) => {
                     changePomoConfig(e.target.value, e.target.name);
-                    playPreview(e.target.value);
+                    trackPreview(e.target.value);
                   }}
                 ></input>
                 <label htmlFor="sound1" className="ml-[3ch]">
@@ -213,7 +221,7 @@ export default function PomodoroConfig() {
                   checked={pomoConfig.alarmSound === "sound2"}
                   onChange={(e) => {
                     changePomoConfig(e.target.value, e.target.name);
-                    playPreview(e.target.value);
+                    trackPreview(e.target.value);
                   }}
                 ></input>
                 <label htmlFor="sound2" className="ml-[3ch]">
@@ -232,6 +240,7 @@ export default function PomodoroConfig() {
                 value={pomoConfig.volume}
                 onChange={(e) => {
                   changePomoConfig(e.target.value, e.target.name);
+                  volumePreview(pomoConfig.alarmSound);
                 }}
                 className="w-full min-w-0"
               />
