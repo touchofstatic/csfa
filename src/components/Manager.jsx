@@ -485,7 +485,8 @@ export default function Manager() {
 
       {/* <body>... 2!!!
       IMPORTANT: load bearing for flow. I forgot why */}
-      <div className="mx-[1ch] my-[1lh] flex max-w-dvw flex-col gap-[1ch] md:flex-row">
+      <div className="flex max-w-dvw flex-col gap-[1ch] py-4 md:flex-row">
+        {/* <div className="mx-[1ch] my-[1lh] flex max-w-dvw flex-col gap-[1ch] md:flex-row"> */}
         <ManagerContext.Provider
           value={{
             items,

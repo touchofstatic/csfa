@@ -16,7 +16,7 @@ export default function Navbar() {
 
   return (
     // Kinda ass to combine css modules and tailwind like that but I've already done it a thousand times here and there's so many moving parts in the details dropdown's styles
-    <nav className="z-1001 box-border flex w-dvw bg-[var(--foreground0)] shadow-md md:sticky md:top-0">
+    <nav className="z-1001 box-border flex w-dvw bg-[var(--foreground0)] shadow-md md:sticky md:top-0 md:h-10 md:items-center">
       <details
         is-="popover"
         className={`noselect relative`}
