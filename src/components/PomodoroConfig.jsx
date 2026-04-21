@@ -11,9 +11,9 @@ export default function PomodoroConfig() {
         size-="small"
         command="show-modal"
         commandfor="config-pomo-dialog"
-        className={`hover:bg-[var(--foreground2)] active:bg-[var(--background0)]`}
+        className={`block w-full text-left hover:bg-[var(--foreground2)] active:bg-[var(--background0)]`}
       >
-        PomoConfig
+        Pomodoro
       </button>
 
       {/* Dimensions subject to change */}
@@ -119,12 +119,6 @@ export default function PomodoroConfig() {
               {/* TODO: make selecting sound play demo */}
               <label htmlFor="alarmsound">Alarm sound:</label>
               <fieldset className="flex flex-col">
-                {/* <button size-="small" name="alarm" value="sound0">
-                  sound0
-                </button>
-                <button size-="small" name="alarm" value="sound1">
-                  sound1
-                </button> */}
                 <input
                   type="radio"
                   name="alarmsound"

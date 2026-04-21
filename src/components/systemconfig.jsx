@@ -20,9 +20,9 @@ export const SYSTEM_CONFIG_POMODORO = {
 
   // TEMPORARY ONLY FOR DEVELOPMENT
   pomo: 5,
-  short: 60,
-  long: 60,
-  interval: 1,
+  short: 2,
+  long: 3,
+  interval: 2,
   autoStart: false,
   alarmSound: "sound0",
   volume: 10,

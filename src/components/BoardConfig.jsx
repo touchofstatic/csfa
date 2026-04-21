@@ -4,7 +4,7 @@ import Import from "./Import";
 import Export from "./Export";
 import ResetBoardConfig from "./ResetBoardConfig";
 
-export default function BoardConfig() {
+export default function BoardConfig(detailsRef) {
   const { stagesConfig, handleResizeConfigStages, handleRenameConfigStages } =
     useContext(ManagerContext);
 
@@ -34,9 +34,10 @@ export default function BoardConfig() {
         command="show-modal"
         commandfor="config-board-dialog"
         size-="small"
-        className={`hover:bg-[var(--foreground2)] active:bg-[var(--background0)]`}
+        className={`block w-full text-left hover:bg-[var(--foreground2)] active:bg-[var(--background0)]`}
+        onClick={() => (detailsRef.current.open = false)}
       >
-        BoardConfig
+        Board
       </button>
 
       {/* Dimensions subject to change */}

@@ -1,0 +1,14 @@
+.summary {
+  color: var(--background0);
+  padding-inline: 1ch;
+  cursor: pointer;
+}
+.summary:hover {
+  background-color: var(--foreground2);
+}
+.summary:active {
+  color: var(--foreground0);
+  background-color: var(--background0);
+  font-weight: bold;
+  text-decoration: underline;
+}
