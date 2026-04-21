@@ -28,16 +28,14 @@ customElements.whenDefined("ascii-progress-bar").then(() => {
   });
 });
 
-// const a = new Date();
-// console.log("a: " + a.getDate());
-
 export default function Pomodoro() {
+  // TODO+++: Current implementation only adds up totalWins and totalTime indefinitely. I'd like to append dd-mm-yyyy timestamp to totalWins and totalTime db records. On either changes, if current Date doesn't match current record's timestamp, "archive" {timestamp, totalWins, totalTime} and open new record. After giving it some thought I decided to work on it after db migration because that might make accessing and storing those records much simpler
+
   const { pomoConfig } = useContext(ManagerContext);
   // Current mode = its name and duration
   const [mode, setMode] = useState(["Pomodoro", pomoConfig.pomo]);
   // For auto start. Only AS during mode cycle (pomo > short > pomo > long > ...), don't AS if Timer rendered due to page loading or manually selecting mode. That'd be bad user experience. Note: cycling and paused are different and entirely unrelated
   const [cycling, setCycling] = useState(false);
-  // TODO+: store record's date and check against today's date instead of always counting up
   // Total completed pomodoros today (WIP). Based on timer expire proc
   const [totalWins, setTotalWins] = useState(() => {
     const loadTotalWins = JSON.parse(localStorage.getItem("total-wins"));
@@ -54,14 +52,7 @@ export default function Pomodoro() {
   }, [totalWins]);
   useEffect(() => {
     localStorage.setItem("total-time", JSON.stringify(totalTime));
-    const foo = new Date();
-    console.log(foo.getDate());
-    // console.log(Date.now());
   }, [totalTime]);
-
-  useEffect(() => {
-    console.log("bweh");
-  }, []);
 
   // Initialize alarm sound
   // const [play] = useSound(SOUND_URL, {
@@ -70,9 +61,6 @@ export default function Pomodoro() {
   const [play] = useSound(`../src/${pomoConfig.alarmSound}.mp3`, {
     volume: pomoConfig.volume,
   });
-
-  // const b = new Date();
-  // console.log("b: " + b.getDate());
 
   // IMPORTANT: Enables intended behavior. A check of consistency between mode's duration in here and in config prop
   if (mode[0] === "Pomodoro" && mode[1] !== pomoConfig.pomo)
