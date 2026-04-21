@@ -8,6 +8,7 @@ import styles from "../styles/navbar.module.css";
 // Design guideline: based on navbars of software like Legacy BIOS and Norton Commander.
 // Because the site is styled as software, some links styled as buttons might be necessary here
 export default function Navbar() {
+  // TODO: clicking on either Config button should close details dropdown too
   const detailsRef = useRef(null);
   const clickAwayRef = useClickAway(() => {
     detailsRef.current.open = false;

@@ -10,6 +10,7 @@ export const SYSTEM_CONFIG_STAGES = [
 
 export const SYSTEM_CONFIG_POMODORO = {
   // TIME SHOULD ALWAYS BE SET IN ROUND MINUTES
+  // Note: bypassing that rule for development causes all kinds of strange behavior; that's completely normal
   // pomo: 1500,
   // short: 300,
   // long: 900,
@@ -19,10 +20,10 @@ export const SYSTEM_CONFIG_POMODORO = {
   // volume: 10,
 
   // TEMPORARY ONLY FOR DEVELOPMENT
-  pomo: 5,
-  short: 2,
-  long: 3,
-  interval: 2,
+  pomo: 60,
+  short: 60,
+  long: 60,
+  interval: 4,
   autoStart: false,
   alarmSound: "sound0",
   volume: 10,
