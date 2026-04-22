@@ -74,20 +74,20 @@ export default function Item({ item, myListId, stages, ...handle }) {
 
   return (
     <div
-      className={`${styles.item} ${!draftRenameItem && `${styles.hoveritem}`}`}
+      className={`${styles.item} ${!draftRenameItem && `${styles.hoveritem}`} py-0.5`}
     >
       {/* Item controls */}
       <div>
         {/* Dnd drag handle. Needs noselect, and set font-bold individually as it's not a button like the others */}
         <span
           {...handle}
-          className={`${ctrlcolor} noselect p-0.5 hover:font-bold`}
+          className={`${ctrlcolor} noselect px-0.5 hover:font-bold`}
         >
           [=]
         </span>
         {/* Rename */}
         <button
-          className={`${ctrlcolor} ${styles.controls} p-0.5`}
+          className={`${ctrlcolor} ${styles.controls} px-0.5`}
           size-="small"
           onClick={() => setDraftRenameItem(item.name)}
         >
@@ -95,7 +95,7 @@ export default function Item({ item, myListId, stages, ...handle }) {
         </button>
         {/* Delete */}
         <button
-          className={`${ctrlcolor} ${styles.controls} p-0.5`}
+          className={`${ctrlcolor} ${styles.controls} px-0.5`}
           size-="small"
           onClick={() => handleDeleteItem(item.id, myListId)}
         >
@@ -103,7 +103,7 @@ export default function Item({ item, myListId, stages, ...handle }) {
         </button>
         {/* Reset stage */}
         <button
-          className={`${ctrlcolor} ${styles.controls} p-0.5`}
+          className={`${ctrlcolor} ${styles.controls} px-0.5`}
           size-="small"
           onClick={() => handleResetItem(item.id)}
         >

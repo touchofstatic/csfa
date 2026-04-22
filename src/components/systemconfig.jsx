@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 export const SYSTEM_CONFIG_STAGES = [
-  "unspecified",
+  "unassigned",
   "queued",
   "priority",
   "working",

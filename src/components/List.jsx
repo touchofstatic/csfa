@@ -98,7 +98,7 @@ export default function List({ list, index, children }) {
         <div>
           {/* Settings */}
           <button
-            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0.5`}
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
             size-="small"
             command="show-modal"
             commandfor={`config-board-dialog-${list.id}`}
@@ -107,7 +107,7 @@ export default function List({ list, index, children }) {
           </button>
           {/* Rename */}
           <button
-            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0.5`}
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
             size-="small"
             onClick={() => setDraftRenameList(list.name)}
           >
@@ -115,7 +115,7 @@ export default function List({ list, index, children }) {
           </button>
           {/* Delete */}
           <button
-            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0.5`}
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
             size-="small"
             onClick={() => handleDeleteList(list.id, myItems)}
           >
@@ -123,7 +123,7 @@ export default function List({ list, index, children }) {
           </button>
           {/* Collapse */}
           <button
-            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0.5`}
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
             size-="small"
             onClick={() => handleCollapseList(list.id)}
           >
@@ -131,7 +131,7 @@ export default function List({ list, index, children }) {
           </button>
           {/* Move up */}
           <button
-            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0.5`}
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
             size-="small"
             onClick={() => handleMoveList(index, "up")}
           >
@@ -139,7 +139,7 @@ export default function List({ list, index, children }) {
           </button>
           {/* Move down */}
           <button
-            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0.5`}
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
             size-="small"
             onClick={() => handleMoveList(index, "down")}
           >
@@ -147,7 +147,7 @@ export default function List({ list, index, children }) {
           </button>
           {/* Order by stage */}
           <button
-            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0.5`}
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
             size-="small"
             onClick={() => handleOrderList(list.id, myItems)}
           >
@@ -279,7 +279,7 @@ function ListSettings({
           <h2># Stages</h2>
 
           {/* AUDIT: accessibility */}
-          {/* Display list.stages.length - 1 to user because there's always one, stages[0] aka unspecified, but it's hidden from user and can't be changed */}
+          {/* Display list.stages.length - 1 to user because there's always one, stages[0] aka unassigned, but it's hidden from user and can't be changed */}
           <label htmlFor="listStages">
             <input
               type="range"
@@ -315,78 +315,39 @@ function ListSettings({
   );
 }
 
+// Stacked bar graph of items' stages
 function Bar({ myItems }) {
-  let test = [[], [], [], [], [], [], [], []];
+  // Collect items by stage to know how many in each
+  let segments = [[], [], [], [], [], [], [], []];
   myItems.map((item) => {
-    test[item.stage].push(item.id);
+    segments[item.stage].push(item.id);
   });
 
-  return (
-    <div className="noselect flex w-full min-w-full">
-      {test[1].length > 0 && (
+  const bar = [];
+  for (let i = 1; i < 8; i++) {
+    const segcolor = "bg-stage" + i;
+    if (segments[i].length > 0)
+      // Segment occupies width based on its items count % of all items
+      bar.push(
         <span
-          className="bg-stage1"
-          style={{ width: `${(test[1].length * 100) / myItems.length}%` }}
+          className={segcolor}
+          style={{ width: `${(segments[i].length * 100) / myItems.length}%` }}
         >
-          {test[1].length}
-        </span>
-      )}
-      {test[2].length > 0 && (
-        <span
-          className="bg-stage2"
-          style={{ width: `${(test[2].length * 100) / myItems.length}%` }}
-        >
-          {test[2].length}
-        </span>
-      )}
-      {test[3].length > 0 && (
-        <span
-          className="bg-stage3"
-          style={{ width: `${(test[3].length * 100) / myItems.length}%` }}
-        >
-          {test[3].length}
-        </span>
-      )}
-      {test[4].length > 0 && (
-        <span
-          className="bg-stage4"
-          style={{ width: `${(test[4].length * 100) / myItems.length}%` }}
-        >
-          {test[4].length}
-        </span>
-      )}
-      {test[5].length > 0 && (
-        <span
-          className="bg-stage5"
-          style={{ width: `${(test[5].length * 100) / myItems.length}%` }}
-        >
-          {test[5].length}
-        </span>
-      )}
-      {test[6].length > 0 && (
-        <span
-          className="bg-stage6"
-          style={{ width: `${(test[6].length * 100) / myItems.length}%` }}
-        >
-          {test[6].length}
-        </span>
-      )}
-      {test[7].length > 0 && (
-        <span
-          className="bg-stage7"
-          style={{ width: `${(test[7].length * 100) / myItems.length}%` }}
-        >
-          {test[7].length}
-        </span>
-      )}
-      {test[0].length > 0 && (
-        <span
-          className="bg-stage0"
-          style={{ width: `${(test[0].length * 100) / myItems.length}%` }}
-        >
-          {test[0].length}
-        </span>
-      )}
-    </div>
-  );
+          {segments[i].length}
+        </span>,
+      );
+  }
+  // Unassigned goes last
+  if (segments[0].length > 0)
+    bar.push(
+      <span
+        className="bg-stage0"
+        style={{ width: `${(segments[0].length * 100) / myItems.length}%` }}
+      >
+        {segments[0].length}
+      </span>,
+    );
+
+  // Important to set width
+  return <div className="noselect flex w-full min-w-full py-0.5">{bar}</div>;
 }
