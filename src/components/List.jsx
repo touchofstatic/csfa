@@ -279,7 +279,7 @@ function ListSettings({
           <h2># Stages</h2>
 
           {/* AUDIT: accessibility */}
-          {/* Display list.stages.length - 1 to user because there's always one, stages[0] aka unassigned, but it's hidden from user and can't be changed */}
+          {/* Display list.stages.length - 1 to user because there's always one, stages[0] aka none, but it's hidden from user and can't be changed */}
           <label htmlFor="listStages">
             <input
               type="range"
@@ -337,7 +337,7 @@ function Bar({ myItems }) {
         </span>,
       );
   }
-  // Unassigned goes last
+  // none goes last
   if (segments[0].length > 0)
     bar.push(
       <span
