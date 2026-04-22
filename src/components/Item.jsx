@@ -107,7 +107,7 @@ export default function Item({ item, myListId, stages, ...handle }) {
           size-="small"
           onClick={() => handleResetItem(item.id)}
         >
-          [r]
+          [cl]
         </button>
         {/* Advance stage */}
         <button
