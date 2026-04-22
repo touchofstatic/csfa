@@ -16,7 +16,14 @@ const THEMES_STANDARD = [
 ];
 
 // Our themes based on colors from webtui themes
-const THEMES_CUSTOM = ["catppuccin-pink", "colder-nord"];
+const THEMES_CUSTOM = [
+  "catppuccin-pink",
+  "colder-nord",
+  "solarized-dark",
+  "solarized-light",
+  "selenized-dark",
+  "selenized-light",
+];
 
 export default function Themes() {
   const { theme, changeTheme } = useContext(ThemeContext);
@@ -36,7 +43,7 @@ export default function Themes() {
       <dialog
         id="themes-dialog"
         popover="true"
-        className={`h-4/5 w-full md:h-[50ch]`}
+        className={`h-4/5 w-full md:min-h-[26lh]`}
       >
         <article
           className={`align-center dialog-webtuibox-spacing flex h-full flex-col justify-center`}

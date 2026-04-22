@@ -134,3 +134,238 @@ https://github.com/webtui/webtui/blob/master/packages/theme-nord/src/components/
     }
   }
 }
+
+/* TODO: touch up; REWIEW NOTES AND COMMENMTS! DON'T FORGET */
+/* solarized-dark */
+@layer base {
+  [data-webtui-theme="solarized-dark"] {
+    /* Base tones — dark to light */
+    --base03: #002b36;
+    --base02: #073642;
+    --base01: #586e75;
+    --base00: #657b83;
+    --base0: #839496;
+    --base1: #93a1a1;
+    --base2: #eee8d5;
+    --base3: #fdf6e3;
+
+    /* Accent Colors */
+    --sol-yellow: #b58900;
+    --sol-orange: #cb4b16;
+    --sol-red: #dc322f;
+    --sol-magenta: #d33682;
+    --sol-violet: #6c71c4;
+    --sol-blue: #268bd2;
+    --sol-cyan: #2aa198;
+    --sol-green: #859900;
+
+    /* background0 is darkest; foreground0 is brightest (used as navbar/selected-button bg) */
+    --background0: var(--base03);
+    --background1: var(--base02);
+    --background2: var(--base01);
+    --background3: var(--base00);
+
+    --foreground0: var(--base2);
+    --foreground1: var(--base1);
+    --foreground2: var(--base0);
+
+    --color0: var(--sol-red);
+    --color1: var(--sol-orange);
+    --color2: var(--sol-yellow);
+    --color3: var(--sol-cyan);
+    --color4: var(--sol-blue);
+    --color5: var(--sol-violet);
+    --color6: var(--sol-green);
+  }
+}
+
+/* Overrides */
+@layer components {
+  [data-webtui-theme="solarized-dark"] {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: var(--sol-blue);
+    }
+  }
+}
+
+/* solarized-light */
+@layer base {
+  [data-webtui-theme="solarized-light"] {
+    /* Base tones — light to dark */
+    --base03: #002b36;
+    --base02: #073642;
+    --base01: #586e75;
+    --base00: #657b83;
+    --base0: #839496;
+    --base1: #93a1a1;
+    --base2: #eee8d5;
+    --base3: #fdf6e3;
+
+    /* Accent Colors */
+    --sol-yellow: #b58900;
+    --sol-orange: #cb4b16;
+    --sol-red: #dc322f;
+    --sol-magenta: #d33682;
+    --sol-violet: #6c71c4;
+    --sol-blue: #268bd2;
+    --sol-cyan: #2aa198;
+    --sol-green: #859900;
+
+    /* Light theme: backgrounds are the warm light tones, foregrounds are the dark ink tones */
+    --background0: var(--base3);
+    --background1: var(--base2);
+    --background2: var(--base1);
+    --background3: var(--base0);
+
+    --foreground0: var(--base02);
+    --foreground1: var(--base01);
+    --foreground2: var(--base00);
+
+    --color0: var(--sol-red);
+    --color1: var(--sol-orange);
+    --color2: var(--sol-yellow);
+    --color3: var(--sol-cyan);
+    --color4: var(--sol-blue);
+    --color5: var(--sol-violet);
+    --color6: var(--sol-green);
+  }
+}
+
+/* Overrides */
+@layer components {
+  [data-webtui-theme="solarized-light"] {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: var(--sol-blue);
+    }
+  }
+}
+
+/* selenized-dark */
+@layer base {
+  [data-webtui-theme="selenized-dark"] {
+    /* Backgrounds — dark to lighter */
+    --bg_0: #103c48;
+    --bg_1: #184956;
+    --bg_2: #2d5b69;
+    --bg_3: #3a6f7f;
+
+    /* Midtone */
+    --dim_0: #72898f;
+
+    /* Foregrounds — brightest to dimmer */
+    --fg_1: #cad8d9;
+    --fg_0: #adbcbc;
+
+    /* Accent Colors */
+    --sel-red: #fa5750;
+    --sel-orange: #ed8649;
+    --sel-yellow: #dbb32d;
+    --sel-cyan: #41c7b9;
+    --sel-blue: #4695f7;
+    --sel-violet: #af88eb;
+    --sel-green: #75b938;
+    --sel-magenta: #f275be;
+
+    --background0: var(--bg_0);
+    --background1: var(--bg_1);
+    --background2: var(--bg_2);
+    --background3: var(--bg_3);
+
+    /* fg_1 is brightest — used as navbar bg and selected-button highlight */
+    --foreground0: var(--fg_1);
+    --foreground1: var(--fg_0);
+    --foreground2: var(--dim_0);
+
+    --color0: var(--sel-red);
+    --color1: var(--sel-orange);
+    --color2: var(--sel-yellow);
+    --color3: var(--sel-cyan);
+    --color4: var(--sel-blue);
+    --color5: var(--sel-violet);
+    --color6: var(--sel-green);
+  }
+}
+
+/* Overrides */
+@layer components {
+  [data-webtui-theme="selenized-dark"] {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: var(--sel-blue);
+    }
+  }
+}
+
+/* selenized-light */
+@layer base {
+  [data-webtui-theme="selenized-light"] {
+    /* Backgrounds — lightest to darker */
+    --bg_0: #fbf3db;
+    --bg_1: #ece3cc;
+    --bg_2: #d5cdb6;
+    --bg_3: #c5bfaa;
+
+    /* Midtone */
+    --dim_0: #909995;
+
+    /* Foregrounds — darkest ink to slightly lighter */
+    --fg_1: #3a4d53;
+    --fg_0: #53676d;
+
+    /* Accent Colors (print-contrast variants for light bg) */
+    --sel-red: #d2212d;
+    --sel-orange: #c25d1e;
+    --sel-yellow: #ad8900;
+    --sel-cyan: #009c8f;
+    --sel-blue: #0072d4;
+    --sel-violet: #8762c6;
+    --sel-green: #489100;
+    --sel-magenta: #ca4898;
+
+    /* bg_0 is lightest — main page bg; fg_1 is darkest ink — navbar bg */
+    --background0: var(--bg_0);
+    --background1: var(--bg_1);
+    --background2: var(--bg_2);
+    --background3: var(--bg_3);
+
+    --foreground0: var(--fg_1);
+    --foreground1: var(--fg_0);
+    --foreground2: var(--dim_0);
+
+    --color0: var(--sel-red);
+    --color1: var(--sel-orange);
+    --color2: var(--sel-yellow);
+    --color3: var(--sel-cyan);
+    --color4: var(--sel-blue);
+    --color5: var(--sel-violet);
+    --color6: var(--sel-green);
+  }
+}
+
+/* Overrides */
+@layer components {
+  [data-webtui-theme="selenized-light"] {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: var(--sel-blue);
+    }
+  }
+}
