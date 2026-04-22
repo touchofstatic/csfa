@@ -102,7 +102,6 @@ Back: bg is colored */
 .front-stage0 {
   color: var(--foreground0);
 }
-
 .front-stage1 {
   color: var(--color0);
 }
@@ -125,6 +124,9 @@ Back: bg is colored */
   color: var(--color6);
 }
 
+.bg-stage0 {
+  background-color: var(--background0);
+}
 .bg-stage1 {
   background-color: var(--color0);
   color: var(--background0);

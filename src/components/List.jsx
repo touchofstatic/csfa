@@ -7,7 +7,6 @@ import styles from "../styles/list.module.css";
 
 export default function List({ list, index, children }) {
   const [draftRenameList, setDraftRenameList] = useState("");
-
   const {
     items,
     handleAddItem,
@@ -315,7 +314,10 @@ function ListSettings({
   );
 }
 
-// Stacked bar graph of items' stages
+// Stacked bar graph of items' stages (That's what this style of graph is called)
+// NOTES from removed filter implementation: click on segment to display only items at corresponding stage. Click anywhere on bar to reset. Stage 0 segment can't be targeted, can only reset filter.
+// I added "filter" state that was -1 or index. handleFilter if arg !== -1 then setFilter -1, else setFilter(arg). Pass filter to Item to conditionally display if filter === -1 or .item.stage. opacity-15 is good.
+// HOWEVER user experience issue: user filters targeting stage i items A, ... > changes stage of A (which is the primary mode of using the site) > A isn't in filter anymore and disappears but user probably still wants to interact with A. We might want to "capture" filtered items in the moment and keep them onscreen. So it'd be based on "items that passed filter" rather than "current condition of stage". Does that contradict the concept of filtering?
 function Bar({ myItems }) {
   // Collect items by stage to know how many in each
   let segments = [[], [], [], [], [], [], [], []];
@@ -324,13 +326,16 @@ function Bar({ myItems }) {
   });
 
   const bar = [];
+  let segcolor = "";
+
   for (let i = 1; i < 8; i++) {
-    const segcolor = "bg-stage" + i;
+    segcolor = "bg-stage" + i;
     if (segments[i].length > 0)
-      // Segment occupies width based on its items count % of all items
       bar.push(
+        // Segment occupies width based on its items count % of all items. Shouldn't squish each other to become unreadable
         <span
-          className={segcolor}
+          key={i}
+          className={`${segcolor} min-w-fit px-[1ch]`}
           style={{ width: `${(segments[i].length * 100) / myItems.length}%` }}
         >
           {segments[i].length}
@@ -338,16 +343,17 @@ function Bar({ myItems }) {
       );
   }
   // none goes last
+  segcolor = "bg-stage0";
   if (segments[0].length > 0)
     bar.push(
       <span
-        className="bg-stage0"
+        key="0"
+        className={`${segcolor} min-w-fit px-[1ch]`}
         style={{ width: `${(segments[0].length * 100) / myItems.length}%` }}
       >
         {segments[0].length}
       </span>,
     );
-
-  // Important to set width
+  // It's important to set bar width
   return <div className="noselect flex w-full min-w-full py-0.5">{bar}</div>;
 }
