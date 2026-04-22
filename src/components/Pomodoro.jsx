@@ -5,6 +5,53 @@ import { AsciiProgressBar } from "@yacosta738/ascii-progress-bar/browser";
 import useSound from "use-sound";
 import Clock from "./Clock";
 
+const TOTAL_WINS_KEY = "total-wins";
+const TOTAL_TIME_KEY = "total-time";
+
+function getTodayStamp() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function readDailyState(key) {
+  const raw = localStorage.getItem(key);
+  const today = getTodayStamp();
+
+  if (!raw) {
+    // No record > reset
+    return { date: today, value: 0 };
+  }
+
+  try {
+    const parsed = JSON.parse(raw);
+    // Educational concept from chat: backward compatibility with old numeric-only records i.e From when my app recorded { total-time: n }.
+    // "This check is a migration safeguard. It handles older localStorage data that may have been saved as a plain number before the app switched to the newer object format { date, value }. When parsed is a number, the code wraps it into the new structure and assigns today’s date. That lets the app keep existing user data instead of discarding it, while ensuring the rest of the code always receives one consistent shape. In practice, this avoids breaking changes during upgrades and keeps the daily-reset logic compatible with legacy stored values"
+    if (typeof parsed === "number") {
+      return { date: today, value: parsed };
+    }
+
+    // Check structure
+    if (
+      parsed &&
+      typeof parsed === "object" &&
+      typeof parsed.date === "string" &&
+      typeof parsed.value === "number"
+    ) {
+      // Parse success, correct structure > check for daily reset
+      return parsed.date === today ? parsed : { date: today, value: 0 };
+    }
+    // Remember: catch only runs on thrown errors, mainly invalid JSON syntax
+  } catch {
+    // Parse failure > reset
+    return { date: today, value: 0 };
+  }
+  // Parse success, incorrect stucture > reset
+  return { date: today, value: 0 };
+}
+
 // @yacosta738/ascii-progress-bar syntax
 // Both are cool I cannot decide
 AsciiProgressBar.register();
@@ -24,37 +71,46 @@ customElements.whenDefined("ascii-progress-bar").then(() => {
   });
 });
 
+// TODO+++: Save daily history records when migrating to DB
 export default function Pomodoro() {
-  // TODO+++: Current implementation only adds up totalWins and totalTime indefinitely. I'd like to append dd-mm-yyyy timestamp to totalWins and totalTime db records. On either changes, if current Date doesn't match current record's timestamp, "archive" {timestamp, totalWins, totalTime} and open new record. After giving it some thought I decided to work on it after db migration because that might make accessing and storing those records much simpler
-  // TODO: maybe just basic day reset so you can ship v1
-
   const { pomoConfig } = useContext(ManagerContext);
   // Current mode = its name and duration
   const [mode, setMode] = useState(["Pomodoro", pomoConfig.pomo]);
   // For auto start. Only AS during mode cycle (pomo > short > pomo > long > ...), don't AS if Timer rendered due to page loading or manually selecting mode. That'd be bad user experience. Note: cycling and paused are different and entirely unrelated
   const [cycling, setCycling] = useState(false);
-  // Total completed pomodoros today (WIP). Based on timer expire proc
-  const [totalWins, setTotalWins] = useState(() => {
-    const loadTotalWins = JSON.parse(localStorage.getItem("total-wins"));
-    return loadTotalWins || 0;
-  });
-  // Total time spent in pomodoro today (WIP)
-  const [totalTime, setTotalTime] = useState(() => {
-    return JSON.parse(localStorage.getItem("total-time")) || 0;
-  });
+  // Daily counters are stored with {date, value} so they reset automatically when a new day starts.
+  const [totalWinsRecord, setTotalWinsRecord] = useState(() =>
+    readDailyState(TOTAL_WINS_KEY),
+  );
+  const [totalTimeRecord, setTotalTimeRecord] = useState(() =>
+    readDailyState(TOTAL_TIME_KEY),
+  );
+
+  const totalWins = totalWinsRecord.value;
+  const totalTime = totalTimeRecord.value;
 
   // Update localstorage
   useEffect(() => {
-    localStorage.setItem("total-wins", JSON.stringify(totalWins));
-  }, [totalWins]);
+    const today = getTodayStamp();
+    const recordToSave =
+      totalWinsRecord.date === today
+        ? totalWinsRecord
+        : { date: today, value: 0 };
+
+    localStorage.setItem(TOTAL_WINS_KEY, JSON.stringify(recordToSave));
+  }, [totalWinsRecord]);
+
   useEffect(() => {
-    localStorage.setItem("total-time", JSON.stringify(totalTime));
-  }, [totalTime]);
+    const today = getTodayStamp();
+    const recordToSave =
+      totalTimeRecord.date === today
+        ? totalTimeRecord
+        : { date: today, value: 0 };
+
+    localStorage.setItem(TOTAL_TIME_KEY, JSON.stringify(recordToSave));
+  }, [totalTimeRecord]);
 
   // Initialize alarm sound
-  // const [play] = useSound(SOUND_URL, {
-  //   volume: pomoConfig.volume,
-  // });
   const [play] = useSound(`../src/${pomoConfig.alarmSound}.mp3`, {
     volume: pomoConfig.volume,
   });
@@ -70,9 +126,14 @@ export default function Pomodoro() {
   // Timer expired
   function handleExpire() {
     if (mode[0] === "Pomodoro") {
-      setTotalWins(totalWins + 1);
+      const today = getTodayStamp();
+      const currentWins =
+        totalWinsRecord.date === today ? totalWinsRecord.value : 0;
+      const nextWins = currentWins + 1;
+
+      setTotalWinsRecord({ date: today, value: nextWins });
       // Don't forget, set state is asyncronous!
-      if ((totalWins + 1) % pomoConfig.interval !== 0)
+      if (nextWins % pomoConfig.interval !== 0)
         setMode(["Short break", pomoConfig.short]);
       else setMode(["Long break", pomoConfig.long]);
     } else if (mode[0] === "Short break" || mode[0] === "Long break") {
@@ -83,7 +144,13 @@ export default function Pomodoro() {
   }
 
   // Cache addMinute with useCallback so that it doesn't cause a loop in effect. Because it uses the functional updater and doesn't reference total time directly, it doesn't have dependencies itself
-  const addMinute = useCallback(() => setTotalTime((prev) => prev + 1), []);
+  const addMinute = useCallback(() => {
+    setTotalTimeRecord((prev) => {
+      const today = getTodayStamp();
+      const baseValue = prev.date === today ? prev.value : 0;
+      return { date: today, value: baseValue + 1 };
+    });
+  }, []);
 
   // Select mode
   function selectMode(mode) {
@@ -199,7 +266,7 @@ function Timer({
   // Notes:
   // 1) "That's a lot of effect procs and storage operations. Why not add minutes all at once when a pomodoro stops (by timer expire or select mode)?"
   // User can stop it by other means like closing the browser or turning off the computer. What if user spent 30 minutes out of 45 working and had a power outage? We must add 30 minutes to their statistic. Then we must've been persistently recording that 30 minutes passed. Tracking in real time is the only solution.
-  // 2) I also tried useStopwatch from react-timer-hook, but it can't pause, and always risks going out of sync with useTimer. Ultimately, calculating from the timer info we already have is perfectly fine.
+  // 2) I also tried useStopwatch from react-timer-hook. But it can't pause, and always risks going out of sync with useTimer. Ultimately, calculating from the timer info we already have is perfectly fine.
   useEffect(() => {
     if (
       mode[0] === "Pomodoro" &&
