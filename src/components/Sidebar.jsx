@@ -10,9 +10,7 @@ export default function Sidebar() {
   const { items, handleAddList } = useContext(ManagerContext);
 
   return (
-    // md:top-[2lh] to not collide with sticky header
-    <aside className="flex flex-col md:sticky md:top-10 md:max-h-[calc(100dvh-1rem)] md:w-[36ch] md:min-w-[36ch] md:self-start md:overflow-y-auto">
-      {/* <aside className="flex flex-col border-1 md:sticky md:top-[2lh] md:h-dvh md:max-h-[calc(100dvh-3lh)] md:w-[36ch] md:min-w-[36ch] md:overflow-y-auto"> */}
+    <aside className="flex flex-col md:sticky md:top-[2lh] md:h-full md:w-[36ch] md:min-w-[36ch] md:self-start md:overflow-y-auto">
       <Ascii text="csfa" />
       <NewListForm onAddList={handleAddList} />
       <RandomItem items={items} />
