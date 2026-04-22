@@ -21,7 +21,7 @@ https://github.com/webtui/webtui/blob/master/packages/theme-nord/src/components/
     --blue: #89b4fa;
     --lavender: #b4befe;
 
-    /* Note: I actually have no idea what those vars do, I've never seen them used. And other themes' code doesn't have them, it's just catpuccin. I copied it just in case */
+    /* Note: I actually have no idea what those vars do, I've never seen them used, and other themes' code doesn't have them, it's just catpuccin. I copied it just in case. Don't use elsewhere unless it turns out to be important */
     /* Background / Foreground Colors */
     --text: #cdd6f4;
     --subtext1: #bac2de;
