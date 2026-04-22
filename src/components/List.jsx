@@ -1,10 +1,9 @@
 import { useState, useContext, useRef } from "react";
 import { useClickAway } from "@uidotdev/usehooks";
-import { ManagerContext } from "./Contexts";
-import styles from "../styles/list.module.css";
-
-import Item from "./Item";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { ManagerContext } from "./Contexts";
+import Item from "./Item";
+import styles from "../styles/list.module.css";
 
 export default function List({ list, index, children }) {
   const [draftRenameList, setDraftRenameList] = useState("");
@@ -93,6 +92,8 @@ export default function List({ list, index, children }) {
     >
       <header className={`${list.collapsed ? `${styles.collapsed}` : ""}`}>
         {title}
+        <Bar myItems={myItems} />
+
         {/* List controls */}
         <div>
           {/* Settings */}
@@ -311,5 +312,81 @@ function ListSettings({
         </section>
       </article>
     </dialog>
+  );
+}
+
+function Bar({ myItems }) {
+  let test = [[], [], [], [], [], [], [], []];
+  myItems.map((item) => {
+    test[item.stage].push(item.id);
+  });
+
+  return (
+    <div className="noselect flex w-full min-w-full">
+      {test[1].length > 0 && (
+        <span
+          className="bg-stage1"
+          style={{ width: `${(test[1].length * 100) / myItems.length}%` }}
+        >
+          {test[1].length}
+        </span>
+      )}
+      {test[2].length > 0 && (
+        <span
+          className="bg-stage2"
+          style={{ width: `${(test[2].length * 100) / myItems.length}%` }}
+        >
+          {test[2].length}
+        </span>
+      )}
+      {test[3].length > 0 && (
+        <span
+          className="bg-stage3"
+          style={{ width: `${(test[3].length * 100) / myItems.length}%` }}
+        >
+          {test[3].length}
+        </span>
+      )}
+      {test[4].length > 0 && (
+        <span
+          className="bg-stage4"
+          style={{ width: `${(test[4].length * 100) / myItems.length}%` }}
+        >
+          {test[4].length}
+        </span>
+      )}
+      {test[5].length > 0 && (
+        <span
+          className="bg-stage5"
+          style={{ width: `${(test[5].length * 100) / myItems.length}%` }}
+        >
+          {test[5].length}
+        </span>
+      )}
+      {test[6].length > 0 && (
+        <span
+          className="bg-stage6"
+          style={{ width: `${(test[6].length * 100) / myItems.length}%` }}
+        >
+          {test[6].length}
+        </span>
+      )}
+      {test[7].length > 0 && (
+        <span
+          className="bg-stage7"
+          style={{ width: `${(test[7].length * 100) / myItems.length}%` }}
+        >
+          {test[7].length}
+        </span>
+      )}
+      {test[0].length > 0 && (
+        <span
+          className="bg-stage0"
+          style={{ width: `${(test[0].length * 100) / myItems.length}%` }}
+        >
+          {test[0].length}
+        </span>
+      )}
+    </div>
   );
 }

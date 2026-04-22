@@ -26,6 +26,7 @@ customElements.whenDefined("ascii-progress-bar").then(() => {
 
 export default function Pomodoro() {
   // TODO+++: Current implementation only adds up totalWins and totalTime indefinitely. I'd like to append dd-mm-yyyy timestamp to totalWins and totalTime db records. On either changes, if current Date doesn't match current record's timestamp, "archive" {timestamp, totalWins, totalTime} and open new record. After giving it some thought I decided to work on it after db migration because that might make accessing and storing those records much simpler
+  // TODO: maybe just basic day reset so you can ship v1
 
   const { pomoConfig } = useContext(ManagerContext);
   // Current mode = its name and duration

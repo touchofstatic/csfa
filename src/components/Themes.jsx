@@ -43,7 +43,7 @@ export default function Themes() {
       <dialog
         id="themes-dialog"
         popover="true"
-        className={`h-4/5 w-full md:min-h-[26lh]`}
+        className={`h-dvh w-full md:min-h-[26lh]`}
       >
         <article
           className={`align-center dialog-webtuibox-spacing flex h-full flex-col justify-center`}

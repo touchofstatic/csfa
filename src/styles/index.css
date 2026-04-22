@@ -94,6 +94,8 @@ button {
   padding: 2lh 2ch 1lh 2ch;
 }
 
+/* TODO: maybe normalize i of colorN and stageM, the discrepancy is painful */
+
 /* Giving stage colors to elements */
 /* Front: text is colored
 Back: bg is colored */
