@@ -1,9 +1,9 @@
 import { useContext, useEffect, useRef } from "react";
 import { ManagerContext } from "./Contexts";
 import { Howl } from "howler";
-import sound0File from "../sound0.mp3";
-import sound1File from "../sound1.mp3";
-import sound2File from "../sound2.mp3";
+import soundfile0 from "../sound0.mp3";
+import soundfile1 from "../sound1.mp3";
+import soundfileSus from "../sound2.mp3";
 // AUDIT: should I move sound files to another folder?
 // TODO: add a small selection of fun sounds
 // TODO: refactor Pomodoro.jsx to use howler library as well
@@ -18,9 +18,9 @@ export default function PomodoroConfig() {
   const previewSoundsRef = useRef(null);
   useEffect(() => {
     previewSoundsRef.current = {
-      sound0: new Howl({ src: [sound0File] }),
-      sound1: new Howl({ src: [sound1File] }),
-      sound2: new Howl({ src: [sound2File] }),
+      sound0: new Howl({ src: [soundfile0] }),
+      sound1: new Howl({ src: [soundfile1] }),
+      suspicious: new Howl({ src: [soundfileSus] }),
     };
     // Cleanup for the audio objects. For each Howl instance .stop immediately halts playback, .unload() releases audio resources from memory. This prevents lingering audio, avoids leaks, and keeps behavior predictable when leaving the config screen
     return () => {
@@ -217,16 +217,16 @@ export default function PomodoroConfig() {
                 <input
                   type="radio"
                   name="alarmsound"
-                  id="sound2"
-                  value="sound2"
-                  checked={pomoConfig.alarmSound === "sound2"}
+                  id="suspicious"
+                  value="suspicious"
+                  checked={pomoConfig.alarmSound === "suspicious"}
                   onChange={(e) => {
                     changePomoConfig(e.target.value, e.target.name);
                     trackPreview(e.target.value);
                   }}
                 ></input>
-                <label htmlFor="sound2" className="ml-[3ch]">
-                  sound2
+                <label htmlFor="suspicious" className="ml-[3ch]">
+                  Suspicious
                 </label>
               </fieldset>
             </form>

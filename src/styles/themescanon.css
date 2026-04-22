@@ -1,7 +1,7 @@
 /* https://webtui.ironclad.sh/start/theming/ */
 /* Csfa uses 4 background and 3 forefround colors (based on webtui theme structure), and 7 ordered stage colors. We choose 7 stage colors and set our universal css vars --color that are used across site code.*/
-/* "Standard" themes: data-webtui-theme attribute receives a string expected by a corresponding webtui package. Doesn't need any extra work except to define our stage colors.
-"Custom" themes: data-webtui-theme attribute receives an unexpected string. Background, foreground, accent vars, and colored elements need to be defined by us, in addition to stage colors. */
+/* Canonical themes: data-webtui-theme attribute receives a string expected by a corresponding webtui package. Doesn't need any extra work except to define our stage colors.
+Custom themes: data-webtui-theme attribute receives an unexpected string. Background, foreground, accent vars, and colored elements need to be defined by us, in addition to stage colors. */
 /* Note: webtui theme plugins come with a little hardcoded colors in typography, mostly <h1> and <a>. And some color <h1>-<h6> individually, some don't. Make sure to override with your own when needed! */
 
 @layer base {
