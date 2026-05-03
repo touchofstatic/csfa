@@ -16,7 +16,7 @@ export const SYSTEM_CONFIG_POMODORO = {
   // long: 900,
   // interval: 4,
   // autoStart: false,
-  // alarmSound: "soundChime",
+  // alarmSound: "chime",
   // volume: 10,
 
   // TEMPORARY ONLY FOR DEVELOPMENT
@@ -25,7 +25,7 @@ export const SYSTEM_CONFIG_POMODORO = {
   long: 60,
   interval: 4,
   autoStart: false,
-  alarmSound: "soundChime",
+  alarmSound: "chime",
   volume: 10,
 };
 
