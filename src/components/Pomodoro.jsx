@@ -111,7 +111,7 @@ export default function Pomodoro() {
   }, [totalTimeRecord]);
 
   // Initialize alarm sound
-  const [play] = useSound(`../src/${pomoConfig.alarmSound}.mp3`, {
+  const [play] = useSound(`../src/assets/audio/${pomoConfig.alarmSound}.mp3`, {
     volume: pomoConfig.volume,
   });
 

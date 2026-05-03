@@ -1,11 +1,10 @@
 import { useContext, useEffect, useRef } from "react";
 import { ManagerContext } from "./Contexts";
 import { Howl } from "howler";
-import soundfile0 from "../sound0.mp3";
-import soundfile1 from "../sound1.mp3";
-import soundfileSus from "../sound2.mp3";
-// AUDIT: should I move sound files to another folder?
-// TODO: add a small selection of fun sounds
+import soundfileChime from "../assets/audio/662162__melokacool__school-bell-chime.mp3";
+import soundfileTides from "../assets/audio/827122__xkeril__end-of-task-sound.mp3";
+import soundfileTune from "../assets/audio/616692__melokacool__notification-4.mp3";
+import soundfileSus from "../assets/audio/finntastico-among-us-sound-157106.mp3";
 // TODO: refactor Pomodoro.jsx to use howler library as well
 
 export default function PomodoroConfig() {
@@ -18,9 +17,10 @@ export default function PomodoroConfig() {
   const previewSoundsRef = useRef(null);
   useEffect(() => {
     previewSoundsRef.current = {
-      sound0: new Howl({ src: [soundfile0] }),
-      sound1: new Howl({ src: [soundfile1] }),
-      suspicious: new Howl({ src: [soundfileSus] }),
+      soundChime: new Howl({ src: [soundfileChime] }),
+      soundTides: new Howl({ src: [soundfileTides] }),
+      soundSus: new Howl({ src: [soundfileSus] }),
+      soundTune: new Howl({ src: [soundfileTune] }),
     };
     // Cleanup for the audio objects. For each Howl instance .stop immediately halts playback, .unload() releases audio resources from memory. This prevents lingering audio, avoids leaks, and keeps behavior predictable when leaving the config screen
     return () => {
@@ -188,45 +188,59 @@ export default function PomodoroConfig() {
                 <input
                   type="radio"
                   name="alarmsound"
-                  id="sound0"
-                  value="sound0"
-                  checked={pomoConfig.alarmSound === "sound0"}
+                  id="soundChime"
+                  value="soundChime"
+                  checked={pomoConfig.alarmSound === "soundChime"}
                   onChange={(e) => {
                     changePomoConfig(e.target.value, e.target.name);
                     trackPreview(e.target.value);
                   }}
                 ></input>
                 {/* KNOWN ISSUE: Why are you hidden behind checkbox.... low priority because it's "fixed" */}
-                <label htmlFor="sound0" className="ml-[3ch]">
-                  sound0
+                <label htmlFor="soundChime" className="ml-[3ch]">
+                  Chime
                 </label>{" "}
                 <input
                   type="radio"
                   name="alarmsound"
-                  id="sound1"
-                  value="sound1"
-                  checked={pomoConfig.alarmSound === "sound1"}
+                  id="soundTides"
+                  value="soundTides"
+                  checked={pomoConfig.alarmSound === "soundTides"}
                   onChange={(e) => {
                     changePomoConfig(e.target.value, e.target.name);
                     trackPreview(e.target.value);
                   }}
                 ></input>
-                <label htmlFor="sound1" className="ml-[3ch]">
-                  sound1
+                <label htmlFor="soundTides" className="ml-[3ch]">
+                  Tides
                 </label>
                 <input
                   type="radio"
                   name="alarmsound"
-                  id="suspicious"
-                  value="suspicious"
-                  checked={pomoConfig.alarmSound === "suspicious"}
+                  id="soundTune"
+                  value="soundTune"
+                  checked={pomoConfig.alarmSound === "soundTune"}
                   onChange={(e) => {
                     changePomoConfig(e.target.value, e.target.name);
                     trackPreview(e.target.value);
                   }}
                 ></input>
-                <label htmlFor="suspicious" className="ml-[3ch]">
-                  Suspicious
+                <label htmlFor="soundTune" className="ml-[3ch]">
+                  Tune
+                </label>
+                <input
+                  type="radio"
+                  name="alarmsound"
+                  id="soundSus"
+                  value="soundSus"
+                  checked={pomoConfig.alarmSound === "soundSus"}
+                  onChange={(e) => {
+                    changePomoConfig(e.target.value, e.target.name);
+                    trackPreview(e.target.value);
+                  }}
+                ></input>
+                <label htmlFor="soundSus" className="ml-[3ch]">
+                  Suspect
                 </label>
               </fieldset>
             </form>
