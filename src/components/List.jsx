@@ -25,7 +25,8 @@ export default function List({ list, index, children }) {
     setDraftRenameList("");
   });
 
-  const ref2 = useClickAway(() => {
+  // Clicking outside closes the menu
+  const refMenu = useClickAway(() => {
     setMenu(false);
   });
 
@@ -97,8 +98,9 @@ export default function List({ list, index, children }) {
       className={`flex h-fit flex-col p-[1ch] ${list.collapsed ? `${styles.collapsed} border-2 border-[var(--background1)] hover:border-[var(--background3)]` : "border-2 border-[var(--background2)] hover:border-[var(--foreground1)]"}`}
     >
       <header className={`${list.collapsed ? `${styles.collapsed}` : ""}`}>
+        {/* Menu. Not visible when renaming but I didn't combine it with renaming logic for no reason I didn't want to lock in that day idk. Clicking outside closes menu and clicking a button in menu does too */}
         {!draftRenameList && (
-          <div className="relative float-right" ref={ref2}>
+          <div className="relative float-right" ref={refMenu}>
             {/* Toggle menu */}
             <button
               className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
