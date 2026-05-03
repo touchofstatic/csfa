@@ -5,6 +5,8 @@ import styles from "../styles/item.module.css";
 
 export default function Item({ item, myListId, stages, ...handle }) {
   const [draftRenameItem, setDraftRenameItem] = useState("");
+  const [menu, setMenu] = useState(false);
+
   const {
     handleDeleteItem,
     handleRenameItem,
@@ -77,7 +79,7 @@ export default function Item({ item, myListId, stages, ...handle }) {
       className={`${styles.item} ${!draftRenameItem && `${styles.hoveritem}`} py-0.5`}
     >
       {/* Item controls */}
-      <div>
+      <div className={`py-0.5`}>
         {/* Dnd drag handle. Needs noselect, and set font-bold individually as it's not a button like the others */}
         <span
           {...handle}
@@ -85,13 +87,21 @@ export default function Item({ item, myListId, stages, ...handle }) {
         >
           [=]
         </span>
+        {/* Toggle menu */}
+        {/* <button
+          className={`${ctrlcolor} ${styles.controls} px-0.5`}
+          size-="small"
+          onClick={() => setMenu(!menu)}
+        >
+          [⋯]
+        </button> */}
         {/* Rename */}
         <button
           className={`${ctrlcolor} ${styles.controls} px-0.5`}
           size-="small"
           onClick={() => setDraftRenameItem(item.name)}
         >
-          [rn]
+          [r]
         </button>
         {/* Delete */}
         <button
@@ -99,7 +109,7 @@ export default function Item({ item, myListId, stages, ...handle }) {
           size-="small"
           onClick={() => handleDeleteItem(item.id, myListId)}
         >
-          [-]
+          [d]
         </button>
         {/* Reset stage */}
         <button
@@ -107,7 +117,7 @@ export default function Item({ item, myListId, stages, ...handle }) {
           size-="small"
           onClick={() => handleResetItem(item.id)}
         >
-          [cl]
+          [c]
         </button>
 
         {/* Advance stage */}
@@ -123,6 +133,14 @@ export default function Item({ item, myListId, stages, ...handle }) {
         </button>
       </div>
       {name}
+
+      {/* {menu === true && (
+        <div className="absolute z-10 flex w-[16ch] flex-col bg-[var(--background0)]">
+          <p>Rename</p>
+          <p>Delete</p>
+          <p>Clear</p>
+        </div>
+      )} */}
     </div>
   );
 }
