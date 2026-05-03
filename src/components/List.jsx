@@ -7,6 +7,7 @@ import styles from "../styles/list.module.css";
 
 export default function List({ list, index, children }) {
   const [draftRenameList, setDraftRenameList] = useState("");
+  const [menu, setMenu] = useState(false);
   const {
     items,
     handleAddItem,
@@ -24,6 +25,10 @@ export default function List({ list, index, children }) {
     setDraftRenameList("");
   });
 
+  const ref2 = useClickAway(() => {
+    setMenu(false);
+  });
+
   // ref to clear form text after submit
   const clearform = useRef("");
 
@@ -37,7 +42,9 @@ export default function List({ list, index, children }) {
   // If not renaming, display name normally
   if (!draftRenameList) {
     title = (
-      <div className={`${styles.name} breakword font-[700]`}>{list.name}</div>
+      <div className={`${styles.name} clear-left font-[700] break-all`}>
+        {list.name}
+      </div>
     );
     // If renaming, display the form in its place
   } else {
@@ -90,37 +97,14 @@ export default function List({ list, index, children }) {
       className={`flex h-fit flex-col p-[1ch] ${list.collapsed ? `${styles.collapsed} border-2 border-[var(--background1)] hover:border-[var(--background3)]` : "border-2 border-[var(--background2)] hover:border-[var(--foreground1)]"}`}
     >
       <header className={`${list.collapsed ? `${styles.collapsed}` : ""}`}>
-        {title}
-        <Bar myItems={myItems} />
-
-        {/* List controls */}
-        <div>
-          {/* Settings */}
+        <div className="relative float-right" ref={ref2}>
           <button
             className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
             size-="small"
-            command="show-modal"
-            commandfor={`config-board-dialog-${list.id}`}
+            onClick={() => setMenu(!menu)}
           >
-            [s]
+            [...]
           </button>
-          {/* Rename */}
-          <button
-            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
-            size-="small"
-            onClick={() => setDraftRenameList(list.name)}
-          >
-            [rn]
-          </button>
-          {/* Delete */}
-          <button
-            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
-            size-="small"
-            onClick={() => handleDeleteList(list.id, myItems)}
-          >
-            [-]
-          </button>
-          {/* Collapse */}
           <button
             className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
             size-="small"
@@ -128,30 +112,125 @@ export default function List({ list, index, children }) {
           >
             {list.collapsed ? `[▼]` : `[▲]`}
           </button>
+
+          {menu === true && (
+            <div className="absolute right-0 z-10 flex w-[16ch] flex-col bg-[var(--background0)]">
+              <button
+                className={`block text-left`}
+                size-="small"
+                command="show-modal"
+                commandfor={`config-board-dialog-${list.id}`}
+              >
+                Settings
+              </button>
+              {/* Rename */}
+              <button
+                className={`block text-left`}
+                size-="small"
+                onClick={() => {
+                  setDraftRenameList(list.name);
+                  setMenu(false);
+                }}
+              >
+                Rename
+              </button>
+              {/* Delete */}
+              <button
+                className={`block text-left`}
+                size-="small"
+                onClick={() => {
+                  handleDeleteList(list.id, myItems);
+                  setMenu(false);
+                }}
+              >
+                Delete
+              </button>
+              {/* Order by stage */}
+              <button
+                className={`block text-left`}
+                size-="small"
+                onClick={() => {
+                  handleOrderList(list.id, myItems);
+                  setMenu(false);
+                }}
+              >
+                Order
+              </button>
+            </div>
+          )}
+        </div>
+
+        {title}
+        <Bar myItems={myItems} />
+
+        {/* List controls */}
+        <div>
+          {/* IN DEVELOPMENT drop down menu to reduce UI bloat */}
+          {/* <button
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
+            size-="small"
+            onClick={() => setMenu(!menu)}
+          >
+            [...]
+          </button> */}
+
+          {/* Settings */}
+          {/* <button
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
+            size-="small"
+            command="show-modal"
+            commandfor={`config-board-dialog-${list.id}`}
+          >
+            [s]
+          </button> */}
+          {/* Rename */}
+          {/* <button
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
+            size-="small"
+            onClick={() => setDraftRenameList(list.name)}
+          >
+            [rn]
+          </button> */}
+          {/* Delete */}
+          {/* <button
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
+            size-="small"
+            onClick={() => handleDeleteList(list.id, myItems)}
+          >
+            [-]
+          </button> */}
+          {/* Collapse */}
+          {/* <button
+            className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
+            size-="small"
+            onClick={() => handleCollapseList(list.id)}
+          >
+            {list.collapsed ? `[▼]` : `[▲]`}
+          </button> */}
           {/* Move up */}
-          <button
+          {/* <button
             className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
             size-="small"
             onClick={() => handleMoveList(index, "up")}
           >
             [↑]
-          </button>
+          </button> */}
           {/* Move down */}
-          <button
+          {/* <button
             className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
             size-="small"
             onClick={() => handleMoveList(index, "down")}
           >
             [↓]
-          </button>
+          </button> */}
           {/* Order by stage */}
-          <button
+          {/* <button
             className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
             size-="small"
             onClick={() => handleOrderList(list.id, myItems)}
           >
             [o]
-          </button>
+          </button> */}
         </div>
       </header>
 

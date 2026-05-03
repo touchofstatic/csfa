@@ -109,6 +109,7 @@ export default function Item({ item, myListId, stages, ...handle }) {
         >
           [cl]
         </button>
+
         {/* Advance stage */}
         <button
           size-="small"
