@@ -42,7 +42,7 @@ export default function Themes() {
       <dialog
         id="themes-dialog"
         popover="true"
-        className={`min-h-dvh w-full md:min-h-[31lh]`}
+        className={`max-h-dvh w-full md:h-[31lh]`}
       >
         <article
           className={`dialog-webtuibox-spacing flex h-full flex-col gap-[1lh]`}
