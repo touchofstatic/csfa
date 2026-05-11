@@ -20,10 +20,6 @@ export default function Ascii({ text }) {
   });
 
   // TODO+: User can set different ascii logos. Add switch that returns custom <pre>s for each font option. font name is from user settings and passed by prop. Create a setting for it
-  return (
-    <pre
-      ref={asciiTextRef}
-      className="gradient hidden md:block md:text-[17px]"
-    ></pre>
-  );
+  // Used to be hidden on mobile using "hidden md:block" but mobile layout is currently unavailable anyway
+  return <pre ref={asciiTextRef} className="gradient block text-[17px]"></pre>;
 }

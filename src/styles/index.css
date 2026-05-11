@@ -40,6 +40,14 @@
   }
 }
 
+/* Fix: webtui popover injects a full-viewport summary::before backdrop when open.
+   Since ::before is part of <summary> for hit-testing, hovering anywhere on the
+   page registers as summary:hover. pointer-events:none makes the backdrop transparent
+   to the mouse; useClickAway still handles closing on outside clicks. */
+details[is-~="popover"][open] summary::before {
+  pointer-events: none;
+}
+
 /* To apply noselect */
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
