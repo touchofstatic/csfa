@@ -3,6 +3,7 @@ import { useClickAway } from "@uidotdev/usehooks";
 import Themes from "./Themes";
 import BoardConfig from "./BoardConfig";
 import PomodoroConfig from "./PomodoroConfig";
+import About from "./About";
 import styles from "../styles/navbar.module.css";
 
 // Design guideline: based on navbars of software like Legacy BIOS and Norton Commander.
@@ -33,6 +34,7 @@ export default function Navbar() {
         </div>
       </details>
       <Themes />
+      <About />
     </nav>
   );
 }
