@@ -25,7 +25,7 @@ export default function RandomItem({ items }) {
         e.preventDefault();
         randomize();
       }}
-      className="mb-[1lh] flex flex-col"
+      className="mb-[1lh] flex flex-col gap-[1ch]"
     >
       <output
         name="randomTask"

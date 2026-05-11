@@ -27,7 +27,7 @@ function NewListForm({ onAddList }) {
     <form
       onSubmit={onAddList}
       autoComplete="off"
-      className="mb-[1lh] flex flex-col gap-[1ch] md:flex-row"
+      className="mb-[1lh] flex flex-col gap-[1ch]"
     >
       {/* min-w-0 overrides text input browser css that doesn't allow it to shrink past some point and makes it clip */}
       <input
@@ -39,11 +39,7 @@ function NewListForm({ onAddList }) {
         ref={clearform}
       ></input>
       {/* Without whitespace-nowrap button text folds*/}
-      <button
-        size-="small"
-        type="submit"
-        className="w-full whitespace-nowrap md:w-fit"
-      >
+      <button size-="small" type="submit" className="w-full whitespace-nowrap">
         [Add list]
       </button>
     </form>

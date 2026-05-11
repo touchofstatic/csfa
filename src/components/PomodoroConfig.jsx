@@ -274,7 +274,7 @@ export default function PomodoroConfig() {
               Reset settings
             </button>
           </section>
-          <section>
+          <footer>
             <button
               commandfor="config-pomo-dialog"
               command="close"
@@ -283,7 +283,7 @@ export default function PomodoroConfig() {
             >
               Exit
             </button>
-          </section>
+          </footer>
         </article>
       </dialog>
     </>

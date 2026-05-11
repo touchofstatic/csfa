@@ -346,11 +346,11 @@ function ListSettings({
           </form>
         </section>
 
-        <section>
+        <footer>
           <button commandfor={`config-board-dialog-${list.id}`} command="close">
             Exit
           </button>
-        </section>
+        </footer>
       </article>
     </dialog>
   );

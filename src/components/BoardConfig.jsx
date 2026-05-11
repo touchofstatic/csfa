@@ -84,11 +84,11 @@ export default function BoardConfig() {
             <ResetBoardConfig />
           </section>
 
-          <section>
+          <footer>
             <button commandfor="config-board-dialog" command="close">
               Exit
             </button>
-          </section>
+          </footer>
         </article>
       </dialog>
     </>

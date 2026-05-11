@@ -103,12 +103,13 @@ export default function Themes() {
               </button>
             ))}
           </section>
-          {/* Bro what is that????? */}
-          <section>
+
+          {/* "<footer> instead of <section> for the exit button — The closing button is the dialog's footer, not a content section. Using <footer> is more semantically accurate HTML (it signals "this is the closing/action area of this landmark") and helps screen readers understand the page structure better. It's a small change but good habit." */}
+          <footer>
             <button commandfor="themes-dialog" command="close">
               Exit
             </button>
-          </section>
+          </footer>
         </article>
       </dialog>
     </>
