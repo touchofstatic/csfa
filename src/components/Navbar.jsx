@@ -15,7 +15,7 @@ export default function Navbar() {
   });
 
   return (
-    <nav className="z-1001 box-border flex w-dvw bg-[var(--foreground0)] shadow-md md:fixed md:top-0 md:h-[1lh] md:items-center">
+    <nav className="fixed top-0 z-1001 box-border flex h-[1lh] w-dvw items-center bg-[var(--foreground0)] shadow-md">
       <details
         is-="popover"
         className={`noselect relative`}
