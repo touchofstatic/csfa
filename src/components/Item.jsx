@@ -53,6 +53,8 @@ export default function Item({ item, myListId, stages, ...handle }) {
         <input
           type="text"
           name="newItemName"
+          minLength="0"
+          maxLength="99"
           className="w-full"
           defaultValue={draftRenameItem}
           autoFocus
