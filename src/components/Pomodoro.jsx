@@ -220,7 +220,8 @@ export default function Pomodoro() {
       {/* Statistics */}
       <p>Completed: {totalWins}</p>
       <p>
-        Time: {Math.floor(totalTime / 60)} hr {totalTime % 60} min
+        Time: {String(Math.floor(totalTime / 60)).padStart(2, "0")}:
+        {String(totalTime % 60).padStart(2, "0")}
       </p>
     </article>
   );

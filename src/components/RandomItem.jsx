@@ -30,14 +30,18 @@ export default function RandomItem({ items }) {
       <output
         name="randomTask"
         aria-live="polite"
-        className={`breakword align-center flex h-[3.5lh] w-full overflow-y-scroll bg-[var(--background1)] px-[1ch]`}
+        className={`breakword flex h-[3lh] w-full content-center overflow-y-scroll bg-[var(--background1)] px-[1ch]`}
       >
-        {/* Spinner component from webtui */}
-        {spinner && <span is-="spinner" variant-="dots"></span>}
-        <span>{pull?.name}</span>
+        {spinner && (
+          <span className="content-center">
+            {/* Spinner component from webtui */}
+            <span is-="spinner" variant-="dots"></span>
+          </span>
+        )}
+        <span className="content-center">{pull?.name}</span>
       </output>
       <button type="submit" size-="small" className="w-full">
-        [Random Task]
+        [Random task]
       </button>
     </form>
   );

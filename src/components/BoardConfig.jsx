@@ -19,7 +19,7 @@ export default function BoardConfig() {
         name="stage"
         minLength="1"
         maxLength="12"
-        className={`${stagesConfig.length < i + 1 ? `bg-[var(--background1)] ` : sdcolor}`}
+        className={`${stagesConfig.length < i + 1 ? `bg-[var(--background1)] ` : sdcolor} w-[20ch]`}
         value={stagesConfig[i] || ""}
         onChange={(e) => handleRenameConfigStages(e.target.value, i)}
         required
@@ -43,18 +43,18 @@ export default function BoardConfig() {
       <dialog
         id="config-board-dialog"
         popover="true"
-        className={`h-dvh max-h-dvh w-full md:h-[26lh] md:w-[40ch]`}
+        className={`max-h-dvh w-full md:w-[50ch]`}
       >
         <article
-          className={`dialog-webtuibox-spacing flex h-full flex-col`}
+          className={`dialog-webtuibox-spacing flex h-full flex-col gap-[1lh]`}
           box-="double"
         >
-          <h1 tabIndex="0">Config/Board</h1>
+          <h1 tabIndex="0">Settings/Board</h1>
           <section>
             <h2># Stages</h2>
             <p>
-              Default settings for new lists. Changing it will not overwrite
-              existing ones, or disable configuring new lists individually.
+              Default configuration for creating new lists. Changing it will not
+              overwrite existing ones.
             </p>
 
             {/* AUDIT: accessibility */}
@@ -84,8 +84,7 @@ export default function BoardConfig() {
             <ResetBoardConfig />
           </section>
 
-          {/* KNOWN ISSUE: align bottom doesn't work*/}
-          <section className="self-center align-bottom">
+          <section>
             <button commandfor="config-board-dialog" command="close">
               Exit
             </button>

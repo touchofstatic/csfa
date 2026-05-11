@@ -101,13 +101,15 @@ export default function List({ list, index, children }) {
         {/* Menu. Not visible when renaming but I didn't combine it with renaming logic for no reason I didn't want to lock in that day idk. Clicking outside closes menu and clicking a button in menu does too */}
         {!draftRenameList && (
           <div className="relative float-right" ref={refMenu}>
-            {/* Toggle menu */}
             <button
               className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
               size-="small"
-              onClick={() => setMenu(!menu)}
+              onClick={() => {
+                handleCollapseList(list.id);
+                setMenu(false);
+              }}
             >
-              [⋯]
+              {list.collapsed ? `[▼]` : `[▲]`}
             </button>
             {/* Move up */}
             <button
@@ -131,15 +133,14 @@ export default function List({ list, index, children }) {
             >
               [↓]
             </button>
+
+            {/* Toggle menu */}
             <button
               className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} px-0.5`}
               size-="small"
-              onClick={() => {
-                handleCollapseList(list.id);
-                setMenu(false);
-              }}
+              onClick={() => setMenu(!menu)}
             >
-              {list.collapsed ? `[▼]` : `[▲]`}
+              [⋯]
             </button>
 
             {menu === true && (
@@ -257,7 +258,7 @@ export default function List({ list, index, children }) {
           type="submit"
           className={`${styles.controls} ${list.collapsed ? `${styles.collapsed}` : ""} p-0 whitespace-nowrap`}
         >
-          [Add Item]
+          [Add task]
         </button>
       </form>
 
@@ -290,7 +291,7 @@ function ListSettings({
         name="stage"
         minLength="1"
         maxLength="12"
-        className={`${list.stages.length < i + 1 ? `bg-[var(--background1)] ` : sdcolor}`}
+        className={`${list.stages.length < i + 1 ? `bg-[var(--background1)] ` : sdcolor} w-[20ch]`}
         value={list.stages[i] || ""}
         onChange={(e) => handleRenameListStages(e.target.value, i, list.id)}
         required
@@ -303,16 +304,18 @@ function ListSettings({
     // Each list's dialog is uniquely associated with it by id. Otherwise changing its settings affects all lists
     // Dimensions subject to change
     <dialog
-      className={`h-4/5 max-h-dvh w-full md:h-[26lh] md:w-[40ch]`}
+      className={`max-h-dvh w-full md:w-[50ch]`}
       id={`config-board-dialog-${list.id}`}
       popover="true"
     >
       <article
-        className={`dialog-webtuibox-spacing flex h-full flex-col`}
+        className={`dialog-webtuibox-spacing flex h-full flex-col gap-[1lh]`}
         box-="double"
       >
         {/* tabIndex focuses dialog's header instead of first input which is the default*/}
-        <h1 tabIndex="0">Config/List/{list.name}</h1>
+        <h1 tabIndex="0" className="break-all">
+          Settings/{list.name}
+        </h1>
         <section>
           <h2># Stages</h2>
 
@@ -343,7 +346,7 @@ function ListSettings({
           </form>
         </section>
 
-        <section className="self-center align-bottom">
+        <section>
           <button commandfor={`config-board-dialog-${list.id}`} command="close">
             Exit
           </button>

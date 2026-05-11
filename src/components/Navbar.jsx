@@ -25,7 +25,7 @@ export default function Navbar() {
         }}
       >
         {/* Dropdown "button". Style should match other buttons on navbar */}
-        <summary className={`${styles.summary}`}>Config</summary>
+        <summary className={`${styles.summary}`}>Settings</summary>
         {/* Buttons in dropdown */}
         <div className="absolute z-1001 w-[16ch]">
           <BoardConfig detailsRef={detailsRef} />

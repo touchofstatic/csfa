@@ -39,39 +39,40 @@ export default function Themes() {
         Themes
       </button>
 
-      {/* Dimensions subject to change */}
       <dialog
         id="themes-dialog"
         popover="true"
-        className={`h-dvh w-full md:min-h-[26lh]`}
+        className={`min-h-dvh w-full md:min-h-[31lh]`}
       >
         <article
-          className={`align-center dialog-webtuibox-spacing flex h-full flex-col justify-center`}
+          className={`dialog-webtuibox-spacing flex h-full flex-col gap-[1lh]`}
           box-="double"
         >
           {/* tabIndex focuses dialog's header instead of first input which is the default*/}
           <h1 tabIndex="0">Themes</h1>
-          {/* AUDIT: accessibility */}
           {/* Color scheme ui element that showcases the current theme as a row of color blocks. It's common in tui, for example the linux terminal. Purely visual, not relevant to screen readers */}
-          <div className="noselect">
-            <span className="bg-[var(--foreground0)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--foreground1)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--foreground2)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--background0)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--background1)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--background2)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--background3)]">&nbsp;&nbsp;</span>
-          </div>
-
-          <div className="noselect">
-            <span className="bg-[var(--color0)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--color1)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--color2)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--color3)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--color4)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--color5)]">&nbsp;&nbsp;</span>
-            <span className="bg-[var(--color6)]">&nbsp;&nbsp;</span>
-          </div>
+          <p className="noselect" aria-hidden="true">
+            {/* Base colors */}
+            <div>
+              <span className="bg-[var(--foreground0)]">&nbsp;&nbsp;</span>
+              <span className="bg-[var(--foreground1)]">&nbsp;&nbsp;</span>
+              <span className="bg-[var(--foreground2)]">&nbsp;&nbsp;</span>
+              <span className="bg-[var(--background0)]">&nbsp;&nbsp;</span>
+              <span className="bg-[var(--background1)]">&nbsp;&nbsp;</span>
+              <span className="bg-[var(--background2)]">&nbsp;&nbsp;</span>
+              <span className="bg-[var(--background3)]">&nbsp;&nbsp;</span>
+            </div>
+            {/* Accent colors */}
+            <div>
+              <span className="bg-[var(--color0)]">&nbsp;&nbsp;</span>
+              <span className="bg-[var(--color1)]">&nbsp;&nbsp;</span>
+              <span className="bg-[var(--color2)]">&nbsp;&nbsp;</span>
+              <span className="bg-[var(--color3)]">&nbsp;&nbsp;</span>
+              <span className="bg-[var(--color4)]">&nbsp;&nbsp;</span>
+              <span className="bg-[var(--color5)]">&nbsp;&nbsp;</span>
+              <span className="bg-[var(--color6)]">&nbsp;&nbsp;</span>
+            </div>
+          </p>
 
           <section>
             {/* Current theme is strongly highlighted in foreground. hovering highlights slightly */}
@@ -102,11 +103,12 @@ export default function Themes() {
               </button>
             ))}
           </section>
-          <div className="flex justify-center">
+          {/* Bro what is that????? */}
+          <section>
             <button commandfor="themes-dialog" command="close">
               Exit
             </button>
-          </div>
+          </section>
         </article>
       </dialog>
     </>

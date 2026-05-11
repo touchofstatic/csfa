@@ -23,7 +23,7 @@ export default function Ascii({ text }) {
   return (
     <pre
       ref={asciiTextRef}
-      className="gradient text-[12px] md:block md:text-[17px]"
+      className="gradient hidden md:block md:text-[17px]"
     ></pre>
   );
 }

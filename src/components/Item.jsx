@@ -5,7 +5,9 @@ import styles from "../styles/item.module.css";
 
 export default function Item({ item, myListId, stages, ...handle }) {
   const [draftRenameItem, setDraftRenameItem] = useState("");
-  const [menu, setMenu] = useState(false);
+  // Unused dropdown menu code
+  // I still can't say if items should have drop down menus or not... I ran into some issues with implementing click away. The controls bar is very short anyway, and is probably used often, compared to lists'. Drop down menu seems more mobile-friendly but mobile version is currently on hold because I suspect some things will have to be completely different and I'm not educated enough to do it yet, and I'm more interested in desktop. These days nothing should be desktop only though.
+  // const [menu, setMenu] = useState(false);
 
   const {
     handleDeleteItem,
@@ -18,6 +20,12 @@ export default function Item({ item, myListId, stages, ...handle }) {
   const ref = useClickAway(() => {
     setDraftRenameItem("");
   });
+
+  // Unused dropdown menu code
+  // Clicking outside closes the menu
+  // const refMenu = useClickAway(() => {
+  //   setMenu(false);
+  // });
 
   // Generate class names to style Item's elements according to its stage
   let ctrlcolor = "front-stage" + item.stage;
@@ -87,6 +95,7 @@ export default function Item({ item, myListId, stages, ...handle }) {
         >
           [=]
         </span>
+        {/* Unused dropdown menu code */}
         {/* Toggle menu */}
         {/* <button
           className={`${ctrlcolor} ${styles.controls} px-0.5`}
@@ -95,7 +104,6 @@ export default function Item({ item, myListId, stages, ...handle }) {
         >
           [⋯]
         </button> */}
-        {/* Rename */}
         <button
           className={`${ctrlcolor} ${styles.controls} px-0.5`}
           size-="small"
@@ -103,7 +111,6 @@ export default function Item({ item, myListId, stages, ...handle }) {
         >
           [r]
         </button>
-        {/* Delete */}
         <button
           className={`${ctrlcolor} ${styles.controls} px-0.5`}
           size-="small"
@@ -111,7 +118,6 @@ export default function Item({ item, myListId, stages, ...handle }) {
         >
           [d]
         </button>
-        {/* Reset stage */}
         <button
           className={`${ctrlcolor} ${styles.controls} px-0.5`}
           size-="small"
@@ -134,11 +140,29 @@ export default function Item({ item, myListId, stages, ...handle }) {
       </div>
       {name}
 
+      {/* Unused dropdown menu code */}
       {/* {menu === true && (
         <div className="absolute z-10 flex w-[16ch] flex-col bg-[var(--background0)]">
-          <p>Rename</p>
-          <p>Delete</p>
-          <p>Clear</p>
+          <button
+            className={`block text-left`}
+            size-="small"
+            onClick={() => {
+              setDraftRenameItem(item.name);
+              setMenu(false);
+            }}
+          >
+            Rename
+          </button>
+          <button
+            className={`block text-left`}
+            size-="small"
+            onClick={() => {
+              handleDeleteItem(item.id, myListId);
+              setMenu(false);
+            }}
+          >
+            Delete
+          </button>
         </div>
       )} */}
     </div>

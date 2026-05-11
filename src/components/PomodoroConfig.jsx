@@ -88,13 +88,13 @@ export default function PomodoroConfig() {
         popover="true"
         // Cleanup sound previews
         onClose={stopAllPreviews}
-        className={`h-dvh max-h-dvh w-full md:h-[26lh] md:w-[40ch]`}
+        className={`max-h-dvh w-full md:w-[50ch]`}
       >
         <article
-          className={`dialog-webtuibox-spacing flex h-full flex-col`}
+          className={`dialog-webtuibox-spacing flex h-full flex-col gap-[1lh]`}
           box-="double"
         >
-          <h1 tabIndex="0">Config/Pomodoro</h1>
+          <h1 tabIndex="0">Settings/Pomodoro</h1>
           {/* AUDIT: see react.dev Optimizing re-rendering on every keystroke  */}
           <section>
             <h2># Timer</h2>
@@ -274,7 +274,7 @@ export default function PomodoroConfig() {
               Reset settings
             </button>
           </section>
-          <section className="self-center align-bottom">
+          <section>
             <button
               commandfor="config-pomo-dialog"
               command="close"
