@@ -3,7 +3,13 @@ import { useClickAway } from "@uidotdev/usehooks";
 import { ManagerContext } from "./Contexts";
 import styles from "../styles/item.module.css";
 
-export default function Item({ item, myListId, stages, ...handle }) {
+export default function Item({
+  item,
+  myListId,
+  stageNames,
+  activeStageCount,
+  ...handle
+}) {
   const [draftRenameItem, setDraftRenameItem] = useState("");
   // Unused dropdown menu code
   // I still can't say if items should have drop down menus or not... I ran into some issues with implementing click away. The controls bar is very short anyway, and is probably used often, compared to lists'. Drop down menu seems more mobile-friendly but mobile version is currently on hold because I suspect some things will have to be completely different and I'm not educated enough to do it yet, and I'm more interested in desktop. These days nothing should be desktop only though.
@@ -132,10 +138,10 @@ export default function Item({ item, myListId, stages, ...handle }) {
         <button
           size-="small"
           className={`${ctrlcolor} float-right bg-transparent p-0 text-[var(--foreground2)]`}
-          onClick={() => handleAdvanceItem(item.id, stages)}
+          onClick={() => handleAdvanceItem(item.id, activeStageCount)}
         >
           <span className={`${item.stage === 0 && `invisible`}`}>
-            {stages[item.stage]}&nbsp;
+            {stageNames[item.stage]}&nbsp;
           </span>
           [&gt;]
         </button>

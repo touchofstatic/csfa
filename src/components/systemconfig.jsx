@@ -5,6 +5,8 @@ export const SYSTEM_CONFIG_STAGES = [
   "working",
   "pending",
   "done",
+  "",
+  "",
 ];
 
 export const SYSTEM_CONFIG_POMODORO = {
@@ -31,7 +33,20 @@ export const SYSTEM_CONFIG_POMODORO = {
 // TEMPORARY; ONLY FOR DEVELOPMENT
 export const devStages = SYSTEM_CONFIG_STAGES;
 // A shorter custom stages config to test per-list stage independence
-const devStagesShort = ["none", "todo", "doing"];
+const devStagesShort = ["none", "todo", "doing", "", "", "", "", ""];
+
+// For development
+// function padStageNames(source = []) {
+//   const next = Array(8).fill("");
+//   next[0] = "none";
+//   for (let i = 1; i < 8; i++) {
+//     next[i] = source[i] || "";
+//   }
+//   return next;
+// }
+
+// const devStageNames = padStageNames(devStages);
+// const devStageNamesShort = padStageNames(devStagesShort);
 
 export const devItems = [
   // List A — "Backlog": 8 items spread across every stage (0–5).
@@ -98,7 +113,8 @@ export const devLists = [
     id: "list-a",
     itemIds: ["a0", "a1", "a2", "a3", "a4", "a5", "a6", "a7"],
     collapsed: false,
-    stages: devStages,
+    stageNames: devStages,
+    activeStageCount: 5,
   },
   // Normal active list
   {
@@ -106,7 +122,8 @@ export const devLists = [
     id: "list-b",
     itemIds: ["b0", "b1", "b2", "b3"],
     collapsed: false,
-    stages: devStages,
+    stageNames: devStages,
+    activeStageCount: 5,
   },
   // All items at max stage — uniform bar, advance wraps to 0
   {
@@ -114,7 +131,8 @@ export const devLists = [
     id: "list-c",
     itemIds: ["c0", "c1", "c2"],
     collapsed: false,
-    stages: devStages,
+    stageNames: devStages,
+    activeStageCount: 5,
   },
   // Empty list — tests the add-item form in isolation and the empty droppable drop target
   {
@@ -122,7 +140,8 @@ export const devLists = [
     id: "list-d",
     itemIds: [],
     collapsed: false,
-    stages: devStages,
+    stageNames: devStages,
+    activeStageCount: 5,
   },
   // Collapsed list — header and bar visible, items hidden; tests collapse toggle
   {
@@ -130,7 +149,8 @@ export const devLists = [
     id: "list-e",
     itemIds: ["e0", "e1", "e2"],
     collapsed: true,
-    stages: devStages,
+    stageNames: devStages,
+    activeStageCount: 5,
   },
   // Custom stages (length 3) — tests per-list stage independence from global config
   {
@@ -138,7 +158,8 @@ export const devLists = [
     id: "list-f",
     itemIds: ["f0", "f1", "f2", "f3"],
     collapsed: false,
-    stages: devStagesShort,
+    stageNames: devStagesShort,
+    activeStageCount: 2,
   },
   // Long item names — tests text wrapping and layout stability
   {
@@ -146,6 +167,7 @@ export const devLists = [
     id: "list-g",
     itemIds: ["g0", "g1", "g2"],
     collapsed: false,
-    stages: devStages,
+    stageNames: devStages,
+    activeStageCount: 5,
   },
 ];

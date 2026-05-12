@@ -14,6 +14,14 @@ export const listsSchema = {
   type: "array",
   items: {
     type: "object",
+    required: [
+      "name",
+      "id",
+      "itemIds",
+      "collapsed",
+      "stageNames",
+      "activeStageCount",
+    ],
     properties: {
       name: { type: "string" },
       id: { type: "string" },
@@ -22,7 +30,17 @@ export const listsSchema = {
         items: [{ type: "string", uniqueItems: true }],
       },
       collapsed: { type: "boolean" },
-      stages: { type: "array", items: [{ type: "string" }] },
+      stageNames: {
+        type: "array",
+        minItems: 8,
+        maxItems: 8,
+        items: { type: "string" },
+      },
+      activeStageCount: {
+        type: "number",
+        minimum: 0,
+        maximum: 7,
+      },
     },
   },
 };

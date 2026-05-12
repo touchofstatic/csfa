@@ -37,6 +37,19 @@ const move = (SLobj, DLobj, source, destination) => {
   return result;
 };
 
+// Takes those arrays I have from pre model migration and pads to fixed length with empty strings for compatibility with new model
+// MIGRATION: not sure if will be relevant
+const MAX_COLORED_STAGES = 7;
+
+function padStageNames(source = []) {
+  const next = Array(MAX_COLORED_STAGES + 1).fill("");
+  next[0] = "none";
+  for (let i = 1; i <= MAX_COLORED_STAGES; i++) {
+    next[i] = source[i] || "";
+  }
+  return next;
+}
+
 export default function Manager() {
   const [items, setItems] = useState(() => {
     const loadItems = JSON.parse(localStorage.getItem("items"));
@@ -163,9 +176,9 @@ export default function Manager() {
       newLists[DLind] = update[DLind];
       setLists(newLists);
 
-      // Lists can have different stages. Moving an item can cause a conflict if its stage is higher than destination's. Always check after moving and reset conflict stages to 0
+      // Lists can have different active stage counts.  Moving an item can cause a conflict if its stage is higher than destination's.
       const targetitem = items.find((item) => item.id === SLobj.itemIds[SIind]);
-      if (targetitem.stage >= DLobj.stages.length) {
+      if (targetitem.stage > DLobj.activeStageCount) {
         setItems(
           items.map((item) => {
             if (item !== targetitem) return item;
@@ -202,7 +215,8 @@ export default function Manager() {
         id: uuidv4(),
         itemIds: [],
         collapsed: false,
-        stages: stagesConfig,
+        stageNames: padStageNames(stagesConfig),
+        activeStageCount: stagesConfig.length - 1,
       },
       ...lists,
     ]);
@@ -314,53 +328,40 @@ export default function Manager() {
     setLists(newLists);
   }
 
-  // Resize List's Stages
-  // nextSize is num of COLORED stages
-  function handleResizeListStages(nextSize, listStages, listId, myItems) {
-    // First resolve conflicts with Items' stages
+  // COPILOT CODE: EXAMINE 2
+  // Disastrous name
+  // Apply List stage settings as one transaction
+  function handleApplyListStagesSettings(
+    listId,
+    nextActiveStageCount,
+    nextStageNames,
+    myItems,
+  ) {
+    // MIGRATION: what is it cooking?? 
+    const safeActiveStageCount = Math.min(
+      MAX_COLORED_STAGES,
+      Math.max(0, Number(nextActiveStageCount)),
+    );
+    const safeStageNames = padStageNames(nextStageNames);
+
+    // Keep all tasks visible and interactive after reducing active stages.
     setItems(
       items.map((item) => {
-        // skip Items not in List
         if (myItems.includes(item) === false) return item;
-        else {
-          // Reset conflicting stage
-          if (item.stage > nextSize) return { ...item, stage: 0 };
-          else return item;
-        }
+        if (item.stage <= safeActiveStageCount) return item;
+        if (safeActiveStageCount === 0) return { ...item, stage: 0 };
+        return { ...item, stage: safeActiveStageCount };
       }),
     );
 
-    const size = listStages.length - 1;
-    // If received form input =/= stages size
-    if (nextSize !== size) {
-      let nextStages;
-      if (nextSize > size) {
-        // Copy existing stages + append empty array (unnamed) of length diff
-        nextStages = [...listStages, ...Array(nextSize - size).fill("")];
-      } else if (nextSize < size) {
-        // Remove length diff
-        nextStages = listStages.slice(0, nextSize - size);
-      }
-      // Note: we can't simply append or delete one because a slider can be clicked anywhere and not just moved
-      setLists(
-        lists.map((list) => {
-          if (list.id !== listId) return list;
-          else return { ...list, stages: nextStages };
-        }),
-      );
-    }
-  }
-
-  // Rename List's Stages
-  function handleRenameListStages(input, index, listId) {
     setLists(
       lists.map((list) => {
         if (list.id !== listId) return list;
-        else {
-          let newStages = structuredClone(list.stages);
-          newStages[index] = input;
-          return { ...list, stages: newStages };
-        }
+        return {
+          ...list,
+          activeStageCount: safeActiveStageCount,
+          stageNames: safeStageNames,
+        };
       }),
     );
   }
@@ -409,13 +410,14 @@ export default function Manager() {
   }
 
   // Advance Item
-  function handleAdvanceItem(itemId, stages) {
+  function handleAdvanceItem(itemId, activeStageCount) {
+    const lastActiveStage = Math.max(0, Number(activeStageCount));
     setItems(
       items.map((item) => {
         if (item.id !== itemId) return item;
         else {
           // Max stage loops back to stage 0
-          if (item.stage === stages.length - 1) return { ...item, stage: 0 };
+          if (item.stage >= lastActiveStage) return { ...item, stage: 0 };
           else return { ...item, stage: item.stage + 1 };
         }
       }),
@@ -502,8 +504,7 @@ export default function Manager() {
             handleRenameItem,
             handleResetItem,
             handleAdvanceItem,
-            handleResizeListStages,
-            handleRenameListStages,
+            handleApplyListStagesSettings,
             onDragEnd,
           }}
         >

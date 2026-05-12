@@ -1,6 +1,6 @@
 import { useState, useContext, useRef } from "react";
 import { useClickAway } from "@uidotdev/usehooks";
-import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { Droppable, Draggable } from "@hello-pangea/dnd";
 import { ManagerContext } from "./Contexts";
 import Item from "./Item";
 import styles from "../styles/list.module.css";
@@ -16,8 +16,7 @@ export default function List({ list, index, children }) {
     handleCollapseList,
     handleOrderList,
     handleMoveList,
-    handleResizeListStages,
-    handleRenameListStages,
+    handleApplyListStagesSettings,
   } = useContext(ManagerContext);
 
   // Clicking outside ends the rename interaction
@@ -148,8 +147,15 @@ export default function List({ list, index, children }) {
                 <button
                   className={`block text-left`}
                   size-="small"
-                  command="show-modal"
-                  commandfor={`config-board-dialog-${list.id}`}
+                  // Note: previously used command show-modal but was changed by proposed edits and I kept it because it worked smoothly with setMenu(false). I always struggle to combine approaches of native command show-modal and onClick for closing menus in this app
+                  // Consider: direct DOM lookup here is said to be more brittle than refs
+                  onClick={() => {
+                    const dialog = document.getElementById(
+                      `config-board-dialog-${list.id}`,
+                    );
+                    if (dialog) dialog.showPopover();
+                    setMenu(false);
+                  }}
                 >
                   Settings
                 </button>
@@ -219,7 +225,8 @@ export default function List({ list, index, children }) {
                       <Item
                         item={item}
                         myListId={list.id}
-                        stages={list.stages}
+                        stageNames={list.stageNames}
+                        activeStageCount={list.activeStageCount}
                         index={index}
                         {...provided.dragHandleProps}
                       />
@@ -235,7 +242,7 @@ export default function List({ list, index, children }) {
       </Droppable>
 
       <form
-        className={`mt-[1ch] flex gap-[1ch]`}
+        className={`flex gap-[1ch]`}
         onSubmit={(event) => {
           handleAddItem(event);
         }}
@@ -266,36 +273,63 @@ export default function List({ list, index, children }) {
       <ListSettings
         list={list}
         myItems={myItems}
-        handleRenameListStages={handleRenameListStages}
-        handleResizeListStages={handleResizeListStages}
+        handleApplyListStagesSettings={handleApplyListStagesSettings}
       />
       {/* KNOWN ISSUE: on md screen, sometimes modal can appear not in the center but higher, and can overlap navbar. Don't know when it triggers or why. High priority*/}
     </div>
   );
 }
 
-function ListSettings({
-  list,
-  myItems,
-  handleResizeListStages,
-  handleRenameListStages,
-}) {
+// COPILOT CODE: EXAMINE 3
+function ListSettings({ list, myItems, handleApplyListStagesSettings }) {
+  // TODO: I don't know if I agree with this const and function being scattered across the app. Also appears in Manager
+  const MAX_COLORED_STAGES = 7;
+
+  function padStageNames(source = []) {
+    const next = Array(MAX_COLORED_STAGES + 1).fill("");
+    next[0] = "none";
+    for (let i = 1; i <= MAX_COLORED_STAGES; i++) {
+      next[i] = source[i] || "";
+    }
+    return next;
+  }
+
+  const [draftActiveStageCount, setDraftActiveStageCount] = useState(
+    list.activeStageCount,
+  );
+  const [draftStageNames, setDraftStageNames] = useState(
+    padStageNames(list.stageNames),
+  );
+
+  const savedStageNames = padStageNames(list.stageNames);
+  const isDirty =
+    draftActiveStageCount !== list.activeStageCount ||
+    savedStageNames.some((name, index) => name !== draftStageNames[index]);
+
+  function resetDraft() {
+    setDraftActiveStageCount(list.activeStageCount);
+    setDraftStageNames(savedStageNames);
+  }
+
   const stagesdisplay = [];
-  for (let i = 1; i < 8; i++) {
+  for (let i = 1; i <= MAX_COLORED_STAGES; i++) {
     const sdcolor = "bg-stage" + i;
+    const isActive = i <= draftActiveStageCount;
     stagesdisplay.push(
-      // AUDIT: see react.dev Optimizing re-rendering on every keystroke
       <input
         key={sdcolor}
         type="text"
-        name="stage"
+        name={`stage-${i}`}
         minLength="1"
         maxLength="12"
-        className={`${list.stages.length < i + 1 ? `bg-[var(--background1)] ` : sdcolor} w-[20ch]`}
-        value={list.stages[i] || ""}
-        onChange={(e) => handleRenameListStages(e.target.value, i, list.id)}
-        required
-        disabled={list.stages.length < i + 1}
+        className={`${isActive ? sdcolor : "bg-[var(--background1)] text-[var(--foreground1)]"} w-[20ch]`}
+        value={draftStageNames[i] || ""}
+        onChange={(e) => {
+          const next = [...draftStageNames];
+          next[i] = e.target.value;
+          setDraftStageNames(next);
+        }}
+        required={isActive}
       />,
     );
   }
@@ -307,6 +341,10 @@ function ListSettings({
       className={`max-h-dvh w-full md:w-[50ch]`}
       id={`config-board-dialog-${list.id}`}
       popover="true"
+      // runs when dialog toggles and detects open transition to reinitialize draft state from canonical values. prevents stale edits from leaking back
+      onToggle={(event) => {
+        if (event.currentTarget.matches(":popover-open")) resetDraft();
+      }}
     >
       <article
         className={`dialog-webtuibox-spacing flex h-full flex-col gap-[1lh]`}
@@ -318,39 +356,62 @@ function ListSettings({
         </h1>
         <section>
           <h2># Stages</h2>
-
-          {/* AUDIT: accessibility */}
-          {/* Display list.stages.length - 1 to user because there's always one, stages[0] aka none, but it's hidden from user and can't be changed */}
-          <label htmlFor="listStages">
-            <input
-              type="range"
-              min="0"
-              max="7"
-              name="listStages"
-              value={list.stages.length - 1}
-              onChange={(e) =>
-                handleResizeListStages(
-                  e.target.value,
-                  list.stages,
-                  list.id,
-                  myItems,
+          {/* Explicit stepper reduces accidental destructive changes */}
+          <div className="flex items-center gap-[1ch]">
+            <button
+              type="button"
+              onClick={() =>
+                setDraftActiveStageCount(Math.max(0, draftActiveStageCount - 1))
+              }
+            >
+              [-]
+            </button>
+            <span className="min-w-[2ch] text-center">
+              {draftActiveStageCount}
+            </span>
+            <button
+              type="button"
+              onClick={() =>
+                setDraftActiveStageCount(
+                  Math.min(MAX_COLORED_STAGES, draftActiveStageCount + 1),
                 )
               }
-              required
-            />
-            {list.stages.length - 1}
-          </label>
+            >
+              [+]
+            </button>
+          </div>
 
-          <form className={`flex flex-col gap-1`} autoComplete="off">
+          <form
+            className={`flex flex-col gap-1`}
+            autoComplete="off"
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleApplyListStagesSettings(
+                list.id,
+                draftActiveStageCount,
+                draftStageNames,
+                myItems,
+              );
+              event.currentTarget.closest("dialog")?.hidePopover();
+            }}
+          >
             {stagesdisplay}
+            <div className="flex gap-[1ch]">
+              <button type="submit" disabled={!isDirty}>
+                Save
+              </button>
+              <button
+                type="button"
+                onClick={(event) => {
+                  resetDraft();
+                  event.currentTarget.closest("dialog")?.hidePopover();
+                }}
+              >
+                Exit
+              </button>
+            </div>
           </form>
         </section>
-
-        <footer>
-          <button commandfor={`config-board-dialog-${list.id}`} command="close">
-            Exit
-          </button>
-        </footer>
       </article>
     </dialog>
   );
