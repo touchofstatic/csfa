@@ -51,9 +51,9 @@ export default function Themes() {
           {/* tabIndex focuses dialog's header instead of first input which is the default*/}
           <h1 tabIndex="0">Themes</h1>
           {/* Color scheme ui element that showcases the current theme as a row of color blocks. It's common in tui, for example the linux terminal. Purely visual, not relevant to screen readers */}
-          <p className="noselect" aria-hidden="true">
+          <div className="noselect" aria-hidden="true">
             {/* Base colors */}
-            <div>
+            <p>
               <span className="bg-[var(--foreground0)]">&nbsp;&nbsp;</span>
               <span className="bg-[var(--foreground1)]">&nbsp;&nbsp;</span>
               <span className="bg-[var(--foreground2)]">&nbsp;&nbsp;</span>
@@ -61,9 +61,9 @@ export default function Themes() {
               <span className="bg-[var(--background1)]">&nbsp;&nbsp;</span>
               <span className="bg-[var(--background2)]">&nbsp;&nbsp;</span>
               <span className="bg-[var(--background3)]">&nbsp;&nbsp;</span>
-            </div>
+            </p>
             {/* Accent colors */}
-            <div>
+            <p>
               <span className="bg-[var(--color0)]">&nbsp;&nbsp;</span>
               <span className="bg-[var(--color1)]">&nbsp;&nbsp;</span>
               <span className="bg-[var(--color2)]">&nbsp;&nbsp;</span>
@@ -71,8 +71,8 @@ export default function Themes() {
               <span className="bg-[var(--color4)]">&nbsp;&nbsp;</span>
               <span className="bg-[var(--color5)]">&nbsp;&nbsp;</span>
               <span className="bg-[var(--color6)]">&nbsp;&nbsp;</span>
-            </div>
-          </p>
+            </p>
+          </div>
 
           <section>
             {/* Current theme is strongly highlighted in foreground. hovering highlights slightly */}
