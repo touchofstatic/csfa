@@ -35,18 +35,6 @@ export const devStages = SYSTEM_CONFIG_STAGES;
 // A shorter custom stages config to test per-list stage independence
 const devStagesShort = ["none", "todo", "doing", "", "", "", "", ""];
 
-// For development
-// function padStageNames(source = []) {
-//   const next = Array(8).fill("");
-//   next[0] = "none";
-//   for (let i = 1; i < 8; i++) {
-//     next[i] = source[i] || "";
-//   }
-//   return next;
-// }
-
-// const devStageNames = padStageNames(devStages);
-// const devStageNamesShort = padStageNames(devStagesShort);
 
 export const devItems = [
   // List A — "Backlog": 8 items spread across every stage (0–5).

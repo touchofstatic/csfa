@@ -37,7 +37,7 @@ const move = (SLobj, DLobj, source, destination) => {
   return result;
 };
 
-// Takes those arrays I have from pre model migration and pads to fixed length with empty strings for compatibility with new model
+
 // MIGRATION: not sure if will be relevant
 const MAX_COLORED_STAGES = 7;
 
@@ -215,7 +215,7 @@ export default function Manager() {
         id: uuidv4(),
         itemIds: [],
         collapsed: false,
-        stageNames: padStageNames(stagesConfig),
+        stageNames: stagesConfig,
         activeStageCount: stagesConfig.length - 1,
       },
       ...lists,

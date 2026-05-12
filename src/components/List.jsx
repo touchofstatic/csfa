@@ -242,7 +242,7 @@ export default function List({ list, index, children }) {
       </Droppable>
 
       <form
-        className={`flex gap-[1ch]`}
+        className={`mt-[1ch] flex gap-[1ch]`}
         onSubmit={(event) => {
           handleAddItem(event);
         }}
