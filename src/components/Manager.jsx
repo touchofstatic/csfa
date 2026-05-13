@@ -37,18 +37,7 @@ const move = (SLobj, DLobj, source, destination) => {
   return result;
 };
 
-
-// MIGRATION: not sure if will be relevant
 const MAX_COLORED_STAGES = 7;
-
-function padStageNames(source = []) {
-  const next = Array(MAX_COLORED_STAGES + 1).fill("");
-  next[0] = "none";
-  for (let i = 1; i <= MAX_COLORED_STAGES; i++) {
-    next[i] = source[i] || "";
-  }
-  return next;
-}
 
 export default function Manager() {
   const [items, setItems] = useState(() => {
@@ -199,16 +188,6 @@ export default function Manager() {
     // Reset input
     event.target.reset();
     // Lists are created with stages specified in user board config
-    // setLists([
-    //   ...lists,
-    //   {
-    //     name: newList,
-    //     id: uuidv4(),
-    //     itemIds: [],
-    //     collapsed: false,
-    //     stages: stagesConfig,
-    //   },
-    // ]);
     setLists([
       {
         name: newList,
@@ -328,8 +307,7 @@ export default function Manager() {
     setLists(newLists);
   }
 
-  // COPILOT CODE: EXAMINE 2
-  // Disastrous name
+  // TODO: Disastrous name
   // Apply List stage settings as one transaction
   function handleApplyListStagesSettings(
     listId,
@@ -337,19 +315,21 @@ export default function Manager() {
     nextStageNames,
     myItems,
   ) {
-    // MIGRATION: what is it cooking?? 
+    // Coerces the incoming value into a number and in the allowed range of no less than 0 and no greater than MAX_COLORED_STAGES
     const safeActiveStageCount = Math.min(
       MAX_COLORED_STAGES,
       Math.max(0, Number(nextActiveStageCount)),
     );
-    const safeStageNames = padStageNames(nextStageNames);
 
-    // Keep all tasks visible and interactive after reducing active stages.
     setItems(
       items.map((item) => {
+        // items not in target list
         if (myItems.includes(item) === false) return item;
+        // items not affected by stages count change
         if (item.stage <= safeActiveStageCount) return item;
+        // items affected by stages count change if it's 0
         if (safeActiveStageCount === 0) return { ...item, stage: 0 };
+        // items affected by stages count change reset to closest available stage
         return { ...item, stage: safeActiveStageCount };
       }),
     );
@@ -357,10 +337,11 @@ export default function Manager() {
     setLists(
       lists.map((list) => {
         if (list.id !== listId) return list;
+        // update list's stage count and names
         return {
           ...list,
           activeStageCount: safeActiveStageCount,
-          stageNames: safeStageNames,
+          stageNames: nextStageNames,
         };
       }),
     );

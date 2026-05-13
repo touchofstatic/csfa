@@ -280,35 +280,25 @@ export default function List({ list, index, children }) {
   );
 }
 
-// COPILOT CODE: EXAMINE 3
 function ListSettings({ list, myItems, handleApplyListStagesSettings }) {
-  // TODO: I don't know if I agree with this const and function being scattered across the app. Also appears in Manager
+  // I don't know if I agree with this const being scattered across the app. Also appears in Manager
   const MAX_COLORED_STAGES = 7;
 
-  function padStageNames(source = []) {
-    const next = Array(MAX_COLORED_STAGES + 1).fill("");
-    next[0] = "none";
-    for (let i = 1; i <= MAX_COLORED_STAGES; i++) {
-      next[i] = source[i] || "";
-    }
-    return next;
-  }
-
+  // Drafts for list stages settings renaming and length
   const [draftActiveStageCount, setDraftActiveStageCount] = useState(
     list.activeStageCount,
   );
-  const [draftStageNames, setDraftStageNames] = useState(
-    padStageNames(list.stageNames),
-  );
+  const [draftStageNames, setDraftStageNames] = useState(list.stageNames);
 
-  const savedStageNames = padStageNames(list.stageNames);
+  // If has pending changes (to enable save button)
   const isDirty =
     draftActiveStageCount !== list.activeStageCount ||
-    savedStageNames.some((name, index) => name !== draftStageNames[index]);
+    list.stageNames.some((name, index) => name !== draftStageNames[index]);
 
+  // Reset draft utility
   function resetDraft() {
     setDraftActiveStageCount(list.activeStageCount);
-    setDraftStageNames(savedStageNames);
+    setDraftStageNames(list.stageNames);
   }
 
   const stagesdisplay = [];
@@ -341,7 +331,7 @@ function ListSettings({ list, myItems, handleApplyListStagesSettings }) {
       className={`max-h-dvh w-full md:w-[50ch]`}
       id={`config-board-dialog-${list.id}`}
       popover="true"
-      // runs when dialog toggles and detects open transition to reinitialize draft state from canonical values. prevents stale edits from leaking back
+      // runs when dialog toggles and detects open transition to reset draft state to canonical values. prevents stale edits from leaking back
       onToggle={(event) => {
         if (event.currentTarget.matches(":popover-open")) resetDraft();
       }}
