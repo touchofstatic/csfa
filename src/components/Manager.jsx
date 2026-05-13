@@ -8,6 +8,7 @@ import Sidebar from "./Sidebar.jsx";
 import {
   SYSTEM_CONFIG_STAGES,
   SYSTEM_CONFIG_POMODORO,
+  TEST,
   // ONLY FOR DEVELOPMENT
   devItems,
   devLists,
@@ -62,6 +63,12 @@ export default function Manager() {
     return loadPomoConfig || SYSTEM_CONFIG_POMODORO;
   });
 
+  // STRUGGLE ZONE
+  const [test, setTest] = useState(() => {
+    const loadTest = JSON.parse(localStorage.getItem("test"));
+    return loadTest || TEST;
+  });
+
   // AUDIT++: see what can be done to optimize
   // Will possibly migrate db to dexie anyway?
   // Update localstorage
@@ -80,6 +87,11 @@ export default function Manager() {
   useEffect(() => {
     localStorage.setItem("pomo-config", JSON.stringify(pomoConfig));
   }, [pomoConfig]);
+
+  // STRUGGLE ZONE
+  useEffect(() => {
+    localStorage.setItem("test", JSON.stringify(test));
+  }, [test]);
 
   // Change pomodoro config
   function changePomoConfig(value, name) {
@@ -195,7 +207,7 @@ export default function Manager() {
         itemIds: [],
         collapsed: false,
         stageNames: stagesConfig,
-        activeStageCount: stagesConfig.length - 1,
+        activeStageCount: test,
       },
       ...lists,
     ]);
@@ -412,26 +424,13 @@ export default function Manager() {
     setItems(items);
   }
 
-  // Resize Config Stages
-  // nextSize is num of COLORED stages
-  function handleResizeConfigStages(nextSize) {
-    const size = stagesConfig.length - 1;
-    if (nextSize !== size) {
-      if (nextSize > size) {
-        const newStages = [...stagesConfig, ...Array(nextSize - size).fill("")];
-        setStagesConfig(newStages);
-      } else if (nextSize < size) {
-        const newStages = stagesConfig.slice(0, nextSize - size);
-        setStagesConfig(newStages);
-      }
-    }
-  }
-
-  // Rename Config Stages
-  function handleRenameConfigStages(input, index) {
-    let newStages = structuredClone(stagesConfig);
-    newStages[index] = input;
-    setStagesConfig(newStages);
+  function handleTest(nextActiveStageCount, nextStageNames) {
+    const safeActiveStageCount = Math.min(
+      MAX_COLORED_STAGES,
+      Math.max(0, Number(nextActiveStageCount)),
+    );
+    setTest(safeActiveStageCount);
+    setStagesConfig(nextStageNames);
   }
 
   // Reset Board Config
@@ -439,6 +438,7 @@ export default function Manager() {
     // Reset config stages
     // Doesn't do anything else because it's the only Board setting now
     setStagesConfig(SYSTEM_CONFIG_STAGES);
+    setTest(TEST);
   }
 
   return (
@@ -455,9 +455,9 @@ export default function Manager() {
           lists,
           stagesConfig,
           pomoConfig,
+          test,
           handleImportBoard,
-          handleResizeConfigStages,
-          handleRenameConfigStages,
+          handleTest,
           resetBoardConfig,
           changePomoConfig,
           resetPomoConfig,

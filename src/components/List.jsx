@@ -149,6 +149,8 @@ export default function List({ list, index, children }) {
                   size-="small"
                   // Note: previously used command show-modal but was changed by proposed edits and I kept it because it worked smoothly with setMenu(false). I always struggle to combine approaches of native command show-modal and onClick for closing menus in this app
                   // Consider: direct DOM lookup here is said to be more brittle than refs
+
+                  // TODO: WRONG ID LMAO
                   onClick={() => {
                     const dialog = document.getElementById(
                       `config-board-dialog-${list.id}`,
@@ -382,7 +384,6 @@ function ListSettings({ list, myItems, handleApplyListStagesSettings }) {
                 draftStageNames,
                 myItems,
               );
-              event.currentTarget.closest("dialog")?.hidePopover();
             }}
           >
             {stagesdisplay}

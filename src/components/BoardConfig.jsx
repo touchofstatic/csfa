@@ -1,29 +1,54 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ManagerContext } from "./Contexts";
 import Import from "./Import";
 import Export from "./Export";
 import ResetBoardConfig from "./ResetBoardConfig";
 
 export default function BoardConfig() {
-  const { stagesConfig, handleResizeConfigStages, handleRenameConfigStages } =
-    useContext(ManagerContext);
+  // TODO: HORRIBLE HORRIBLE NAME
+  const {
+    stagesConfig,
+    test,
+    handleTest,
+  } = useContext(ManagerContext);
+
+  // I don't know if I agree with this const being scattered across the app. Also appears in Manager
+  const MAX_COLORED_STAGES = 7;
+
+  const [draftActiveStageCount, setDraftActiveStageCount] = useState(test);
+  const [draftStageNames, setDraftStageNames] = useState(stagesConfig);
+
+  // If has pending changes (to enable save button)
+  const isDirty =
+    draftActiveStageCount !== test ||
+    stagesConfig.some((name, index) => name !== draftStageNames[index]);
+
+  // Reset draft utility
+  function resetDraft() {
+    setDraftActiveStageCount(test);
+    setDraftStageNames(stagesConfig);
+  }
 
   const stagesdisplay = [];
-  for (let i = 1; i < 8; i++) {
+  for (let i = 1; i <= MAX_COLORED_STAGES; i++) {
     const sdcolor = "bg-stage" + i;
+    const isActive = i <= draftActiveStageCount;
     stagesdisplay.push(
       // AUDIT: see react.dev Optimizing re-rendering on every keystroke
       <input
         key={sdcolor}
         type="text"
-        name="stage"
+        name={`stage-${i}`}
         minLength="1"
         maxLength="12"
-        className={`${stagesConfig.length < i + 1 ? `bg-[var(--background1)] ` : sdcolor} w-[20ch]`}
-        value={stagesConfig[i] || ""}
-        onChange={(e) => handleRenameConfigStages(e.target.value, i)}
-        required
-        disabled={stagesConfig.length < i + 1}
+        className={`${isActive ? sdcolor : "bg-[var(--background1)] text-[var(--foreground1)]"} w-[20ch]`}
+        value={draftStageNames[i] || ""}
+        onChange={(e) => {
+          const next = [...draftStageNames];
+          next[i] = e.target.value;
+          setDraftStageNames(next);
+        }}
+        required={isActive}
       />,
     );
   }
@@ -31,10 +56,14 @@ export default function BoardConfig() {
   return (
     <>
       <button
-        command="show-modal"
-        commandfor="config-board-dialog"
+        // command="show-modal"
+        // commandfor="config-board-dialog"
         size-="small"
         className={`block w-full text-left hover:bg-[var(--foreground2)] active:bg-[var(--background0)]`}
+        onClick={() => {
+          const dialog = document.getElementById(`config-board-dialog`);
+          if (dialog) dialog.showPopover();
+        }}
       >
         Board
       </button>
@@ -44,6 +73,12 @@ export default function BoardConfig() {
         id="config-board-dialog"
         popover="true"
         className={`max-h-dvh w-full md:w-[50ch]`}
+        onToggle={(event) => {
+          if (event.currentTarget.matches(":popover-open")) {
+            resetDraft();
+            console.log("a");
+          }
+        }}
       >
         <article
           className={`dialog-webtuibox-spacing flex h-full flex-col gap-[1lh]`}
@@ -56,8 +91,7 @@ export default function BoardConfig() {
               Default configuration for creating new lists. Changing it will not
               overwrite existing ones.
             </p>
-
-            {/* AUDIT: accessibility */}
+            {/* 
             <label htmlFor="stagesConfig">
               <input
                 type="range"
@@ -71,12 +105,67 @@ export default function BoardConfig() {
                 required
               />
               {stagesConfig.length - 1}
-            </label>
+            </label> */}
 
-            <form className={`flex flex-col gap-1`} autoComplete="off">
+            {/* Explicit stepper reduces accidental destructive changes */}
+            <div className="flex items-center gap-[1ch]">
+              <button
+                type="button"
+                onClick={() =>
+                  setDraftActiveStageCount(
+                    Math.max(0, draftActiveStageCount - 1),
+                  )
+                }
+              >
+                [-]
+              </button>
+              <span className="min-w-[2ch] text-center">
+                {draftActiveStageCount}
+              </span>
+              <button
+                type="button"
+                onClick={() =>
+                  setDraftActiveStageCount(
+                    Math.min(MAX_COLORED_STAGES, draftActiveStageCount + 1),
+                  )
+                }
+              >
+                [+]
+              </button>
+            </div>
+
+            <form
+              className={`flex flex-col gap-1`}
+              autoComplete="off"
+              onSubmit={(event) => {
+                event.preventDefault();
+                handleTest(draftActiveStageCount, draftStageNames);
+                // handleApplyListStagesSettings(
+                //   list.id,
+                //   draftActiveStageCount,
+                //   draftStageNames,
+                //   myItems,
+                // );
+              }}
+            >
               {stagesdisplay}
+              <div className="flex gap-[1ch]">
+                <button type="submit" disabled={!isDirty}>
+                  Save
+                </button>
+                <button
+                  type="button"
+                  disabled={!isDirty}
+                  onClick={() => {
+                    resetDraft();
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
             </form>
           </section>
+
           <section className="flex w-fit flex-col gap-1">
             <h2># Data</h2>
             <Import />
@@ -85,7 +174,18 @@ export default function BoardConfig() {
           </section>
 
           <footer>
-            <button commandfor="config-board-dialog" command="close">
+            <button
+              // commandfor="config-board-dialog"
+              // command="close"
+              // onClick={(event) => {
+              //   resetDraft();
+              // }}
+              type="button"
+              onClick={(event) => {
+                resetDraft();
+                event.currentTarget.closest("dialog")?.hidePopover();
+              }}
+            >
               Exit
             </button>
           </footer>

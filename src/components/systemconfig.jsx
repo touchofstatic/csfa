@@ -9,6 +9,8 @@ export const SYSTEM_CONFIG_STAGES = [
   "",
 ];
 
+export const TEST = 5;
+
 export const SYSTEM_CONFIG_POMODORO = {
   // TIME SHOULD ALWAYS BE SET IN ROUND MINUTES
   // Note: bypassing that rule for development causes all kinds of strange behavior; that's completely normal
