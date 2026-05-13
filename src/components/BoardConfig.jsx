@@ -30,21 +30,24 @@ export default function BoardConfig() {
     const isActive = i <= draftStageActive;
     stagesdisplay.push(
       // AUDIT: see react.dev Optimizing re-rendering on every keystroke
-      <input
-        key={sdcolor}
-        type="text"
-        name={`stage-${i}`}
-        minLength="1"
-        maxLength="12"
-        className={`${isActive ? sdcolor : "bg-[var(--background1)] text-[var(--foreground1)]"} w-[20ch]`}
-        value={draftStageNames[i] || ""}
-        onChange={(e) => {
-          const next = [...draftStageNames];
-          next[i] = e.target.value;
-          setDraftStageNames(next);
-        }}
-        required={isActive}
-      />,
+      <span>
+        <input
+          key={sdcolor}
+          type="text"
+          name={`stage-${i}`}
+          minLength="1"
+          maxLength="12"
+          className={`${isActive ? sdcolor : "bg-[var(--background1)] text-[var(--foreground1)]"} mr-[1ch] w-[19ch] min-w-0`}
+          value={draftStageNames[i] || ""}
+          onChange={(e) => {
+            const next = [...draftStageNames];
+            next[i] = e.target.value;
+            setDraftStageNames(next);
+          }}
+          required={isActive}
+        />
+        {!isActive && "[off]"}
+      </span>,
     );
   }
 

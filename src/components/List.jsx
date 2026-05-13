@@ -304,21 +304,24 @@ function ListSettings({ list, myItems, handleSaveListStages }) {
     const sdcolor = "bg-stage" + i;
     const isActive = i <= draftStageActive;
     stagesdisplay.push(
-      <input
-        key={sdcolor}
-        type="text"
-        name={`stage-${i}`}
-        minLength="1"
-        maxLength="12"
-        className={`${isActive ? sdcolor : "bg-[var(--background1)] text-[var(--foreground1)]"} w-[20ch]`}
-        value={draftStageNames[i] || ""}
-        onChange={(e) => {
-          const next = [...draftStageNames];
-          next[i] = e.target.value;
-          setDraftStageNames(next);
-        }}
-        required={isActive}
-      />,
+      <span>
+        <input
+          key={sdcolor}
+          type="text"
+          name={`stage-${i}`}
+          minLength="1"
+          maxLength="12"
+          className={`${isActive ? sdcolor : "bg-[var(--background1)] text-[var(--foreground1)]"} mr-[1ch] w-[19ch] min-w-0`}
+          value={draftStageNames[i] || ""}
+          onChange={(e) => {
+            const next = [...draftStageNames];
+            next[i] = e.target.value;
+            setDraftStageNames(next);
+          }}
+          required={isActive}
+        />
+        {!isActive && "[off]"}
+      </span>,
     );
   }
 
@@ -345,8 +348,8 @@ function ListSettings({ list, myItems, handleSaveListStages }) {
         <section>
           <h2># Stages</h2>
           <p className="text-sm">
-            Warning: disabling stages that are currently in use will reset those
-            items' progress.
+            Warning: disabling stages that are currently in use will overwrite
+            those items' progress.
           </p>
           {/* Explicit stepper reduces accidental destructive changes */}
           <div className="flex items-center gap-[1ch]">
