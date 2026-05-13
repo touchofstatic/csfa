@@ -73,7 +73,7 @@ export default function List({ list, index, children }) {
             size-="small"
             type="submit"
           >
-            [Save]
+            Save
           </button>
           <button
             type="button"
@@ -84,7 +84,7 @@ export default function List({ list, index, children }) {
               setDraftRenameList("");
             }}
           >
-            [Cancel]
+            Cancel
           </button>
         </span>
       </form>
@@ -344,6 +344,10 @@ function ListSettings({ list, myItems, handleSaveListStages }) {
         </h1>
         <section>
           <h2># Stages</h2>
+          <p className="text-sm">
+            Warning: disabling stages that are currently in use will reset those
+            items' progress.
+          </p>
           {/* Explicit stepper reduces accidental destructive changes */}
           <div className="flex items-center gap-[1ch]">
             <button
@@ -352,7 +356,7 @@ function ListSettings({ list, myItems, handleSaveListStages }) {
                 setDraftStageActive(Math.max(0, draftStageActive - 1))
               }
             >
-              [-]
+              -
             </button>
             <span className="min-w-[2ch] text-center">{draftStageActive}</span>
             <button
@@ -363,7 +367,7 @@ function ListSettings({ list, myItems, handleSaveListStages }) {
                 )
               }
             >
-              [+]
+              +
             </button>
           </div>
 
@@ -387,16 +391,27 @@ function ListSettings({ list, myItems, handleSaveListStages }) {
               </button>
               <button
                 type="button"
-                onClick={(event) => {
+                disabled={!isDirty}
+                onClick={() => {
                   resetDraft();
-                  event.currentTarget.closest("dialog")?.hidePopover();
                 }}
               >
-                Exit
+                Cancel
               </button>
             </div>
           </form>
         </section>
+        <footer>
+          <button
+            type="button"
+            onClick={(event) => {
+              resetDraft();
+              event.currentTarget.closest("dialog")?.hidePopover();
+            }}
+          >
+            Exit
+          </button>
+        </footer>
       </article>
     </dialog>
   );

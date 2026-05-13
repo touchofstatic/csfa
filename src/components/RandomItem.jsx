@@ -41,7 +41,7 @@ export default function RandomItem({ items }) {
         <span className="content-center">{pull?.name}</span>
       </output>
       <button type="submit" size-="small" className="w-full">
-        [Random task]
+        Random task
       </button>
     </form>
   );

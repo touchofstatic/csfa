@@ -81,9 +81,9 @@ export default function BoardConfig() {
           <h1 tabIndex="0">Settings/Board</h1>
           <section>
             <h2># Stages</h2>
-            <p>
-              Your standard configuration for creating new lists. Changing it
-              won't affect existing ones.
+            <p className="text-sm">
+              Your standard template for creating new lists. Changing this
+              setting won't affect existing lists.
             </p>
 
             {/* Explicit stepper reduces accidental destructive changes */}
@@ -94,7 +94,7 @@ export default function BoardConfig() {
                   setDraftStageActive(Math.max(0, draftStageActive - 1))
                 }
               >
-                [-]
+                -
               </button>
               <span className="min-w-[2ch] text-center">
                 {draftStageActive}
@@ -107,7 +107,7 @@ export default function BoardConfig() {
                   )
                 }
               >
-                [+]
+                +
               </button>
             </div>
 

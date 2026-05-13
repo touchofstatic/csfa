@@ -40,7 +40,7 @@ function NewListForm({ onAddList }) {
       ></input>
       {/* Without whitespace-nowrap button text folds*/}
       <button size-="small" type="submit" className="w-full whitespace-nowrap">
-        [Add list]
+        Add list
       </button>
     </form>
   );

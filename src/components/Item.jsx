@@ -72,7 +72,7 @@ export default function Item({
             size-="small"
             type="submit"
           >
-            [Save]
+            Save
           </button>
           <button
             type="button"
@@ -83,7 +83,7 @@ export default function Item({
               setDraftRenameItem("");
             }}
           >
-            [Cancel]
+            Cancel
           </button>
         </span>
       </form>
