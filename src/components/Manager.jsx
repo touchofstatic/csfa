@@ -6,9 +6,10 @@ import Board from "./Board.jsx";
 import Sidebar from "./Sidebar.jsx";
 
 import {
-  SYSTEM_CONFIG_STAGES,
-  SYSTEM_CONFIG_POMODORO,
-  TEST,
+  SYSTEM_STAGE_ACTIVE,
+  SYSTEM_STAGE_NAMES,
+  SYSTEM_POMODORO,
+
   // ONLY FOR DEVELOPMENT
   devItems,
   devLists,
@@ -54,19 +55,17 @@ export default function Manager() {
     return loadLists || devLists;
   });
   // If user doesn't have config in localstorage, load system config
-  const [stagesConfig, setStagesConfig] = useState(() => {
-    const loadStagesConfig = JSON.parse(localStorage.getItem("stages-config"));
-    return loadStagesConfig || SYSTEM_CONFIG_STAGES;
+  const [stagesActive, setStagesActive] = useState(() => {
+    const loadStagesActive = JSON.parse(localStorage.getItem("stages-active"));
+    return loadStagesActive || SYSTEM_STAGE_ACTIVE;
+  });
+  const [stagesNames, setStagesNames] = useState(() => {
+    const loadStagesNames = JSON.parse(localStorage.getItem("stages-config"));
+    return loadStagesNames || SYSTEM_STAGE_NAMES;
   });
   const [pomoConfig, setPomoConfig] = useState(() => {
     const loadPomoConfig = JSON.parse(localStorage.getItem("pomo-config"));
-    return loadPomoConfig || SYSTEM_CONFIG_POMODORO;
-  });
-
-  // STRUGGLE ZONE
-  const [test, setTest] = useState(() => {
-    const loadTest = JSON.parse(localStorage.getItem("test"));
-    return loadTest || TEST;
+    return loadPomoConfig || SYSTEM_POMODORO;
   });
 
   // AUDIT++: see what can be done to optimize
@@ -80,18 +79,18 @@ export default function Manager() {
     localStorage.setItem("items", JSON.stringify(items));
   }, [items]);
 
+  // STRUGGLE ZONE
   useEffect(() => {
-    localStorage.setItem("stages-config", JSON.stringify(stagesConfig));
-  }, [stagesConfig]);
+    localStorage.setItem("stages-active", JSON.stringify(stagesActive));
+  }, [stagesActive]);
+
+  useEffect(() => {
+    localStorage.setItem("stages-config", JSON.stringify(stagesNames));
+  }, [stagesNames]);
 
   useEffect(() => {
     localStorage.setItem("pomo-config", JSON.stringify(pomoConfig));
   }, [pomoConfig]);
-
-  // STRUGGLE ZONE
-  useEffect(() => {
-    localStorage.setItem("test", JSON.stringify(test));
-  }, [test]);
 
   // Change pomodoro config
   function changePomoConfig(value, name) {
@@ -123,13 +122,13 @@ export default function Manager() {
   // Reset pomodoro config
   function resetPomoConfig() {
     setPomoConfig({
-      pomo: SYSTEM_CONFIG_POMODORO.pomo,
-      short: SYSTEM_CONFIG_POMODORO.short,
-      long: SYSTEM_CONFIG_POMODORO.long,
-      interval: SYSTEM_CONFIG_POMODORO.interval,
-      autoStart: SYSTEM_CONFIG_POMODORO.autoStart,
-      alarmSound: SYSTEM_CONFIG_POMODORO.alarmSound,
-      volume: SYSTEM_CONFIG_POMODORO.volume,
+      pomo: SYSTEM_POMODORO.pomo,
+      short: SYSTEM_POMODORO.short,
+      long: SYSTEM_POMODORO.long,
+      interval: SYSTEM_POMODORO.interval,
+      autoStart: SYSTEM_POMODORO.autoStart,
+      alarmSound: SYSTEM_POMODORO.alarmSound,
+      volume: SYSTEM_POMODORO.volume,
     });
   }
 
@@ -179,7 +178,7 @@ export default function Manager() {
 
       // Lists can have different active stage counts.  Moving an item can cause a conflict if its stage is higher than destination's.
       const targetitem = items.find((item) => item.id === SLobj.itemIds[SIind]);
-      if (targetitem.stage > DLobj.activeStageCount) {
+      if (targetitem.stage > DLobj.stageActive) {
         setItems(
           items.map((item) => {
             if (item !== targetitem) return item;
@@ -206,8 +205,8 @@ export default function Manager() {
         id: uuidv4(),
         itemIds: [],
         collapsed: false,
-        stageNames: stagesConfig,
-        activeStageCount: test,
+        stageNames: stagesNames,
+        stageActive: stagesActive,
       },
       ...lists,
     ]);
@@ -319,9 +318,8 @@ export default function Manager() {
     setLists(newLists);
   }
 
-  // TODO: Disastrous name
   // Apply List stage settings as one transaction
-  function handleApplyListStagesSettings(
+  function handleSaveListStages(
     listId,
     nextActiveStageCount,
     nextStageNames,
@@ -352,7 +350,7 @@ export default function Manager() {
         // update list's stage count and names
         return {
           ...list,
-          activeStageCount: safeActiveStageCount,
+          stageActive: safeActiveStageCount,
           stageNames: nextStageNames,
         };
       }),
@@ -403,8 +401,8 @@ export default function Manager() {
   }
 
   // Advance Item
-  function handleAdvanceItem(itemId, activeStageCount) {
-    const lastActiveStage = Math.max(0, Number(activeStageCount));
+  function handleAdvanceItem(itemId, stageActive) {
+    const lastActiveStage = Math.max(0, Number(stageActive));
     setItems(
       items.map((item) => {
         if (item.id !== itemId) return item;
@@ -424,21 +422,21 @@ export default function Manager() {
     setItems(items);
   }
 
-  function handleTest(nextActiveStageCount, nextStageNames) {
+  function handleSaveBoardStages(nextActiveStageCount, nextStageNames) {
     const safeActiveStageCount = Math.min(
       MAX_COLORED_STAGES,
       Math.max(0, Number(nextActiveStageCount)),
     );
-    setTest(safeActiveStageCount);
-    setStagesConfig(nextStageNames);
+    setStagesActive(safeActiveStageCount);
+    setStagesNames(nextStageNames);
   }
 
   // Reset Board Config
   function resetBoardConfig() {
     // Reset config stages
     // Doesn't do anything else because it's the only Board setting now
-    setStagesConfig(SYSTEM_CONFIG_STAGES);
-    setTest(TEST);
+    setStagesNames(SYSTEM_STAGE_NAMES);
+    setStagesActive(SYSTEM_STAGE_ACTIVE);
   }
 
   return (
@@ -453,11 +451,11 @@ export default function Manager() {
         value={{
           items,
           lists,
-          stagesConfig,
+          stagesActive,
+          stagesNames,
           pomoConfig,
-          test,
           handleImportBoard,
-          handleTest,
+          handleSaveBoardStages,
           resetBoardConfig,
           changePomoConfig,
           resetPomoConfig,
@@ -485,7 +483,7 @@ export default function Manager() {
             handleRenameItem,
             handleResetItem,
             handleAdvanceItem,
-            handleApplyListStagesSettings,
+            handleSaveListStages,
             onDragEnd,
           }}
         >

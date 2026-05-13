@@ -20,7 +20,7 @@ export const listsSchema = {
       "itemIds",
       "collapsed",
       "stageNames",
-      "activeStageCount",
+      "stageActive",
     ],
     properties: {
       name: { type: "string" },
@@ -36,7 +36,7 @@ export const listsSchema = {
         maxItems: 8,
         items: { type: "string" },
       },
-      activeStageCount: {
+      stageActive: {
         type: "number",
         minimum: 0,
         maximum: 7,

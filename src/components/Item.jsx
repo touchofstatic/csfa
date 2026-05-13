@@ -7,7 +7,7 @@ export default function Item({
   item,
   myListId,
   stageNames,
-  activeStageCount,
+  stageActive,
   ...handle
 }) {
   const [draftRenameItem, setDraftRenameItem] = useState("");
@@ -138,7 +138,7 @@ export default function Item({
         <button
           size-="small"
           className={`${ctrlcolor} float-right bg-transparent p-0 text-[var(--foreground2)]`}
-          onClick={() => handleAdvanceItem(item.id, activeStageCount)}
+          onClick={() => handleAdvanceItem(item.id, stageActive)}
         >
           <span className={`${item.stage === 0 && `invisible`}`}>
             {stageNames[item.stage]}&nbsp;

@@ -16,7 +16,7 @@ export default function List({ list, index, children }) {
     handleCollapseList,
     handleOrderList,
     handleMoveList,
-    handleApplyListStagesSettings,
+    handleSaveListStages,
   } = useContext(ManagerContext);
 
   // Clicking outside ends the rename interaction
@@ -150,10 +150,9 @@ export default function List({ list, index, children }) {
                   // Note: previously used command show-modal but was changed by proposed edits and I kept it because it worked smoothly with setMenu(false). I always struggle to combine approaches of native command show-modal and onClick for closing menus in this app
                   // Consider: direct DOM lookup here is said to be more brittle than refs
 
-                  // TODO: WRONG ID LMAO
                   onClick={() => {
                     const dialog = document.getElementById(
-                      `config-board-dialog-${list.id}`,
+                      `config-list-dialog-${list.id}`,
                     );
                     if (dialog) dialog.showPopover();
                     setMenu(false);
@@ -228,7 +227,7 @@ export default function List({ list, index, children }) {
                         item={item}
                         myListId={list.id}
                         stageNames={list.stageNames}
-                        activeStageCount={list.activeStageCount}
+                        stageActive={list.stageActive}
                         index={index}
                         {...provided.dragHandleProps}
                       />
@@ -275,38 +274,36 @@ export default function List({ list, index, children }) {
       <ListSettings
         list={list}
         myItems={myItems}
-        handleApplyListStagesSettings={handleApplyListStagesSettings}
+        handleSaveListStages={handleSaveListStages}
       />
       {/* KNOWN ISSUE: on md screen, sometimes modal can appear not in the center but higher, and can overlap navbar. Don't know when it triggers or why. High priority*/}
     </div>
   );
 }
 
-function ListSettings({ list, myItems, handleApplyListStagesSettings }) {
+function ListSettings({ list, myItems, handleSaveListStages }) {
   // I don't know if I agree with this const being scattered across the app. Also appears in Manager
   const MAX_COLORED_STAGES = 7;
 
   // Drafts for list stages settings renaming and length
-  const [draftActiveStageCount, setDraftActiveStageCount] = useState(
-    list.activeStageCount,
-  );
+  const [draftStagesActive, setDraftStagesActive] = useState(list.stageActive);
   const [draftStageNames, setDraftStageNames] = useState(list.stageNames);
 
   // If has pending changes (to enable save button)
   const isDirty =
-    draftActiveStageCount !== list.activeStageCount ||
+    draftStagesActive !== list.stageActive ||
     list.stageNames.some((name, index) => name !== draftStageNames[index]);
 
   // Reset draft utility
   function resetDraft() {
-    setDraftActiveStageCount(list.activeStageCount);
+    setDraftStagesActive(list.stageActive);
     setDraftStageNames(list.stageNames);
   }
 
   const stagesdisplay = [];
   for (let i = 1; i <= MAX_COLORED_STAGES; i++) {
     const sdcolor = "bg-stage" + i;
-    const isActive = i <= draftActiveStageCount;
+    const isActive = i <= draftStagesActive;
     stagesdisplay.push(
       <input
         key={sdcolor}
@@ -331,7 +328,7 @@ function ListSettings({ list, myItems, handleApplyListStagesSettings }) {
     // Dimensions subject to change
     <dialog
       className={`max-h-dvh w-full md:w-[50ch]`}
-      id={`config-board-dialog-${list.id}`}
+      id={`config-list-dialog-${list.id}`}
       popover="true"
       // runs when dialog toggles and detects open transition to reset draft state to canonical values. prevents stale edits from leaking back
       onToggle={(event) => {
@@ -353,19 +350,17 @@ function ListSettings({ list, myItems, handleApplyListStagesSettings }) {
             <button
               type="button"
               onClick={() =>
-                setDraftActiveStageCount(Math.max(0, draftActiveStageCount - 1))
+                setDraftStagesActive(Math.max(0, draftStagesActive - 1))
               }
             >
               [-]
             </button>
-            <span className="min-w-[2ch] text-center">
-              {draftActiveStageCount}
-            </span>
+            <span className="min-w-[2ch] text-center">{draftStagesActive}</span>
             <button
               type="button"
               onClick={() =>
-                setDraftActiveStageCount(
-                  Math.min(MAX_COLORED_STAGES, draftActiveStageCount + 1),
+                setDraftStagesActive(
+                  Math.min(MAX_COLORED_STAGES, draftStagesActive + 1),
                 )
               }
             >
@@ -378,9 +373,9 @@ function ListSettings({ list, myItems, handleApplyListStagesSettings }) {
             autoComplete="off"
             onSubmit={(event) => {
               event.preventDefault();
-              handleApplyListStagesSettings(
+              handleSaveListStages(
                 list.id,
-                draftActiveStageCount,
+                draftStagesActive,
                 draftStageNames,
                 myItems,
               );

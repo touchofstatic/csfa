@@ -1,4 +1,6 @@
-export const SYSTEM_CONFIG_STAGES = [
+// (13.05.26) Design update: stage names can exist and be interactive when deactivated. They're just "frozen" rather than erased from array. That's why active isn't extrapolated from names' length anymore.
+export const SYSTEM_STAGE_ACTIVE = 5;
+export const SYSTEM_STAGE_NAMES = [
   "none",
   "queued",
   "priority",
@@ -9,9 +11,7 @@ export const SYSTEM_CONFIG_STAGES = [
   "",
 ];
 
-export const TEST = 5;
-
-export const SYSTEM_CONFIG_POMODORO = {
+export const SYSTEM_POMODORO = {
   // TIME SHOULD ALWAYS BE SET IN ROUND MINUTES
   // Note: bypassing that rule for development causes all kinds of strange behavior; that's completely normal
   pomo: 1500,
@@ -33,10 +33,9 @@ export const SYSTEM_CONFIG_POMODORO = {
 };
 
 // TEMPORARY; ONLY FOR DEVELOPMENT
-export const devStages = SYSTEM_CONFIG_STAGES;
+export const devStages = SYSTEM_STAGE_NAMES;
 // A shorter custom stages config to test per-list stage independence
 const devStagesShort = ["none", "todo", "doing", "", "", "", "", ""];
-
 
 export const devItems = [
   // List A — "Backlog": 8 items spread across every stage (0–5).
@@ -104,7 +103,7 @@ export const devLists = [
     itemIds: ["a0", "a1", "a2", "a3", "a4", "a5", "a6", "a7"],
     collapsed: false,
     stageNames: devStages,
-    activeStageCount: 5,
+    stageActive: 5,
   },
   // Normal active list
   {
@@ -113,7 +112,7 @@ export const devLists = [
     itemIds: ["b0", "b1", "b2", "b3"],
     collapsed: false,
     stageNames: devStages,
-    activeStageCount: 5,
+    stageActive: 5,
   },
   // All items at max stage — uniform bar, advance wraps to 0
   {
@@ -122,7 +121,7 @@ export const devLists = [
     itemIds: ["c0", "c1", "c2"],
     collapsed: false,
     stageNames: devStages,
-    activeStageCount: 5,
+    stageActive: 5,
   },
   // Empty list — tests the add-item form in isolation and the empty droppable drop target
   {
@@ -131,7 +130,7 @@ export const devLists = [
     itemIds: [],
     collapsed: false,
     stageNames: devStages,
-    activeStageCount: 5,
+    stageActive: 5,
   },
   // Collapsed list — header and bar visible, items hidden; tests collapse toggle
   {
@@ -140,7 +139,7 @@ export const devLists = [
     itemIds: ["e0", "e1", "e2"],
     collapsed: true,
     stageNames: devStages,
-    activeStageCount: 5,
+    stageActive: 5,
   },
   // Custom stages (length 3) — tests per-list stage independence from global config
   {
@@ -149,7 +148,7 @@ export const devLists = [
     itemIds: ["f0", "f1", "f2", "f3"],
     collapsed: false,
     stageNames: devStagesShort,
-    activeStageCount: 2,
+    stageActive: 2,
   },
   // Long item names — tests text wrapping and layout stability
   {
@@ -158,6 +157,6 @@ export const devLists = [
     itemIds: ["g0", "g1", "g2"],
     collapsed: false,
     stageNames: devStages,
-    activeStageCount: 5,
+    stageActive: 5,
   },
 ];

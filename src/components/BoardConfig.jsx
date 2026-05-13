@@ -5,34 +5,30 @@ import Export from "./Export";
 import ResetBoardConfig from "./ResetBoardConfig";
 
 export default function BoardConfig() {
-  // TODO: HORRIBLE HORRIBLE NAME
-  const {
-    stagesConfig,
-    test,
-    handleTest,
-  } = useContext(ManagerContext);
+  const { stagesNames, stagesActive, handleSaveBoardStages } =
+    useContext(ManagerContext);
 
   // I don't know if I agree with this const being scattered across the app. Also appears in Manager
   const MAX_COLORED_STAGES = 7;
 
-  const [draftActiveStageCount, setDraftActiveStageCount] = useState(test);
-  const [draftStageNames, setDraftStageNames] = useState(stagesConfig);
+  const [draftStagesActive, setDraftStagesActive] = useState(stagesActive);
+  const [draftStageNames, setDraftStageNames] = useState(stagesNames);
 
   // If has pending changes (to enable save button)
   const isDirty =
-    draftActiveStageCount !== test ||
-    stagesConfig.some((name, index) => name !== draftStageNames[index]);
+    draftStagesActive !== stagesActive ||
+    stagesNames.some((name, index) => name !== draftStageNames[index]);
 
   // Reset draft utility
   function resetDraft() {
-    setDraftActiveStageCount(test);
-    setDraftStageNames(stagesConfig);
+    setDraftStagesActive(stagesActive);
+    setDraftStageNames(stagesNames);
   }
 
   const stagesdisplay = [];
   for (let i = 1; i <= MAX_COLORED_STAGES; i++) {
     const sdcolor = "bg-stage" + i;
-    const isActive = i <= draftActiveStageCount;
+    const isActive = i <= draftStagesActive;
     stagesdisplay.push(
       // AUDIT: see react.dev Optimizing re-rendering on every keystroke
       <input
@@ -88,45 +84,28 @@ export default function BoardConfig() {
           <section>
             <h2># Stages</h2>
             <p>
-              Default configuration for creating new lists. Changing it will not
-              overwrite existing ones.
+              Your standard configuration for creating new lists. Changing it
+              won't affect existing ones.
             </p>
-            {/* 
-            <label htmlFor="stagesConfig">
-              <input
-                type="range"
-                min="0"
-                max="7"
-                name="stagesConfig"
-                value={stagesConfig.length - 1}
-                onChange={(e) => {
-                  handleResizeConfigStages(e.target.value);
-                }}
-                required
-              />
-              {stagesConfig.length - 1}
-            </label> */}
 
             {/* Explicit stepper reduces accidental destructive changes */}
             <div className="flex items-center gap-[1ch]">
               <button
                 type="button"
                 onClick={() =>
-                  setDraftActiveStageCount(
-                    Math.max(0, draftActiveStageCount - 1),
-                  )
+                  setDraftStagesActive(Math.max(0, draftStagesActive - 1))
                 }
               >
                 [-]
               </button>
               <span className="min-w-[2ch] text-center">
-                {draftActiveStageCount}
+                {draftStagesActive}
               </span>
               <button
                 type="button"
                 onClick={() =>
-                  setDraftActiveStageCount(
-                    Math.min(MAX_COLORED_STAGES, draftActiveStageCount + 1),
+                  setDraftStagesActive(
+                    Math.min(MAX_COLORED_STAGES, draftStagesActive + 1),
                   )
                 }
               >
@@ -139,13 +118,7 @@ export default function BoardConfig() {
               autoComplete="off"
               onSubmit={(event) => {
                 event.preventDefault();
-                handleTest(draftActiveStageCount, draftStageNames);
-                // handleApplyListStagesSettings(
-                //   list.id,
-                //   draftActiveStageCount,
-                //   draftStageNames,
-                //   myItems,
-                // );
+                handleSaveBoardStages(draftStagesActive, draftStageNames);
               }}
             >
               {stagesdisplay}
@@ -175,11 +148,6 @@ export default function BoardConfig() {
 
           <footer>
             <button
-              // commandfor="config-board-dialog"
-              // command="close"
-              // onClick={(event) => {
-              //   resetDraft();
-              // }}
               type="button"
               onClick={(event) => {
                 resetDraft();
