@@ -147,16 +147,8 @@ export default function List({ list, index, children }) {
                 <button
                   className={`block text-left`}
                   size-="small"
-                  // Note: previously used command show-modal but was changed by proposed edits and I kept it because it worked smoothly with setMenu(false). I always struggle to combine approaches of native command show-modal and onClick for closing menus in this app
-                  // Consider: direct DOM lookup here is said to be more brittle than refs
-
-                  onClick={() => {
-                    const dialog = document.getElementById(
-                      `config-list-dialog-${list.id}`,
-                    );
-                    if (dialog) dialog.showPopover();
-                    setMenu(false);
-                  }}
+                  command="show-modal"
+                  commandfor={`config-list-dialog-${list.id}`}
                 >
                   Settings
                 </button>
@@ -304,9 +296,8 @@ function ListSettings({ list, myItems, handleSaveListStages }) {
     const sdcolor = "bg-stage" + i;
     const isActive = i <= draftStageActive;
     stagesdisplay.push(
-      <span>
+      <span key={sdcolor}>
         <input
-          key={sdcolor}
           type="text"
           name={`stage-${i}`}
           minLength="1"
@@ -333,8 +324,8 @@ function ListSettings({ list, myItems, handleSaveListStages }) {
       id={`config-list-dialog-${list.id}`}
       popover="true"
       // runs when dialog toggles and detects open transition to reset draft state to canonical values. prevents stale edits from leaking back
-      onToggle={(event) => {
-        if (event.currentTarget.matches(":popover-open")) resetDraft();
+      onToggle={() => {
+        resetDraft();
       }}
     >
       <article
@@ -407,10 +398,11 @@ function ListSettings({ list, myItems, handleSaveListStages }) {
         <footer>
           <button
             type="button"
-            onClick={(event) => {
+            onClick={() => {
               resetDraft();
-              event.currentTarget.closest("dialog")?.hidePopover();
             }}
+            commandfor={`config-list-dialog-${list.id}`}
+            command="close"
           >
             Exit
           </button>

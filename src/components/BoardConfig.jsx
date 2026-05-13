@@ -30,9 +30,8 @@ export default function BoardConfig() {
     const isActive = i <= draftStageActive;
     stagesdisplay.push(
       // AUDIT: see react.dev Optimizing re-rendering on every keystroke
-      <span>
+      <span key={sdcolor}>
         <input
-          key={sdcolor}
           type="text"
           name={`stage-${i}`}
           minLength="1"
@@ -58,10 +57,8 @@ export default function BoardConfig() {
         // commandfor="config-board-dialog"
         size-="small"
         className={`block w-full text-left hover:bg-[var(--foreground2)] active:bg-[var(--background0)]`}
-        onClick={() => {
-          const dialog = document.getElementById(`config-board-dialog`);
-          if (dialog) dialog.showPopover();
-        }}
+        command="show-modal"
+        commandfor={`config-board-dialog`}
       >
         Board
       </button>
@@ -71,10 +68,8 @@ export default function BoardConfig() {
         id="config-board-dialog"
         popover="true"
         className={`max-h-dvh w-full md:w-[50ch]`}
-        onToggle={(event) => {
-          if (event.currentTarget.matches(":popover-open")) {
-            resetDraft();
-          }
+        onToggle={() => {
+          resetDraft();
         }}
       >
         <article
@@ -150,10 +145,11 @@ export default function BoardConfig() {
           <footer>
             <button
               type="button"
-              onClick={(event) => {
+              onClick={() => {
                 resetDraft();
-                event.currentTarget.closest("dialog")?.hidePopover();
               }}
+              commandfor={`config-board-dialog`}
+              command="close"
             >
               Exit
             </button>
