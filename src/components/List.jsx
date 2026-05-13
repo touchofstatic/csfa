@@ -282,28 +282,27 @@ export default function List({ list, index, children }) {
 }
 
 function ListSettings({ list, myItems, handleSaveListStages }) {
-  // I don't know if I agree with this const being scattered across the app. Also appears in Manager
   const MAX_COLORED_STAGES = 7;
 
   // Drafts for list stages settings renaming and length
-  const [draftStagesActive, setDraftStagesActive] = useState(list.stageActive);
+  const [draftStageActive, setDraftStageActive] = useState(list.stageActive);
   const [draftStageNames, setDraftStageNames] = useState(list.stageNames);
 
   // If has pending changes (to enable save button)
   const isDirty =
-    draftStagesActive !== list.stageActive ||
+    draftStageActive !== list.stageActive ||
     list.stageNames.some((name, index) => name !== draftStageNames[index]);
 
   // Reset draft utility
   function resetDraft() {
-    setDraftStagesActive(list.stageActive);
+    setDraftStageActive(list.stageActive);
     setDraftStageNames(list.stageNames);
   }
 
   const stagesdisplay = [];
   for (let i = 1; i <= MAX_COLORED_STAGES; i++) {
     const sdcolor = "bg-stage" + i;
-    const isActive = i <= draftStagesActive;
+    const isActive = i <= draftStageActive;
     stagesdisplay.push(
       <input
         key={sdcolor}
@@ -350,17 +349,17 @@ function ListSettings({ list, myItems, handleSaveListStages }) {
             <button
               type="button"
               onClick={() =>
-                setDraftStagesActive(Math.max(0, draftStagesActive - 1))
+                setDraftStageActive(Math.max(0, draftStageActive - 1))
               }
             >
               [-]
             </button>
-            <span className="min-w-[2ch] text-center">{draftStagesActive}</span>
+            <span className="min-w-[2ch] text-center">{draftStageActive}</span>
             <button
               type="button"
               onClick={() =>
-                setDraftStagesActive(
-                  Math.min(MAX_COLORED_STAGES, draftStagesActive + 1),
+                setDraftStageActive(
+                  Math.min(MAX_COLORED_STAGES, draftStageActive + 1),
                 )
               }
             >
@@ -375,7 +374,7 @@ function ListSettings({ list, myItems, handleSaveListStages }) {
               event.preventDefault();
               handleSaveListStages(
                 list.id,
-                draftStagesActive,
+                draftStageActive,
                 draftStageNames,
                 myItems,
               );

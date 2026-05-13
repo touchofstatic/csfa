@@ -55,12 +55,16 @@ export default function Manager() {
     return loadLists || devLists;
   });
   // If user doesn't have config in localstorage, load system config
-  const [stagesActive, setStagesActive] = useState(() => {
-    const loadStagesActive = JSON.parse(localStorage.getItem("stages-active"));
-    return loadStagesActive || SYSTEM_STAGE_ACTIVE;
+  const [stageActiveConfig, setStageActiveConfig] = useState(() => {
+    const loadStagesActiveConfig = JSON.parse(
+      localStorage.getItem("stage-active-config"),
+    );
+    return loadStagesActiveConfig || SYSTEM_STAGE_ACTIVE;
   });
-  const [stagesNames, setStagesNames] = useState(() => {
-    const loadStagesNames = JSON.parse(localStorage.getItem("stages-config"));
+  const [stageNamesConfig, setStageNamesConfig] = useState(() => {
+    const loadStagesNames = JSON.parse(
+      localStorage.getItem("stage-names-config"),
+    );
     return loadStagesNames || SYSTEM_STAGE_NAMES;
   });
   const [pomoConfig, setPomoConfig] = useState(() => {
@@ -79,14 +83,19 @@ export default function Manager() {
     localStorage.setItem("items", JSON.stringify(items));
   }, [items]);
 
-  // STRUGGLE ZONE
   useEffect(() => {
-    localStorage.setItem("stages-active", JSON.stringify(stagesActive));
-  }, [stagesActive]);
+    localStorage.setItem(
+      "stage-active-config",
+      JSON.stringify(stageActiveConfig),
+    );
+  }, [stageActiveConfig]);
 
   useEffect(() => {
-    localStorage.setItem("stages-config", JSON.stringify(stagesNames));
-  }, [stagesNames]);
+    localStorage.setItem(
+      "stage-names-config",
+      JSON.stringify(stageNamesConfig),
+    );
+  }, [stageNamesConfig]);
 
   useEffect(() => {
     localStorage.setItem("pomo-config", JSON.stringify(pomoConfig));
@@ -205,8 +214,8 @@ export default function Manager() {
         id: uuidv4(),
         itemIds: [],
         collapsed: false,
-        stageNames: stagesNames,
-        stageActive: stagesActive,
+        stageNames: stageNamesConfig,
+        stageActive: stageActiveConfig,
       },
       ...lists,
     ]);
@@ -427,16 +436,16 @@ export default function Manager() {
       MAX_COLORED_STAGES,
       Math.max(0, Number(nextActiveStageCount)),
     );
-    setStagesActive(safeActiveStageCount);
-    setStagesNames(nextStageNames);
+    setStageActiveConfig(safeActiveStageCount);
+    setStageNamesConfig(nextStageNames);
   }
 
   // Reset Board Config
   function resetBoardConfig() {
     // Reset config stages
     // Doesn't do anything else because it's the only Board setting now
-    setStagesNames(SYSTEM_STAGE_NAMES);
-    setStagesActive(SYSTEM_STAGE_ACTIVE);
+    setStageNamesConfig(SYSTEM_STAGE_NAMES);
+    setStageActiveConfig(SYSTEM_STAGE_ACTIVE);
   }
 
   return (
@@ -451,8 +460,8 @@ export default function Manager() {
         value={{
           items,
           lists,
-          stagesActive,
-          stagesNames,
+          stageActiveConfig,
+          stageNamesConfig,
           pomoConfig,
           handleImportBoard,
           handleSaveBoardStages,

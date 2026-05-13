@@ -5,30 +5,29 @@ import Export from "./Export";
 import ResetBoardConfig from "./ResetBoardConfig";
 
 export default function BoardConfig() {
-  const { stagesNames, stagesActive, handleSaveBoardStages } =
+  const { stageNamesConfig, stageActiveConfig, handleSaveBoardStages } =
     useContext(ManagerContext);
 
-  // I don't know if I agree with this const being scattered across the app. Also appears in Manager
   const MAX_COLORED_STAGES = 7;
 
-  const [draftStagesActive, setDraftStagesActive] = useState(stagesActive);
-  const [draftStageNames, setDraftStageNames] = useState(stagesNames);
+  const [draftStageActive, setDraftStageActive] = useState(stageActiveConfig);
+  const [draftStageNames, setDraftStageNames] = useState(stageNamesConfig);
 
   // If has pending changes (to enable save button)
   const isDirty =
-    draftStagesActive !== stagesActive ||
-    stagesNames.some((name, index) => name !== draftStageNames[index]);
+    draftStageActive !== stageActiveConfig ||
+    stageNamesConfig.some((name, index) => name !== draftStageNames[index]);
 
   // Reset draft utility
   function resetDraft() {
-    setDraftStagesActive(stagesActive);
-    setDraftStageNames(stagesNames);
+    setDraftStageActive(stageActiveConfig);
+    setDraftStageNames(stageNamesConfig);
   }
 
   const stagesdisplay = [];
   for (let i = 1; i <= MAX_COLORED_STAGES; i++) {
     const sdcolor = "bg-stage" + i;
-    const isActive = i <= draftStagesActive;
+    const isActive = i <= draftStageActive;
     stagesdisplay.push(
       // AUDIT: see react.dev Optimizing re-rendering on every keystroke
       <input
@@ -72,7 +71,6 @@ export default function BoardConfig() {
         onToggle={(event) => {
           if (event.currentTarget.matches(":popover-open")) {
             resetDraft();
-            console.log("a");
           }
         }}
       >
@@ -93,19 +91,19 @@ export default function BoardConfig() {
               <button
                 type="button"
                 onClick={() =>
-                  setDraftStagesActive(Math.max(0, draftStagesActive - 1))
+                  setDraftStageActive(Math.max(0, draftStageActive - 1))
                 }
               >
                 [-]
               </button>
               <span className="min-w-[2ch] text-center">
-                {draftStagesActive}
+                {draftStageActive}
               </span>
               <button
                 type="button"
                 onClick={() =>
-                  setDraftStagesActive(
-                    Math.min(MAX_COLORED_STAGES, draftStagesActive + 1),
+                  setDraftStageActive(
+                    Math.min(MAX_COLORED_STAGES, draftStageActive + 1),
                   )
                 }
               >
@@ -118,7 +116,7 @@ export default function BoardConfig() {
               autoComplete="off"
               onSubmit={(event) => {
                 event.preventDefault();
-                handleSaveBoardStages(draftStagesActive, draftStageNames);
+                handleSaveBoardStages(draftStageActive, draftStageNames);
               }}
             >
               {stagesdisplay}
